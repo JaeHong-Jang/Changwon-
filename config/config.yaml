@@ -1,0 +1,25 @@
+# ===== 프로젝트 설정 =====
+project:
+  name: "2026 창원시 AI·데이터 활용 공모전"
+  team: ""
+  topic: ""  # 선정 후 기입
+
+# ===== 경로 설정 =====
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  external_data: "data/external"
+  figures: "reports/figures"
+  reports: "reports/final"
+
+# ===== 공공데이터 API =====
+api:
+  data_go_kr:
+    base_url: "https://api.data.go.kr"
+    api_key: ""  # .env 파일에서 관리 권장
+
+# ===== 분석 설정 =====
+analysis:
+  random_seed: 42
+  test_size: 0.2
+  cv_folds: 5

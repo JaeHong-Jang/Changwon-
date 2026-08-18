@@ -54,7 +54,7 @@
   {
    "id": "G008",
    "title": "G008 Layer2 역류위험",
-   "objective": "Plan A XGBoost+SHAP 또는 Plan B 근사점수. 증거: layer2_sewer.gpkg + layer2_map.png + (A)F1·AUC표 또는 (B)Spearman ρ",
+   "objective": "Plan A XGBoost+SHAP 또는 Plan B 근사점수. 증거: layer2_sewer.gpkg + layer2_map.png + (A)F1·AUC표 또는 (B)Spearman ρ + 민원 원문 LLM 구조화(classify_complaint) 정확도 표(수작업 100건 대비)",
    "status": "pending",
    "evidence": null
   },
@@ -74,8 +74,8 @@
   },
   {
    "id": "G011",
-   "title": "G011 AI Agent 프로토타입",
-   "objective": "tools 5개 + Claude tool use + Streamlit, 시나리오 3개(특보알림/민원분류/시민안내). 증거: 실행로그 + 스크린샷 3장 + 소요시간표 + agent_storyboard.md",
+   "title": "G011 특보 연동 알림 초안 (옵션)",
+   "objective": "[옵션] G010 후 여유 시에만. draft_alert(top_grids, forecast) → 알림 문안 1건. 증거: 실행 로그 + 화면 1장 + 소요시간. 일정 밀리면 evidence \"skipped: 일정\"으로 완료 처리. Streamlit·챗봇 없음.",
    "status": "pending",
    "evidence": null
   },

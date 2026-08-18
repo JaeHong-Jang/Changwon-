@@ -112,20 +112,31 @@ cp .env.example .env
 | (추후 기입) | 팀장 | |
 | | | |
 
-## 📅 일정
+## 🗺️ 연구 계획 & 진행 관리 (하네스)
 
-- [x] 주제 선정 (8/18)
-- [x] 프로젝트 구조 세팅
-- [ ] 정보공개청구 접수 (8/18)
-- [ ] 공개 데이터 수집 (8/18~8/31)
-- [ ] 탐색적 데이터 분석 (8/25~9/5)
-- [ ] 정보공개청구 회신 수령 (~9/1)
-- [ ] 데이터 전처리·병합 (9/1~9/7)
-- [ ] 위험도 모델링 (9/7~9/15)
-- [ ] AI Agent 프로토타입 (9/10~9/20)
-- [ ] 시각화 (9/15~9/22)
-- [ ] 보고서 작성 (9/20~9/28)
-- [ ] 검토·수정·제출 (9/28~9/30 18:00)
+**계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 딥리서치 3건(데이터 검증·방법론·수상작 패턴) 기반, 14개 스토리 × 7 페이즈, 각 스토리에 검증 기준·담당·기한 명시.
+
+진행 상태는 `.fablize/goals.json`에 영속화되며, **증거 없이는 스토리를 완료할 수 없습니다.**
+
+```bash
+# 저장소 루트에서 (Windows는 python + C:\Users\User\.claude\... 경로)
+python3 /mnt/c/Users/User/.claude/plugins/fablize/scripts/goals.py status       # 현재 어디까지 왔나
+python3 /mnt/c/Users/User/.claude/plugins/fablize/scripts/goals.py next         # 다음 스토리 활성화 + 할 일 출력
+python3 /mnt/c/Users/User/.claude/plugins/fablize/scripts/goals.py checkpoint --id G001 --status complete --evidence "docs/data_access_log.md 접수번호 6건"
+```
+
+| Phase | 스토리 | 기간 |
+|-------|--------|------|
+| 0 착수 | G001 데이터 접근 일괄 신청 | 8/18~8/20 |
+| 1 데이터 | G002 다운로드·검증 → G003 관측지점 좌표 → G004 100m 격자 | 8/18~8/31 |
+| 2 EDA | G005 | 8/25~9/5 |
+| 3 **Decision Gate** | G006 Layer 2 Plan A/B 확정 (정보공개 회신 기반) | 9/1~9/3 |
+| 4 모델링 | G007 침수 → G008 역류 → G009 취약계층 → G010 통합 CDRI·TOP 20 | 9/1~9/15 |
+| 5 AI Agent | G011 프로토타입·시나리오 3개 | 9/10~9/20 |
+| 6 보고서 | G012 시각화 → G013 v1→리뷰→v2 | 9/15~9/28 |
+| 7 **검증 게이트** | G014 재실행·페이지·출처 검증 → 제출 | 9/28~9/30 18:00 |
+
+관련 문서: [`docs/report_checklist.md`](docs/report_checklist.md) · [`docs/data_access_log.md`](docs/data_access_log.md) · [`docs/decisions/`](docs/decisions/) · [`docs/references/정보공개청구_문안.md`](docs/references/정보공개청구_문안.md)
 
 ## 📝 라이선스
 

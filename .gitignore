@@ -29,16 +29,13 @@ env/
 Thumbs.db
 desktop.ini
 
-# ===== 데이터 (대용량 원본 데이터는 git에 올리지 않음) =====
-data/raw/**
-!data/raw/README.md
+# ===== 데이터 (raw 원본은 Git LFS로 공유) =====
 data/processed/*.csv
 data/processed/*.pkl
 data/processed/*.parquet
 data/external/*.csv
 data/external/*.xlsx
-# 데이터 설명 README는 추적함
-!data/raw/README.md
+# 데이터 설명 README는 일반 Git으로 추적함
 !data/processed/README.md
 !data/external/README.md
 

@@ -1,0 +1,2 @@
+data/raw/** filter=lfs diff=lfs merge=lfs -text
+data/raw/README.md -filter diff merge text

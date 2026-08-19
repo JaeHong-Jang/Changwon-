@@ -6,8 +6,16 @@
 - **원본 데이터는 절대 수정하지 않습니다.**
 - 파일명 형식: `{출처}_{데이터명}_{수집일}.{확장자}`
   - 예: `datagokr_창원시_교통사고_20260701.csv`
-- 대용량 파일은 `.gitignore`에 의해 git에 올라가지 않습니다.
+- 원본 데이터는 Git LFS로 공유합니다. 새로 clone한 뒤 `git lfs pull`로 실제 파일을 받으세요.
 - 데이터 출처와 다운로드 URL을 아래 표에 기록해 주세요.
+
+## 다운로드
+
+```bash
+brew install git-lfs  # macOS에서 최초 1회
+git lfs install
+git lfs pull
+```
 
 ## 데이터 목록
 

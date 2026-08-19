@@ -21,3 +21,4 @@
 | `sgis/grid_boundaries_100m_2025/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자경계(라라·라마·마라·마마) |
 | `sgis/grid_statistics_100m_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자 인구·가구·주택 통계 |
 | `dem/public_dem_2025/` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | EPSG:5179, 90m 해상도; 창원시 전역 6개 도엽(35810·35811·35812·35814·35815·35816) |
+| `land_cover/middle_2025/` | 기후에너지환경부 환경공간정보서비스 | https://aid.mcee.go.kr/ | 2026-08-19 | 2025 중분류 토지피복지도 16개 도엽, EPSG:5186, 창원시 전역 100% 포함 |

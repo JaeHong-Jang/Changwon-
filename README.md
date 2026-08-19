@@ -145,6 +145,8 @@ python3 /mnt/c/Users/User/.claude/plugins/fablize/scripts/goals.py checkpoint --
 | 6 보고서 | G012 시각화 → G013 v1→리뷰→v2 | 9/15~9/28 |
 | 7 **검증 게이트** | G014 재실행·페이지·출처 검증 → 제출 | 9/28~9/30 18:00 |
 
+상세 문서: [`docs/ANALYSIS_PLAN.md`](docs/ANALYSIS_PLAN.md)(방법론 규격) · [`docs/LITERATURE.md`](docs/LITERATURE.md)(필독 논문 8 + 권장 35) · [`docs/DATA_CATALOG.md`](docs/DATA_CATALOG.md)(추가 데이터·변수 매핑)
+
 관련 문서: [`docs/report_checklist.md`](docs/report_checklist.md) · [`docs/data_access_log.md`](docs/data_access_log.md) · [`docs/decisions/`](docs/decisions/) · [`docs/references/정보공개청구_문안.md`](docs/references/정보공개청구_문안.md)
 
 ## 📝 라이선스

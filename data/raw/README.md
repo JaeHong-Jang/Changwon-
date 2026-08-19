@@ -20,4 +20,4 @@
 | `sgis/aggregation_statistics_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 성·연령별 인구, 총인구, 노령화지수 |
 | `sgis/grid_boundaries_100m_2025/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자경계(라라·라마·마라·마마) |
 | `sgis/grid_statistics_100m_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자 인구·가구·주택 통계 |
-| `(B080)공개DEM_35811_img_2025.zip` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | EPSG:5179, 90m 해상도; 창원시 일부 도엽(35811) |
+| `dem/public_dem_2025/` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | EPSG:5179, 90m 해상도; 창원시 전역 6개 도엽(35810·35811·35812·35814·35815·35816) |

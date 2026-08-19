@@ -1,5 +1,5 @@
 {
- "brief": "창원시 폭우·기후재난 AI 선제 대응 시스템 — 2026 창원시 AI·데이터 공모전 (마감 9/30 18:00). 계획 원본: docs/RESEARCH_PLAN.md",
+ "brief": "창원시 폭우 침수·하수 역류 우선 대응지역 분석 (100m 격자 통합위험지수 CDRI 기반 TOP 20) — 2026 창원시 AI·데이터 공모전 (마감 9/30 18:00). 계획 원본: docs/RESEARCH_PLAN.md",
  "created": "2026-08-18T03:20:19.544044+00:00",
  "goals": [
   {
@@ -12,7 +12,7 @@
   {
    "id": "G002",
    "title": "G002 즉시확보 데이터 다운로드+스키마 검증",
-   "objective": "강수량·하천수위·배수펌프장·하수관로집계·SGIS격자·하천표준·시민의소리 스크래핑. 증거: data/raw/README.md 표 + validate_raw.py 출력(shape·컬럼·결측)",
+   "objective": "강수량·하천수위·배수펌프장·하수관로집계·SGIS격자·하천표준·시민의소리 스크래핑. 증거: data/raw/README.md 표 + validate_raw.py 출력(shape·컬럼·결측) + DATA_CATALOG A1~A9 즉시 다운로드분(침수예상도 WFS·침수흔적 PDF·하수도통계 xlsx 등) 포함, data/raw/README.md 취득일·md5",
    "status": "pending",
    "evidence": null
   },
@@ -26,7 +26,7 @@
   {
    "id": "G004",
    "title": "G004 100m 분석격자 구축",
-   "objective": "DEM경사·상대고도·불투수면·하천버퍼·펌프장거리·SGIS인구 결합. 증거: grid_100m.gpkg + data_dictionary.md + 결측<5% + 03노트북 통과",
+   "objective": "DEM경사·상대고도·불투수면·하천버퍼·펌프장거리·SGIS인구 결합. 증거: grid_100m.gpkg + data_dictionary.md + 결측<5% + 03노트북 통과 + EPSG:5179·SGIS 격자ID·TWI·내수침수 예상 침수심·universe 플래그 (ANALYSIS_PLAN §1~2)",
    "status": "pending",
    "evidence": null
   },
@@ -40,42 +40,42 @@
   {
    "id": "G006",
    "title": "G006 Decision Gate Layer2 설계 확정",
-   "objective": "정보공개 회신 검토→Plan A(관로별 XGBoost)/B(동별 근사점수) 분기. 증거: docs/decisions/001-layer2-design.md + 회신파일 경로 또는 미회신 근거",
+   "objective": "정보공개 회신 검토→Plan A(관로별 XGBoost)/B(동별 근사점수) 분기. 증거: docs/decisions/001-layer2-design.md + 회신파일 경로 또는 미회신 근거 + Plan B는 회신 무관 즉시 착수, 게이트는 A 추가 여부·침수흔적도 경로 3안 결정",
    "status": "pending",
    "evidence": null
   },
   {
    "id": "G007",
    "title": "G007 Layer1 침수취약성",
-   "objective": "기후노출(강우IDW)×민감도 표준화합산→Jenks I~IV, 사례지5곳+민원위치 검증. 증거: layer1_flood.gpkg + layer1_map.png + 적중률/AUC 수치",
+   "objective": "기후노출(강우IDW)×민감도 표준화합산→Jenks I~IV, 사례지5곳+민원위치 검증. 증거: layer1_flood.gpkg + layer1_map.png + 적중률/AUC 수치 + 검증: 침수흔적 AUC ≥0.70(주)·사례지 lift ≥1.5·하천/예상도 제외 민감도",
    "status": "pending",
    "evidence": null
   },
   {
    "id": "G008",
    "title": "G008 Layer2 역류위험",
-   "objective": "Plan A XGBoost+SHAP 또는 Plan B 근사점수. 증거: layer2_sewer.gpkg + layer2_map.png + (A)F1·AUC표 또는 (B)Spearman ρ",
+   "objective": "Plan A XGBoost+SHAP 또는 Plan B 근사점수. 증거: layer2_sewer.gpkg + layer2_map.png + (A)F1·AUC표 또는 (B)Spearman ρ + 민원 원문 LLM 구조화(classify_complaint) 정확도 표(수작업 100건 대비)",
    "status": "pending",
    "evidence": null
   },
   {
    "id": "G009",
    "title": "G009 Layer3 취약계층",
-   "objective": "SGIS 65세↑·1인가구 + 건축HUB 노후·지하층 + 대피소·펌프장 접근성. 증거: layer3_vuln.gpkg + layer3_map.png + 건축HUB 수집건수·커버리지",
+   "objective": "SGIS 65세↑·1인가구 + 건축HUB 노후·지하층 + 대피소·펌프장 접근성. 증거: layer3_vuln.gpkg + layer3_map.png + 건축HUB 수집건수·커버리지 + GIS건물통합정보 SHP 1순위, 지상 임시주거시설 거리, VIF<5",
    "status": "pending",
    "evidence": null
   },
   {
    "id": "G010",
    "title": "G010 통합 CDRI + TOP20",
-   "objective": "R=H×E×V→Balica 5등급, 가중치 3방식 민감도, TOP20 기여도분해. 증거: cdri.gpkg + top20.csv + sensitivity.csv(Spearman) + cdri_map.png + 04노트북 통과",
+   "objective": "R=H×E×V→Balica 5등급, 가중치 3방식 민감도, TOP20 기여도분해. 증거: cdri.gpkg + top20.csv + sensitivity.csv(Spearman) + cdri_map.png + 04노트북 통과 + 가중기하평균·Balica 5등급+Jenks κ·500m MAUP·시 지정 위험지역 중첩률",
    "status": "pending",
    "evidence": null
   },
   {
    "id": "G011",
-   "title": "G011 AI Agent 프로토타입",
-   "objective": "tools 5개 + Claude tool use + Streamlit, 시나리오 3개(특보알림/민원분류/시민안내). 증거: 실행로그 + 스크린샷 3장 + 소요시간표 + agent_storyboard.md",
+   "title": "G011 특보 연동 알림 초안 (옵션)",
+   "objective": "[옵션] G010 후 여유 시에만. draft_alert(top_grids, forecast) → 알림 문안 1건. 증거: 실행 로그 + 화면 1장 + 소요시간. 일정 밀리면 evidence \"skipped: 일정\"으로 완료 처리. Streamlit·챗봇 없음.",
    "status": "pending",
    "evidence": null
   },

@@ -5,7 +5,7 @@
   {
    "id": "G001",
    "title": "G001 데이터 접근 일괄 신청",
-   "objective": "정보공개청구(민원3년+관로연도좌표+침수흔적도SHP)·EGIS 토지피복·NGII DEM·SGIS키·건축HUB키·기상청키 6건 신청. 증거: docs/data_access_log.md 접수번호 6건",
+   "objective": "정보공개청구(민원3년+관로연도좌표+침수흔적도SHP)·EGIS 토지피복·NGII DEM·SGIS키·건축HUB키·기상청키 6건 신청. 증거: docs/data_access_log.md 접수번호 6건 [기한 8/20로 조정: 필수 6건 접수번호 + #8~#17 상태 기록]",
    "status": "pending",
    "evidence": null
   },
@@ -67,8 +67,8 @@
   },
   {
    "id": "G010",
-   "title": "G010 통합 CDRI + TOP20",
-   "objective": "R=H×E×V→Balica 5등급, 가중치 3방식 민감도, TOP20 기여도분해. 증거: cdri.gpkg + top20.csv + sensitivity.csv(Spearman) + cdri_map.png + 04노트북 통과 + 가중기하평균·Balica 5등급+Jenks κ·500m MAUP·시 지정 위험지역 중첩률",
+   "title": "G010 통합 CDRI + R1~R5 등급 + TOP 20",
+   "objective": "R=H×E×V→Balica 5등급, 가중치 3방식 민감도, TOP20 기여도분해. 증거: cdri.gpkg + top20.csv + sensitivity.csv(Spearman) + cdri_map.png + 04노트북 통과 + 가중기하평균·Balica 5등급+Jenks κ·500m MAUP·시 지정 위험지역 중첩률 + R1~R5 등급 체계(CDRI_GRADE_SYSTEM v2: 조건부 캘리브레이션 본안, 규칙 A/B/C, grade_raw/final, 등급표·grade_by_dong.csv·하수센터별 집계, 단조성·κw·지정지역 정합 검증)",
    "status": "pending",
    "evidence": null
   },

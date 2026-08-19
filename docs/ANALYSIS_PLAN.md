@@ -105,7 +105,7 @@ z-score(부호 정렬) 합산 → `L3=minmax`, Jenks 4등급. 상관 |r|>0.8 쌍
 
 - **H** = 0.5·L1 + 0.5·L2(처리구역 밖 L2 결측 → H=L1, `H_source` 플래그). **E** = minmax(z(인구밀도)+z(건물 수)). **V** = L3.
 - 집계: **가중기하평균 `CDRI = H^wH·E^wE·V^wV`**(기본 w=1/3). 근거: IPCC AR5 세 요소 필요조건, OECD/JRC(2008) 기하평균의 비보상성(compensability). Moreira et al.(2021)이 지적한 기하평균의 과소평가 경향 때문에 가법형 `ΣwX`를 민감도로 병기. H·V는 minmax 후 `[0.05,1]` 재척도, E=0 격자 제외.
-- 등급: 유니버스 minmax 0~1 → **Balica 5등급**(<0.01 매우낮음 / 0.01–0.25 낮음 / 0.25–0.50 보통 / 0.50–0.75 높음 / 0.75–1 매우높음; 출처는 Balica(2012) UNESCO-IHE 박사논문, Karmaoui et al.(2016) Table 4 재수록 — Nat Hazards 논문 아님, 정확 표기). Moreira(2021)에 따라 등급화가 가장 민감 → **Jenks 5등급 대안과 등급 일치율 κ 병기**.
+- 등급: **→ `docs/CDRI_GRADE_SYSTEM.md` v2가 등급 규격의 원본** (R1~R5 오름차순, 조건부 캘리브레이션 본안 + Balica·Jenks 병기, 규칙 A/B/C, raw/final 분리, 대응표). 아래는 1안 Balica 설명으로 유지: 유니버스 minmax 0~1 → **Balica 5등급**(<0.01 매우낮음 / 0.01–0.25 낮음 / 0.25–0.50 보통 / 0.50–0.75 높음 / 0.75–1 매우높음; 출처는 Balica(2012) UNESCO-IHE 박사논문, Karmaoui et al.(2016) Table 4 재수록 — Nat Hazards 논문 아님, 정확 표기). Moreira(2021)에 따라 등급화가 가장 민감 → **Jenks 5등급 대안과 등급 일치율 κ 병기**.
 - 가중치 3안(OECD/JRC 비교표 근거): ① 동일(Balica 'without weighting') ② 엔트로피 ③ AHP 3×3(팀 3인+하수도사업소 담당 1인, CR<0.1, RI=0.58; 9/8까지 수집). 비교: 전 격자 Spearman ρ ≥0.9, TOP 20 겹침 ≥14, 등급 이동 매트릭스.
 
 ```python

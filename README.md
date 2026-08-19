@@ -123,7 +123,7 @@ cp .env.example .env
 
 ## 🗺️ 연구 계획 & 진행 관리 (하네스)
 
-**계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 딥리서치 3건(데이터 검증·방법론·수상작 패턴) 기반, 14개 스토리 × 7 페이즈, 각 스토리에 검증 기준·담당·기한 명시.
+**계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 연구 계획서(Research Proposal) 형식: 배경·목적·RQ/가설·선행연구·범위·방법·기대결과(결론 mock)·수행 체계(14 스토리 × 7 페이즈)·일정·자원·리스크·윤리·참고문헌.
 
 진행 상태는 `.fablize/goals.json`에 영속화되며, **증거 없이는 스토리를 완료할 수 없습니다.**
 
@@ -145,7 +145,7 @@ python3 /mnt/c/Users/User/.claude/plugins/fablize/scripts/goals.py checkpoint --
 | 6 보고서 | G012 시각화 → G013 v1→리뷰→v2 | 9/15~9/28 |
 | 7 **검증 게이트** | G014 재실행·페이지·출처 검증 → 제출 | 9/28~9/30 18:00 |
 
-상세 문서: [`docs/ANALYSIS_PLAN.md`](docs/ANALYSIS_PLAN.md)(방법론 규격) · [`docs/LITERATURE.md`](docs/LITERATURE.md)(필독 논문 8 + 권장 35) · [`docs/DATA_CATALOG.md`](docs/DATA_CATALOG.md)(추가 데이터·변수 매핑)
+상세 문서: [`docs/CDRI_GRADE_SYSTEM.md`](docs/CDRI_GRADE_SYSTEM.md)(R1~R5 등급 체계) · [`docs/ANALYSIS_PLAN.md`](docs/ANALYSIS_PLAN.md)(방법론 규격) · [`docs/LITERATURE.md`](docs/LITERATURE.md)(필독 논문 8 + 권장 35) · [`docs/DATA_CATALOG.md`](docs/DATA_CATALOG.md)(추가 데이터·변수 매핑)
 
 관련 문서: [`docs/report_checklist.md`](docs/report_checklist.md) · [`docs/data_access_log.md`](docs/data_access_log.md) · [`docs/decisions/`](docs/decisions/) · [`docs/references/정보공개청구_문안.md`](docs/references/정보공개청구_문안.md)
 

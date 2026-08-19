@@ -30,12 +30,8 @@ Thumbs.db
 desktop.ini
 
 # ===== 데이터 (대용량 원본 데이터는 git에 올리지 않음) =====
-data/raw/*.csv
-data/raw/*.xlsx
-data/raw/*.json
-data/raw/*.xml
-data/raw/*.zip
-data/raw/*.tar.gz
+data/raw/**
+!data/raw/README.md
 data/processed/*.csv
 data/processed/*.pkl
 data/processed/*.parquet

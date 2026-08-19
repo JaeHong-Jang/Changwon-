@@ -13,4 +13,11 @@
 
 | 파일명 | 출처 | URL | 수집일 | 비고 |
 |--------|------|-----|--------|------|
-| | | | | |
+| `경상남도 창원시_시간별 강수량_20250923.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 시간대별 강수량 |
+| `경상남도 창원시_하천수위 통계_20250922.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 하천 관측지점별 수위 |
+| `경상남도_창원시_배수펌프장 현황_20250801.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 배수펌프장 위치·시설 현황 |
+| `sgis/aggregation_boundaries_2025_2Q/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 창원시 5개 구 집계구 경계(38111~38115) |
+| `sgis/aggregation_statistics_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 성·연령별 인구, 총인구, 노령화지수 |
+| `sgis/grid_boundaries_100m_2025/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자경계(라라·라마·마라·마마) |
+| `sgis/grid_statistics_100m_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자 인구·가구·주택 통계 |
+| `(B080)공개DEM_35811_img_2025.zip` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | EPSG:5179, 90m 해상도; 창원시 일부 도엽(35811) |

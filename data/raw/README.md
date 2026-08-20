@@ -28,7 +28,7 @@ git lfs pull
 | `sgis/aggregation_statistics_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 성·연령별 인구, 총인구, 노령화지수 |
 | `sgis/grid_boundaries_100m_2025/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자경계(라라·라마·마라·마마) |
 | `sgis/grid_statistics_100m_2024/` | SGIS 통계지리정보서비스 | https://sgis.kostat.go.kr/ | 2026-08-19 | 100m 격자 인구·가구·주택 통계 |
-| `dem/public_dem_2025/` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | EPSG:5179, 90m 해상도; 창원시 전역 6개 도엽(35810·35811·35812·35814·35815·35816) |
+| `dem/public_dem_2025/` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | HFA 6개 도엽(35810·35811·35812·35814·35815·35816); `rasterio 1.5.1` 확인 결과 EPSG:5179, 90m, NoData -9999 |
 | `land_cover/middle_2025/` | 기후에너지환경부 환경공간정보서비스 | https://aid.mcee.go.kr/ | 2026-08-19 | 2025 중분류 16개 도엽, EPSG:5186; 불투수면비율 및 내륙수(`L2_CODE=710`) 하천 공간대체 산정 |
 | `river/경상남도_창원시_하천_20250203.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 53개 하천 명칭·시종점 주소·길이; 좌표는 전체 결측이므로 보조 메타데이터로만 사용 |
 

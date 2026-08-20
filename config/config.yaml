@@ -23,3 +23,9 @@ analysis:
   random_seed: 42
   test_size: 0.2
   cv_folds: 5
+  climatology_start: "2015-01-01"
+  climatology_end: "2024-12-31"
+  min_station_day_coverage: 0.90
+  min_idw_stations_per_event: 24
+  canonical_crs: "EPSG:5179"
+  grid_size_m: 100

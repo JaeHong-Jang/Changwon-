@@ -73,6 +73,10 @@
 ### 환경 설정
 
 ```bash
+# Git LFS 설치 후 원본 데이터 체크아웃
+git lfs install
+git lfs pull
+
 # 가상환경 생성 및 활성화
 python -m venv venv
 source venv/bin/activate        # Linux/Mac
@@ -97,13 +101,13 @@ cp .env.example .env
 
 | # | 데이터 | 출처 | 용도 |
 |---|--------|------|------|
-| 1 | [하수관로 시설별 설치현황](https://www.data.go.kr/data/15118453/fileData.do) | 한국환경공단 | 관로 노후도 분석 |
-| 2 | [시간별 강수량](https://www.data.go.kr/data/15150315/fileData.do) | 기상청 | 침수·역류 트리거 |
-| 3 | [배수펌프장 현황](https://www.data.go.kr/data/15047868/fileData.do) | 환경부 | 배수 용량 분석 |
-| 4 | [하수도 배수구역](https://www.data.go.kr/data/15129161/fileData.do) | 국토교통부 | 배수 구역 경계 |
-| 5 | [건축물대장](https://www.data.go.kr/data/15064338/fileData.do) | 창원시 | 노후 건물·반지하 |
+| 1 | [하수관로 시설별 설치현황](https://www.data.go.kr/data/15118453/fileData.do) | 한국환경공단 | 관로 노후도 분석 (현재 미보유) |
+| 2 | [시간별 강수량](https://www.data.go.kr/data/15150315/fileData.do) | 창원시 | 36지점 침수·역류 트리거 (보유) |
+| 3 | [배수펌프장 현황](https://www.data.go.kr/data/15047868/fileData.do) | 창원시 | 9개소 배수 인프라 접근성 (보유) |
+| 4 | [하수도 배수구역](https://www.data.go.kr/data/15129161/fileData.do) | 국토교통부 | 배수 구역 경계 (현재 미보유) |
+| 5 | [건축물대장](https://www.data.go.kr/data/15064338/fileData.do) | 창원시 | 노후 건물·지하층 (현재 미보유) |
 | 6 | 기상청 종관기상관측 API | 기상청 | 실시간 기상 데이터 |
-| 7 | 동별 인구통계 (고령·1인가구) | 통계청 | 취약계층 분포 |
+| 7 | SGIS 100m·집계구 통계 | 통계청 | 총인구·고령인구 proxy; 1인가구는 현재 미보유 |
 | 8 | 하수도 민원 접수 현황 | 창원시 (정보공개청구) | 민원 핫스팟 분석 |
 
 ## 🤖 AI 요소 (분석 도구로만)
@@ -123,7 +127,16 @@ cp .env.example .env
 
 ## 🗺️ 연구 계획 & 진행 관리 (하네스)
 
-**계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 딥리서치 3건(데이터 검증·방법론·수상작 패턴) 기반, 14개 스토리 × 7 페이즈, 각 스토리에 검증 기준·담당·기한 명시.
+**계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 딥리서치와 최신 실데이터 검증 기반, 14개 스토리 × 7 페이즈, 각 스토리에 검증 기준·담당·기한 명시.
+
+**실행 명세**: [`docs/RESEARCH_HARNESS.md`](docs/RESEARCH_HARNESS.md) — H00~H10의 입력·산출물·통과 기준·중단 조건·대체 경로와 현재 데이터 품질 기준.
+
+```bash
+# 원본 다운로드/구조 확인 후 분석 투입 품질 게이트
+git lfs pull
+python3 -m src.data.validate_raw --fail-on error
+python3 -m src.data.validate_raw --fail-on warning
+```
 
 진행 상태는 `.fablize/goals.json`에 영속화되며, **증거 없이는 스토리를 완료할 수 없습니다.**
 

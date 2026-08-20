@@ -1,0 +1,69 @@
+version: 1
+
+# Waiver는 오류를 정상값으로 인정하는 문서가 아니다. 불변 raw에 남겨 둔 finding을
+# H02 quarantine/정제 단계로 넘기기 위한 한시적 승인이다. fingerprint에 포함된 건수나
+# 임계치가 바뀌면 자동으로 일치하지 않아 재검토가 필요하다.
+waivers:
+  - fingerprint: 6f592793668045b2
+    dataset: rainfall_hourly
+    code: exact_duplicates
+    owner: R1 데이터·공간분석
+    reason: 원본을 수정하지 않고 H02에서 중복 원행을 보존한 뒤 정규화해야 함
+    cleaning_rule: H02-R01 완전중복 quarantine 후 1건 유지, 행수 보존식 제출
+    expires_on: 2026-08-22
+
+  - fingerprint: fdb58cb73cbcaebc
+    dataset: rainfall_hourly
+    code: duplicate_keys
+    owner: R1 데이터·공간분석
+    reason: 완전중복 외 지점-일자 충돌을 셀 비교·코드북 확인 후 결정해야 함
+    cleaning_rule: H02-R02 충돌행 분리, 값이 다르면 자동 선택 금지
+    expires_on: 2026-08-22
+
+  - fingerprint: fba9852b8d431775
+    dataset: rainfall_hourly
+    code: invalid_dates
+    owner: R1 데이터·공간분석
+    reason: 2022-02-29·30·31 원행을 임의 날짜로 보정하지 않고 격리해야 함
+    cleaning_rule: H02-R03 잘못된 날짜 3행 quarantine
+    expires_on: 2026-08-22
+
+  - fingerprint: d61f0a58eafecdfa
+    dataset: rainfall_hourly
+    code: numeric_range
+    owner: R1 데이터·공간분석
+    reason: 음수 144셀과 300mm 초과 1셀의 코드 의미를 확인해야 함
+    cleaning_rule: H02-R04 원값·원행 보존, 코드북 확인 전 이벤트 분석 제외
+    expires_on: 2026-08-22
+
+  - fingerprint: c984955c3c8229e9
+    dataset: rainfall_hourly
+    code: date_range
+    owner: R1 데이터·공간분석
+    reason: 1958년 9행은 현대 관측망과 연속되지 않아 코드북 확인이 필요함
+    cleaning_rule: H02-R05 2000년 이전 9행 quarantine, 2015~2024 고정기간 사용
+    expires_on: 2026-08-22
+
+  - fingerprint: cd8284ca77a5ff98
+    dataset: river_level_hourly
+    code: sentinel_values
+    owner: R1 데이터·공간분석
+    reason: 4종 값은 센티널 후보이며 실제 수위로 집계하면 극값이 왜곡됨
+    cleaning_rule: H02-W01 코드북 확인 후 결측 전환, 원값·플래그 보존
+    expires_on: 2026-08-22
+
+  - fingerprint: 82462d3f63c2f3bc
+    dataset: river_level_hourly
+    code: numeric_range
+    owner: R1 데이터·공간분석
+    reason: 단위·코드북 확정 전 광범위 후보범위 밖 18셀을 실제 수위로 사용할 수 없음
+    cleaning_rule: H02-W02 -100~1000 밖 18셀 quarantine, 원값·원행 보존 후 코드북으로 재판정
+    expires_on: 2026-08-22
+
+  - fingerprint: 92ef07610bf1f539
+    dataset: river_level_hourly
+    code: temporal_coverage
+    owner: R1 데이터·공간분석
+    reason: 센티널 제외 유효일 기준으로 2015~2024 커버리지 90% 충족 수위계가 없음
+    cleaning_rule: H02-W03 수위를 도시 전체 공간검증·음성라벨에서 제외하고 특정 호우 보조 사례로만 사용
+    expires_on: 2026-08-22

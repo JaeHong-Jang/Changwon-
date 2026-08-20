@@ -133,9 +133,9 @@ git branch -d feat/내-작업-이름
 | 규칙 | 이유 |
 |------|------|
 | `data/raw/` 원본은 **절대 수정 금지** | 재현성 보장 |
-| 대용량 데이터는 git에 올리지 않음 | `.gitignore`에 설정됨 |
+| `data/raw/**`는 Git LFS로만 공유 | 일반 Git blob 비대화 방지, commit과 원본 checksum 고정 |
 | 데이터 추가 시 해당 폴더 `README.md`에 출처 기록 | 보고서에 명시 필요 |
-| 공유가 필요한 데이터는 Google Drive 등에 업로드 후 링크 공유 | |
+| clone/pull 후 `git lfs pull`과 원본 검증 실행 | 포인터를 원본으로 오인하는 문제 방지 |
 
 ### 노트북 (.ipynb)
 
@@ -162,7 +162,7 @@ git branch -d feat/내-작업-이름
 2. **커밋 메시지 "수정", "업데이트"** → 구체적으로 쓰기
 3. **다른 사람 브랜치에서 작업** → 자기 브랜치만 사용
 4. **API 키를 코드에 직접 작성** → `.env` 파일 사용
-5. **대용량 데이터 파일 git add** → Google Drive 등으로 공유
+5. **Git LFS 확인 없이 `data/raw/` 추가** → `.gitattributes` 적용과 `git lfs status`를 먼저 확인
 6. **merge 충돌을 대충 해결** → 확인 후 충돌 해결, 모르면 팀원에게 물어보기
 
 ---

@@ -33,6 +33,11 @@ desktop.ini
 data/processed/*.csv
 data/processed/*.pkl
 data/processed/*.parquet
+data/processed/**/*.csv
+data/processed/**/*.pkl
+data/processed/**/*.parquet
+data/processed/**/*.gpkg
+data/processed/**/*.geojson
 data/external/*.csv
 data/external/*.xlsx
 # 데이터 설명 README는 일반 Git으로 추적함
@@ -50,6 +55,11 @@ data/external/*.xlsx
 # ===== 로그 =====
 logs/
 *.log
+
+# ===== 하네스 실행 산출물 =====
+artifacts/validation/*.json
+artifacts/runs/
+!artifacts/README.md
 
 # ===== OMC =====
 .omc/

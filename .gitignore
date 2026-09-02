@@ -63,3 +63,6 @@ artifacts/runs/
 
 # ===== OMC =====
 .omc/
+
+# 파이프라인 노드별 최신 fingerprint·시도 횟수 (캐시 판정용). approvals/ 는 추적함
+artifacts/state/

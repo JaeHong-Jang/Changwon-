@@ -80,6 +80,10 @@ H05 검증세트 동결 ─▶ H06 Layer 1~3 ─▶ H07 CDRI·민감도
 H08 TOP 20 정책화 ─▶ H09 선택적 알림 출력 ─▶ H10 최종 재현성 검증
 ```
 
+위 구조는 `config/pipeline.yaml`에 큰 단계 4개(P1 데이터 확보·검증 / P2 전처리·EDA / P3 방법론 검증 / P4 결과 확인·보고)와
+의존성 DAG로 선언되어 있고 `python -m src.pipeline run`이
+위상 순서·fail-fast·캐시·manifest 기록을 강제한다. 설계와 노드 계약은 `docs/PIPELINE_DAG.md`를 따른다.
+
 H02 실행기부터 각 실행은 `run_id = UTC시각 + Git short SHA + config SHA 앞 8자리`로 식별한다.
 완료 증거에는 최소한 Git commit, dirty worktree 여부와 diff hash, 계약/config checksum,
 입력 checksum, 실행 명령, Python·OS·패키지 lock hash, 종료 코드, 핵심 지표, 출력 checksum을
@@ -230,8 +234,12 @@ python3 -m src.data.validate_raw --fail-on error
 # rasterio·pyproj가 설치된 프로젝트 가상환경에서 실행
 python3 -m src.data.validate_raw --fail-on warning
 
-# 3) 검증기 회귀 테스트
+# 3) 검증기·실행기 회귀 테스트
 python3 -m unittest discover -s tests -v
+
+# 4) DAG로 실행 (H01은 위 2)와 동일 판정; 이후 게이트는 구현되는 대로 이어서 실행)
+python3 -m src.pipeline plan
+python3 -m src.pipeline run --target h01_raw_contract
 ```
 
 H01 통과는 raw 이상값이 해결됐다는 뜻이 아니다. 현재 raw warning은

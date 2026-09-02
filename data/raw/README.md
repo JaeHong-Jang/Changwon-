@@ -36,3 +36,33 @@ git lfs pull
 
 - `창원시 교통량`: 현재 로컬 파일 없음. 폭우·침수 취약성 핵심 변수가 아니므로 현 분석 범위에서 제외한다.
 - 별도 하천 SHP: 현재 보유하지 않음. 토지피복지도의 내륙수(`L2_CODE=710`)로 하천 인접도를 근사한다.
+
+## 공개데이터 자동 수집분 (접근신청 #17)
+
+`python -m src.data.fetch_open_data` 로 받았다. sha256 전체는 `open_data_manifest.json`.
+
+| 항목 | 파일 | 크기 | 취득일 |
+|---|---|---|---|
+| A1 창원 침수예상도 내수침수 50년 | `flood_maps/changwon_wfs/L200_050.geojson` | 86.2 MB | 2026-08-22 |
+| A1 창원 침수예상도 내수침수 80년 | `flood_maps/changwon_wfs/L200_080.geojson` | 92.7 MB | 2026-08-22 |
+| A1 창원 침수예상도 내수침수 100년 (28,544건) | `flood_maps/changwon_wfs/L200_100.geojson` | 94.7 MB | 2026-08-22 |
+| A1 창원 침수예상도 내수침수 200년 | `flood_maps/changwon_wfs/L200_200.geojson` | 101.4 MB | 2026-08-22 |
+| A1 창원 침수예상도 복합 30년 | `flood_maps/changwon_wfs/L210_030.geojson` | 35.0 MB | 2026-08-22 |
+| A1 창원 침수예상도 복합 50년 | `flood_maps/changwon_wfs/L210_050.geojson` | 36.6 MB | 2026-08-22 |
+| A1 창원 침수예상도 복합 80년 | `flood_maps/changwon_wfs/L210_080.geojson` | 37.7 MB | 2026-08-22 |
+| A1 창원 침수예상도 복합 100년 (41,130건) | `flood_maps/changwon_wfs/L210_100.geojson` | 38.3 MB | 2026-08-22 |
+| A1 창원 침수예상도 외수범람 50년 | `flood_maps/changwon_wfs/L220_050.geojson` | 9.8 MB | 2026-08-22 |
+| A1 창원 침수예상도 외수범람 100년 (2,681건) | `flood_maps/changwon_wfs/L220_100.geojson` | 13.5 MB | 2026-08-22 |
+| A1 창원 침수예상도 외수범람 150년 | `flood_maps/changwon_wfs/L220_150.geojson` | 19.5 MB | 2026-08-22 |
+| A1 창원 침수예상도 외수범람 200년 | `flood_maps/changwon_wfs/L220_200.geojson` | 22.2 MB | 2026-08-22 |
+| A1 창원 침수예상도 하천 범람 예상도 (62,430건) | `flood_maps/changwon_wfs/L300.geojson` | 135.2 MB | 2026-08-22 |
+| A5 경로당·경찰·소방·병원 포인트 | `shelters/changwon_facility_frequency2.json` | 0.1 MB | 2026-08-22 |
+| A5 임시주거시설·학교 포인트 | `shelters/changwon_shelter_frequency1.json` | 0.1 MB | 2026-08-22 |
+| A9 환경부 하수도통계 2025 (읍면동·매설연도별 관로) — Layer 2 Plan B 핵심 입력 | `sewer/환경부_하수도통계_2025.xlsx` | 25.6 MB | 2026-08-22 |
+
+### 사용 전 주의
+
+- **A1 침수예상도는 EPSG:5181** 이다. 분석 기준 EPSG:5179 로 재투영해야 한다.
+- A1 의 `FEXMP_NM` 컬럼은 WFS 응답에서 cp949 가 latin1 로 잘못 인코딩돼 깨져 있다.
+  `value.encode('latin1').decode('cp949')` 로 복원한다 (예: `³»¼öÄ§¼ö ¿¹»óµµ` → `내수침수 예상도`).
+- A9 하수도통계는 시트 37개다. 관로 관련은 `2-3. 관종별현황`·`2-5. 맨홀현황`·`3-1. 하수관로 개보수`·`5. 펌프장`.

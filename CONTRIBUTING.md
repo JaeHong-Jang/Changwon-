@@ -5,6 +5,54 @@
 
 ---
 
+## 🐍 분석 환경 설정 (최초 1회)
+
+노트북과 파이프라인은 `requirements.txt` 의 패키지가 설치된 환경에서 돌아간다.
+**conda 를 쓰든 venv 를 쓰든 상관없지만**, 그 환경에 아래 패키지가 다 있어야 한다.
+없으면 노트북 첫 셀(사전점검)이 어떤 패키지가 없는지 알려주고 멈춘다.
+
+```bash
+# conda 를 쓰는 경우
+conda create -n changwon python=3.12
+conda activate changwon
+pip install -r requirements.txt
+```
+
+venv 로 하려면:
+
+```bash
+# 프로젝트 루트에서
+python3 -m venv .venv
+./.venv/bin/pip install -r requirements.txt
+
+# 노트북용 커널 등록 (VS Code·Jupyter 에서 "Python (창원 .venv)" 로 보인다)
+./.venv/bin/python -m ipykernel install --user \
+    --name changwon --display-name "Python (창원 .venv)"
+```
+
+Windows PowerShell 이면 `.venv\Scripts\pip.exe install -r requirements.txt`,
+커널 등록은 `.venv\Scripts\python.exe -m ipykernel install ...` 이다.
+
+### 노트북을 열었는데 오류가 난다면
+
+첫 셀(사전점검)이 **실행 중인 파이썬 경로 · 프로젝트 루트 · 없는 패키지**를 찍어준다.
+메시지에 나온 `pip install ...` 을 그 환경에서 실행하면 된다.
+VS Code 는 오른쪽 위 커널이 그 환경을 가리키는지도 같이 확인한다.
+
+노트북은 `src/` 를 임포트하므로 프로젝트 루트가 `sys.path` 에 있어야 하는데,
+사전점검 셀이 현재 폴더에서 위로 올라가며 `config/pipeline.yaml` 을 찾아 자동으로 넣는다.
+따라서 **노트북을 프로젝트 밖으로 복사해 열면 안 된다.**
+
+### 파이프라인 실행
+
+```bash
+./.venv/bin/python -m src.pipeline plan --phase P1   # 무엇이 돌지 미리 보기
+./.venv/bin/python -m src.pipeline run  --phase P1   # 실행
+./.venv/bin/python -m unittest discover -s tests     # 테스트
+```
+
+---
+
 ## 📌 Git 브랜치 전략
 
 ### 브랜치 구조

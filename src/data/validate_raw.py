@@ -164,7 +164,10 @@ def finding_fingerprint(result: DatasetResult, finding: dict[str, Any]) -> str:
 def apply_waivers(
     results: list[DatasetResult],
     waiver_path: Path | None,
+    scope: set[str] | None = None,
 ) -> dict[str, Any]:
+    """scope: 이번 실행에서 검증한 dataset 이름. 주면 그 밖의 dataset 을 가리키는 waiver 는
+    판정에서 제외한다 (묶음별 검증에서 다른 묶음 waiver 가 'unused' 로 잡히는 것을 막는다)."""
     entries: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
     if waiver_path and waiver_path.exists():
@@ -264,12 +267,22 @@ def apply_waivers(
             }
             used.add(fingerprint)
 
+    # scope 밖 dataset 을 가리키는 waiver 는 이번 실행의 판정 대상이 아니다.
+    in_scope = {
+        fp
+        for fp, waiver in by_fingerprint.items()
+        if scope is None or waiver.get("dataset") in scope
+    }
+    out_of_scope = sorted(set(by_fingerprint) - in_scope)
+
     return {
         "path": display_path(waiver_path) if waiver_path else None,
         "declared": len(entries),
+        "scope": sorted(scope) if scope is not None else None,
         "applied": len(used),
-        "unused": sorted(set(by_fingerprint) - used - expired),
-        "expired": sorted(expired),
+        "unused": sorted(in_scope - used - expired),
+        "expired": sorted(expired & in_scope),
+        "out_of_scope": out_of_scope,
         "invalid": invalid,
     }
 
@@ -1032,12 +1045,20 @@ def validate_contract(
     raw_root_override: Path | None = None,
     fail_on: str = "error",
     waiver_path: Path | None = None,
+    only: list[str] | None = None,
 ) -> dict[str, Any]:
+    """only: 검증할 dataset 이름 목록 (None이면 전부). 파이프라인이 데이터 묶음별로 나눠 부를 때 쓴다."""
     contract = yaml.safe_load(contract_path.read_text(encoding="utf-8"))
     raw_root = raw_root_override or PROJECT_ROOT / contract["raw_root"]
     results: list[DatasetResult] = []
+    if only is not None:
+        unknown = set(only) - set(contract["datasets"])
+        if unknown:
+            raise KeyError(f"계약에 없는 dataset: {sorted(unknown)}")
 
     for name, spec in contract["datasets"].items():
+        if only is not None and name not in only:
+            continue
         result = DatasetResult(name=name, kind=spec["kind"], description=spec.get("description", ""))
         result.metrics["source_url"] = spec.get("source_url")
         result.metrics["collected_at"] = (
@@ -1067,7 +1088,9 @@ def validate_contract(
                 result.add("error", "unknown_kind", f"지원하지 않는 데이터 종류입니다: {spec['kind']}")
         results.append(result)
 
-    waiver_summary = apply_waivers(results, waiver_path)
+    waiver_summary = apply_waivers(
+        results, waiver_path, scope=set(only) if only is not None else None
+    )
     counts = {
         severity: sum(
             1

@@ -7,7 +7,6 @@ import os
 from pathlib import Path
 
 import yaml
-from dotenv import load_dotenv
 
 # 프로젝트 루트 디렉토리 (src/utils/config.py 기준 2단계 상위)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -22,10 +21,18 @@ def load_config(path: str | None = None) -> dict:
 
 
 def load_env():
-    """프로젝트 루트의 .env 파일을 로드합니다."""
+    """프로젝트 루트의 .env 파일을 로드합니다.
+
+    python-dotenv는 API 키를 읽을 때만 필요하므로 여기서 지연 임포트한다.
+    모듈 최상단에서 임포트하면 설정만 읽는 파이프라인·노트북까지 이 패키지를
+    요구하게 되어, 없는 환경에서 `from src.pipeline.graph import Graph` 가 실패한다.
+    """
     dotenv_path = PROJECT_ROOT / ".env"
-    if dotenv_path.exists():
-        load_dotenv(dotenv_path)
+    if not dotenv_path.exists():
+        return
+    from dotenv import load_dotenv
+
+    load_dotenv(dotenv_path)
 
 
 def get_api_key(name: str = "DATA_GO_KR_API_KEY") -> str:

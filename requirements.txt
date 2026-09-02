@@ -28,6 +28,10 @@ rasterio>=1.5        # DEM/GeoTIFF 등 래스터 처리
 # ===== 주피터 =====
 jupyter>=1.0
 ipykernel>=6.25
+jupyterlab>=4.0
+nbformat>=5.9        # 노트북 생성·검사
+nbconvert>=7.0       # 노트북 일괄 실행 (Restart & Run All 자동화)
+nbclient>=0.9
 
 # ===== 유틸리티 =====
 python-dotenv>=1.0

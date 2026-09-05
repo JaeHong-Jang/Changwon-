@@ -29,7 +29,7 @@ env/
 Thumbs.db
 desktop.ini
 
-# ===== 데이터 (raw 원본은 Git LFS로 공유) =====
+# ===== 데이터 (raw 원본·external CSV는 Git LFS로 공유) =====
 data/processed/*.csv
 data/processed/*.pkl
 data/processed/*.parquet
@@ -38,7 +38,6 @@ data/processed/**/*.pkl
 data/processed/**/*.parquet
 data/processed/**/*.gpkg
 data/processed/**/*.geojson
-data/external/*.csv
 data/external/*.xlsx
 # 데이터 설명 README는 일반 Git으로 추적함
 !data/processed/README.md

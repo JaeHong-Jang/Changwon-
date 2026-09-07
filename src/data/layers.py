@@ -181,3 +181,66 @@ def top_share_lift(mask: np.ndarray, scores: np.ndarray, top_fraction: float) ->
         "base_rate": round(base, 4),
         "lift": round(share / base, 3) if base > 0 else float("nan"),
     }
+
+
+# ── 복합지수 집계 (OECD/JRC 2008 §6·§7) ────────────────────────────────────
+# Balica(2012) UNESCO-IHE 박사논문의 5등급 구간. Karmaoui et al.(2016) Table 4 재수록.
+BALICA_BREAKS = (0.01, 0.25, 0.50, 0.75)
+BALICA_LABELS = ("매우낮음", "낮음", "보통", "높음", "매우높음")
+
+
+def rescale_positive(a: np.ndarray, floor: float = 0.05) -> np.ndarray:
+    """minmax 후 [floor, 1] 로 재척도. 기하평균에서 0 이 전체를 0 으로 만드는 것을 막는다."""
+    return floor + (1.0 - floor) * minmax(a)
+
+
+def entropy_weights(matrix: np.ndarray) -> np.ndarray:
+    """엔트로피 가중치. 격자 간 변별력이 큰 지표에 큰 가중치를 준다 (OECD/JRC §6)."""
+    x = np.asarray(matrix, dtype=float)
+    x = np.where(np.isfinite(x), x, 0.0) + 1e-9
+    share = x / x.sum(axis=0, keepdims=True)
+    entropy = -(share * np.log(share)).sum(axis=0) / np.log(len(x))
+    diversity = 1.0 - entropy
+    total = diversity.sum()
+    return np.full(x.shape[1], 1.0 / x.shape[1]) if total <= 0 else diversity / total
+
+
+def geometric_aggregate(matrix: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """가중기하평균. 한 요소가 낮으면 다른 요소가 높아도 보상되지 않는다(비보상성)."""
+    x = np.asarray(matrix, dtype=float)
+    w = np.asarray(weights, dtype=float)
+    return np.exp((w * np.log(np.maximum(x, 1e-12))).sum(axis=1))
+
+
+def additive_aggregate(matrix: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """가중합. 기하평균의 과소평가 경향(Moreira et al. 2021)을 확인하는 병기용."""
+    return (np.asarray(matrix, dtype=float) * np.asarray(weights, dtype=float)).sum(axis=1)
+
+
+def balica_tier(values: np.ndarray) -> np.ndarray:
+    """0~1 지수를 Balica 5등급 라벨로."""
+    idx = np.searchsorted(np.asarray(BALICA_BREAKS), np.asarray(values, dtype=float), side="left")
+    return np.asarray(BALICA_LABELS, dtype=object)[np.clip(idx, 0, len(BALICA_LABELS) - 1)]
+
+
+def cohen_kappa(a: np.ndarray, b: np.ndarray) -> float:
+    """두 등급 배정의 일치도. 등급화 방식(Balica vs Jenks)이 결과를 얼마나 바꾸는지 본다."""
+    a = np.asarray(a)
+    b = np.asarray(b)
+    labels = sorted(set(a.tolist()) | set(b.tolist()), key=str)
+    index = {label: i for i, label in enumerate(labels)}
+    table = np.zeros((len(labels), len(labels)))
+    for x, y in zip(a, b):
+        table[index[x], index[y]] += 1
+    total = table.sum()
+    observed = np.trace(table) / total
+    expected = float((table.sum(axis=0) * table.sum(axis=1)).sum()) / total**2
+    return 1.0 if expected >= 1.0 else float((observed - expected) / (1.0 - expected))
+
+
+def contribution_share(matrix: np.ndarray, weights: np.ndarray, names: list[str]) -> dict[str, np.ndarray]:
+    """가법형 구성비 w_k·X_k / Σ w_j·X_j. TOP 20 의 '주 원인'을 이 값으로 설명한다."""
+    weighted = np.asarray(matrix, dtype=float) * np.asarray(weights, dtype=float)
+    total = weighted.sum(axis=1, keepdims=True)
+    share = np.divide(weighted, total, out=np.zeros_like(weighted), where=total > 0)
+    return {name: share[:, i] for i, name in enumerate(names)}

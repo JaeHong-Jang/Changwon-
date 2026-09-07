@@ -91,7 +91,10 @@ def node_fingerprint(
         "code_sha256": runner_code_sha(node.runner),
         "params": config_params(config, node.params),
         "inputs": inputs,
-        "upstream": {dep: upstream[dep] for dep in node.depends_on},
+        # optional 상류가 실패(skipped)하면 그 노드의 outputs 가 없다. 하류를 KeyError 로
+        # 죽이지 않고 "없음"을 fingerprint 에 남긴다 — 나중에 그 상류가 성공하면 값이 바뀌어
+        # 하류가 자동으로 다시 돈다.
+        "upstream": {dep: upstream.get(dep, {"__unavailable__": True}) for dep in node.depends_on},
     }
     return _sha_text(json.dumps(basis, sort_keys=True, ensure_ascii=False)), basis
 

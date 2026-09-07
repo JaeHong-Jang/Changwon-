@@ -1,0 +1,5 @@
+﻿variant,spearman_rho_vs_primary,top20_overlap,top20_overlap_pct
+geometric_equal,1.0,20,1.0
+additive_equal,0.8846,9,0.45
+geometric_entropy,0.8501,10,0.5
+additive_entropy,0.927,9,0.45

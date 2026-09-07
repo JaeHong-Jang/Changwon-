@@ -581,6 +581,7 @@ nodes:
       - "data/raw/sewer/**/*"                                      # 관로 연도·좌표 (정보공개청구 회신 후)
     outputs:
       - data/processed/layers/layer2_sewer.gpkg
+    optional: true   # decision 001 — 관로 비공개로 검증 불가. CDRI 기본 산식에서 제외하고 시나리오로만
     params:
       - analysis.random_seed
       - analysis.cv_folds
@@ -617,18 +618,23 @@ nodes:
     gate: H07
     phase: P3
     title: CDRI 통합·민감도
-    description: CDRI 합성 + 가중치·입력오차 민감도 (ρ≥0.8, TOP20 중첩≥70%)
-    runner: src.stages.pending:cdri
-    depends_on: [h06_layer1_flood, h06_layer2_sewer, h06_layer3_vuln]
-    inputs: []
+    description: H(Layer 1)·E·V·Capacity 부족도 가중기하평균 + 가중치/집계형/MAUP/등급화 민감도
+    runner: src.stages.h07_cdri:cdri
+    depends_on: [h06_layer1_flood, h06_layer3_vuln]
+    inputs:
+      - data/processed/layers/layer2_sewer.gpkg   # 선택 입력 — 있으면 시나리오 하나를 더 만든다
     outputs:
       - data/processed/layers/cdri.gpkg
       - reports/tables/sensitivity.csv
       - artifacts/evaluation/primary_formula_manifest.json
     params:
       - analysis.random_seed
+      - cdri.top_n
+      - cdri.rescale_floor
+      - cdri.min_spearman
+      - cdri.min_top20_overlap
     verify:
-      - {kind: code, rule: "중위 Spearman ρ ≥ 0.8, TOP20 중첩 ≥ 70%, capacity 결측 0 대체 없음"}
+      - {kind: code, rule: "변형 간 중위 Spearman rho >= min_spearman, TOP 20 중첩 >= min_top20_overlap, Capacity 결측 0 대체 없음"}
     approval: {who: R3, what: "primary 산식·가중치 확정. 승인 후 재조정 금지 (retuning_prohibited)"}
     on_fail: {max_iterations: 1, action: "분기: 강건성 미달이면 정밀 순위 대신 위험군(tier) 모드로 보고. 재튜닝 루프 금지"}
 

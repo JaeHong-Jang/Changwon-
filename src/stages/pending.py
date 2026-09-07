@@ -36,13 +36,6 @@ def layer2_sewer(ctx: StageContext) -> dict[str, Any]:
     _todo("layer2_sewer")
 
 
-def cdri(ctx: StageContext) -> dict[str, Any]:
-    """equal/entropy × 곱셈/가중합 중 primary 산식 선택, 입력오차·가중치 민감도.
-    통과: 중위 Spearman rho ≥ 0.8, TOP20 중첩 ≥ 70%. 미달이면 tier 보고 모드.
-    metrics: rho_median, top20_overlap, primary_formula."""
-    _todo("cdri")
-
-
 def top20(ctx: StageContext) -> dict[str, Any]:
     """top20.csv(격자별 트리거·근거 3개·신뢰등급·담당·조치·KPI) + 최종 홀드아웃 1회 평가.
     행동 트리거·실행 주체 없는 항목은 제외. metrics: n_top20, holdout_metrics."""

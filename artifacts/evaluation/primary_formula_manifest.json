@@ -1,0 +1,30 @@
+{
+  "primary_formula": "geometric_equal",
+  "definition": "CDRI = Π (X_k ^ w_k), X ∈ {H, E, V, D}, 각 [floor, 1] 재척도",
+  "components": {
+    "H": "Hazard 물리적 침수위험 (Layer 1)",
+    "E": "Exposure 노출 (인구·주택 수)",
+    "V": "Vulnerability 취약성 (65세 이상 비율)",
+    "D": "Capacity 부족도 (1 - 대피소·방재기관 접근성)"
+  },
+  "weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ],
+  "weight_scheme": "equal",
+  "rescale_floor": 0.05,
+  "universe_rule": "pop_total > 0 또는 houses >= 1",
+  "n_universe": 10202,
+  "layer2_included": false,
+  "ranking_mode": "tier",
+  "ranking_mode_note": "정밀 순위를 주장하지 않는다. 위험군(tier)과 강건 공통집합으로만 보고한다 — 하네스 H07 분기",
+  "robustness_unmet": [
+    "TOP 20 최소 중첩 9 < 14"
+  ],
+  "robust_core_n": 8,
+  "decision": "docs/decisions/001-layer2-design.md",
+  "run_id": "20260907T145130Z-6a34146-efd2032c",
+  "retuning_prohibited": true
+}

@@ -44,6 +44,13 @@ layer1:
 layer3:
   capacity_max_dist_m: 2000         # 대피소·방재기관 접근성 상한 (ANALYSIS_PLAN 4)
 
+# ----- H07 CDRI 통합·민감도 -----
+cdri:
+  top_n: 20                         # 우선대응 지역 수
+  rescale_floor: 0.05               # 기하평균에서 0 이 전체를 0 으로 만들지 않도록 하한
+  min_spearman: 0.80                # 가중치·집계형 변형 간 중위 순위상관 하한 (하네스 H07)
+  min_top20_overlap: 14             # TOP 20 중첩 하한 (70%)
+
 analysis:
   random_seed: 42
   test_size: 0.2

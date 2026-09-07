@@ -504,6 +504,7 @@ nodes:
       - "data/raw/complaints/*meta*.csv"
     outputs:
       - artifacts/evaluation/holdout_manifest.json
+    optional: true   # 2026-09-01 민원 비공개 회신 — docs/decisions/001. 실패해도 하류를 막지 않는다
     params:
       - analysis.random_seed
     verify:
@@ -525,6 +526,7 @@ nodes:
       - data/processed/canonical/complaints_development.parquet
       - artifacts/evaluation/complaint_extractor_manifest.json
       - data/processed/spatial/evaluation_points.gpkg
+    optional: true   # 2026-09-01 민원 비공개 회신 — docs/decisions/001. 실패해도 하류를 막지 않는다
     params: []
     verify:
       - {kind: human, rule: "LLM 추출 결과 표본 검수 — 필드별 정확도·사람검수율 기록"}
@@ -536,20 +538,34 @@ nodes:
     gate: H06
     phase: P3
     title: Layer 1 침수취약성
-    description: Layer 1 침수취약성 (IDW 강수노출 × 지형민감도)
-    runner: src.stages.pending:layer1_flood
-    depends_on: [h04_grid_features]
-    inputs:   # 아래 둘은 정보공개청구 회신 후에만 존재 — 없으면 baseline 만 산출하고 AUC 검증은 '라벨 없음' 으로 기록
-      - "data/raw/flood_traces/**/*"
-      - data/processed/spatial/evaluation_points.gpkg
+    description: 기후노출(IDW 강수 4변수) × 도시민감도(지형·피복·배수) → z-score 합산 → Jenks 4등급 매트릭스
+    runner: src.stages.h06_layers:layer1_flood
+    depends_on: [h04_grid_features, h03_stations, h02_rainfall_long]
+    inputs:
+      - "data/raw/flood_traces/**/*"   # 선택 입력 — 2026-09-14 정보공개 회신분. 없으면 label_available=false
     outputs:
       - data/processed/layers/layer1_flood.gpkg
     params:
+      - analysis.canonical_crs
       - analysis.random_seed
+      - analysis.climatology_start
+      - analysis.climatology_end
+      - analysis.min_idw_stations_per_event
+      - layer1.idw_powers
+      - layer1.idw_k
+      - layer1.idw_max_dist_m
+      - layer1.river_proximity_m
+      - layer1.winsor_lo
+      - layer1.winsor_hi
+      - layer1.n_classes
+      - layer1.case_study_lift_min
+      - layer1.trace_auc_min
+      - layer1.trace_top20_capture_min
     verify:
-      - {kind: external, rule: "사례지 5개 동 I·II등급 lift ≥ 1.5"}
-      - {kind: external, rule: "침수흔적 라벨 있으면 ROC-AUC ≥ 0.70, 상위 20% 포착률 ≥ 50%. 라벨 없으면 metrics 에 label_available=false 로 기록하고 예측 성능 주장 금지"}
-    on_fail: {goto: h04_grid_features, max_iterations: 3, action: "피처·가중 재검토. 라벨 부족 시 예측 성능 주장 금지로 전환"}
+      - {kind: code, rule: "IDW 사용 지점 ≥ min_idw_stations_per_event, L1 결측 0, 등급 I~IV 가 모두 나타남"}
+      - {kind: external, rule: "사례지 5개 동 I·II등급 lift ≥ case_study_lift_min. 행정동 이름 매핑이 없으면 case_study.available=false 로 기록하고 판정하지 않는다 (face-validity 점검)"}
+      - {kind: external, rule: "침수흔적 라벨이 있으면 ROC-AUC ≥ trace_auc_min, 상위 20% 포착률 ≥ trace_top20_capture_min. 없으면 label_available=false 로 기록하고 예측 성능 주장 금지"}
+    on_fail: {goto: h04_grid_features, max_iterations: 3, action: "피처·부호 재검토. 라벨 부족 시 예측 성능 주장 금지로 전환"}
 
   h06_layer2_sewer:
     gate: H06

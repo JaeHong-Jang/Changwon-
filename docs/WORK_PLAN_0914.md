@@ -155,3 +155,27 @@ B2(이의신청)는 제출 여부를 `docs/data_access_log.md` #18 에 적는다
 ### 본인(A) 다음
 
 A1(결정 001 + pipeline.yaml 민원 노드 optional) → A4(Layer 1 baseline + 침수흔적 로더) → 9/14 침수흔적도.
+
+## 8. 진행 갱신 (2026-09-07 저녁)
+
+A1·A4 완료. 파이프라인 20노드 중 14개가 통과했고, 남은 것은 Layer 2·3, CDRI, TOP 20, 결과 EDA, 재현성이다.
+
+| 완료 | 근거 |
+|---|---|
+| A1 결정 001 | `docs/decisions/001-layer2-design.md` — Layer 2 는 산출하되 CDRI 기본 산식에서 제외(민감도 시나리오로만), 민원 노드 2개 optional, 검증 무게중심을 침수흔적도로 이동 |
+| A4 Layer 1 침수취약성 | `h06_layer1_flood` pass 30초. 등급 I 4,752 / II 7,942 / III 36,355 / IV 26,351 격자. IDW 29지점, LOOCV 로 power 선택(1·1·3·2). 하천·예상도 제외 시 순위 상관 ρ=0.946 |
+
+### Layer 1 에서 아직 판정하지 못한 것 두 가지
+
+1. **사례지 face-validity** — 행정동 코드-이름 매핑이 없어 건너뛰었다(`case_study.available=false`).
+   `data/external/adm_dong_names.csv` (열: `adm_cd,adm_name`) 만 있으면 자동으로 판정된다. **B 작업으로 추가.**
+2. **침수흔적 AUC·사후검증** — 9/14 회신분 대기(`label_available=false`).
+   `data/raw/flood_traces/` 에 벡터 파일을 넣고 `--only h06_layer1_flood` 만 다시 돌리면 붙는다.
+
+### 팀원(B) 작업에 추가
+
+| # | 작업 | 왜 |
+|---|---|---|
+| B3-6 | **행정동 코드-이름 매핑** → `data/external/adm_dong_names.csv` (`adm_cd,adm_name`). 우리 경계의 `adm_cd` 는 통계청 8자리(예: 38111110)다. SGIS 행정동 경계 다운로드 또는 통계분류포털 한국행정구역분류 연계DB | Layer 1 사례지 검증과 **TOP 20 표의 행정동 이름**에 모두 필요. 없으면 최종 표에 동 이름을 못 쓴다 |
+
+우선순위: B3-6 · B3-1(하천선) · B0(README 기록) · B3-5(배수구역) · 나머지 키 발급.

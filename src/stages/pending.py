@@ -30,14 +30,6 @@ def complaint_extract(ctx: StageContext) -> dict[str, Any]:
 
 
 # ── H06 레이어 ────────────────────────────────────────────────────────────
-def layer1_flood(ctx: StageContext) -> dict[str, Any]:
-    """IDW 강수노출 × 지형민감도 → z-score → 등급 I~IV.
-    통과: 사례지 5개 동 lift ≥ 1.5, 흔적 라벨 있으면 AUC ≥ 0.70.
-    라벨이 없으면 label_available=false 로 기록하고 예측 성능을 주장하지 않는다.
-    metrics: lift, auc, n_grid, label_available."""
-    _todo("layer1_flood")
-
-
 def layer2_sewer(ctx: StageContext) -> dict[str, Any]:
     """decisions/001 에 따라 Plan B(인프라 baseline) 또는 Plan A(+로지스틱/XGBoost).
     민원 부재를 음성 라벨로 쓰지 않는다. metrics: plan, auc, n_grid."""

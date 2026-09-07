@@ -34,22 +34,22 @@
    "id": "G005",
    "title": "G005 EDA",
    "objective": "민원 원문 접근 전에 메타데이터만으로 개발/최종 홀드아웃을 분리·checksum 동결하고, 개발 원문만 LLM으로 장소·유형·피해·원인후보·시민요구·행정답변·근거문장을 구조화·표본검수한 뒤 추출기 코드·프롬프트·모델·taxonomy를 동결. 증거: complaints_development.parquet + complaint_taxonomy.md + complaint_extractor_manifest.json + holdout_manifest.json + 02노트북 + figures 6장",
-   "status": "pending",
-   "evidence": null
+   "status": "complete",
+   "evidence": "h02_eda_data_check pass — docs/eda_data_check.md (강수 cohort 29지점 이상 0건, 수위 유효 92.6%, SGIS 인구 100.6%) + figures 4장. 하천수위는 지수 미포함"
   },
   {
    "id": "G006",
    "title": "G006 Decision Gate Layer2 설계 확정",
    "objective": "Plan B 인프라-only 지수는 회신과 무관하게 착수하고, 정보공개 회신으로 관로와 확인된 양·음성 라벨이 충분할 때만 Plan A(로지스틱 baseline+XGBoost)를 추가. 민원 부재를 음성으로 만들지 않으며 관로 집계도 없으면 Layer2 제외. 게이트에서 A 추가 여부와 침수흔적도 경로 3안을 결정. 증거: docs/decisions/001-layer2-design.md + 회신/미회신 근거",
-   "status": "pending",
-   "evidence": null
+   "status": "complete",
+   "evidence": "docs/decisions/001-layer2-design.md 채택: 관로 비공개로 Plan A 소멸, Plan B 는 산출하되 CDRI 기본 산식 제외(민감도 시나리오), 검증은 침수흔적 침수원인·내수 위험지구로 대체, 민원 노드 2개 optional"
   },
   {
    "id": "G007",
    "title": "G007 Layer1 침수취약성",
    "objective": "과거 지점관측 IDW×지형민감도로 Layer1을 만들고 침수흔적 AUC≥0.70(라벨 충족 시)·사례지 lift≥1.5·하천/예상도 제외 민감도로 개발검증. 동적 활용은 기상청 단기예보 5km PCP 부모격자의 1~48h lead만 사용해 6h/24h 누적·최대시간강수 조건부 시나리오를 생성하며 숫자 mm·강수없음=0만 primary에 사용, 범주·timezone·checksum 계약을 준수. 과거 발표예보 미확보 시 100m 예측성능 주장 금지, final은 G010까지 봉인. 증거: layer1_flood.gpkg + forecast_manifest.json + scenario_risk.gpkg + 개발검증 지표",
-   "status": "pending",
-   "evidence": null
+   "status": "complete",
+   "evidence": "h06_layer1_flood pass (run 20260907T143417Z-40c24a6-a5043674): IDW 29지점 LOOCV power 선택, 등급 I 4752/II 7942/III 36355/IV 26351, 하천·예상도 제외 rho=0.946, layer1_flood.gpkg + layer1_map.png. 미판정: 사례지 lift(행정동명 미확보), 침수흔적 AUC(9/14 대기)"
   },
   {
    "id": "G008",

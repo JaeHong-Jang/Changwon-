@@ -27,6 +27,19 @@ features:
   sgis_year: 2024                   # 인구·가구·주택 결합 연도
   max_missing_rate: 0.05            # 핵심 변수 결측률 상한 (하네스 H04 게이트)
 
+# ----- H06 Layer 1 침수취약성 (src/stages/h06_layers.py) -----
+layer1:
+  idw_powers: [1, 2, 3]             # LOOCV RMSE 로 이 중 하나를 고른다
+  idw_k: 12                         # 최근접 지점 수 (ANALYSIS_PLAN §2-2)
+  idw_max_dist_m: 10000             # 이 반경 밖은 외삽하지 않고 최근접 값 + 플래그
+  river_proximity_m: 300            # 하천 근접도 max(0, 1 - d/300)
+  winsor_lo: 0.01                   # z-score 전 윈저라이즈 하한
+  winsor_hi: 0.99
+  n_classes: 4                      # Jenks 등급 수 (국토부 지침 I~IV)
+  case_study_lift_min: 1.5          # 사례지 5개 동 I·II등급 lift (face-validity)
+  trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
+  trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
+
 analysis:
   random_seed: 42
   test_size: 0.2

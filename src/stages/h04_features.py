@@ -22,7 +22,9 @@ FEATURE_SPEC: list[tuple[str, str, str, str, str]] = [
     ("flow_acc_cells", "DEM", "셀", "+", "D8 상류 셀 수 (자신 포함)"),
     ("impervious_frac", "환경부 토지피복 중분류 2025, 코드 110~160(시가화·건조지역)", "비율 0~1", "+", "{sub}m 래스터화 → 100m 면적 비율"),
     ("inland_water_frac", "토지피복 코드 710(내륙수)", "비율 0~1", "·", "위와 같음"),
-    ("water_dist_m", "토지피복 코드 710(내륙수) — 하천선 자료 확보 전 proxy", "m", "−", "{sub}m 래스터 EDT, 셀 중심 거리"),
+    ("water_dist_m", "토지피복 코드 710(내륙수) — 폭이 있는 수역만 잡힌다", "m", "−", "{sub}m 래스터 EDT, 셀 중심 거리"),
+    ("river_dist_m", "OpenStreetMap waterway = river·stream·canal (창원 692개, 총연장 501km)", "m", "−", "하천 중심선까지 {sub}m 래스터 EDT. 토지피복이 못 잡는 소하천까지 포함"),
+    ("culvert_dist_m", "OpenStreetMap waterway 중 tunnel=culvert (복개 구간 191개)", "m", "−", "복개천까지 거리. 최유라·한우석(2024)이 창원 피해 가중요인으로 지목"),
     ("sea_dist_m", "토지피복 코드 720(해양수)", "m", "−", "위와 같음"),
     ("flood_l210_100_frac", "창원 도시침수정보시스템 침수예상도 L210_100 (내수침수, 100년 빈도)", "비율 0~1", "+", "{sub}m 래스터화 → 침수 면적 비율"),
     ("flood_l210_100_depth_m", "침수예상도 L210_100 침수심 구간 대표값", "m", "+", "면적가중 평균 침수심 (겹치면 깊은 쪽, 비침수 부분 0)"),
@@ -38,7 +40,7 @@ FEATURE_SPEC: list[tuple[str, str, str, str, str]] = [
 ]
 CORE = [
     "elev_m", "slope_deg", "rel_elev_m", "twi", "impervious_frac", "water_dist_m",
-    "flood_l210_100_depth_m", "pump_dist_m", "pop_total",
+    "flood_l210_100_depth_m", "pump_dist_m", "pop_total", "river_dist_m",
 ]
 
 
@@ -83,6 +85,20 @@ def grid_features(ctx: StageContext) -> dict[str, Any]:
     water_dist = F.distance_to(water_geoms, lat, sub)
     sea_dist = F.distance_to(lc.loc[lc["L2_CODE"] == F.SEA_CODE, "geometry"], lat, sub)
 
+    # 하천선 (OSM). 토지피복 내륙수는 폭이 있는 수역만 잡아 소하천·복개천이 빠진다.
+    waterways = gpd.read_file(PROJECT_ROOT / "data/raw/rivers/osm_waterways.gpkg", layer="waterways").to_crs(crs)
+    channels = waterways[waterways["waterway"].isin(["river", "stream", "canal"])]
+    culverts = waterways[waterways["tunnel"] == "culvert"]
+    m["waterways"] = {
+        "n_total": int(len(waterways)),
+        "by_type": {k: int(v) for k, v in waterways["waterway"].value_counts().items()},
+        "n_channel": int(len(channels)),
+        "n_culvert": int(len(culverts)),
+        "channel_length_km": round(float(channels.geometry.length.sum() / 1000), 1),
+    }
+    river_dist = F.distance_to(channels["geometry"], lat, sub)
+    culvert_dist = F.distance_to(culverts["geometry"], lat, sub) if len(culverts) else None
+
     # 침수예상도
     fm = gpd.read_file(PROJECT_ROOT / "data/processed/canonical/flood_maps.gpkg", layer="flood_maps")
     fm = fm.to_crs(crs)
@@ -115,12 +131,14 @@ def grid_features(ctx: StageContext) -> dict[str, Any]:
         "inland_water_frac": pick(water_frac),
         "water_dist_m": pick(water_dist),
         "sea_dist_m": pick(sea_dist),
+        "river_dist_m": pick(river_dist),
         "flood_l210_100_frac": pick(l210_frac),
         "flood_l210_100_depth_m": pick(l210_depth),
         "flood_l200_100_frac": pick(l200_frac),
         "flood_l220_100_frac": pick(l220_frac),
         "pump_dist_m": pick(pump_dist),
     })
+    out["culvert_dist_m"] = pick(culvert_dist) if culvert_dist is not None else np.nan
     out["pump_within_km"] = (out["pump_dist_m"] <= pump_radius).astype("int8")
     out = out.merge(wide, on="grid_id", how="left")
     out["sgis_reported"] = out[list(SGIS_VARIABLES.values())].notna().any(axis=1).astype("int8")

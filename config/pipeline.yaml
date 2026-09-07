@@ -478,6 +478,7 @@ nodes:
     inputs:
       - "data/raw/dem/**/*.img"
       - "data/raw/land_cover/**/*.shp"
+      - data/raw/rivers/osm_waterways.gpkg
     outputs:
       - data/processed/features/grid_features.parquet
       - docs/data_dictionary.md

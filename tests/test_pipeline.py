@@ -102,11 +102,18 @@ class GraphTest(unittest.TestCase):
         self.assertEqual(g.nodes["h02_rainfall_long"].on_fail["goto"], "h00_collect_rainfall")
         self.assertEqual(g.nodes["h01_contract_sgis"].on_fail["goto"], "h00_collect_sgis")
         self.assertTrue(all(n.title and n.title != n.id for n in g.nodes.values()), "모든 노드에 한글 title")
-        # 정보공개청구(민원·관로·침수흔적) 없이도 Layer 1~3·CDRI 까지 갈 수 있어야 한다
-        blocked = {"h05_holdout_freeze", "h05_complaint_extract"}
-        for nid in ("h06_layer1_flood", "h06_layer2_sewer", "h06_layer3_vuln", "h07_cdri"):
-            self.assertFalse(g.ancestors(nid) & blocked, f"{nid} 가 민원 노드에 묶여 있음")
-        self.assertIn("h05_complaint_extract", g.ancestors("h08_top20_policy"))  # 정책카드·홀드아웃 평가는 민원 필요
+        # 2026-09-01 회신으로 민원이 비공개가 되었다 (docs/decisions/001-layer2-design.md).
+        # 민원 노드는 optional 이고, 어느 하류도 민원에 묶여 있으면 안 된다 — 정책카드까지 포함.
+        complaint = {"h05_holdout_freeze", "h05_complaint_extract"}
+        for nid in complaint:
+            self.assertTrue(g.nodes[nid].optional, f"{nid} 는 optional 이어야 한다")
+        for nid in ("h06_layer1_flood", "h06_layer2_sewer", "h06_layer3_vuln", "h07_cdri", "h08_top20_policy"):
+            self.assertFalse(g.ancestors(nid) & complaint, f"{nid} 가 민원 노드에 묶여 있음")
+        # Layer 2 도 관로 비공개로 optional 이며 CDRI 를 막지 않는다
+        self.assertTrue(g.nodes["h06_layer2_sewer"].optional)
+        self.assertNotIn("h06_layer2_sewer", g.ancestors("h07_cdri"))
+        # 대신 CDRI 는 Layer 1·3 에 반드시 묶여 있어야 한다
+        self.assertLessEqual({"h06_layer1_flood", "h06_layer3_vuln"}, g.ancestors("h07_cdri"))
         # 모든 goto 는 자기 자신 또는 상류 (Graph 검증이 보장) — 단계도 같거나 앞
         for n in g.nodes.values():
             goto = (n.on_fail or {}).get("goto")

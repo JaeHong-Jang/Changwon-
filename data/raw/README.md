@@ -31,6 +31,7 @@ git lfs pull
 | `dem/public_dem_2025/` | 국토지리정보원 국토정보플랫폼 | http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total | 2026-08-19 | HFA 6개 도엽(35810·35811·35812·35814·35815·35816); `rasterio 1.5.1` 확인 결과 EPSG:5179, 90m, NoData -9999 |
 | `land_cover/middle_2025/` | 기후에너지환경부 환경공간정보서비스 | https://aid.mcee.go.kr/ | 2026-08-19 | 2025 중분류 16개 도엽, EPSG:5186; 불투수면비율 및 내륙수(`L2_CODE=710`) 하천 공간대체 산정 |
 | `river/경상남도_창원시_하천_20250203.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 53개 하천 명칭·시종점 주소·길이; 좌표는 전체 결측이므로 보조 메타데이터로만 사용 |
+| `rivers/osm_waterways.gpkg` | OpenStreetMap (Overpass API) | https://overpass-api.de/api/interpreter | 2026-09-08 | 창원 bbox(35.05~35.40N, 128.35~128.95E) `waterway=river\|stream\|canal\|drain` 728개(창원 경계 교차), 총연장 501km, 복개(tunnel=culvert) 191개. ODbL — 출처표시·동일조건 재배포. md5 `66b928a7f27200954a9de3b35f6a4fce`. 재취득: `.cache_ingest` 삭제 후 취득 스크립트 재실행 |
 
 ## 미보유·제외 데이터
 

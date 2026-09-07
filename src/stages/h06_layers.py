@@ -21,16 +21,25 @@ SENSITIVITY_SPEC: dict[str, int] = {
     "slope_deg": -1,               # 평평하면 배수가 느리다
     "twi": +1,                     # 지형상 물이 모이는 정도
     "impervious_frac": +1,         # 불투수면이 많으면 유출이 빠르다
-    "river_proximity": +1,         # 하천 300m 이내 근접도
+    "river_proximity": +1,         # 하천 중심선(OSM) 근접도
+    "culvert_proximity": +1,       # 복개천 근접도 — 최유라·한우석(2024) 창원 피해 가중요인
     "flood_l210_100_depth_m": +1,  # 창원시 내수침수 예상 침수심 (모형 산출물 = 입력)
     "pump_within_km": +1,          # 배수펌프장 서비스권 = 자연배수 불가지역의 행정적 인정
 }
 # 하천 근접·침수예상도를 뺀 민감도. 홍재주 외(2015)가 지적한 '하천 인접도에 따른 I등급 과다'와
 # 예상도 의존을 확인하는 제외 민감도 (ANALYSIS_PLAN §2-1·2-3).
-EXCLUDED_FOR_ROBUSTNESS = ("river_proximity", "flood_l210_100_depth_m")
+EXCLUDED_FOR_ROBUSTNESS = ("river_proximity", "culvert_proximity", "flood_l210_100_depth_m")
 
 # 선행연구(최유라·한우석 2024) 현장조사 사례지. 독립 성능검증이 아니라 face-validity 점검이다.
-CASE_STUDY_DONG = ("양덕동", "봉암동", "팔용동", "명서동", "사화동")
+# 논문은 **법정동** 이름을 쓰고 우리 경계는 **행정동**이라 1:1 로 대응하지 않는다.
+# 대응이 확인된 것만 넣는다. 명서동·사화동은 관할 행정동을 확인하지 못해 제외했다.
+CASE_STUDY_MAPPING = {
+    "양덕동": ("양덕1동", "양덕2동"),
+    "봉암동": ("봉암동",),
+    "팔용동": ("팔룡동",),        # 법정동 팔용동 = 행정동 팔룡동
+}
+CASE_STUDY_UNMATCHED = ("명서동", "사화동")
+CASE_STUDY_DONG = tuple(n for names in CASE_STUDY_MAPPING.values() for n in names)
 DONG_NAME_FILE = "data/external/adm_dong_names.csv"
 
 
@@ -101,7 +110,9 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
     m["min_idw_stations_required"] = min_stations
 
     # ── 도시민감도 ───────────────────────────────────────────────────────
-    df["river_proximity"] = np.maximum(0.0, 1.0 - df["water_dist_m"] / float(p["layer1.river_proximity_m"]))
+    radius = float(p["layer1.river_proximity_m"])
+    df["river_proximity"] = np.maximum(0.0, 1.0 - df["river_dist_m"] / radius)
+    df["culvert_proximity"] = np.maximum(0.0, 1.0 - df["culvert_dist_m"] / radius).fillna(0.0)
 
     z_exposure, exposure_detail = L.composite(df, EXPOSURE_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
     z_sensitivity, sensitivity_detail = L.composite(df, SENSITIVITY_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
@@ -153,6 +164,8 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
         share = float(high[universe & in_case].mean()) if (universe & in_case).any() else float("nan")
         m["case_study"] = {
             "available": True,
+            "mapping": {k: list(v) for k, v in CASE_STUDY_MAPPING.items()},
+            "unmatched_legal_dong": list(CASE_STUDY_UNMATCHED),
             "dong_found": found,
             "dong_missing": sorted(set(CASE_STUDY_DONG) - set(found)),
             "n_grid": int((universe & in_case).sum()),

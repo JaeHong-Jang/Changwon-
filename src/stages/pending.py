@@ -15,14 +15,6 @@ def _todo(name: str) -> None:
     raise NotImplementedError(name)
 
 
-# ── H04 피처 ──────────────────────────────────────────────────────────────
-def grid_features(ctx: StageContext) -> dict[str, Any]:
-    """DEM 경사·상대고도·TWI, 불투수면, 하천버퍼, 펌프장거리, 인구를 격자에 결합.
-    통과: 핵심 변수 결측 < 5%, 변수별 출처·방향·단위 기록, 누수 점검.
-    metrics: n_features, missing_rate_by_feature."""
-    _todo("grid_features")
-
-
 # ── H05 민원 (정보공개청구 회신 후) ─────────────────────────────────────────
 def holdout_freeze(ctx: StageContext) -> dict[str, Any]:
     """메타데이터만으로 개발/최종 홀드아웃 분리 후 checksum 동결.

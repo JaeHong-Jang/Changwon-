@@ -472,11 +472,11 @@ nodes:
     gate: H04
     phase: P2
     title: 격자 피처 결합
-    description: DEM·토지피복·하천·펌프·인구를 격자에 결합, 결측 <5%
-    runner: src.stages.pending:grid_features
-    depends_on: [h03_grid_base, h03_stations, h03_pump_stations]
+    description: DEM·토지피복·침수예상도·펌프장·인구를 100m 격자망 위에서 계산해 결합, 핵심 변수 결측 <5%
+    runner: src.stages.h04_features:grid_features
+    depends_on: [h03_grid_base, h03_stations, h03_pump_stations, h03_flood_maps, h02_sgis_canonical]
     inputs:
-      - "data/raw/dem/**/*"
+      - "data/raw/dem/**/*.img"
       - "data/raw/land_cover/**/*.shp"
     outputs:
       - data/processed/features/grid_features.parquet
@@ -484,8 +484,13 @@ nodes:
     params:
       - analysis.canonical_crs
       - analysis.grid_size_m
+      - features.raster_subdivision
+      - features.relative_elevation_radius_m
+      - features.pump_service_radius_m
+      - features.sgis_year
+      - features.max_missing_rate
     verify:
-      - {kind: code, rule: "핵심 변수 결측 < 5%, 변수별 출처·방향·단위 존재, 누수 점검 기록"}
+      - {kind: code, rule: "핵심 변수 결측 < max_missing_rate, 변수별 출처·방향·단위가 data_dictionary 에 존재, 라벨(침수흔적·민원) 미사용 기록"}
     on_fail: {goto: h04_grid_features, max_iterations: 3, action: "결측 5% 초과 변수 제외 또는 대체 근거를 data_dictionary 에 기록"}
 
   h05_holdout_freeze:

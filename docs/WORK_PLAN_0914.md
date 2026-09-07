@@ -122,3 +122,36 @@ CDRI 통합·민감도(`h07_cdri`) → TOP 20·정책카드(`h08`) → 보고서
 - 5m DEM 교체 — 90m 로 성립. 여유 있을 때만.
 - 시스템·챗봇·Streamlit — 결정 002 유지. 제출물이 분석보고서뿐.
 - 격자별 침수 확률 모델 — 69건으로 불가. 상위 20% 포착률·lift 로 보고.
+
+## 7. 진행 갱신 (2026-09-07)
+
+A2·A3 완료. B1(좌표) 반영 확인 후 러너로 결합했다.
+
+| 완료 | 근거 |
+|---|---|
+| B1 좌표 마무리 | `stations.csv` 31/31, `pump_stations_geocoded.csv` 9/9 (커밋 4228d21). 근사점 2곳(국방연구소·덕동동)은 강수 상관으로 위치 타당성 확인해 note 기록 |
+| A2 h03_stations / h03_pump_stations | stations pass(cohort 29 전부 좌표), 펌프장 **17개** = 창원시 배수펌프장 표준데이터 공식 15 + 지오코딩 2(양덕하류·봉암). **R1 승인 대기** → `python -m src.pipeline approve h03_pump_stations --by <이름> --note "..."` |
+| A3 h04_grid_features | 피처 20개, 결측 0%, `docs/data_dictionary.md` 자동 생성. 실행 48초 |
+
+실행 환경: WSL `/home/data/.venv-changwon` (rasterio 1.5.1·geopandas 1.1.4). Windows conda 환경에는 rasterio 가 없다.
+
+### 다음 팀원(B) 작업 — 우선순위 순
+
+| # | 작업 | 왜 지금 | 완료 기준 |
+|---|---|---|---|
+| B3-1 | **하천선 확보**: OSM `waterway`(river·stream·canal) 창원 추출 → `data/raw/rivers/osm_waterways.gpkg` (EPSG:5179). 대안 V-World `lt_c_wkmstrm` WFS | 현재 `water_dist_m` 이 토지피복 내륙수 proxy 라 소하천·복개천이 빠진다. h04 의 유일한 proxy 변수 | 파일 + `data/raw/README.md` 기록(취득일·URL·md5) |
+| B3-2 | 기상청 API허브 키 → AWS 지점정보(창원 155·북창원 255·진해·마산 등) 좌표·매분자료 2015~2024 | 관측지점 좌표 근사 오차 보완, IDW 밀도 | `data/raw/kma_aws/` + README |
+| B3-3 | V-World 키 → GIS건물통합정보 창원 5개 구 SHP (건축물대장 속성: 사용승인일·지하층수) | Layer 3 지하층·노후건물 | `data/raw/buildings/` + README |
+| B3-4 | SGIS 격자 API 키 → 100m **연령별** 인구 유무 확인. 있으면 65세 이상 100m 파일 | Layer 3 고령인구를 집계구 배분 없이 | 확인 결과를 `docs/data_access_log.md` #4 에 기록 |
+| B3-5 | 배수구역 SHP (data.go.kr 15129161) | Layer 2 Plan B 해상도 | `data/raw/sewer/` + README |
+| B0 | 이미 올린 원본 2개(`경상남도_창원시_배수펌프장_20260731.csv`, `전국배수펌프장표준데이터_20260905.csv`) 의 취득일·URL·md5 를 `data/raw/README.md` 에 기록 | H01 계약 추가(A5) 선행 조건 | README 행 2개 |
+| B4 | Layer 3 노트북: `grid_features.parquet` 의 `pop_total·households·houses` + B3-3 건물 + B3-4 연령 → 격자별 취약 변수 표 | 격자 피처가 나왔으므로 바로 결합 가능 | `notebooks/` + CSV |
+| B5 | Layer 2 Plan B 노트북: 하수도통계 xlsx 읍면동·매설연도 → 노후도, B3-5 배수구역 결합 | 위와 같음 | CSV |
+| B6 | 트리거 기준 문서 (풍수해 표준매뉴얼 4단계·호우특보 기준) | 변경 없음 | `docs/trigger_criteria.md` |
+| B7 | 시민의소리 표본 50건 | 변경 없음 | go/no-go |
+
+B2(이의신청)는 제출 여부를 `docs/data_access_log.md` #18 에 적는다. 미제출이면 9/30 전에 반드시.
+
+### 본인(A) 다음
+
+A1(결정 001 + pipeline.yaml 민원 노드 optional) → A4(Layer 1 baseline + 침수흔적 로더) → 9/14 침수흔적도.

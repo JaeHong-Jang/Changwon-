@@ -19,6 +19,14 @@ api:
     api_key: ""  # .env 파일에서 관리 권장
 
 # ===== 분석 설정 =====
+# ----- H04 격자 피처 (src/stages/h04_features.py) -----
+features:
+  raster_subdivision: 10            # 폴리곤 변수 래스터화 배율: 100m / 10 = 10m 픽셀 → 면적 비율
+  relative_elevation_radius_m: 500  # 상대고도 초점평균 반경 (ANALYSIS_PLAN §2-1)
+  pump_service_radius_m: 1000       # 펌프장 서비스권 (ANALYSIS_PLAN §2-1)
+  sgis_year: 2024                   # 인구·가구·주택 결합 연도
+  max_missing_rate: 0.05            # 핵심 변수 결측률 상한 (하네스 H04 게이트)
+
 analysis:
   random_seed: 42
   test_size: 0.2

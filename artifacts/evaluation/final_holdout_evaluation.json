@@ -1,0 +1,11 @@
+{
+  "holdout_evaluated": false,
+  "reason": "민원 3년 자료 비공개 (정보공개법 §9①6호) — docs/decisions/001-layer2-design.md",
+  "evaluation_count": 0,
+  "substitute_validation": "2026-09-14 침수흔적도 수령 후 Layer 1 ROC-AUC·사후검증으로 대체 예정",
+  "ranking_mode": "tier",
+  "ranking_claim": "정밀 순위를 주장하지 않는다. 위험군과 강건 공통집합으로만 보고한다",
+  "n_selected": 20,
+  "n_in_robust_core": 7,
+  "run_id": "20260907T145555Z-376e15c-a1857c5e"
+}

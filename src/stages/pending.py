@@ -36,12 +36,6 @@ def layer2_sewer(ctx: StageContext) -> dict[str, Any]:
     _todo("layer2_sewer")
 
 
-def top20(ctx: StageContext) -> dict[str, Any]:
-    """top20.csv(격자별 트리거·근거 3개·신뢰등급·담당·조치·KPI) + 최종 홀드아웃 1회 평가.
-    행동 트리거·실행 주체 없는 항목은 제외. metrics: n_top20, holdout_metrics."""
-    _todo("top20")
-
-
 def result_review(ctx: StageContext) -> dict[str, Any]:
     """CDRI 분포·TOP 20 지도를 A1 침수예상도·A7 홍수위험지도와 대조.
     통과: 기여도 합 100%, 동 편중 없음, 중첩률 보고.

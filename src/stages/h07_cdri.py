@@ -155,11 +155,18 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "note": "Moreira et al.(2021) 은 등급화가 가장 민감하다고 지적한다. 두 방식을 병기한다",
     }
 
-    # ── 기여도 (가법형 구성비) ────────────────────────────────────────────
+    # ── 기여도와 주 원인 ──────────────────────────────────────────────────
+    # 구성비(가법형)와 백분위를 모두 낸다. **주 원인은 최대 백분위 요소**다 (ANALYSIS_PLAN §5).
+    # 구성비의 최댓값을 쓰면 분포가 치우친 요소(인구)가 거의 항상 이겨서 조치가 한쪽으로 쏠린다.
     shares = L.contribution_share(matrix, weights["equal"], COMPONENTS)
     for key, values in shares.items():
         sub[f"{key.lower()}_contribution"] = values
-    sub["primary_cause"] = np.asarray(COMPONENTS)[np.column_stack(list(shares.values())).argmax(axis=1)]
+    percentiles = np.column_stack([
+        pd.Series(matrix[:, i]).rank(pct=True).to_numpy() for i in range(len(COMPONENTS))
+    ])
+    for i, key in enumerate(COMPONENTS):
+        sub[f"{key.lower()}_percentile"] = percentiles[:, i]
+    sub["primary_cause"] = np.asarray(COMPONENTS)[percentiles.argmax(axis=1)]
 
     sub["cdri"] = primary_scaled
     sub["cdri_raw"] = primary
@@ -176,6 +183,7 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "p50": round(float(sub["cdri"].median()), 4),
         "p90": round(float(sub["cdri"].quantile(0.9)), 4),
         "primary_cause_counts": {k: int(v) for k, v in sub["primary_cause"].value_counts().items()},
+        "primary_cause_rule": "구성요소 백분위가 가장 높은 것 (ANALYSIS_PLAN §5). 구성비 최댓값은 분포가 치우친 요소가 항상 이겨서 쓰지 않는다",
     }
     # 강건성 판정. 미달이면 **실패가 아니라 분기**다 — 하네스 H07 on_fail 은 goto 없이
     # "정밀 순위 대신 위험군(tier) 모드로 보고"라고 정했다. 임계값을 낮추는 재튜닝은 금지이므로
@@ -210,6 +218,7 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "risk_tier", "jenks_tier", "primary_cause", "in_robust_core",
         "H_scaled", "E_scaled", "V_scaled", "D_scaled",
         "h_contribution", "e_contribution", "v_contribution", "d_contribution",
+        "h_percentile", "e_percentile", "v_percentile", "d_percentile",
         "L1", "E", "V", "capacity_deficit", "pop_total", "houses", "elderly_ratio",
         "shelter_dist_m", "vulnerability_grade", "geometry",
     ]

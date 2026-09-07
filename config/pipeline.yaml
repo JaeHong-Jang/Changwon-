@@ -641,20 +641,22 @@ nodes:
   h08_top20_policy:
     gate: H08
     phase: P4
-    title: TOP 20 정책화·최종평가
-    description: TOP 20 정책카드 + 최종 홀드아웃 1회 평가 (재조정 금지)
-    runner: src.stages.pending:top20
-    depends_on: [h07_cdri, h05_complaint_extract]
+    title: 우선대응 지역 정책화
+    description: 300m NMS 로 선정한 격자에 트리거-행동 계약(정책카드) 부여. CDRI 가 tier 모드면 정밀 순위를 주장하지 않는다
+    runner: src.stages.h08_policy:top20
+    depends_on: [h07_cdri]
     inputs: []
     outputs:
       - reports/tables/top20.csv
       - artifacts/evaluation/final_holdout_evaluation.json
-    params: []
+    params:
+      - cdri.top_n
+      - policy.nms_radius_m
     verify:
-      - {kind: external, rule: "최종 홀드아웃 민원 원문 1회 평가 (평가횟수 == 1)"}
-      - {kind: code, rule: "격자마다 트리거·담당·조치·KPI 존재; 없는 항목은 TOP20 제외"}
-    approval: {who: R3, what: "최종 TOP 20 과 정책카드 제출 승인. 평가 후 공식·가중치 재조정 금지"}
-    on_fail: {max_iterations: 1, action: "루프 없음. 실패 시 평가 결과를 그대로 보고하고 한계로 기술"}
+      - {kind: code, rule: "격자마다 트리거·담당·조치·KPI 존재. 없는 항목은 표에서 제외"}
+      - {kind: external, rule: "민원 홀드아웃 최종 1회 평가 — 비공개로 수행 불가. holdout_evaluated=false 로 기록하고 침수흔적 검증으로 대체 (decision 001)"}
+    approval: {who: R3, what: "최종 우선대응 지역과 정책카드 제출 승인. 평가 후 공식·가중치 재조정 금지"}
+    on_fail: {max_iterations: 1, action: "루프 없음. 실패 시 결과를 그대로 보고하고 한계로 기술"}
 
   h08_result_review:
     gate: H08

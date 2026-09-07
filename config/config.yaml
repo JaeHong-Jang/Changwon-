@@ -51,6 +51,10 @@ cdri:
   min_spearman: 0.80                # 가중치·집계형 변형 간 중위 순위상관 하한 (하네스 H07)
   min_top20_overlap: 14             # TOP 20 중첩 하한 (70%)
 
+# ----- H08 우선대응 지역 정책화 -----
+policy:
+  nms_radius_m: 300                 # 같은 침수 구역이 인접 격자로 중복 선정되는 것을 막는다
+
 analysis:
   random_seed: 42
   test_size: 0.2

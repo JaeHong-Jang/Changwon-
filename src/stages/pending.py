@@ -36,13 +36,6 @@ def layer2_sewer(ctx: StageContext) -> dict[str, Any]:
     _todo("layer2_sewer")
 
 
-def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
-    """인구·고령·주택 기반 취약계층 지수. 65세 이상 파생은 연령 코드북 확정 후에만.
-    metrics: n_grid, missing_rate."""
-    _todo("layer3_vuln")
-
-
-# ── H07~H10 ──────────────────────────────────────────────────────────────
 def cdri(ctx: StageContext) -> dict[str, Any]:
     """equal/entropy × 곱셈/가중합 중 primary 산식 선택, 입력오차·가중치 민감도.
     통과: 중위 Spearman rho ≥ 0.8, TOP20 중첩 ≥ 70%. 미달이면 tier 보고 모드.

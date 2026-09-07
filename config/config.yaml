@@ -40,6 +40,10 @@ layer1:
   trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
   trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
 
+# ----- H06 Layer 3 취약계층·대응역량 -----
+layer3:
+  capacity_max_dist_m: 2000         # 대피소·방재기관 접근성 상한 (ANALYSIS_PLAN 4)
+
 analysis:
   random_seed: 42
   test_size: 0.2

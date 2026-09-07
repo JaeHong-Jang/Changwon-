@@ -241,3 +241,167 @@ def _layer1_map(df, out: Path) -> None:
         ax.grid(False)
     fig.tight_layout()
     style.save(fig, out)
+
+
+# ── Layer 3 취약계층·노출·대응역량 ─────────────────────────────────────────
+# V(취약성)는 **비율**, E(노출)는 **수**로 나눈다 (ANALYSIS_PLAN §4 이중계산 방지).
+LAYER3_VULNERABILITY_SPEC: dict[str, int] = {"elderly_ratio": +1}
+LAYER3_EXPOSURE_SPEC: dict[str, int] = {"pop_total": +1, "houses": +1}
+# 아직 확보하지 못해 V 에서 빠진 변수. 보고서 한계와 metrics 에 그대로 남긴다.
+LAYER3_MISSING_VARIABLES = {
+    "one_person_household_ratio": "SGIS 1인가구 미보유 (100m·집계구 모두)",
+    "old_building_ratio": "GIS건물통합정보 SHP 미확보 (V-World 키 필요)",
+    "basement_building_count": "건축물대장 지하층수 미확보 (건축HUB 키 필요)",
+}
+
+
+def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
+    """통과: 65세 이상은 확정된 연령 코드북으로만 파생, 집계구 조인율·결측률 기록,
+    대응역량은 높을수록 좋은 방향으로 정규화한 뒤 capacity_deficit = 1 - capacity_norm."""
+    import geopandas as gpd
+    import numpy as np
+    import pandas as pd
+    from scipy.spatial import cKDTree
+
+    from src.data import layers as L
+    from src.data import sgis, shelters
+
+    p = ctx.params
+    n_classes = int(p["layer1.n_classes"])
+    winsor = (float(p["layer1.winsor_lo"]), float(p["layer1.winsor_hi"]))
+    capacity_max = float(p["layer3.capacity_max_dist_m"])
+    year = int(p["features.sgis_year"])
+
+    features = pd.read_parquet(PROJECT_ROOT / "data/processed/features/grid_features.parquet")
+    grid = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/grid_base.gpkg", layer="grid")
+    df = gpd.GeoDataFrame(
+        features[["grid_id", "adm_cd", "gu_code", "universe", "pop_total", "households", "houses"]]
+        .merge(grid[["grid_id", "geometry"]], on="grid_id", how="left"),
+        geometry="geometry", crs=p["analysis.canonical_crs"],
+    )
+    m: dict[str, Any] = {"n_grid": int(len(df)), "n_universe": int(df["universe"].sum())}
+
+    # 65세 이상 비율: 집계구에서 구해 격자 중심점이 속한 집계구 값을 붙인다.
+    aggregation = pd.read_parquet(PROJECT_ROOT / "data/processed/canonical/sgis_aggregation.parquet")
+    elderly = sgis.elderly_ratio(aggregation, year)
+    shapes = sorted((PROJECT_ROOT / "data/raw/sgis/aggregation_boundaries_2025_2Q").glob("*.shp"))
+    boundaries = pd.concat([gpd.read_file(q) for q in shapes], ignore_index=True)
+    boundaries = gpd.GeoDataFrame(boundaries, geometry="geometry", crs=boundaries.crs).to_crs(df.crs)
+    boundaries["spatial_id"] = boundaries["TOT_OA_CD"].astype(str)
+    centroids = gpd.GeoDataFrame({"grid_id": df["grid_id"]}, geometry=df.geometry.centroid, crs=df.crs)
+    joined = gpd.sjoin(centroids, boundaries[["spatial_id", "geometry"]], predicate="within", how="left")
+    joined = joined.drop_duplicates(subset="grid_id")[["grid_id", "spatial_id"]]
+    df = df.merge(joined, on="grid_id", how="left").merge(
+        elderly[["spatial_id", "elderly_ratio", "pop_elderly", "pop_age_total"]], on="spatial_id", how="left"
+    )
+    universe = df["universe"].to_numpy().astype(bool)
+    first_elderly_col = sgis.age_columns(sgis.AGE_BLOCK_TOTAL, min_age=sgis.ELDERLY_FROM_AGE)[0]
+    m["elderly"] = {
+        "age_codebook": f"in_age 5세 계급, {sgis.ELDERLY_FROM_AGE}세 이상 = {first_elderly_col} 이후",
+        "codebook_verified": "노령화지수(to_in_004) 항등식 대조 — src/data/sgis.py 주석",
+        "n_aggregation_units": int(len(elderly)),
+        "join_rate_all": round(float(df["spatial_id"].notna().mean()), 4),
+        "join_rate_universe": round(float(df.loc[universe, "spatial_id"].notna().mean()), 4),
+        "missing_ratio_universe": round(float(df.loc[universe, "elderly_ratio"].isna().mean()), 4),
+        "city_elderly_share": round(float(elderly["pop_elderly"].sum() / elderly["pop_age_total"].sum()), 4),
+        # 단순평균은 면적이 넓은 농촌 집계구가 격자를 많이 차지해 부풀려진다(0.32).
+        # 시 전체와 대조할 수 있는 것은 인구가중 평균이다.
+        "grid_pop_weighted_universe": round(
+            float((df.loc[universe, "elderly_ratio"] * df.loc[universe, "pop_total"]).sum()
+                  / df.loc[universe, "pop_total"].sum()), 4
+        ),
+        "grid_unweighted_mean_universe": round(float(df.loc[universe, "elderly_ratio"].mean()), 4),
+        "grids_per_aggregation_unit": {
+            "median": float(df.loc[universe].groupby("spatial_id").size().median()),
+            "max": int(df.loc[universe].groupby("spatial_id").size().max()),
+            "note": "집계구 하나가 격자 여러 개에 같은 비율을 준다 — 배분 불확실성 (ANALYSIS_PLAN §4)",
+        },
+    }
+    # 집계구에 걸치지 못한 격자는 구 중앙값으로 채우고 플래그를 남긴다 (0 대체 금지).
+    df["elderly_imputed"] = df["elderly_ratio"].isna().astype("int8")
+    df["elderly_ratio"] = df["elderly_ratio"].fillna(
+        df.groupby("gu_code")["elderly_ratio"].transform("median")
+    ).fillna(df["elderly_ratio"].median())
+
+    # 대응역량: 대피장소·방재기관 최근접 거리 → 가까울수록 1
+    points, shelter_meta = shelters.load(
+        sorted((PROJECT_ROOT / "data/raw/shelters").glob("*.json")), crs=p["analysis.canonical_crs"]
+    )
+    cent_xy = np.column_stack([df.geometry.centroid.x, df.geometry.centroid.y])
+    for kind, column in (("shelter", "shelter_dist_m"), ("facility", "facility_dist_m")):
+        sub = points[points["kind"] == kind]
+        tree = cKDTree(np.column_stack([sub.geometry.x, sub.geometry.y]))
+        df[column] = tree.query(cent_xy)[0]
+    df["capacity_norm"] = 1.0 - np.mean(
+        [np.minimum(df["shelter_dist_m"], capacity_max) / capacity_max,
+         np.minimum(df["facility_dist_m"], capacity_max) / capacity_max], axis=0
+    )
+    df["capacity_deficit"] = 1.0 - df["capacity_norm"]
+    m["capacity"] = {
+        **shelter_meta,
+        "max_dist_m": capacity_max,
+        "shelter_dist_median_universe": round(float(df.loc[universe, "shelter_dist_m"].median()), 1),
+        "facility_dist_median_universe": round(float(df.loc[universe, "facility_dist_m"].median()), 1),
+        "capacity_deficit_mean_universe": round(float(df.loc[universe, "capacity_deficit"].mean()), 4),
+        "note": "펌프장 거리는 Layer 1 배수조건으로 이미 썼으므로 대응역량에서 제외 (하네스 §7 이중투입 금지)",
+    }
+
+    # E(노출, 수) · V(취약성, 비율)
+    z_exposure, exposure_detail = L.composite(df, LAYER3_EXPOSURE_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
+    z_vulnerability, vulnerability_detail = L.composite(
+        df, LAYER3_VULNERABILITY_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1]
+    )
+    df["E"] = L.minmax(z_exposure)
+    df["V"] = L.minmax(z_vulnerability)
+    df["L3"] = df["V"]
+    breaks = L.jenks_breaks(df.loc[universe, "V"].to_numpy(), n_classes)
+    df["l3_class"] = L.classify(df["V"].to_numpy(), breaks)
+    m["composite"] = {"exposure": exposure_detail, "vulnerability": vulnerability_detail}
+    m["jenks_breaks_v_universe"] = [round(v, 4) for v in breaks]
+    m["class_counts_universe"] = {
+        int(c): int(((df["l3_class"] == c) & universe).sum()) for c in range(1, n_classes + 1)
+    }
+    m["missing_variables"] = LAYER3_MISSING_VARIABLES
+    m["n_vulnerability_variables"] = len(LAYER3_VULNERABILITY_SPEC)
+
+    findings: list[dict[str, Any]] = []
+    if m["elderly"]["join_rate_universe"] < 0.95:
+        findings.append({"code": "aggregation_join", "detail": m["elderly"]["join_rate_universe"]})
+    if int(df.loc[universe, ["E", "V", "capacity_deficit"]].isna().sum().sum()):
+        findings.append({"code": "layer3_missing", "detail": "E·V·capacity_deficit 에 결측"})
+    if findings:
+        raise StageFailed("Layer 3 통과 기준 미달", findings, metrics=m)
+
+    out = ctx.outputs[0]
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if out.exists():
+        out.unlink()
+    df[[
+        "grid_id", "adm_cd", "gu_code", "universe", "pop_total", "households", "houses",
+        "spatial_id", "elderly_ratio", "elderly_imputed",
+        "shelter_dist_m", "facility_dist_m", "capacity_norm", "capacity_deficit",
+        "E", "V", "L3", "l3_class", "geometry",
+    ]].to_file(out, layer="layer3_vuln", driver="GPKG")
+    _layer3_map(df, PROJECT_ROOT / "reports/figures/layer3_map.png")
+    return m
+
+
+def _layer3_map(df, out: Path) -> None:
+    import matplotlib.pyplot as plt
+
+    from src.visualization import style
+
+    style.apply()
+    fig, axes = plt.subplots(1, 3, figsize=(16, 6))
+    panels = [
+        ("E", "노출 E (인구·주택 수)", dict(cmap="magma_r")),
+        ("V", "취약성 V (65세 이상 비율)", dict(cmap="YlOrBr")),
+        ("capacity_deficit", "대응역량 부족도 (대피소·방재기관 거리)", dict(cmap="PuBu")),
+    ]
+    for ax, (col, title, kw) in zip(axes, panels):
+        df.plot(column=col, ax=ax, linewidth=0, legend=True, legend_kwds={"shrink": 0.6}, **kw)
+        ax.set_title(title, fontsize=10)
+        ax.set_axis_off()
+        ax.grid(False)
+    fig.tight_layout()
+    style.save(fig, out)

@@ -55,15 +55,15 @@
    "id": "G008",
    "title": "G008 Layer2 역류위험",
    "objective": "민원 원문 LLM 구조화는 수작업 100건과 정확도를 검증. 확인된 양·음성 라벨이 충분할 때만 Plan A 개발세트 내부 시간·공간 분리 로지스틱+XGBoost/SHAP, 아니면 민원 미포함 Plan B 인프라-only 지수; 관로 미보유 시 제외. 최종 홀드아웃은 G010까지 봉인. 증거: layer2_sewer.gpkg + map + LLM 정확도표 + 개발검증 지표 또는 제외 결정",
-   "status": "pending",
-   "evidence": null
+   "status": "blocked",
+   "evidence": "Layer 2 Plan B 보류: 하수도통계는 읍면동 이름 기준인데 격자의 adm_cd 는 통계청 코드라 조인 불가 — data/external/adm_dong_names.csv 대기. decision 001 이 이미 Layer 2 를 CDRI 기본 산식에서 제외했으므로 노드를 optional 로 두고 CDRI 를 먼저 진행한다"
   },
   {
    "id": "G009",
    "title": "G009 Layer3 취약계층",
    "objective": "Exposure(총인구·건물), Vulnerability(고령·노후·지하층), Capacity(지상 임시주거시설·긴급대응·펌프 접근성)를 분리하고 VIF<5·변수 중복 금지. 건물은 GIS건물통합정보 SHP 우선, Capacity는 capacity_deficit=1-capacity_norm으로 변환하고 결측은 0 대체 없이 제외·재가중·신뢰등급 하향. 1인가구 미보유 시 제외. 증거: layer3_vuln.gpkg + map + 건물/인구 커버리지",
-   "status": "pending",
-   "evidence": null
+   "status": "complete",
+   "evidence": "h06_layer3_vuln pass (run 20260907T144533Z): E(인구·주택) / V(65세 이상 비율) / capacity_deficit(대피소 444 + 방재기관 516 최근접) 분리. 연령 코드북을 노령화지수 항등식으로 확정(65+ = in_age_014 이후, 상관 0.963). 집계구 조인율 100%, 격자 인구가중 고령비율 19.2% = 시 전체 18.4%. 펌프장은 Layer 1 에 썼으므로 Capacity 제외. 미확보: 1인가구·노후건물·지하층. 산출 layer3_vuln.gpkg + layer3_map.png"
   },
   {
    "id": "G010",

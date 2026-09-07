@@ -593,17 +593,25 @@ nodes:
   h06_layer3_vuln:
     gate: H06
     phase: P3
-    title: Layer 3 취약계층
-    description: Layer 3 취약계층 (인구·고령·주택)
-    runner: src.stages.pending:layer3_vuln
-    depends_on: [h04_grid_features]
-    inputs: []
+    title: Layer 3 취약계층·대응역량
+    description: 노출 E(인구·주택 수) / 취약성 V(65세 이상 비율) / 대응역량 부족도(대피소·방재기관 거리)
+    runner: src.stages.h06_layers:layer3_vuln
+    depends_on: [h04_grid_features, h02_sgis_canonical]
+    inputs:
+      - "data/raw/sgis/aggregation_boundaries_2025_2Q/*"
+      - "data/raw/shelters/*.json"
     outputs:
       - data/processed/layers/layer3_vuln.gpkg
-    params: []
+    params:
+      - analysis.canonical_crs
+      - features.sgis_year
+      - layer1.winsor_lo
+      - layer1.winsor_hi
+      - layer1.n_classes
+      - layer3.capacity_max_dist_m
     verify:
-      - {kind: code, rule: "65세 이상 파생은 연령 코드북 확정 후에만, 결측률 기록"}
-    on_fail: {goto: h06_layer3_vuln, max_iterations: 2, action: "코드북 확인 후 재실행"}
+      - {kind: code, rule: "65세 이상은 확정된 연령 코드북으로만 파생(노령화지수 항등식 대조), 집계구 조인율 >= 95%, E/V/capacity_deficit 결측 0"}
+    on_fail: {goto: h06_layer3_vuln, max_iterations: 2, action: "코드북·집계구 경계 확인 후 재실행"}
 
   h07_cdri:
     gate: H07

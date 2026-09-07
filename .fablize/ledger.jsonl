@@ -1,1 +1,6 @@
 {"ts": "2026-08-18T03:20:19.549505+00:00", "event": "plan_created", "brief": "창원시 폭우·기후재난 AI 선제 대응 시스템 — 2026 창원시 AI·데이터 공모전 (마감 9/30 18:00). 계획 원본: docs/RESEARCH_PLAN.md", "count": 14}
+{"ts": "2026-09-07T07:16:24.908359+00:00", "event": "story_started", "id": "G001", "title": "G001 데이터 접근 일괄 신청"}
+{"ts": "2026-09-07T07:16:25.000030+00:00", "event": "checkpoint", "id": "G001", "status": "complete", "evidence": "docs/data_access_log.md: 정보공개청구 17369500 부분 회신(9/1), 필수 자료 #2·#3 수령, h00_access_requests 노드 pass (artifacts/state/h00_access_requests.json)", "verify_cmd": "", "verify_evidence": ""}
+{"ts": "2026-09-07T07:16:25.098389+00:00", "event": "story_started", "id": "G002", "title": "G002 데이터 확보·원본 검증·canonical 정규화"}
+{"ts": "2026-09-07T07:16:25.184009+00:00", "event": "checkpoint", "id": "G002", "status": "complete", "evidence": "P1 12노드 + h02 정제 3노드 pass (artifacts/state/h01_raw_contract.json, h02_*_long.json, h02_sgis_canonical.json); canonical parquet 5개 data/processed/canonical/", "verify_cmd": "", "verify_evidence": ""}
+{"ts": "2026-09-07T07:16:25.288133+00:00", "event": "story_started", "id": "G003", "title": "G003 관측지점 좌표 확보"}

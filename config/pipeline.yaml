@@ -430,9 +430,9 @@ nodes:
     gate: H03
     phase: P2
     title: 관측지점 좌표 결합
-    description: 강수 29지점·수위계 좌표 결합 (확보율 ≥90% 미달 시 중단)
-    runner: src.stages.pending:stations
-    depends_on: [h02_eda_data_check]
+    description: 강수 29지점·수위계 2지점 좌표 결합 (확보율 ≥90% 미달 시 중단, 근사점은 is_proxy 표시)
+    runner: src.stages.h03_spatial:stations
+    depends_on: [h02_eda_data_check, h03_boundary, h02_rainfall_long]
     inputs:
       - data/external/stations.csv
     outputs:
@@ -440,28 +440,32 @@ nodes:
     params:
       - analysis.canonical_crs
       - analysis.min_idw_stations_per_event
+      - analysis.min_station_coord_coverage
+      - analysis.climatology_start
+      - analysis.climatology_end
+      - analysis.min_station_day_coverage
     verify:
-      - {kind: code, rule: "좌표 확보율 ≥ 0.90, 이벤트별 정상지점 ≥ min_idw_stations_per_event"}
+      - {kind: code, rule: "좌표 확보율 ≥ min_station_coord_coverage, 위경도 뒤바뀜·중복 코드 0, 전 지점 창원 경계 안, 좌표 있는 강수 cohort 지점 ≥ min_idw_stations_per_event"}
     on_fail: {max_iterations: 2, action: "분기: 확보율 미달이면 공간보간 중단하고 docs/decisions 에 대안 기록"}
 
   h03_pump_stations:
     gate: H03
     phase: P2
-    title: 펌프장 지오코딩·검수
-    description: 배수펌프장 9개 지오코딩 + 수동 검수 결과 반영
-    runner: src.stages.pending:pump_stations
-    depends_on: [h02_eda_data_check]
+    title: 펌프장 좌표 결합·검수
+    description: 창원시 배수펌프장 표준데이터 공식 좌표 15개 + 공식 목록에 없는 지오코딩 펌프장(수동 검수) 결합
+    runner: src.stages.h03_spatial:pump_stations
+    depends_on: [h02_eda_data_check, h03_boundary]
     inputs:
-      - "data/raw/*펌프장*.csv"
+      - data/raw/경상남도_창원시_배수펌프장_20260731.csv
       - data/external/pump_stations_geocoded.csv
     outputs:
       - data/processed/spatial/pump_stations.gpkg
     params:
       - analysis.canonical_crs
     verify:
-      - {kind: human, rule: "지오코딩된 9개 좌표를 지도에서 육안 검수, reviewed=true 플래그"}
-      - {kind: code, rule: "9행 전부 reviewed=true"}
-    approval: {who: R1, what: "펌프장 9개 좌표 최종 확정 (이후 거리변수 생성 허용)"}
+      - {kind: human, rule: "지오코딩으로 추가된 펌프장 좌표를 지도에서 육안 검수, reviewed=Y 플래그"}
+      - {kind: code, rule: "공식 좌표 결측 0, 추가분 전부 reviewed=Y, 전 지점 창원 경계 안"}
+    approval: {who: R1, what: "펌프장 좌표 최종 확정 — 공식 15 + 지오코딩 추가분 (이후 거리변수 생성 허용)"}
     on_fail: {goto: h03_pump_stations, max_iterations: 3, action: "오지오코딩 주소 수동 보정"}
 
   h04_grid_features:

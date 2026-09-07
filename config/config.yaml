@@ -27,6 +27,7 @@ analysis:
   climatology_end: "2024-12-31"
   min_station_day_coverage: 0.90
   min_idw_stations_per_event: 24
+  min_station_coord_coverage: 0.90   # 관측지점 좌표 확보율 하한 (h03_stations). 미달이면 공간보간 중단
   canonical_crs: "EPSG:5179"
   grid_size_m: 100
 

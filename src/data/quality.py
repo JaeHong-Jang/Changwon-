@@ -101,6 +101,16 @@ def _days_in_year(year: int) -> int:
     return 366 if pd.Timestamp(year=int(year), month=12, day=31).dayofyear == 366 else 365
 
 
+def cohort_station_ids(
+    rain: pd.DataFrame, lo: pd.Timestamp, hi: pd.Timestamp, min_coverage: float
+) -> list[int]:
+    """분석기간 안 관측일 비율이 `min_coverage` 이상인 지점 코드. `rainfall_table` 과 같은 정의다."""
+    rain = rain[(rain["obs_date"] >= lo) & (rain["obs_date"] <= hi)]
+    total_days = (hi - lo).days + 1
+    ratios = rain.groupby("station_id")["obs_date"].nunique() / total_days
+    return sorted(int(sid) for sid, value in ratios.items() if value >= min_coverage)
+
+
 def rainfall_table(
     rain: pd.DataFrame,
     lo: pd.Timestamp,
@@ -131,7 +141,7 @@ def rainfall_table(
             names=["station_id", "station_name"],
         ),
     ).sort_values(ascending=False)
-    cohort_ids = sorted(int(sid) for sid, value in ratios.items() if value >= thresholds.cohort_coverage_min)
+    cohort_ids = cohort_station_ids(rain, lo, hi, thresholds.cohort_coverage_min)
 
     annual = (
         rain[rain["quality_flag"] == "ok"]

@@ -15,20 +15,6 @@ def _todo(name: str) -> None:
     raise NotImplementedError(name)
 
 
-# ── H03 공간기반 (좌표 확보 후 구현) ────────────────────────────────────────
-def stations(ctx: StageContext) -> dict[str, Any]:
-    """강수 29지점·수위계 좌표 결합.
-    통과: 좌표 확보율 ≥ 0.90, 이벤트별 정상지점 ≥ params.min_idw_stations_per_event.
-    미달이면 StageFailed (공간보간 중단). metrics: n_stations, coord_coverage."""
-    _todo("stations")
-
-
-def pump_stations(ctx: StageContext) -> dict[str, Any]:
-    """펌프장 9개 지오코딩 결과 + 수동 검수 플래그를 gpkg 로.
-    통과: 9행 전부 reviewed=true. metrics: n_pumps, n_reviewed."""
-    _todo("pump_stations")
-
-
 # ── H04 피처 ──────────────────────────────────────────────────────────────
 def grid_features(ctx: StageContext) -> dict[str, Any]:
     """DEM 경사·상대고도·TWI, 불투수면, 하천버퍼, 펌프장거리, 인구를 격자에 결합.

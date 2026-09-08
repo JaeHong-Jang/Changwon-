@@ -627,6 +627,7 @@ nodes:
     outputs:
       - data/processed/layers/cdri.gpkg
       - reports/tables/sensitivity.csv
+      - reports/tables/grade_by_dong.csv
       - artifacts/evaluation/primary_formula_manifest.json
     params:
       - analysis.random_seed
@@ -635,7 +636,7 @@ nodes:
       - cdri.min_spearman
       - cdri.min_top20_overlap
     verify:
-      - {kind: code, rule: "변형 간 중위 Spearman rho >= min_spearman, TOP 20 중첩 >= min_top20_overlap, Capacity 결측 0 대체 없음"}
+      - {kind: code, rule: "변형 간 중위 Spearman rho >= min_spearman, TOP 20 중첩 >= min_top20_overlap, Capacity 결측 0 대체 없음, 등급 규칙으로 바뀐 격자 <= 5% (decisions/003)"}
     approval: {who: R3, what: "primary 산식·가중치 확정. 승인 후 재조정 금지 (retuning_prohibited)"}
     on_fail: {max_iterations: 1, action: "분기: 강건성 미달이면 정밀 순위 대신 위험군(tier) 모드로 보고. 재튜닝 루프 금지"}
 

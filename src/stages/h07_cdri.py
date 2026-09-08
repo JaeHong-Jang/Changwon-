@@ -7,6 +7,9 @@ Moreira et al.(2021) 이 지적한 기하평균의 과소평가 경향을 확인
 
 Layer 2(하수 역류)는 관로 비공개로 검증할 수 없어 **기본 산식에서 제외**하고 시나리오로만
 넣는다 (docs/decisions/001-layer2-design.md).
+
+최종 등급은 R1~R5 오름차순이며 5가 가장 위험하다 (docs/CDRI_GRADE_SYSTEM.md, decisions/003).
+검증용 `grade_raw` 와 대응표용 `grade_final` 을 분리한다.
 """
 
 from __future__ import annotations
@@ -36,6 +39,7 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
     import pandas as pd
     from scipy.stats import spearmanr
 
+    from src.data import grades as G
     from src.data import layers as L
 
     p = ctx.params
@@ -143,18 +147,6 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "note": "500m 블록의 평균과 최대 재집계 순위 비교 (Fontecha et al. 2021 해상도 비교 논리)",
     }
 
-    # ── 등급화 민감도: Balica 5등급 vs Jenks 5등급 ────────────────────────
-    primary_scaled = L.minmax(primary)
-    balica = L.balica_tier(primary_scaled)
-    jenks = L.classify(primary_scaled, L.jenks_breaks(primary_scaled, len(L.BALICA_LABELS)))
-    jenks_labels = np.asarray(L.BALICA_LABELS, dtype=object)[jenks - 1]
-    m["tiering"] = {
-        "balica_counts": {k: int(v) for k, v in pd.Series(balica).value_counts().items()},
-        "jenks_counts": {k: int(v) for k, v in pd.Series(jenks_labels).value_counts().items()},
-        "cohen_kappa": round(L.cohen_kappa(balica, jenks_labels), 4),
-        "note": "Moreira et al.(2021) 은 등급화가 가장 민감하다고 지적한다. 두 방식을 병기한다",
-    }
-
     # ── 기여도와 주 원인 ──────────────────────────────────────────────────
     # 구성비(가법형)와 백분위를 모두 낸다. **주 원인은 최대 백분위 요소**다 (ANALYSIS_PLAN §5).
     # 구성비의 최댓값을 쓰면 분포가 치우친 요소(인구)가 거의 항상 이겨서 조치가 한쪽으로 쏠린다.
@@ -168,13 +160,60 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         sub[f"{key.lower()}_percentile"] = percentiles[:, i]
     sub["primary_cause"] = np.asarray(COMPONENTS)[percentiles.argmax(axis=1)]
 
+    # ── 등급 체계 R1~R5 (decisions/003, CDRI_GRADE_SYSTEM.md) ───────────────
+    primary_scaled = L.minmax(primary)
+    # 본안 선택: 침수흔적 양성 격자가 충분해야 발생률 캘리브레이션을 쓴다. 지금은 라벨이 없다.
+    trace_path = PROJECT_ROOT / "data/processed/layers/layer1_flood.gpkg"
+    n_positive = 0
+    layer1_cols = gpd.read_file(trace_path, layer="layer1_flood", rows=1).columns
+    if "trace_label" in layer1_cols:
+        traces = gpd.read_file(trace_path, layer="layer1_flood", columns=["grid_id", "trace_label"])
+        n_positive = int(sub[["grid_id"]].merge(traces, on="grid_id", how="left")["trace_label"].fillna(0).sum())
+    scheme, scheme_reason = G.choose_scheme(n_positive, has_time_split=False)
+
+    grade_jenks, grade_breaks = G.jenks_grades(primary_scaled)
+    grade_balica = G.balica_grades(primary_scaled)
+    grade_percentile = G.percentile_grades(primary_scaled)
+    grade_raw = grade_jenks if scheme == "jenks" else grade_jenks  # 캘리브레이션은 라벨 확보 후
+    grade_final, review_flag, rule_meta = G.apply_rules(
+        grade_raw,
+        l1_percentile=percentiles[:, COMPONENTS.index("H")],
+        v_percentile=percentiles[:, COMPONENTS.index("V")],
+        h_percentile=percentiles[:, COMPONENTS.index("H")],
+        designated_near=None,   # 규칙 C 는 지정지구 좌표 확보 후 (팀원 작업 ③)
+    )
+    m["grade_system"] = {
+        "direction": "R1~R5 오름차순, 5 가 가장 위험 (국토부 지침 I~IV 와 방향 반대)",
+        "scheme": scheme,
+        "scheme_reason": scheme_reason,
+        "n_trace_positive": n_positive,
+        "jenks_breaks": [round(v, 4) for v in grade_breaks],
+        "raw": G.grade_summary(grade_raw),
+        "final": G.grade_summary(grade_final),
+        "balica_for_comparison": G.grade_summary(grade_balica),
+        "percentile_for_comparison": G.grade_summary(grade_percentile),
+        "rules": rule_meta,
+        "weighted_kappa": {
+            "jenks_vs_balica": round(G.weighted_kappa(grade_jenks, grade_balica), 4),
+            "jenks_vs_percentile": round(G.weighted_kappa(grade_jenks, grade_percentile), 4),
+            "balica_vs_percentile": round(G.weighted_kappa(grade_balica, grade_percentile), 4),
+            "note": "2차 가중 kappa. Landis & Koch(1977) 기준 0.61~0.80 substantial",
+        },
+        "note": "검증은 grade_raw, 대응 행동표는 grade_final 을 쓴다 (순환 방지)",
+    }
+
     sub["cdri"] = primary_scaled
     sub["cdri_raw"] = primary
     sub["cdri_additive"] = L.minmax(variants["additive_equal"])
-    sub["risk_tier"] = balica
-    sub["jenks_tier"] = jenks_labels
     sub["rank"] = (-sub["cdri"]).rank(method="first").astype(int)
     sub["in_robust_core"] = sub["grid_id"].isin(robust_core).astype("int8")
+    sub["grade_raw"] = grade_raw
+    sub["grade_final"] = grade_final
+    sub["grade_balica"] = grade_balica
+    sub["grade_percentile"] = grade_percentile
+    sub["grade_code"] = pd.Series(grade_final).map(G.GRADE_CODES).to_numpy()
+    sub["grade_name"] = pd.Series(grade_final).map(G.GRADE_NAMES).to_numpy()
+    sub["grade_review_flag"] = review_flag
     for name, column in zip(COMPONENTS, ["H_scaled", "E_scaled", "V_scaled", "D_scaled"]):
         sub[column] = matrix[:, COMPONENTS.index(name)]
 
@@ -215,7 +254,8 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
 
     keep = [
         "grid_id", "adm_cd", "gu_code", "rank", "cdri", "cdri_raw", "cdri_additive",
-        "risk_tier", "jenks_tier", "primary_cause", "in_robust_core",
+        "grade_raw", "grade_final", "grade_balica", "grade_percentile", "grade_code", "grade_name",
+        "grade_review_flag", "primary_cause", "in_robust_core",
         "H_scaled", "E_scaled", "V_scaled", "D_scaled",
         "h_contribution", "e_contribution", "v_contribution", "d_contribution",
         "h_percentile", "e_percentile", "v_percentile", "d_percentile",
@@ -230,6 +270,30 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
     csv.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(csv, index=False, encoding="utf-8-sig")
 
+    # 부서가 바로 쓸 수 있는 행정동 × 등급 집계 (CDRI_GRADE_SYSTEM §3 각주)
+    by_dong = next(o for o in ctx.outputs if o.name == "grade_by_dong.csv")
+    names_path = PROJECT_ROOT / "data/external/adm_dong_names.csv"
+    dong = sub.copy()
+    if names_path.exists():
+        lookup = pd.read_csv(names_path, encoding="utf-8-sig", dtype={"adm_cd": str})
+        dong = dong.merge(lookup[["adm_cd", "adm_name", "gu_name"]], on="adm_cd", how="left")
+    else:
+        dong["adm_name"], dong["gu_name"] = "행정동명 미확보", ""
+    pivot = (
+        dong.pivot_table(index=["gu_name", "adm_name"], columns="grade_code",
+                         values="grid_id", aggfunc="count", fill_value=0)
+        .reindex(columns=["R5", "R4", "R3", "R2", "R1"], fill_value=0)
+    )
+    people = dong.groupby(["gu_name", "adm_name"]).agg(
+        격자수=("grid_id", "count"), 인구=("pop_total", "sum"),
+        고령추정=("elderly_ratio", lambda x: 0),
+    )
+    people["고령추정"] = dong.assign(e=dong["pop_total"] * dong["elderly_ratio"]).groupby(
+        ["gu_name", "adm_name"])["e"].sum().round(0)
+    out_dong = pivot.join(people).reset_index().sort_values(["R5", "R4"], ascending=False)
+    out_dong.to_csv(by_dong, index=False, encoding="utf-8-sig")
+    m["grade_system"]["by_dong_rows"] = int(len(out_dong))
+
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.write_text(json.dumps({
         "primary_formula": primary_name,
@@ -243,6 +307,8 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "layer2_included": False,
         "ranking_mode": ranking_mode,
         "ranking_mode_note": m["ranking_mode_note"],
+        "grade_scheme": scheme,
+        "grade_direction": "R1~R5 오름차순 (5 = 최위험)",
         "robustness_unmet": unmet,
         "robust_core_n": len(robust_core),
         "decision": "docs/decisions/001-layer2-design.md",
@@ -261,15 +327,20 @@ def _cdri_map(df, sub, out: Path) -> None:
 
     style.apply()
     merged = df[["grid_id", "geometry"]].merge(
-        sub[["grid_id", "cdri", "primary_cause"]], on="grid_id", how="left"
+        sub[["grid_id", "cdri", "primary_cause", "grade_final"]], on="grid_id", how="left"
     )
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     merged.plot(column="cdri", ax=axes[0], linewidth=0, legend=True, cmap="magma_r",
                 legend_kwds={"shrink": 0.6}, missing_kwds={"color": "0.92"})
     axes[0].set_title("CDRI 우선대응 지수 (회색 = 순위 대상 밖)", fontsize=10)
-    merged.plot(column="primary_cause", ax=axes[1], linewidth=0, legend=True, cmap="Set2",
-                missing_kwds={"color": "0.92"})
-    axes[1].set_title("주 원인 (가법형 기여도 최대 요소)", fontsize=10)
+    from matplotlib.colors import ListedColormap
+
+    from src.data.grades import GRADE_COLORS
+
+    cmap = ListedColormap([GRADE_COLORS[g] for g in (1, 2, 3, 4, 5)])
+    merged.plot(column="grade_final", ax=axes[1], linewidth=0, legend=True, cmap=cmap,
+                vmin=1, vmax=5, missing_kwds={"color": "0.92"})
+    axes[1].set_title("위험 등급 R1~R5 (5 = 최우선 대응)", fontsize=10)
     for ax in axes:
         ax.set_axis_off()
         ax.grid(False)

@@ -20,11 +20,13 @@
   "layer2_included": false,
   "ranking_mode": "tier",
   "ranking_mode_note": "정밀 순위를 주장하지 않는다. 위험군(tier)과 강건 공통집합으로만 보고한다 — 하네스 H07 분기",
+  "grade_scheme": "jenks",
+  "grade_direction": "R1~R5 오름차순 (5 = 최위험)",
   "robustness_unmet": [
     "TOP 20 최소 중첩 9 < 14"
   ],
   "robust_core_n": 8,
   "decision": "docs/decisions/001-layer2-design.md",
-  "run_id": "20260907T154058Z-dc7e926-a1857c5e",
+  "run_id": "20260908T083510Z-e67551b-a1857c5e",
   "retuning_prohibited": true
 }

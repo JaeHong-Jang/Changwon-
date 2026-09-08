@@ -1,7 +1,7 @@
 """H08 우선대응 지역 정책화 — 정책카드는 '문장'이 아니라 트리거-행동 계약이다 (RESEARCH_PLAN §0-6).
 
 CDRI 가 위험군(tier) 모드이면 정밀 순위를 주장하지 않는다. 그 경우 표의 `rank` 는
-표시 순서일 뿐이며 `robust_core` 와 `risk_tier` 가 실제 근거다.
+표시 순서일 뿐이며 `in_robust_core` 와 `grade_final` 이 실제 근거다.
 """
 
 from __future__ import annotations
@@ -50,7 +50,8 @@ ACTION_BY_CAUSE: dict[str, dict[str, str]] = {
     },
 }
 POLICY_COLUMNS = [
-    "rank", "grid_id", "district", "neighborhood", "cdri", "risk_tier", "in_robust_core",
+    "rank", "grid_id", "district", "neighborhood", "cdri",
+    "grade_raw", "grade_final", "grade_code", "grade_name", "in_robust_core",
     "hazard_contribution", "exposure_contribution", "vulnerability_contribution",
     "capacity_deficit_contribution", "primary_cause", "confidence_grade",
     "trigger", "action_timing", "recommended_action", "owner_department",
@@ -153,13 +154,16 @@ def top20(ctx: StageContext) -> dict[str, Any]:
     m["selected"] = [
         {
             "rank": int(r.rank), "grid_id": r.grid_id, "district": r.district,
-            "cdri": float(r.cdri), "risk_tier": r.risk_tier, "primary_cause": r.primary_cause,
+            "cdri": float(r.cdri), "grade_raw": int(r.grade_raw), "grade_final": int(r.grade_final),
+            "grade_code": r.grade_code, "primary_cause": r.primary_cause,
             "robust_core": int(r.in_robust_core), "pop_total": int(r.pop_total),
             "elderly_estimate": int(r.elderly_estimate),
         }
         for r in out.itertuples()
     ]
     m["cause_mix"] = {k: int(v) for k, v in out["primary_cause"].value_counts().items()}
+    m["grade_mix"] = {k: int(v) for k, v in out["grade_code"].value_counts().items()}
+    m["grade_note"] = "TOP 20 은 CDRI 점수 순(300m NMS)이며 규칙 A·B 의 영향을 받지 않는다 (CDRI_GRADE_SYSTEM §2)"
     m["people_covered"] = {
         "pop_total": int(out["pop_total"].sum()),
         "elderly_estimate": int(out["elderly_estimate"].sum()),

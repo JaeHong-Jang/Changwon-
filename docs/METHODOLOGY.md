@@ -4,6 +4,11 @@
 > "무엇이 되어 있나"는 `PROJECT_STATUS.md`, "언제 무엇을"은 `WORK_PLAN_0914.md`.
 > 여기 나오는 모든 수식은 `src/` 의 실제 구현과 1:1로 대응한다. 대응 파일을 각 절에 적었다.
 
+> **문서 안내**
+> `SCHEDULE.md` 남은 일정·할 일 (앞으로) · `PROJECT_STATUS.md` 지금까지의 경과 ·
+> `METHODOLOGY.md` 수식과 근거 · `TEAM_TASKS.md` 팀원 지시서 ·
+> `RESEARCH_PLAN.md` 왜 · `ANALYSIS_PLAN.md` 규격 · `RESEARCH_HARNESS.md` 규칙
+
 ---
 
 ## 0. 먼저 — 예측 모델은 어디 갔나

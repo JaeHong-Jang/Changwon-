@@ -7,6 +7,11 @@
 > ①은 30분이면 끝나고 확실히 쓰인다. ②는 지금 분석의 가장 큰 구멍을 메운다.
 > ④는 **성공 가능성이 낮다.** 시간이 남을 때만 한다 — 이유는 해당 절에 적었다.
 
+> **문서 안내**
+> `SCHEDULE.md` 남은 일정·할 일 (앞으로) · `PROJECT_STATUS.md` 지금까지의 경과 ·
+> `METHODOLOGY.md` 수식과 근거 · `TEAM_TASKS.md` 팀원 지시서 ·
+> `RESEARCH_PLAN.md` 왜 · `ANALYSIS_PLAN.md` 규격 · `RESEARCH_HARNESS.md` 규칙
+
 ---
 
 ## ① 홍수위험지도 SHP — 30분 (제일 먼저)

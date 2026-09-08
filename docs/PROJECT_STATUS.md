@@ -5,6 +5,11 @@
 > 그 밖에 `RESEARCH_PLAN.md`(왜) · `ANALYSIS_PLAN.md`(규격) · `RESEARCH_HARNESS.md`(규칙) ·
 > `WORK_PLAN_0914.md`(일정·분담).
 
+> **문서 안내**
+> `SCHEDULE.md` 남은 일정·할 일 (앞으로) · `PROJECT_STATUS.md` 지금까지의 경과 ·
+> `METHODOLOGY.md` 수식과 근거 · `TEAM_TASKS.md` 팀원 지시서 ·
+> `RESEARCH_PLAN.md` 왜 · `ANALYSIS_PLAN.md` 규격 · `RESEARCH_HARNESS.md` 규칙
+
 ## 30초 요약
 
 창원시를 100m 칸 75,400개로 나누고, 칸마다 "폭우 때 얼마나 위험한가"를 계산해

@@ -125,6 +125,31 @@ cp .env.example .env
 | (추후 기입) | 팀장 | |
 | | | |
 
+## 🌿 브랜치 규칙
+
+| 브랜치 | 용도 |
+|---|---|
+| `develop` | **작업 브랜치.** 평소 커밋·푸시는 전부 여기 |
+| `main` | **백업 브랜치.** 중간 결과가 완료되거나 결과가 어느 정도 나왔을 때 `develop` 을 밀어 넣는다 |
+
+```bash
+git switch develop          # 평소 작업
+git push origin develop
+
+git push origin develop:main   # 마일스톤 백업
+```
+
+2026-09-08 에 `dev`·`data/dataset-setup`·`feat/research-harness` 를 `develop` 으로 합치고 삭제했다.
+되살릴 일이 있으면 커밋 해시로 복구한다.
+
+| 삭제한 브랜치 | 마지막 커밋 |
+|---|---|
+| `dev` | `c423859` docs: 연구 계획서 v2 + CDRI R1~R5 등급 체계 + decision 003 |
+| `data/dataset-setup` | `4228d21` data: 네이버 지오코딩 검증 및 관측지점 좌표 정비 |
+| `feat/research-harness` | `30f2a2d` docs: 남은 일정 한 장 정리 |
+
+---
+
 ## 🗺️ 연구 계획 & 진행 관리 (하네스)
 
 **계획 원본**: [`docs/RESEARCH_PLAN.md`](docs/RESEARCH_PLAN.md) — 딥리서치와 최신 실데이터 검증 기반, 14개 스토리 × 7 페이즈, 각 스토리에 검증 기준·담당·기한 명시.

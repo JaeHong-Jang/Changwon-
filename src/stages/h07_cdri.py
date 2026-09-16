@@ -41,7 +41,8 @@ MAUP_BLOCK_M = 500
 # 산출 gpkg 에 남길 열. 순서가 곧 표의 순서다.
 OUTPUT_COLUMNS = [
     "grid_id", "adm_cd", "gu_code", "rank", "cdri", "cdri_raw", "cdri_additive",
-    "grade_raw", "grade_final", "grade_balica", "grade_percentile", "grade_code", "grade_name",
+    "grade_raw", "grade_final", "grade_jenks", "grade_balica", "grade_percentile",
+    "grade_code", "grade_name",
     "grade_review_flag", "primary_cause", "in_robust_core",
     "H_scaled", "E_scaled", "V_scaled", "D_scaled",
     "h_contribution", "e_contribution", "v_contribution", "d_contribution",
@@ -195,35 +196,147 @@ def _attach_contributions(sub, matrix, weights):
     return percentiles
 
 
-def _count_trace_positives(grid_ids) -> int:
-    """Layer 1 이 남긴 침수흔적 라벨 중 순위 대상에 드는 양성 격자 수. 등급 본안 선택에 쓴다."""
+TRACE_LABEL_COLUMNS = ("trace_label", "trace_label_cal", "trace_label_val")
+
+
+def _load_trace_labels(grid_ids) -> dict[str, Any] | None:
+    """Layer 1 이 남긴 침수흔적 라벨을 순위 대상 격자 순서에 맞춰 읽는다.
+
+    전체·캘리브레이션 기간·검증 기간 세 벌을 함께 가져온다. 경계를 맞출 때와 채점할 때
+    서로 다른 사상을 써야 in-sample 순환이 생기지 않기 때문이다.
+    """
     import geopandas as gpd
+    import numpy as np
     import pandas as pd
 
-    columns = gpd.read_file(PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", rows=1).columns
-    if "trace_label" not in columns:
-        return 0
+    available = gpd.read_file(PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", rows=1).columns
+    present = [c for c in TRACE_LABEL_COLUMNS if c in available]
+    if "trace_label" not in present:
+        return None
     labelled = gpd.read_file(
-        PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", columns=["grid_id", "trace_label"]
+        PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", columns=["grid_id", *present]
     )
-    return int(pd.DataFrame({"grid_id": grid_ids}).merge(labelled, on="grid_id", how="left")
-               ["trace_label"].fillna(0).sum())
+    aligned = pd.DataFrame({"grid_id": grid_ids}).merge(labelled, on="grid_id", how="left")
+    out = {
+        name.replace("trace_label", "").strip("_") or "all":
+            aligned[name].fillna(0).to_numpy().astype(np.int8)
+        for name in present
+    }
+    out["has_time_split"] = bool("cal" in out and "val" in out and out["cal"].sum() and out["val"].sum())
+    return out
 
 
-def _assign_grades(sub, primary_scaled, percentiles) -> dict[str, Any]:
-    """R1~R5 등급을 매긴다. 본안(Jenks vs 캘리브레이션)은 라벨 수가 정한다."""
+def _grade_validation(grades, val_labels, p, n_classes: int = 5) -> dict[str, Any]:
+    """검증 기간 사상으로 등급을 채점한다 — 경계를 맞추지 않은 사상이라 out-of-sample 이다.
+
+    판정은 단조성과 **효과크기**를 함께 본다. 격자가 수만 개면 p 값은 거의 항상 유의해서
+    p 만으로는 아무것도 말하지 못한다 (CDRI_GRADE_SYSTEM 지적사항 13).
+    lift 기준은 최상위·차상위 등급에 건다. 통합 등급이면 남은 등급 중 그 둘에 적용된다.
+    """
+    from src.data import calibration as C
+
+    table = C.incidence_table(grades, val_labels, n_classes)
+    ratios = [r for r in table["adjacent_ratios"] if r is not None]
+    lift_top = table["rows"][-1]["lift"]
+    lift_second = table["rows"][-2]["lift"] if n_classes >= 2 else None
+    min_ratio = float(p["cdri.calibration_min_ratio"])
+    table["criteria"] = {
+        "monotone": table["monotone"],
+        "trend_significant": table["p_value"] < float(p["cdri.calibration_trend_p_max"]),
+        "all_adjacent_ratios_met": bool(ratios) and min(ratios) >= min_ratio,
+        "lift_top_met": lift_top is not None and lift_top >= float(p["cdri.calibration_lift_r5_min"]),
+        "lift_second_met": lift_second is not None and lift_second >= float(p["cdri.calibration_lift_r4_min"]),
+    }
+    table["failed_criteria"] = [k for k, ok in table["criteria"].items() if not ok]
+    table["passed"] = not table["failed_criteria"]
+    table["sample"] = "out-of-sample (검증 기간 사상)"
+    return table
+
+
+def _reporting_constraint(validation: dict[str, Any], min_ratio: float, lift_min: float) -> dict[str, Any]:
+    """검증 결과로 **무엇을 주장해도 되는지**를 정한다. 보고서 문장을 코드가 제한한다.
+
+    등급 체계가 판정 기준을 다 통과하지 못했을 때, 통과한 부분까지 버릴 이유는 없고
+    통과하지 못한 부분을 주장할 권리도 없다. 그 선을 사람 판단이 아니라 지표가 긋게 한다.
+    """
+    table = validation["calibration"]
+    return {
+        "monotone_claim_allowed": table["monotone"] and table["criteria"]["trend_significant"],
+        # 기저 대비 lift 가 기준 이상인 등급만 "실제로 더 자주 잠긴다"고 말할 수 있다.
+        "separable_grades": [
+            f"R{r['grade']}" for r in table["rows"]
+            if r["lift"] is not None and r["lift"] >= lift_min
+        ],
+        # 인접 발생률 비가 기준에 못 미친 쌍은 떼어 주장하지 않고 통합 단계로 보고한다.
+        "pairs_not_separable": [
+            f"R{i + 1}-R{i + 2}" for i, ratio in enumerate(table["adjacent_ratios"])
+            if ratio is not None and ratio < min_ratio
+        ],
+        "tier_structure_for_report": validation["calibration_merged"]["tier_members"],
+        "failed_criteria": table["failed_criteria"],
+        "note": (
+            "단조 추세는 검증 사상에서 확인됐다. 인접 발생률 비가 기준에 못 미친 등급쌍은 "
+            "개별 등급으로 주장하지 않고 통합 단계로 보고한다 (CDRI_GRADE_SYSTEM §1③ ④)."
+        ),
+    }
+
+
+def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p):
+    """캘리브레이션 기간으로 경계를 맞추고 검증 기간으로 채점한다. (등급, 경계진단, 검증)."""
+    from src.data import calibration as C
+    from src.data import grades as G
+
+    grade_calibration, calibration = G.calibration_grades(
+        primary_scaled, labels["cal"],
+        tolerance=float(p["cdri.calibration_tolerance"]),
+        min_ratio=float(p["cdri.calibration_min_ratio"]),
+    )
+    calibration["sensitivity"] = C.sensitivity(primary_scaled, labels["cal"])
+    calibration["n_calibration_positive"] = int(labels["cal"].sum())
+    calibration["sample"] = "in-sample (캘리브레이션 기간 사상) — 경계 산출에만 쓴다"
+
+    # 캘리브레이션 자료가 통합을 권고한 등급을 묶어 본 결과도 함께 채점한다 (절차 ④).
+    merged, merge_map = C.merge_weak_grades(grade_calibration, calibration["merge_recommended"])
+    validation = {
+        "calibration": _grade_validation(grade_calibration, labels["val"], p),
+        "calibration_merged": {
+            **merge_map,
+            **_grade_validation(merged, labels["val"], p, merge_map["n_tiers"]),
+        },
+        # Jenks 도 같은 자료로 채점해 둔다. 본안 선택 기준이 아니라 비교 정보다.
+        "jenks": _grade_validation(grade_jenks, labels["val"], p),
+    }
+    validation["reporting_constraint"] = _reporting_constraint(
+        validation,
+        min_ratio=float(p["cdri.calibration_min_ratio"]),
+        lift_min=float(p["cdri.calibration_lift_r4_min"]),
+    )
+    return grade_calibration, calibration, validation
+
+
+def _assign_grades(sub, primary_scaled, percentiles, p) -> dict[str, Any]:
+    """R1~R5 등급을 매긴다. 본안(Jenks vs 캘리브레이션)은 라벨 수와 시간 분할 가능 여부가 정한다."""
     import pandas as pd
 
     from src.data import grades as G
 
-    n_positive = _count_trace_positives(sub["grid_id"].to_numpy())
-    # 캘리브레이션은 사상을 시간으로 나눌 수 있어야 하는데, 지금은 단일 자료원이라 False 로 둔다.
-    scheme, reason = G.choose_scheme(n_positive, has_time_split=False)
+    labels = _load_trace_labels(sub["grid_id"].to_numpy())
+    n_positive = int(labels["all"].sum()) if labels else 0
+    scheme, reason = G.choose_scheme(n_positive, has_time_split=bool(labels and labels["has_time_split"]))
 
     grade_jenks, breaks = G.jenks_grades(primary_scaled)
     grade_balica = G.balica_grades(primary_scaled)
     grade_percentile = G.percentile_grades(primary_scaled)
-    grade_raw = grade_jenks   # 캘리브레이션 본안은 라벨 확보 후 별도 구현
+
+    grade_calibration, calibration, validation = (
+        _calibrate_and_validate(primary_scaled, labels, grade_jenks, p)
+        if scheme == "calibration" else (None, None, {})
+    )
+
+    # 본안은 결정 003 이 미리 고른 3안(캘리브레이션)이다. 검증 결과로 방식을 갈아타지
+    # 않는다 — 그러면 검증 자료가 선택에 개입해 out-of-sample 이 아니게 된다. 검증은
+    # "무엇을 주장해도 되는지"를 정할 뿐이며, 미달 기준은 지우지 않고 그대로 싣는다.
+    grade_raw = grade_calibration if grade_calibration is not None else grade_jenks
     grade_final, review_flag, rules = G.apply_rules(
         grade_raw,
         l1_percentile=percentiles[:, COMPONENTS.index("H")],
@@ -234,11 +347,22 @@ def _assign_grades(sub, primary_scaled, percentiles) -> dict[str, Any]:
 
     sub["grade_raw"] = grade_raw
     sub["grade_final"] = grade_final
+    sub["grade_jenks"] = grade_jenks
     sub["grade_balica"] = grade_balica
     sub["grade_percentile"] = grade_percentile
     sub["grade_code"] = pd.Series(grade_final).map(G.GRADE_CODES).to_numpy()
     sub["grade_name"] = pd.Series(grade_final).map(G.GRADE_NAMES).to_numpy()
     sub["grade_review_flag"] = review_flag
+
+    kappa = {
+        "jenks_vs_balica": round(G.weighted_kappa(grade_jenks, grade_balica), 4),
+        "jenks_vs_percentile": round(G.weighted_kappa(grade_jenks, grade_percentile), 4),
+        "balica_vs_percentile": round(G.weighted_kappa(grade_balica, grade_percentile), 4),
+        "note": "2차 가중 kappa. Landis & Koch(1977) 기준 0.61~0.80 substantial",
+    }
+    if grade_calibration is not None:
+        kappa["calibration_vs_jenks"] = round(G.weighted_kappa(grade_calibration, grade_jenks), 4)
+        kappa["calibration_vs_balica"] = round(G.weighted_kappa(grade_calibration, grade_balica), 4)
 
     return {
         "direction": "R1~R5 오름차순, 5 가 가장 위험 (국토부 지침 I~IV 와 방향 반대)",
@@ -246,17 +370,16 @@ def _assign_grades(sub, primary_scaled, percentiles) -> dict[str, Any]:
         "scheme_reason": reason,
         "n_trace_positive": n_positive,
         "jenks_breaks": [round(v, 4) for v in breaks],
+        "calibration": calibration,
+        "calibration_adopted": grade_calibration is not None,
+        "validation": validation or None,
         "raw": G.grade_summary(grade_raw),
         "final": G.grade_summary(grade_final),
+        "jenks_for_comparison": G.grade_summary(grade_jenks),
         "balica_for_comparison": G.grade_summary(grade_balica),
         "percentile_for_comparison": G.grade_summary(grade_percentile),
         "rules": rules,
-        "weighted_kappa": {
-            "jenks_vs_balica": round(G.weighted_kappa(grade_jenks, grade_balica), 4),
-            "jenks_vs_percentile": round(G.weighted_kappa(grade_jenks, grade_percentile), 4),
-            "balica_vs_percentile": round(G.weighted_kappa(grade_balica, grade_percentile), 4),
-            "note": "2차 가중 kappa. Landis & Koch(1977) 기준 0.61~0.80 substantial",
-        },
+        "weighted_kappa": kappa,
         "note": "검증은 grade_raw, 대응 행동표는 grade_final 을 쓴다 (순환 방지)",
     }
 
@@ -343,7 +466,7 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
 
     percentiles = _attach_contributions(sub, matrix, weights["equal"])
     primary_scaled = L.minmax(primary)
-    m["grade_system"] = _assign_grades(sub, primary_scaled, percentiles)
+    m["grade_system"] = _assign_grades(sub, primary_scaled, percentiles, p)
 
     sub["cdri"] = primary_scaled
     sub["cdri_raw"] = primary

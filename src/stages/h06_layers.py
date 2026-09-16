@@ -197,6 +197,38 @@ def _case_study_check(df, universe, lift_min: float) -> dict[str, Any]:
     }
 
 
+def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict[str, Any]:
+    """사상을 연도 시간순으로 나눠 앞뒤 라벨을 따로 붙인다. 분할 내역을 돌려준다.
+
+    등급 경계를 침수흔적으로 맞추고 **같은** 흔적으로 검증하면 in-sample 순환이 된다
+    (CDRI_GRADE_SYSTEM §1③, 지적사항 3). 앞 사상으로 경계를 정하고 뒤 사상으로 검증하면
+    그 순환이 끊긴다.
+
+    분할 기준은 결과를 보기 전에 정한 규칙이다 — **연도를 시간순으로 세워 앞 cal_share 를
+    캘리브레이션, 나머지를 검증**으로 한다. 홀수면 여분을 캘리브레이션 쪽에 준다.
+    창원 기록은 연도마다 사상이 정확히 하나씩이라 연도 분할이 곧 사상 분할이다.
+    """
+    from src.data import flood_traces as FT
+
+    years = sorted(y for y in traces["event_year"].dropna().unique())
+    n_cal = max(1, int(round(len(years) * cal_share)))
+    cal_years, val_years = years[:n_cal], years[n_cal:]
+
+    split = {"years": years, "calibration_years": cal_years, "validation_years": val_years}
+    for name, subset in (("cal", cal_years), ("val", val_years)):
+        if not subset:
+            df[f"trace_label_{name}"] = 0
+            split[f"n_{name}"] = 0
+            continue
+        labels, _ = FT.label_grid(df, traces[traces["event_year"].isin(subset)], min_overlap=min_overlap)
+        df[f"trace_label_{name}"] = labels.astype("int8")
+        split[f"n_{name}"] = int(labels.sum())
+    # 두 쪽 모두 양성이 있어야 캘리브레이션-검증 분리가 성립한다.
+    split["usable"] = bool(split["n_cal"] and split["n_val"])
+    split["n_both"] = int((df["trace_label_cal"].to_numpy() & df["trace_label_val"].to_numpy()).sum())
+    return split
+
+
 def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | None]:
     """실제 침수 기록으로 Layer 1 을 채점한다. (지표, 안내문) 을 돌려준다.
 
@@ -216,6 +248,7 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
     labels, overlap = FT.label_grid(df, traces, min_overlap=min_overlap)
     df["trace_overlap"] = overlap
     df["trace_label"] = labels.astype("int8")
+    split = _time_split_labels(df, traces, min_overlap, float(p["layer1.trace_calibration_share"]))
 
     scores = df["L1"].to_numpy()
     n_all, n_universe = int(labels.sum()), int((labels & universe).sum())
@@ -226,6 +259,7 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
         "n_labelled_in_universe": n_universe,
         "min_positive_required": min_positive,
         "label_sufficient": n_all >= min_positive,
+        "time_split": split,
         "auc_min": float(p["layer1.trace_auc_min"]),
         "capture_min": float(p["layer1.trace_top20_capture_min"]),
     }
@@ -312,7 +346,8 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
         "vulnerability_class", "vulnerability_grade", "L1", "geometry",
     ]
     if "trace_label" in df.columns:
-        columns[-1:-1] = ["trace_overlap", "trace_label"]
+        # 캘리브레이션·검증 라벨을 따로 실어 H07 이 in-sample 순환 없이 등급 경계를 맞춘다.
+        columns[-1:-1] = ["trace_overlap", "trace_label", "trace_label_cal", "trace_label_val"]
     out = ctx.outputs[0]
     out.parent.mkdir(parents=True, exist_ok=True)
     if out.exists():
@@ -384,7 +419,10 @@ def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
         elderly[["spatial_id", "elderly_ratio", "pop_elderly", "pop_age_total"]],
         on="spatial_id", how="left",
     )
-    df[["spatial_id", "elderly_ratio"]] = merged[["spatial_id", "elderly_ratio"]].to_numpy()
+    # 두 열을 한 numpy 배열로 대입하면 문자열(spatial_id)과 실수(elderly_ratio)가 섞여
+    # object dtype 이 되고, 그대로 gpkg 에 쓰면 비율이 TEXT 로 저장돼 하류에서 깨진다.
+    df["spatial_id"] = merged["spatial_id"].to_numpy()
+    df["elderly_ratio"] = merged["elderly_ratio"].to_numpy(dtype=float)
 
     universe = df["universe"].to_numpy().astype(bool)
     first_elderly_col = sgis.age_columns(sgis.AGE_BLOCK_TOTAL, min_age=sgis.ELDERLY_FROM_AGE)[0]

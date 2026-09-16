@@ -561,6 +561,7 @@ nodes:
       - layer1.n_classes
       - layer1.case_study_lift_min
       - layer1.trace_min_overlap
+      - layer1.trace_calibration_share
       - layer1.trace_min_positive
       - layer1.trace_auc_min
       - layer1.trace_top20_capture_min
@@ -637,6 +638,11 @@ nodes:
       - cdri.rescale_floor
       - cdri.min_spearman
       - cdri.min_top20_overlap
+      - cdri.calibration_tolerance
+      - cdri.calibration_min_ratio
+      - cdri.calibration_trend_p_max
+      - cdri.calibration_lift_r5_min
+      - cdri.calibration_lift_r4_min
     verify:
       - {kind: code, rule: "변형 간 중위 Spearman rho >= min_spearman, TOP 20 중첩 >= min_top20_overlap, Capacity 결측 0 대체 없음, 등급 규칙으로 바뀐 격자 <= 5% (decisions/003)"}
     approval: {who: R3, what: "primary 산식·가중치 확정. 승인 후 재조정 금지 (retuning_prohibited)"}

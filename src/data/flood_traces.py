@@ -97,31 +97,54 @@ def _drop_duplicate_geometries(gdf):
     return gdf, before - len(gdf)
 
 
+def _coalesce(gdf, candidates: tuple[str, ...]):
+    """후보 컬럼들을 **행 단위로** 합친다. 앞선 후보의 값이 비면 다음 후보로 채운다.
+
+    두 자료원(창원시 NDMS `F_*`, 행안부 API `FLDN_*`)을 한 표로 합치면 양쪽 컬럼이
+    모두 생기되 각자 자기 행에만 값이 있다. 컬럼을 **하나만** 골라 쓰면 다른 자료원
+    행이 전부 결측이 되어 연도·사상별 분할이 불가능해진다. 그래서 행마다 채운다.
+    """
+    import pandas as pd
+
+    present = [c for c in candidates if c in gdf.columns]
+    if not present:
+        return None, None
+    merged = gdf[present[0]].replace("", pd.NA)
+    for column in present[1:]:
+        merged = merged.fillna(gdf[column].replace("", pd.NA))
+    return merged, present
+
+
 def _derive_event_fields(gdf):
     """자료원마다 다른 컬럼명에서 일자·원인·사상·연도를 뽑아 공통 이름으로 맞춘다."""
     import pandas as pd
 
-    date_col = next((c for c in DATE_COLUMN_CANDIDATES if c in gdf.columns), None)
-    cause_col = next((c for c in CAUSE_COLUMN_CANDIDATES if c in gdf.columns), None)
-    event_col = next((c for c in EVENT_COLUMN_CANDIDATES if c in gdf.columns), None)
-    year_col = next((c for c in YEAR_COLUMN_CANDIDATES if c in gdf.columns), None)
+    raw_date, date_cols = _coalesce(gdf, DATE_COLUMN_CANDIDATES)
+    raw_cause, cause_cols = _coalesce(gdf, CAUSE_COLUMN_CANDIDATES)
+    raw_event, event_cols = _coalesce(gdf, EVENT_COLUMN_CANDIDATES)
+    raw_year, year_cols = _coalesce(gdf, YEAR_COLUMN_CANDIDATES)
 
-    gdf["event_date"] = (
-        pd.to_datetime(gdf[date_col].astype(str), format="%Y%m%d", errors="coerce")
-        if date_col else pd.NaT
-    )
-    if date_col and gdf["event_date"].isna().all():   # 다른 형식일 수 있다
-        gdf["event_date"] = pd.to_datetime(gdf[date_col], errors="coerce")
-    gdf["cause"] = gdf[cause_col].astype(str) if cause_col else None
-    gdf["event_name"] = gdf[event_col].astype(str) if event_col else None
+    if raw_date is None:
+        gdf["event_date"] = pd.NaT
+    else:
+        # NDMS·API 모두 YYYYMMDD 문자열이지만, 다른 형식이 섞이면 일반 파서로 한 번 더 시도한다.
+        text = raw_date.astype("string").str.strip()
+        parsed = pd.to_datetime(text, format="%Y%m%d", errors="coerce")
+        gdf["event_date"] = parsed.fillna(pd.to_datetime(text[parsed.isna()], errors="coerce"))
+    gdf["cause"] = raw_cause.astype("string") if raw_cause is not None else None
+    gdf["event_name"] = raw_event.astype("string") if raw_event is not None else None
+    # 연도 컬럼이 비는 행은 일자에서 뽑아 채운다. 시간 분할에 쓰는 값이라 결측을 남기지 않는다.
+    from_date = gdf["event_date"].dt.year.astype("Int64").astype("string")
     gdf["event_year"] = (
-        gdf[year_col].astype(str) if year_col
-        else gdf["event_date"].dt.year.astype("Int64").astype(str)
+        raw_year.astype("string").str.strip().replace("", pd.NA).fillna(from_date)
+        if raw_year is not None else from_date
     )
     gdf["is_inland"] = (
-        gdf["cause"].str.contains("|".join(INLAND_CAUSE_TOKENS), na=False) if cause_col else pd.NA
+        gdf["cause"].str.contains("|".join(INLAND_CAUSE_TOKENS), na=False)
+        if raw_cause is not None else pd.NA
     )
-    return gdf, {"date_column": date_col, "cause_column": cause_col}
+    return gdf, {"date_columns": date_cols, "cause_columns": cause_cols,
+                 "event_columns": event_cols, "year_columns": year_cols}
 
 
 def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[str, Any]]:

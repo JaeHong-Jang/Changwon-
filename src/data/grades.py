@@ -66,6 +66,21 @@ def jenks_grades(values: np.ndarray) -> tuple[np.ndarray, list[float]]:
     return classify(values, breaks).astype("int8"), breaks
 
 
+def calibration_grades(
+    values: np.ndarray, calibration_labels: np.ndarray, *, tolerance: float, min_ratio: float
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """실제 침수 발생률로 경계를 맞춘 5등급 (본안 3안). (등급, 경계 진단) 을 돌려준다.
+
+    라벨은 **캘리브레이션 기간 사상만** 써야 한다. 검증 기간 라벨을 섞으면 같은 자료로
+    경계를 맞추고 검증하는 순환이 된다 (CDRI_GRADE_SYSTEM §1③).
+    """
+    from src.data import calibration as C
+
+    result = C.calibration_breaks(values, calibration_labels, tolerance=tolerance, min_ratio=min_ratio)
+    grades = classify(values, [*result["breaks"], float(np.max(values))])
+    return grades.astype("int8"), result
+
+
 def percentile_grades(values: np.ndarray) -> np.ndarray:
     """설계 목표 비율(2/8/20/30/40%)을 그대로 강제한 고정 백분위 등급.
 

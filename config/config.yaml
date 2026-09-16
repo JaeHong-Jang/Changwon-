@@ -41,6 +41,9 @@ layer1:
   trace_min_positive: 30            # 양성 격자가 이보다 적으면 성능을 판정하지 않는다
   trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
   trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
+  trace_calibration_share: 0.5      # 사상 연도를 시간순으로 나눠 앞 절반을 등급 캘리브레이션용으로
+                                    # 쓰고 뒤 절반을 검증용으로 남긴다. 흔적으로 경계를 맞추고
+                                    # 같은 흔적으로 검증하는 순환을 막는다 (CDRI_GRADE_SYSTEM §1③)
 
 # ----- H06 Layer 3 취약계층·대응역량 -----
 layer3:
@@ -52,6 +55,11 @@ cdri:
   rescale_floor: 0.05               # 기하평균에서 0 이 전체를 0 으로 만들지 않도록 하한
   min_spearman: 0.80                # 가중치·집계형 변형 간 중위 순위상관 하한 (하네스 H07)
   min_top20_overlap: 14             # TOP 20 중첩 하한 (70%)
+  calibration_tolerance: 0.03       # 목표 백분위에서 이 범위 안의 PAV 단절점으로 경계를 옮긴다
+  calibration_min_ratio: 1.3        # 인접 등급 발생률 비 하한. 미달이면 두 등급 통합을 권고한다
+  calibration_trend_p_max: 0.01     # 등급-발생률 단조 추세검정 상한 (Cochran-Armitage)
+  calibration_lift_r5_min: 3.0      # 검증 사상에서 R5 의 lift 하한
+  calibration_lift_r4_min: 2.0      # 검증 사상에서 R4 의 lift 하한
 
 # ----- H08 우선대응 지역 정책화 -----
 policy:

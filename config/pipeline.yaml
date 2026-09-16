@@ -673,7 +673,7 @@ nodes:
     phase: P4
     title: 결과 확인 EDA
     description: 결과 확인 EDA — TOP 20·CDRI 분포·기여도를 독립 침수자료(A1 침수예상도·A7 홍수위험지도)와 대조
-    runner: src.stages.pending:result_review
+    runner: src.stages.h08_review:result_review
     depends_on: [h08_top20_policy]
     inputs:
       - "data/raw/flood_maps/**/*"

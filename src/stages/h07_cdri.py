@@ -412,6 +412,78 @@ def _write_grade_by_dong(sub, path: Path) -> int:
     return len(table)
 
 
+def _decide_ranking_mode(robustness, top_n: int, min_rho: float, min_overlap: int):
+    """순위를 그대로 보고해도 되는지 정한다. (지표, 모드, 설명).
+
+    강건성 미달은 **실패가 아니라 분기**다 (하네스 H07 on_fail). 임계값을 낮추는
+    재튜닝은 금지이므로 기준은 그대로 두고 산출물의 성격만 바꾼다 — 정밀 순위 대신
+    위험군과 강건 공통집합으로 말한다.
+    """
+    unmet = []
+    if robustness["median_rho"] < min_rho:
+        unmet.append(f"중위 Spearman rho {round(robustness['median_rho'], 4)} < {min_rho}")
+    if robustness["min_overlap"] < min_overlap:
+        unmet.append(f"TOP {top_n} 최소 중첩 {robustness['min_overlap']} < {min_overlap}")
+    metrics = {
+        "median_spearman_rho": round(robustness["median_rho"], 4),
+        "min_spearman_rho": round(robustness["min_rho"], 4),
+        f"min_top{top_n}_overlap": robustness["min_overlap"],
+        "min_spearman_required": min_rho,
+        "min_overlap_required": min_overlap,
+        "unmet": unmet,
+    }
+    note = (
+        "정밀 순위 보고 가능" if not unmet else
+        "정밀 순위를 주장하지 않는다. 위험군(tier)과 강건 공통집합으로만 보고한다 — 하네스 H07 분기"
+    )
+    return metrics, ("rank" if not unmet else "tier"), note
+
+
+def _write_outputs(ctx: StageContext, sub, variant_rows, m: dict[str, Any], formula: dict) -> None:
+    """격자 gpkg·민감도표·행정동표·확정 산식 manifest 를 쓴다.
+
+    manifest 를 따로 남기는 이유: 승인 뒤 산식을 바꾸지 않았다는 것을 나중에 대조할 수
+    있어야 한다. `retuning_prohibited` 와 run_id 가 그 증거다.
+    """
+    import pandas as pd
+
+    gpkg = next(o for o in ctx.outputs if o.suffix == ".gpkg")
+    gpkg.parent.mkdir(parents=True, exist_ok=True)
+    if gpkg.exists():
+        gpkg.unlink()
+    sub[OUTPUT_COLUMNS].to_file(gpkg, layer="cdri", driver="GPKG")
+
+    sensitivity = next(o for o in ctx.outputs if o.name == "sensitivity.csv")
+    sensitivity.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(variant_rows).to_csv(sensitivity, index=False, encoding="utf-8-sig")
+
+    by_dong = next(o for o in ctx.outputs if o.name == "grade_by_dong.csv")
+    m["grade_system"]["by_dong_rows"] = _write_grade_by_dong(sub, by_dong)
+
+    manifest = next(o for o in ctx.outputs if o.suffix == ".json")
+    manifest.parent.mkdir(parents=True, exist_ok=True)
+    manifest.write_text(json.dumps({
+        "primary_formula": formula["name"],
+        "definition": "CDRI = Π (X_k ^ w_k), X ∈ {H, E, V, D}, 각 [floor, 1] 재척도",
+        "components": COMPONENT_LABELS,
+        "weights": m["weights"]["equal"],
+        "weight_scheme": "equal",
+        "rescale_floor": formula["floor"],
+        "universe_rule": "pop_total > 0 또는 houses >= 1",
+        "n_universe": formula["n_universe"],
+        "layer2_included": False,
+        "ranking_mode": formula["ranking_mode"],
+        "ranking_mode_note": m["ranking_mode_note"],
+        "grade_scheme": m["grade_system"]["scheme"],
+        "grade_direction": "R1~R5 오름차순 (5 = 최위험)",
+        "robustness_unmet": formula["unmet"],
+        "robust_core_n": formula["robust_core_n"],
+        "decision": "docs/decisions/001-layer2-design.md",
+        "run_id": ctx.run_id,
+        "retuning_prohibited": True,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 def cdri(ctx: StageContext) -> dict[str, Any]:
     """통과: 가중치·집계형 변형 사이 중위 Spearman ρ ≥ params.min_spearman,
     TOP 20 중첩 ≥ params.min_top20_overlap, 구성요소 결측 0 대체 없음.
@@ -484,62 +556,15 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "primary_cause_rule": "구성요소 백분위가 가장 높은 것 (ANALYSIS_PLAN §5)",
     }
 
-    unmet = []
-    if robustness["median_rho"] < min_rho:
-        unmet.append(f"중위 Spearman rho {round(robustness['median_rho'], 4)} < {min_rho}")
-    if robustness["min_overlap"] < min_overlap:
-        unmet.append(f"TOP {top_n} 최소 중첩 {robustness['min_overlap']} < {min_overlap}")
-    ranking_mode = "rank" if not unmet else "tier"
-    m["robustness"] = {
-        "median_spearman_rho": round(robustness["median_rho"], 4),
-        "min_spearman_rho": round(robustness["min_rho"], 4),
-        f"min_top{top_n}_overlap": robustness["min_overlap"],
-        "min_spearman_required": min_rho,
-        "min_overlap_required": min_overlap,
-        "unmet": unmet,
-    }
-    m["ranking_mode"] = ranking_mode
-    m["ranking_mode_note"] = (
-        "정밀 순위 보고 가능" if ranking_mode == "rank" else
-        "정밀 순위를 주장하지 않는다. 위험군(tier)과 강건 공통집합으로만 보고한다 — 하네스 H07 분기"
+    m["robustness"], m["ranking_mode"], m["ranking_mode_note"] = _decide_ranking_mode(
+        robustness, top_n, min_rho, min_overlap
     )
+    unmet, ranking_mode = m["robustness"]["unmet"], m["ranking_mode"]
 
-    gpkg = next(o for o in ctx.outputs if o.suffix == ".gpkg")
-    gpkg.parent.mkdir(parents=True, exist_ok=True)
-    if gpkg.exists():
-        gpkg.unlink()
-    sub[OUTPUT_COLUMNS].to_file(gpkg, layer="cdri", driver="GPKG")
-
-    sensitivity = next(o for o in ctx.outputs if o.name == "sensitivity.csv")
-    sensitivity.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(robustness["rows"]).to_csv(sensitivity, index=False, encoding="utf-8-sig")
-
-    by_dong = next(o for o in ctx.outputs if o.name == "grade_by_dong.csv")
-    m["grade_system"]["by_dong_rows"] = _write_grade_by_dong(sub, by_dong)
-
-    manifest = next(o for o in ctx.outputs if o.suffix == ".json")
-    manifest.parent.mkdir(parents=True, exist_ok=True)
-    manifest.write_text(json.dumps({
-        "primary_formula": primary_name,
-        "definition": "CDRI = Π (X_k ^ w_k), X ∈ {H, E, V, D}, 각 [floor, 1] 재척도",
-        "components": COMPONENT_LABELS,
-        "weights": m["weights"]["equal"],
-        "weight_scheme": "equal",
-        "rescale_floor": floor,
-        "universe_rule": "pop_total > 0 또는 houses >= 1",
-        "n_universe": int(universe.sum()),
-        "layer2_included": False,
-        "ranking_mode": ranking_mode,
-        "ranking_mode_note": m["ranking_mode_note"],
-        "grade_scheme": m["grade_system"]["scheme"],
-        "grade_direction": "R1~R5 오름차순 (5 = 최위험)",
-        "robustness_unmet": unmet,
-        "robust_core_n": len(robustness["robust_core"]),
-        "decision": "docs/decisions/001-layer2-design.md",
-        "run_id": ctx.run_id,
-        "retuning_prohibited": True,
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
-
+    _write_outputs(ctx, sub, robustness["rows"], m,
+                   formula=dict(name=primary_name, floor=floor, unmet=unmet,
+                                ranking_mode=ranking_mode, n_universe=int(universe.sum()),
+                                robust_core_n=len(robustness["robust_core"])))
     _cdri_map(df, sub, PROJECT_ROOT / "reports/figures/cdri_map.png")
     return m
 

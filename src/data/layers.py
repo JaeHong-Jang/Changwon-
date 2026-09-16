@@ -36,6 +36,7 @@ def zscore(a: np.ndarray) -> np.ndarray:
 
 
 def minmax(a: np.ndarray) -> np.ndarray:
+    """0~1 로 선형 변환. 값이 모두 같으면 0 으로 둔다."""
     a = np.asarray(a, dtype=float)
     lo, hi = np.nanmin(a), np.nanmax(a)
     return np.zeros_like(a) if hi == lo else (a - lo) / (hi - lo)
@@ -69,6 +70,7 @@ def jenks_breaks(values: np.ndarray, k: int) -> list[float]:
     s1, s2 = _prefix_sums(x)
 
     def cost(i: np.ndarray, j: int) -> np.ndarray:
+        """정렬된 x[i..j] 의 편차제곱합. 누적합으로 O(1) 에 구한다."""
         count = j - i + 1
         total = s1[j + 1] - s1[i]
         square = s2[j + 1] - s2[i]

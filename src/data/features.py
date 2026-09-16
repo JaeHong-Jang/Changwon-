@@ -40,13 +40,16 @@ class Lattice:
 
     @property
     def x0(self) -> float:
+        """격자망 왼쪽 끝 x 좌표."""
         return self.transform.c
 
     @property
     def y_top(self) -> float:
+        """격자망 위쪽 끝 y 좌표."""
         return self.transform.f
 
     def rowcol(self, minx: np.ndarray, maxy: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """격자 폴리곤의 좌상단 좌표를 배열의 (행, 열) 위치로 바꾼다."""
         col = np.round((minx - self.x0) / self.res).astype(int)
         row = np.round((self.y_top - maxy) / self.res).astype(int)
         return row, col
@@ -59,6 +62,7 @@ class Lattice:
         return x, y
 
     def refined(self, factor: int) -> "Lattice":
+        """같은 범위를 factor 배 잘게 나눈 격자망. 폴리곤을 면적 비율로 굽는 데 쓴다."""
         return Lattice(
             Affine(self.res / factor, 0, self.x0, 0, -self.res / factor, self.y_top),
             (self.shape[0] * factor, self.shape[1] * factor),
@@ -108,6 +112,7 @@ def dem_to_lattice(dem_paths: Iterable, lat: Lattice, nodata: float = -9999.0) -
 
 
 def slope_deg(elev: np.ndarray, res: float) -> np.ndarray:
+    """경사(도). 인접 셀 표고차의 기울기를 각도로 바꾼다."""
     dy, dx = np.gradient(elev, res)
     return np.degrees(np.arctan(np.hypot(dx, dy)))
 
@@ -254,6 +259,7 @@ def distance_to(geoms: Iterable, lat: Lattice, sub: int = 10) -> np.ndarray:
 
 
 def nearest_point_distance(lat: Lattice, points: gpd.GeoDataFrame) -> np.ndarray:
+    """각 셀 중심에서 가장 가까운 점까지 거리(m). KD-트리로 한 번에 구한다."""
     x, y = lat.centers()
     tree = cKDTree(np.column_stack([points.geometry.x, points.geometry.y]))
     d, _ = tree.query(np.column_stack([x.ravel(), y.ravel()]))

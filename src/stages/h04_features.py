@@ -44,9 +44,124 @@ CORE = [
 ]
 
 
+def _terrain_layers(dem_paths, lat, rel_radius_m: float):
+    """DEM 에서 지형 변수를 만든다. (변수 배열 dict, 메타).
+
+    표고 하나에서 경사·상대고도·TWI·유량누적이 모두 나오므로 한곳에 묶는다.
+    """
+    from src.data import features as F
+
+    elev, meta = F.dem_to_lattice(dem_paths, lat)
+    twi, acc = F.twi(elev, lat.res)
+    layers = {
+        "elev_m": elev,
+        "slope_deg": F.slope_deg(elev, lat.res),
+        "rel_elev_m": F.relative_elevation(elev, lat.res, rel_radius_m),
+        "twi": twi,
+        "flow_acc_cells": acc,
+    }
+    return layers, meta
+
+
+def _land_cover_layers(lc_paths, lat, sub: int, crs: str):
+    """토지피복에서 불투수면 비율과 수역까지의 거리를 만든다. (변수 dict, 메타)."""
+    import geopandas as gpd
+    import pandas as pd
+
+    from src.data import features as F
+
+    lc = pd.concat([gpd.read_file(q) for q in lc_paths], ignore_index=True)
+    lc = gpd.GeoDataFrame(lc, geometry="geometry", crs=lc.crs).to_crs(crs)
+    lc["L2_CODE"] = lc["L2_CODE"].astype(str)
+    inland = lc.loc[lc["L2_CODE"] == F.INLAND_WATER_CODE, "geometry"]
+    layers = {
+        "impervious_frac": F.area_fraction(lc.loc[lc["L2_CODE"].isin(F.IMPERVIOUS_CODES), "geometry"], lat, sub),
+        "inland_water_frac": F.area_fraction(inland, lat, sub),
+        "water_dist_m": F.distance_to(inland, lat, sub),
+        "sea_dist_m": F.distance_to(lc.loc[lc["L2_CODE"] == F.SEA_CODE, "geometry"], lat, sub),
+    }
+    return layers, {"land_cover_polygons": int(len(lc))}
+
+
+def _waterway_layers(lat, sub: int, crs: str):
+    """OSM 하천망에서 하천·복개천까지의 거리를 만든다. (변수 dict, 메타).
+
+    토지피복 내륙수는 폭이 있는 수역만 잡아 소하천·복개천이 빠지므로 중심선을 따로 쓴다.
+    """
+    import geopandas as gpd
+
+    from src.data import features as F
+
+    waterways = gpd.read_file(PROJECT_ROOT / "data/raw/rivers/osm_waterways.gpkg", layer="waterways").to_crs(crs)
+    channels = waterways[waterways["waterway"].isin(["river", "stream", "canal"])]
+    culverts = waterways[waterways["tunnel"] == "culvert"]
+    layers = {
+        "river_dist_m": F.distance_to(channels["geometry"], lat, sub),
+        "culvert_dist_m": F.distance_to(culverts["geometry"], lat, sub) if len(culverts) else None,
+    }
+    meta = {"waterways": {
+        "n_total": int(len(waterways)),
+        "by_type": {k: int(v) for k, v in waterways["waterway"].value_counts().items()},
+        "n_channel": int(len(channels)),
+        "n_culvert": int(len(culverts)),
+        "channel_length_km": round(float(channels.geometry.length.sum() / 1000), 1),
+    }}
+    return layers, meta
+
+
+def _flood_map_layers(lat, sub: int, crs: str):
+    """창원시 침수예상도에서 100년 빈도 침수 면적비와 면적가중 침수심을 만든다.
+
+    **예상도는 입력, 흔적도는 검증**이다. 이 노드는 예상도만 쓴다 (ANALYSIS_PLAN §2-3).
+    """
+    import geopandas as gpd
+
+    from src.data import features as F
+
+    fm = gpd.read_file(PROJECT_ROOT / "data/processed/canonical/flood_maps.gpkg", layer="flood_maps").to_crs(crs)
+    l210_frac, l210_depth = F.value_fraction_and_mean(fm[fm["layer"] == "L210_100"], "depth_m", lat, sub)
+    return {
+        "flood_l210_100_frac": l210_frac,
+        "flood_l210_100_depth_m": l210_depth,
+        "flood_l200_100_frac": F.area_fraction(fm.loc[fm["layer"] == "L200_100", "geometry"], lat, sub),
+        "flood_l220_100_frac": F.area_fraction(fm.loc[fm["layer"] == "L220_100", "geometry"], lat, sub),
+    }
+
+
+def _pump_layers(lat, crs: str):
+    """배수펌프장까지의 거리. (변수 dict, 메타)."""
+    import geopandas as gpd
+
+    from src.data import features as F
+
+    pumps = gpd.read_file(
+        PROJECT_ROOT / "data/processed/spatial/pump_stations.gpkg", layer="pump_stations"
+    ).to_crs(crs)
+    return {"pump_dist_m": F.nearest_point_distance(lat, pumps)}, {"n_pumps": int(len(pumps))}
+
+
+def _attach_population(out, sgis_year: int):
+    """SGIS 인구·가구·주택을 붙이고 순위 대상(universe)을 정한다.
+
+    SGIS 가 발행하지 않은 격자는 0 으로 채우되 `sgis_reported` 로 구분한다.
+    '값이 0' 과 '발행하지 않음' 은 다른 상태다.
+    """
+    import pandas as pd
+
+    from src.data import features as F
+
+    stats = pd.read_parquet(PROJECT_ROOT / "data/processed/canonical/sgis_grid_statistics.parquet")
+    out = out.merge(F.sgis_wide(stats, sgis_year, SGIS_VARIABLES), on="grid_id", how="left")
+    out["sgis_reported"] = out[list(SGIS_VARIABLES.values())].notna().any(axis=1).astype("int8")
+    for column in SGIS_VARIABLES.values():
+        out[column] = out[column].fillna(0).astype("int64")
+    out["universe"] = ((out["pop_total"] > 0) | (out["houses"] >= 1)).astype("int8")
+    return out
+
+
 def grid_features(ctx: StageContext) -> dict[str, Any]:
     """통과: 핵심 변수 결측률 < params.features.max_missing_rate, 변수별 출처·방향·단위가
-    data_dictionary 에 있음, 라벨(침수흔적·민원) 을 입력으로 쓰지 않았음(누수 점검)."""
+    data_dictionary 에 있음, 라벨(침수흔적·민원)을 입력으로 쓰지 않았음(누수 점검)."""
     import geopandas as gpd
     import numpy as np
     import pandas as pd
@@ -65,98 +180,37 @@ def grid_features(ctx: StageContext) -> dict[str, Any]:
     lat, row, col = F.lattice_from_grid(grid, float(p["analysis.grid_size_m"]))
     m: dict[str, Any] = {"n_grid": int(len(grid)), "lattice_shape": list(lat.shape)}
 
-    # DEM
-    dem_paths = sorted(q for q in ctx.inputs if q.suffix.lower() in (".img", ".tif", ".tiff"))
-    elev, dem_meta = F.dem_to_lattice(dem_paths, lat)
-    m.update(dem_meta)
-    slope = F.slope_deg(elev, lat.res)
-    rel = F.relative_elevation(elev, lat.res, rel_radius)
-    twi, acc = F.twi(elev, lat.res)
-
-    # 토지피복
-    lc_paths = sorted(q for q in ctx.inputs if q.suffix.lower() == ".shp")
-    lc = pd.concat([gpd.read_file(q) for q in lc_paths], ignore_index=True)
-    lc = gpd.GeoDataFrame(lc, geometry="geometry", crs=lc.crs).to_crs(crs)
-    lc["L2_CODE"] = lc["L2_CODE"].astype(str)
-    m["land_cover_polygons"] = int(len(lc))
-    imperv = F.area_fraction(lc.loc[lc["L2_CODE"].isin(F.IMPERVIOUS_CODES), "geometry"], lat, sub)
-    water_geoms = lc.loc[lc["L2_CODE"] == F.INLAND_WATER_CODE, "geometry"]
-    water_frac = F.area_fraction(water_geoms, lat, sub)
-    water_dist = F.distance_to(water_geoms, lat, sub)
-    sea_dist = F.distance_to(lc.loc[lc["L2_CODE"] == F.SEA_CODE, "geometry"], lat, sub)
-
-    # 하천선 (OSM). 토지피복 내륙수는 폭이 있는 수역만 잡아 소하천·복개천이 빠진다.
-    waterways = gpd.read_file(PROJECT_ROOT / "data/raw/rivers/osm_waterways.gpkg", layer="waterways").to_crs(crs)
-    channels = waterways[waterways["waterway"].isin(["river", "stream", "canal"])]
-    culverts = waterways[waterways["tunnel"] == "culvert"]
-    m["waterways"] = {
-        "n_total": int(len(waterways)),
-        "by_type": {k: int(v) for k, v in waterways["waterway"].value_counts().items()},
-        "n_channel": int(len(channels)),
-        "n_culvert": int(len(culverts)),
-        "channel_length_km": round(float(channels.geometry.length.sum() / 1000), 1),
-    }
-    river_dist = F.distance_to(channels["geometry"], lat, sub)
-    culvert_dist = F.distance_to(culverts["geometry"], lat, sub) if len(culverts) else None
-
-    # 침수예상도
-    fm = gpd.read_file(PROJECT_ROOT / "data/processed/canonical/flood_maps.gpkg", layer="flood_maps")
-    fm = fm.to_crs(crs)
-    l210_frac, l210_depth = F.value_fraction_and_mean(fm[fm["layer"] == "L210_100"], "depth_m", lat, sub)
-    l200_frac = F.area_fraction(fm.loc[fm["layer"] == "L200_100", "geometry"], lat, sub)
-    l220_frac = F.area_fraction(fm.loc[fm["layer"] == "L220_100", "geometry"], lat, sub)
-
-    # 펌프장
-    pumps = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/pump_stations.gpkg", layer="pump_stations").to_crs(crs)
-    m["n_pumps"] = int(len(pumps))
-    pump_dist = F.nearest_point_distance(lat, pumps)
-
-    # 인구
-    stats = pd.read_parquet(PROJECT_ROOT / "data/processed/canonical/sgis_grid_statistics.parquet")
-    wide = F.sgis_wide(stats, sgis_year, SGIS_VARIABLES)
-
-    def pick(arr: np.ndarray) -> np.ndarray:
-        return arr[row, col]
+    # 자료원별로 격자망 위의 2차원 배열을 만든 뒤, 마지막에 (row, col) 로 한 번에 읽는다.
+    layers: dict[str, Any] = {}
+    for produced, meta in (
+        _terrain_layers(sorted(q for q in ctx.inputs if q.suffix.lower() in (".img", ".tif", ".tiff")),
+                        lat, rel_radius),
+        _land_cover_layers(sorted(q for q in ctx.inputs if q.suffix.lower() == ".shp"), lat, sub, crs),
+        _waterway_layers(lat, sub, crs),
+        (_flood_map_layers(lat, sub, crs), {}),
+        _pump_layers(lat, crs),
+    ):
+        layers.update(produced)
+        m.update(meta)
 
     out = pd.DataFrame({
         "grid_id": grid["grid_id"].to_numpy(),
         "adm_cd": grid["adm_cd"].to_numpy(),
         "gu_code": grid["gu_code"].to_numpy(),
-        "elev_m": pick(elev),
-        "slope_deg": pick(slope),
-        "rel_elev_m": pick(rel),
-        "twi": pick(twi),
-        "flow_acc_cells": pick(acc),
-        "impervious_frac": pick(imperv),
-        "inland_water_frac": pick(water_frac),
-        "water_dist_m": pick(water_dist),
-        "sea_dist_m": pick(sea_dist),
-        "river_dist_m": pick(river_dist),
-        "flood_l210_100_frac": pick(l210_frac),
-        "flood_l210_100_depth_m": pick(l210_depth),
-        "flood_l200_100_frac": pick(l200_frac),
-        "flood_l220_100_frac": pick(l220_frac),
-        "pump_dist_m": pick(pump_dist),
+        **{name: (values[row, col] if values is not None else np.nan) for name, values in layers.items()},
     })
-    out["culvert_dist_m"] = pick(culvert_dist) if culvert_dist is not None else np.nan
     out["pump_within_km"] = (out["pump_dist_m"] <= pump_radius).astype("int8")
-    out = out.merge(wide, on="grid_id", how="left")
-    out["sgis_reported"] = out[list(SGIS_VARIABLES.values())].notna().any(axis=1).astype("int8")
-    for c in SGIS_VARIABLES.values():
-        out[c] = out[c].fillna(0).astype("int64")
-    out["universe"] = ((out["pop_total"] > 0) | (out["houses"] >= 1)).astype("int8")
-    out = out.sort_values("grid_id").reset_index(drop=True)
+    out = _attach_population(out, sgis_year).sort_values("grid_id").reset_index(drop=True)
 
     missing = {c: round(float(out[c].isna().mean()), 4) for c in CORE}
     universe = out[out["universe"] == 1]
-    missing_universe = {c: round(float(universe[c].isna().mean()), 4) for c in CORE}
     m.update({
         "n_features": int(len(FEATURE_SPEC)),
         "n_universe": int(len(universe)),
         "pop_total_sum": int(out["pop_total"].sum()),
         "sgis_reported_grids": int(out["sgis_reported"].sum()),
         "missing_rate_by_feature": missing,
-        "missing_rate_in_universe": missing_universe,
+        "missing_rate_in_universe": {c: round(float(universe[c].isna().mean()), 4) for c in CORE},
         "max_missing_rate": max_missing,
         "label_sources_used": [],  # 누수 점검: 침수흔적·민원은 이 노드의 입력이 아니다
         "feature_summary": {
@@ -181,7 +235,8 @@ def grid_features(ctx: StageContext) -> dict[str, Any]:
     out.to_parquet(parquet, index=False)
     _write_dictionary(
         next(o for o in ctx.outputs if o.suffix == ".md"), out, m,
-        fmt=dict(rel_radius=int(rel_radius), sub=int(lat.res / sub), pump_radius=int(pump_radius), sgis_year=sgis_year),
+        fmt=dict(rel_radius=int(rel_radius), sub=int(lat.res / sub),
+                 pump_radius=int(pump_radius), sgis_year=sgis_year),
     )
     return m
 
@@ -208,7 +263,7 @@ def _write_dictionary(path: Path, out, m: dict[str, Any], fmt: dict[str, Any]) -
         "## 한계·누수 점검",
         "",
         f"- DEM 원본이 {m['dem_source_res_m']:.0f}m 라 100m 격자에서 경사·TWI 가 평활화된다. 5m DEM 으로 교체 시 이 노드만 재실행.",
-        "- 하천선 자료가 아직 없어 `water_dist_m` 은 토지피복 내륙수(710) 경계까지 거리다. 하천선(OSM·V-World) 확보 시 교체.",
+        "- `water_dist_m` 은 토지피복 내륙수(710)까지 거리이고, `river_dist_m`·`culvert_dist_m` 은 OSM 하천 중심선까지 거리다. 전자는 폭이 있는 수역만, 후자는 소하천·복개천까지 잡는다.",
         "- 침수예상도는 창원시 모형 산출물이므로 **입력**으로만 쓴다. 침수흔적도(실제 발생)는 검증 전용이며 이 노드의 입력이 아니다.",
         f"- 라벨 자료 사용: {m['label_sources_used'] or '없음'} (침수흔적·민원 미사용).",
         f"- SGIS {fmt['sgis_year']} 가 값을 발행한 격자 {m['sgis_reported_grids']:,}개, 총인구 {m['pop_total_sum']:,}명. 미발행 격자는 0 으로 두고 `sgis_reported` 로 구분.",

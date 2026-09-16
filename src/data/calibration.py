@@ -135,20 +135,13 @@ def calibration_breaks(
     }
 
 
-def cochran_armitage(grades: np.ndarray, labels: np.ndarray, n_classes: int = 5) -> dict[str, float]:
-    """등급이 오를수록 발생률이 오르는지 추세검정한다 (Cochran 1954; Armitage 1955).
-
-    등급을 1~5 등간 점수로 두고 선형 추세의 z 와 양측 p 를 구한다. p 만으로는
-    표본이 크면 항상 유의하므로 호출부에서 효과크기(발생률 비)를 반드시 함께 본다.
-    """
-    levels = np.arange(1, n_classes + 1, dtype=float)
-    n_i = np.array([float((grades == g).sum()) for g in levels])
-    r_i = np.array([float(labels[grades == g].sum()) for g in levels])
-
-    total, positives = n_i.sum(), r_i.sum()
-    p_bar = positives / total
-    numerator = float(np.sum(levels * (r_i - n_i * p_bar)))
-    spread = float(np.sum(n_i * levels**2) - np.sum(n_i * levels) ** 2 / total)
+def _cochran_armitage_counts(sizes: np.ndarray, positives: np.ndarray) -> dict[str, float]:
+    """등급별 (격자 수, 양성 수) 로 Cochran-Armitage 추세 z 와 양측 p 를 구한다."""
+    levels = np.arange(1, len(sizes) + 1, dtype=float)
+    total = sizes.sum()
+    p_bar = positives.sum() / total if total else 0.0
+    numerator = float(np.sum(levels * (positives - sizes * p_bar)))
+    spread = float(np.sum(sizes * levels**2) - np.sum(sizes * levels) ** 2 / total) if total else 0.0
     variance = p_bar * (1 - p_bar) * spread
     if variance <= 0:
         return {"z": 0.0, "p_value": 1.0}
@@ -156,36 +149,123 @@ def cochran_armitage(grades: np.ndarray, labels: np.ndarray, n_classes: int = 5)
     return {"z": round(z, 4), "p_value": float(math.erfc(abs(z) / math.sqrt(2)))}
 
 
-def incidence_table(grades: np.ndarray, labels: np.ndarray, n_classes: int = 5) -> dict[str, Any]:
-    """등급별 발생률·lift·인접 비를 낸다. 단조성 판정의 근거표가 된다.
+def cochran_armitage(grades: np.ndarray, labels: np.ndarray, n_classes: int = 5) -> dict[str, float]:
+    """등급이 오를수록 발생률이 오르는지 추세검정한다 (Cochran 1954; Armitage 1955).
 
-    통합 등급(3~4단)에도 그대로 쓸 수 있도록 등급 수를 인자로 받는다.
+    **격자가 독립이라고 가정한다.** 침수 폴리곤이 격자 여러 칸을 덮는 자료에서는 이 가정이
+    깨져 p 값이 지나치게 작아진다. 주장의 근거로는 `uncertainty.grade_incidence_bootstrap`
+    의 덩어리 단위 기울기를 쓰고, 이 값은 참고로만 남긴다.
     """
-    base = float(labels.mean())
-    rows = []
-    for grade in range(1, n_classes + 1):
-        mask = grades == grade
-        count = int(mask.sum())
-        positives = int(labels[mask].sum())
-        rate = positives / count if count else 0.0
-        rows.append({
-            "grade": grade, "n": count, "positives": positives,
-            "incidence": round(rate, 5),
-            "lift": round(rate / base, 3) if base > 0 else None,
-        })
-    ratios = [
-        round(rows[i + 1]["incidence"] / rows[i]["incidence"], 3) if rows[i]["incidence"] > 0 else None
-        for i in range(n_classes - 1)
+    g = np.asarray(grades).astype(int)
+    sizes = np.bincount(g, minlength=n_classes + 1)[1:].astype(float)
+    positives = np.bincount(g, weights=np.asarray(labels, dtype=float), minlength=n_classes + 1)[1:]
+    return _cochran_armitage_counts(sizes, positives)
+
+
+def table_from_counts(sizes: np.ndarray, positives: np.ndarray) -> dict[str, Any]:
+    """등급별 (격자 수, 양성 수) 로 발생률·lift·인접 비·단조성 표를 만든다.
+
+    한 번의 등급 배정(시간 분할)이든 여러 폴드를 합친 것(LOEO)이든 개수만 있으면
+    같은 표가 나오도록 계산을 여기 모았다.
+    """
+    sizes = np.asarray(sizes, dtype=float)
+    positives = np.asarray(positives, dtype=float)
+    n_classes = len(sizes)
+    base = positives.sum() / sizes.sum() if sizes.sum() else 0.0
+    rates = np.divide(positives, sizes, out=np.zeros_like(positives), where=sizes > 0)
+    rows = [
+        {
+            "grade": k + 1, "n": int(sizes[k]), "positives": int(positives[k]),
+            "incidence": round(float(rates[k]), 5),
+            "lift": round(float(rates[k] / base), 3) if base > 0 else None,
+        }
+        for k in range(n_classes)
     ]
-    rates = [r["incidence"] for r in rows]
+    rounded = [r["incidence"] for r in rows]
     return {
         "rows": rows,
         "n_classes": n_classes,
-        "base_rate": round(base, 5),
-        "adjacent_ratios": ratios,
-        "monotone": all(rates[i] <= rates[i + 1] for i in range(n_classes - 1)),
-        "top_over_bottom": (round(rates[-1] / rates[0], 2) if rates[0] > 0 else None),
-        **cochran_armitage(grades, labels, n_classes),
+        "base_rate": round(float(base), 5),
+        "adjacent_ratios": [
+            round(rounded[k + 1] / rounded[k], 3) if rounded[k] > 0 else None for k in range(n_classes - 1)
+        ],
+        "monotone": all(rounded[k] <= rounded[k + 1] for k in range(n_classes - 1)),
+        "top_over_bottom": round(rounded[-1] / rounded[0], 2) if rounded[0] > 0 else None,
+        **_cochran_armitage_counts(sizes, positives),
+        "p_value_note": "격자 독립을 가정한 값이라 주장의 근거로 쓰지 않는다 (덩어리 단위 기울기를 본다)",
+    }
+
+
+def incidence_table(grades: np.ndarray, labels: np.ndarray, n_classes: int = 5) -> dict[str, Any]:
+    """등급별 발생률·lift·인접 비를 낸다. 통합 등급(3~4단)에도 쓸 수 있게 등급 수를 받는다."""
+    g = np.asarray(grades).astype(int)
+    sizes = np.bincount(g, minlength=n_classes + 1)[1:]
+    positives = np.bincount(g, weights=np.asarray(labels, dtype=float), minlength=n_classes + 1)[1:]
+    return table_from_counts(sizes, positives)
+
+
+def leave_one_event_out(
+    scores: np.ndarray,
+    event_labels: dict[str, np.ndarray],
+    x: np.ndarray,
+    y: np.ndarray,
+    *,
+    tolerance: float = DEFAULT_TOLERANCE,
+    min_ratio: float = DEFAULT_MIN_RATIO,
+    n_boot: int | None = None,
+    seed: int = 42,
+) -> dict[str, Any]:
+    """사상 하나를 빼고 나머지로 경계를 맞춘 뒤, 뺀 사상으로 채점한다. 사상마다 반복해 합친다.
+
+    **왜 필요한가.** 앞 사상 3개로 경계를 정하고 뒤 사상 3개로 채점하는 시간 분할은 검증에
+    쓰이는 침수가 12건뿐이었다(R5 는 1건). 표본이 너무 작아 어떤 판정도 할 수 없다.
+    LOEO 로 돌리면 모든 사상이 한 번씩 검증에 쓰여 검증 침수가 전체(창원 46건)로 늘어난다.
+    설계 문서가 미리 정해 둔 대안이다 (CDRI_GRADE_SYSTEM §1③① "사상 수가 부족하면
+    사상 단위 leave-one-event-out 으로 대체").
+
+    **가정.** 사상들이 서로 바꿔 써도 되는 표본이라고 본다. 그래서 2019 년 사상으로 정한
+    경계로 2006 년을 채점하는 일도 생긴다. 미래 예측 검증이 아니라 교차검증이다.
+
+    **합치는 방법.** 폴드마다 등급별 격자 수(분모)와 뺀 사상의 양성 수(분자)를 더한다.
+    불확실성은 (사상, 덩어리) 를 한 단위로 재표본해 잰다.
+    """
+    from src.data import uncertainty as U
+    from src.data.layers import classify
+
+    s = np.asarray(scores, dtype=float)
+    n_classes = len(TARGET_PERCENTILES) + 1
+    sizes = np.zeros(n_classes)
+    units, folds = [], []
+    for event in sorted(event_labels):
+        calibration = np.zeros(s.size, dtype=bool)
+        for other, labels in event_labels.items():
+            if other != event:
+                calibration |= np.asarray(labels).astype(bool)
+        result = calibration_breaks(s, calibration.astype(float), tolerance=tolerance, min_ratio=min_ratio)
+        grades = classify(s, [*result["breaks"], float(s.max())]).astype(int)
+        sizes += np.bincount(grades, minlength=n_classes + 1)[1:]
+        event_units = U.unit_grade_counts(grades, event_labels[event], x, y, n_classes)
+        units.append(event_units)
+        folds.append({
+            "held_out": event,
+            "breaks": [round(b, 4) for b in result["breaks"]],
+            "n_positive": int(np.asarray(event_labels[event]).astype(bool).sum()),
+            "n_cluster": int(len(event_units)),
+        })
+
+    units = np.vstack(units) if units else np.zeros((0, n_classes))
+    table = table_from_counts(sizes, units.sum(axis=0))
+    breaks = np.array([f["breaks"] for f in folds])
+    boot_kwargs = {"seed": seed} if n_boot is None else {"seed": seed, "n_boot": n_boot}
+    return {
+        **table,
+        "folds": folds,
+        "n_cluster": int(len(units)),
+        # 뺀 사상이 바뀌어도 경계가 거의 같으면 경계 규칙이 특정 사상에 끌려다니지 않는다는 뜻이다.
+        "break_range": [round(float(v), 4) for v in (breaks.max(axis=0) - breaks.min(axis=0))],
+        "bootstrap": U.grade_incidence_bootstrap(units, sizes, **boot_kwargs),
+        "clusters_by_grade": {f"R{k + 1}": int((units[:, k] > 0).sum()) for k in range(n_classes)},
+        "sample": "leave-one-event-out — 모든 사상이 한 번씩 검증에 쓰인다",
     }
 
 

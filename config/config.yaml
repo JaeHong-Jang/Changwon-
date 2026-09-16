@@ -41,9 +41,9 @@ layer1:
   trace_min_positive: 30            # 양성 격자가 이보다 적으면 성능을 판정하지 않는다
   trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
   trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
-  trace_calibration_share: 0.5      # 사상 연도를 시간순으로 나눠 앞 절반을 등급 캘리브레이션용으로
-                                    # 쓰고 뒤 절반을 검증용으로 남긴다. 흔적으로 경계를 맞추고
-                                    # 같은 흔적으로 검증하는 순환을 막는다 (CDRI_GRADE_SYSTEM §1③)
+  trace_calibration_share: 0.5      # 참고용 시간 분할 — 앞 절반 사상으로 경계, 뒤 절반으로 채점.
+                                    # 검증 침수가 12건뿐이라 주 검증은 사상 단위 교차검증(LOEO)이다
+                                    # (CDRI_GRADE_SYSTEM §1③①, h07_cdri._calibrate_and_validate)
 
 # ----- H06 Layer 3 취약계층·대응역량 -----
 layer3:

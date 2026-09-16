@@ -51,6 +51,7 @@ CASE_STUDY_UNMATCHED = ("명서동", "사화동")
 CASE_STUDY_DONG = tuple(n for names in CASE_STUDY_MAPPING.values() for n in names)
 DONG_NAME_FILE = "data/external/adm_dong_names.csv"
 TRACE_DIR = "data/raw/flood_traces"
+EVENT_LABEL_PREFIX = "trace_ev_"   # 사상(연도)별 침수 라벨 열 이름 앞머리
 # 침수흔적 격자가 왜 그 점수를 받았는지 설명할 때 보는 변수
 DIAGNOSIS_COLUMNS = ["elev_m", "slope_deg", "twi", "impervious_frac",
                      "flood_l210_100_frac", "pump_dist_m", "pop_total"]
@@ -235,6 +236,13 @@ def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict
         labels, _ = FT.label_grid(df, traces[traces["event_year"].isin(subset)], min_overlap=min_overlap)
         df[f"trace_label_{name}"] = labels.astype("int8")
         split[f"n_{name}"] = int(labels.sum())
+    # 사상 단위 교차검증(LOEO)은 사상마다 라벨이 따로 있어야 한다. 연도가 곧 사상이다.
+    split["event_columns"] = []
+    for year in years:
+        labels, _ = FT.label_grid(df, traces[traces["event_year"] == year], min_overlap=min_overlap)
+        column = f"{EVENT_LABEL_PREFIX}{year}"
+        df[column] = labels.astype("int8")
+        split["event_columns"].append(column)
     # 두 쪽 모두 양성이 있어야 캘리브레이션-검증 분리가 성립한다.
     split["usable"] = bool(split["n_cal"] and split["n_val"])
     split["n_both"] = int((df["trace_label_cal"].to_numpy() & df["trace_label_val"].to_numpy()).sum())
@@ -267,7 +275,10 @@ def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list
 
     from src.data import flood_traces as FT
     from src.data import layers as L
+    from src.data import uncertainty as U
 
+    centroids = df.geometry.centroid
+    cx, cy = centroids.x.to_numpy(), centroids.y.to_numpy()
     rows = []
     for year in sorted(traces["event_year"].dropna().unique()):
         subset = traces[traces["event_year"] == year]
@@ -291,6 +302,8 @@ def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list
         flooded = df.loc[labels]
         row["median"] = {c: round(float(flooded[c].median()), 3) for c in DIAGNOSIS_COLUMNS}
         row["urbanness"] = _urbanness(flooded)
+        # 사상별 AUC 가 흔들리는 이유를 읽으려면 격자 수가 아니라 덩어리 수를 봐야 한다.
+        row["n_cluster"] = U.effective_sample(labels, cx, cy)["n_cluster"]
         row["inland_share"] = (round(float(subset["is_inland"].mean()), 3)
                                if subset["is_inland"].notna().any() else None)
         rows.append(row)
@@ -319,41 +332,63 @@ def _event_spread(by_event: list[dict[str, Any]], auc_min: float) -> dict[str, A
     }
 
 
-def _incremental_value(df, labels, z_exposure, winsor) -> dict[str, Any]:
+def _incremental_value(df, labels, z_exposure, winsor, centroids) -> dict[str, Any]:
     """우리 지수가 **창원시가 이미 가진 자료에 무엇을 더했는지** 잰다.
 
     시 침수예상도는 Layer 1 의 입력이다. 그래서 "우리 지수가 실제 침수를 잘 맞혔다"는
-    문장에는 시 모형의 성과가 섞여 있다. 예상도 단독 점수와 나란히 놓아야 우리 기여를
-    분리해 말할 수 있다. 이 표가 없으면 남의 성과를 우리 것으로 보고하게 된다.
+    문장에는 시 모형의 성과가 섞여 있다. 세 가지로 분리한다.
 
-    세 가지를 같은 라벨로 채점한다.
-      시 예상도 단독 / Layer 1 현행 / Layer 1 에서 예상도 변수를 뺀 것
+    1. **같은 라벨로 세 점수를 채점** — 예상도 단독 / Layer 1 / Layer 1 − 예상도.
+       격자마다 1표인 AUC 와 침수 한 건마다 1표인 AUC 를 함께 낸다.
+    2. **짝지은 차이** — 두 점수의 신뢰구간이 겹친다고 "차이 없음"이라 하면 틀린다.
+       같은 침수로 채점한 두 점수는 강하게 상관돼 있으므로, 같은 재표본에서 차이를 직접 잰다.
+    3. **예상도 안/밖 분리** — 예상도가 0 인 구역에서 예상도는 아무 정보도 주지 않는다
+       (AUC 0.5). 그 구역에서 우리 지수의 AUC 가 곧 **예상도와 무관한 우리 기여**다.
     """
     from src.data import layers as L
+    from src.data import uncertainty as U
 
-    scores = {
-        "city_flood_map_only": df["flood_l210_100_depth_m"].to_numpy(dtype=float),
-        "layer1": df["L1"].to_numpy(dtype=float),
-    }
+    cx, cy = centroids
+    depth = df["flood_l210_100_depth_m"].to_numpy(dtype=float)
     without_map = {k: v for k, v in SENSITIVITY_SPEC.items() if k not in FLOOD_MAP_VARIABLES}
     z_reduced, _ = L.composite(df, without_map, winsor_lo=winsor[0], winsor_hi=winsor[1])
-    scores["layer1_without_flood_map"] = L.minmax(z_exposure + z_reduced)
+    scores = {
+        "city_flood_map_only": depth,
+        "layer1": df["L1"].to_numpy(dtype=float),
+        "layer1_without_flood_map": L.minmax(z_exposure + z_reduced),
+    }
 
     rows = {
         name: {
             "auc": round(L.roc_auc(labels, s), 4),
+            "auc_cluster_weighted": round(U.cluster_weighted_auc(labels, s, cx, cy), 4),
             "top20pct_capture": L.top_share_lift(labels, s, 0.20)["capture_rate"],
         }
         for name, s in scores.items()
     }
-    gain = rows["layer1"]["auc"] - rows["city_flood_map_only"]["auc"]
+
+    strata = {}
+    for name, mask in (("outside_city_map", depth <= 0), ("inside_city_map", depth > 0)):
+        y = labels[mask]
+        strata[name] = {
+            "n_grid": int(mask.sum()),
+            **U.effective_sample(y, cx[mask], cy[mask]),
+            "auc": {k: round(L.roc_auc(y, v[mask]), 4) for k, v in scores.items()} if 0 < y.sum() < y.size else None,
+        }
+    strata["note"] = (
+        "예상도 밖에서는 예상도 점수가 모두 0 이라 AUC 가 0.5 로 고정된다. "
+        "그 구역의 Layer 1 AUC 가 예상도와 무관한 우리 기여다"
+    )
+
     return {
         "scores": rows,
-        "auc_gain_over_city_map": round(gain, 4),
+        "auc_gain_over_city_map": round(rows["layer1"]["auc"] - rows["city_flood_map_only"]["auc"], 4),
+        "paired": U.paired_cluster_bootstrap(labels, scores, "city_flood_map_only", cx, cy),
+        "strata": strata,
         "removed_variables": list(FLOOD_MAP_VARIABLES),
         "note": (
-            "시 침수예상도는 Layer 1 의 입력이다. 예상도 단독 AUC 를 함께 보고하지 않으면 "
-            "시 모형의 성과를 우리 것으로 진술하게 된다"
+            "시 침수예상도는 Layer 1 의 입력이다. 예상도 단독 AUC 와 짝지은 차이를 함께 "
+            "보고하지 않으면 시 모형의 성과를 우리 것으로 진술하게 된다"
         ),
     }
 
@@ -407,7 +442,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
         cx, cy = centroids.x.to_numpy(), centroids.y.to_numpy()
         trace["effective_sample"] = U.effective_sample(labels, cx, cy)
         trace["auc_ci"] = U.cluster_bootstrap_auc(labels, scores, cx, cy)
-        trace["incremental_value"] = _incremental_value(df, labels, z_exposure, winsor)
+        trace["incremental_value"] = _incremental_value(df, labels, z_exposure, winsor, (cx, cy))
         trace["diagnosis"] = {
             "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
             "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
@@ -495,7 +530,10 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
     ]
     if "trace_label" in df.columns:
         # 캘리브레이션·검증 라벨을 따로 실어 H07 이 in-sample 순환 없이 등급 경계를 맞춘다.
-        columns[-1:-1] = ["trace_overlap", "trace_label", "trace_label_cal", "trace_label_val"]
+        columns[-1:-1] = [
+            "trace_overlap", "trace_label", "trace_label_cal", "trace_label_val",
+            *sorted(c for c in df.columns if c.startswith(EVENT_LABEL_PREFIX)),
+        ]
     out = ctx.outputs[0]
     out.parent.mkdir(parents=True, exist_ok=True)
     if out.exists():

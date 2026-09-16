@@ -145,5 +145,37 @@ class SensitivityTest(unittest.TestCase):
         self.assertTrue(all(len(r["breaks"]) == 4 for r in rows))
 
 
+class LeaveOneEventOutTest(unittest.TestCase):
+    """사상 단위 교차검증 — 모든 사상이 한 번씩 검증에 쓰이고 분모가 폴드 수만큼 쌓여야 한다."""
+
+    def setUp(self):
+        rng = np.random.default_rng(11)
+        self.n = 3000
+        self.scores = rng.random(self.n)
+        self.x = np.arange(self.n) * 1000.0          # 서로 멀리 떨어뜨려 격자마다 한 덩어리
+        self.y = np.zeros(self.n)
+        self.events = {
+            str(year): (rng.random(self.n) < self.scores**4 * 0.3).astype(np.int8)
+            for year in (2001, 2002, 2003, 2004)
+        }
+
+    def test_every_event_is_held_out_once(self):
+        out = C.leave_one_event_out(self.scores, self.events, self.x, self.y, n_boot=100)
+        self.assertEqual([f["held_out"] for f in out["folds"]], sorted(self.events))
+        self.assertEqual(sum(r["n"] for r in out["rows"]), self.n * len(self.events))
+
+    def test_positives_are_pooled_from_held_out_events(self):
+        out = C.leave_one_event_out(self.scores, self.events, self.x, self.y, n_boot=100)
+        total = sum(int(v.sum()) for v in self.events.values())
+        self.assertEqual(sum(r["positives"] for r in out["rows"]), total)
+        self.assertEqual(out["n_cluster"], total)   # 격자가 모두 떨어져 있으니 양성 1칸 = 1덩어리
+
+    def test_strong_signal_shows_upward_trend(self):
+        out = C.leave_one_event_out(self.scores, self.events, self.x, self.y, n_boot=300)
+        self.assertGreater(out["bootstrap"]["trend_slope"], 0)
+        self.assertLess(out["bootstrap"]["p_slope_nonpositive"], 0.01)
+        self.assertEqual(len(out["break_range"]), 4)
+
+
 if __name__ == "__main__":
     unittest.main()

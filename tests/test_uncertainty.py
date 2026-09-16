@@ -157,5 +157,67 @@ class GradeBootstrapTest(unittest.TestCase):
         self.assertGreater(out["monotone_share"], 0.8)
 
 
+class FractionTest(unittest.TestCase):
+    """양성별 분율의 평균이 ROC-AUC 와 같아야 한다 (Mann-Whitney 항등식)."""
+
+    def test_mean_equals_roc_auc_with_ties(self):
+        from src.data.layers import roc_auc
+
+        rng = np.random.default_rng(5)
+        scores = rng.integers(0, 6, 300).astype(float)      # 동점을 일부러 많이 만든다
+        labels = rng.random(300) < 0.2
+        self.assertAlmostEqual(U.auc_fractions(labels, scores).mean(), roc_auc(labels, scores), places=12)
+
+    def test_cluster_weighting_gives_each_flood_one_vote(self):
+        """큰 덩어리 하나가 잘 맞고 작은 덩어리 둘이 틀리면, 덩어리 가중 AUC 가 더 낮아야 한다."""
+        x = np.concatenate([np.arange(8) * 100.0, [50000.0], [90000.0], np.arange(20) * 100.0 + 200000.0])
+        y = np.zeros(x.size)
+        labels = np.concatenate([np.ones(10, bool), np.zeros(20, bool)])
+        scores = np.concatenate([np.full(8, 10.0), [-10.0, -10.0], np.zeros(20)])
+        from src.data.layers import roc_auc
+
+        self.assertAlmostEqual(roc_auc(labels, scores), 0.8)
+        self.assertAlmostEqual(U.cluster_weighted_auc(labels, scores, x, y), 1 / 3)
+
+
+class PairedTest(unittest.TestCase):
+    def setUp(self):
+        rng = np.random.default_rng(3)
+        self.x = np.concatenate([np.arange(60) * 100.0 // 10 * 1000 + np.arange(60) % 10 * 100,
+                                 rng.random(600) * 1000 + 500000])
+        self.y = np.zeros(self.x.size)
+        self.labels = np.concatenate([np.ones(60, bool), np.zeros(600, bool)])
+        self.base = np.concatenate([rng.normal(0.5, 1, 60), rng.normal(0, 1, 600)])
+
+    def test_identical_scores_have_zero_difference(self):
+        out = U.paired_cluster_bootstrap(self.labels, {"a": self.base, "b": self.base.copy()},
+                                         "a", self.x, self.y, n_boot=200)
+        self.assertEqual(out["b"]["diff"], 0.0)
+        self.assertEqual(out["b"]["diff_ci95"], [0.0, 0.0])
+
+    def test_clearly_better_score_is_detected(self):
+        better = self.base + np.concatenate([np.full(60, 2.0), np.zeros(600)])
+        out = U.paired_cluster_bootstrap(self.labels, {"a": self.base, "b": better},
+                                         "a", self.x, self.y, n_boot=500)
+        self.assertGreater(out["b"]["diff"], 0)
+        self.assertGreater(out["b"]["diff_ci95"][0], 0)
+        self.assertEqual(out["b"]["prob_better"], 1.0)
+
+
+class GradeTrendTest(unittest.TestCase):
+    def test_rising_rates_give_positive_slope(self):
+        # 등급마다 덩어리 20개, 위 등급일수록 덩어리당 양성이 많다
+        units = np.vstack([np.eye(5)[k] * (k + 1) for k in range(5) for _ in range(20)])
+        sizes = np.full(5, 1000.0)
+        out = U.grade_incidence_bootstrap(units, sizes, n_boot=500)
+        self.assertGreater(out["trend_slope"], 0)
+        self.assertLess(out["p_slope_nonpositive"], 0.01)
+
+    def test_flat_rates_do_not_pass(self):
+        units = np.vstack([np.eye(5)[k] for k in range(5) for _ in range(20)])
+        out = U.grade_incidence_bootstrap(units, np.full(5, 1000.0), n_boot=500)
+        self.assertGreater(out["p_slope_nonpositive"], 0.05)
+
+
 if __name__ == "__main__":
     unittest.main()

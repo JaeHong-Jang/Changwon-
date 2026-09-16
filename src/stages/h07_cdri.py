@@ -197,139 +197,157 @@ def _attach_contributions(sub, matrix, weights):
 
 
 TRACE_LABEL_COLUMNS = ("trace_label", "trace_label_cal", "trace_label_val")
+# 덩어리 재표본에서 이 비율 이상 단조로 나와야 "등급이 오를수록 더 잠긴다"고 말한다.
+MONOTONE_SHARE_MIN = 0.95
 
 
 def _load_trace_labels(grid_ids) -> dict[str, Any] | None:
     """Layer 1 이 남긴 침수흔적 라벨을 순위 대상 격자 순서에 맞춰 읽는다.
 
-    전체·캘리브레이션 기간·검증 기간 세 벌을 함께 가져온다. 경계를 맞출 때와 채점할 때
-    서로 다른 사상을 써야 in-sample 순환이 생기지 않기 때문이다.
+    전체·시간분할(앞/뒤)·사상별 라벨을 함께 가져온다. 경계를 맞출 때와 채점할 때 서로 다른
+    사상을 써야 in-sample 순환이 생기지 않기 때문이다.
     """
     import geopandas as gpd
     import numpy as np
     import pandas as pd
 
-    available = gpd.read_file(PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", rows=1).columns
+    from src.stages.h06_layers import EVENT_LABEL_PREFIX
+
+    available = list(gpd.read_file(PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", rows=1).columns)
     present = [c for c in TRACE_LABEL_COLUMNS if c in available]
     if "trace_label" not in present:
         return None
+    event_columns = sorted(c for c in available if c.startswith(EVENT_LABEL_PREFIX))
     labelled = gpd.read_file(
-        PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", columns=["grid_id", *present]
+        PROJECT_ROOT / LAYER1_PATH, layer="layer1_flood", columns=["grid_id", *present, *event_columns]
     )
     aligned = pd.DataFrame({"grid_id": grid_ids}).merge(labelled, on="grid_id", how="left")
-    out = {
-        name.replace("trace_label", "").strip("_") or "all":
-            aligned[name].fillna(0).to_numpy().astype(np.int8)
-        for name in present
+
+    def column(name: str) -> np.ndarray:
+        """라벨 열을 격자 순서의 0/1 배열로. 순위 대상 밖에서 온 결측은 0 이다."""
+        return aligned[name].fillna(0).to_numpy().astype(np.int8)
+
+    out: dict[str, Any] = {
+        name.replace("trace_label", "").strip("_") or "all": column(name) for name in present
     }
+    out["events"] = {c.removeprefix(EVENT_LABEL_PREFIX): column(c) for c in event_columns}
     out["has_time_split"] = bool("cal" in out and "val" in out and out["cal"].sum() and out["val"].sum())
     return out
 
 
-def _grade_validation(grades, val_labels, p, n_classes: int = 5) -> dict[str, Any]:
-    """검증 기간 사상으로 등급을 채점한다 — 경계를 맞추지 않은 사상이라 out-of-sample 이다.
+def _criteria(table: dict[str, Any], boot: dict[str, Any], p) -> dict[str, Any]:
+    """사전에 정한 다섯 기준으로 채점한다. 추세만은 덩어리 단위 기울기로 판정한다.
 
-    판정은 단조성과 **효과크기**를 함께 본다. 격자가 수만 개면 p 값은 거의 항상 유의해서
-    p 만으로는 아무것도 말하지 못한다 (CDRI_GRADE_SYSTEM 지적사항 13).
-    lift 기준은 최상위·차상위 등급에 건다. 통합 등급이면 남은 등급 중 그 둘에 적용된다.
+    Cochran-Armitage p 는 격자를 독립으로 세서 창원 자료에서 10⁻⁸ 같은 값이 나왔다.
+    같은 '추세 유의' 기준을 덩어리 재표본의 기울기로 바꿔 적용한다
+    (기울기 ≤ 0 인 재표본 비율 < p 기준).
     """
-    from src.data import calibration as C
-
-    table = C.incidence_table(grades, val_labels, n_classes)
     ratios = [r for r in table["adjacent_ratios"] if r is not None]
     lift_top = table["rows"][-1]["lift"]
-    lift_second = table["rows"][-2]["lift"] if n_classes >= 2 else None
-    min_ratio = float(p["cdri.calibration_min_ratio"])
-    table["criteria"] = {
+    lift_second = table["rows"][-2]["lift"]
+    criteria = {
         "monotone": table["monotone"],
-        "trend_significant": table["p_value"] < float(p["cdri.calibration_trend_p_max"]),
-        "all_adjacent_ratios_met": bool(ratios) and min(ratios) >= min_ratio,
+        "trend_significant": boot.get("p_slope_nonpositive", 1.0) < float(p["cdri.calibration_trend_p_max"]),
+        "all_adjacent_ratios_met": bool(ratios) and min(ratios) >= float(p["cdri.calibration_min_ratio"]),
         "lift_top_met": lift_top is not None and lift_top >= float(p["cdri.calibration_lift_r5_min"]),
         "lift_second_met": lift_second is not None and lift_second >= float(p["cdri.calibration_lift_r4_min"]),
     }
-    table["failed_criteria"] = [k for k, ok in table["criteria"].items() if not ok]
-    table["passed"] = not table["failed_criteria"]
-    table["sample"] = "out-of-sample (검증 기간 사상)"
-    return table
+    return {
+        "criteria": criteria,
+        "failed_criteria": [k for k, ok in criteria.items() if not ok],
+        "passed": all(criteria.values()),
+        "criteria_note": "monotone·비율·lift 는 점추정, trend 는 덩어리 단위 기울기로 판정",
+    }
 
 
-# 덩어리 재표본에서 이 비율 이상 단조로 나와야 "등급이 오를수록 더 잠긴다"고 말한다.
-MONOTONE_SHARE_MIN = 0.95
+def _time_split_validation(grades, labels, p, cx, cy) -> dict[str, Any]:
+    """앞 사상으로 정한 경계를 뒤 사상으로 채점한다 (참고용, 검증 침수 12건)."""
+    from src.data import calibration as C
+    from src.data import uncertainty as U
+
+    table = C.incidence_table(grades, labels)
+    boot = U.cluster_bootstrap_grades(grades, labels, cx, cy)
+    return {**table, **_criteria(table, boot, p), "bootstrap": boot,
+            "sample": "시간 분할 — 앞 사상으로 경계, 뒤 사상으로 채점"}
 
 
-def _reporting_constraint(validation: dict[str, Any], min_ratio: float, lift_min: float) -> dict[str, Any]:
+def _reporting_constraint(validation: dict[str, Any], p) -> dict[str, Any]:
     """검증 결과로 **무엇을 주장해도 되는지**를 정한다. 보고서 문장을 코드가 제한한다.
 
-    판단은 점추정이 아니라 **덩어리 단위 불확실성**에 건다. 격자는 독립 관측이 아니라서
-    (붙어 있는 격자 = 같은 침수 한 건) 점추정과 Cochran-Armitage p 값은 확신을 부풀린다.
-    창원 검증 자료에서 R5 의 양성 9칸은 침수 2건이었다.
+    판단은 점추정이 아니라 **주 검증(LOEO)의 덩어리 단위 불확실성**에 건다. 격자는 독립
+    관측이 아니라서(붙어 있는 격자 = 같은 침수 한 건) 점추정은 확신을 부풀린다.
     """
-    table = validation["calibration"]
-    boot = validation["cluster_bootstrap"]
-    lift_lo = boot["top_grade_lift_ci95"][0] if boot.get("available") else None
-    monotone_ok = bool(boot.get("available")) and boot["monotone_share"] >= MONOTONE_SHARE_MIN
+    primary = validation[validation["primary"]]
+    boot = primary["bootstrap"]
+    lift_lo, lift_hi = boot["top_grade_lift_ci95"]
+    min_ratio = float(p["cdri.calibration_min_ratio"])
     return {
-        # p 값만으로는 허용하지 않는다. 덩어리 재표본에서도 단조가 유지돼야 한다.
-        "monotone_claim_allowed": table["monotone"] and table["criteria"]["trend_significant"] and monotone_ok,
-        "monotone_share": boot.get("monotone_share"),
+        "based_on": validation["primary"],
+        "n_cluster": boot["n_cluster"],
+        # 기울기가 0 이하인 재표본이 기준보다 드물어야 "등급이 오를수록 더 잠긴다"고 쓴다.
+        "trend_claim_allowed": boot["p_slope_nonpositive"] < float(p["cdri.calibration_trend_p_max"]),
+        "p_slope_nonpositive": boot["p_slope_nonpositive"],
+        # 다섯 등급이 **모두** 오름차순인 것은 추세보다 훨씬 강한 주장이다.
+        "monotone_claim_allowed": boot["monotone_share"] >= MONOTONE_SHARE_MIN,
+        "monotone_share": boot["monotone_share"],
         "monotone_share_required": MONOTONE_SHARE_MIN,
-        # 구간의 **하한**이 기준을 넘어야 "그 등급은 확실히 더 잠긴다"고 말할 수 있다.
-        "top_grade_separable": lift_lo is not None and lift_lo >= lift_min,
-        "top_grade_lift_point": table["rows"][-1]["lift"],
-        "top_grade_lift_ci95": boot.get("top_grade_lift_ci95"),
-        "top_grade_clusters": boot.get("clusters_by_grade", {}).get(f"R{len(table['rows'])}"),
+        # 구간 **하한**으로 판정한다. 점추정이 커도 하한이 1 이하면 "평균보다 더 잠긴다"도 못 쓴다.
+        "top_grade_above_base": lift_lo > 1.0,
+        "top_grade_meets_lift_target": lift_lo >= float(p["cdri.calibration_lift_r5_min"]),
+        "top_grade_lift_point": primary["rows"][-1]["lift"],
+        "top_grade_lift_ci95": [lift_lo, lift_hi],
+        "top_grade_clusters": primary["clusters_by_grade"].get(f"R{len(primary['rows'])}"),
         "pairs_not_separable": [
-            f"R{i + 1}-R{i + 2}" for i, ratio in enumerate(table["adjacent_ratios"])
-            if ratio is not None and ratio < min_ratio
+            f"R{i + 1}-R{i + 2}" for i, ratio in enumerate(primary["adjacent_ratios"])
+            if ratio is None or ratio < min_ratio
         ],
-        "tier_structure_for_report": validation["calibration_merged"]["tier_members"],
-        "failed_criteria": table["failed_criteria"],
+        "failed_criteria": primary["failed_criteria"],
         "note": (
-            "점추정으로는 단조·R5 분리가 보이지만, 검증 양성이 소수의 침수 덩어리라 "
-            "불확실성이 크다. monotone_claim_allowed 와 top_grade_separable 이 거짓이면 "
-            "해당 주장을 보고서에 쓰지 않는다"
+            "*_allowed·top_grade_* 가 거짓인 주장은 보고서에 쓰지 않는다. "
+            "등급은 그 경우 '검증된 위험 구분'이 아니라 '재현 가능한 우선순위 구간'으로 제시한다"
         ),
     }
 
 
 def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p, centroids):
-    """캘리브레이션 기간으로 경계를 맞추고 검증 기간으로 채점한다. (등급, 경계진단, 검증).
+    """등급 경계를 발생률로 맞추고, 사상 단위 교차검증으로 채점한다. (등급, 경계진단, 검증).
 
-    centroids 는 (x, y) 배열 쌍이다. 검증 양성을 침수 덩어리로 묶어 불확실성을 재는 데 쓴다.
+    **운영 등급**은 모든 사상으로 경계를 맞춘다 — 교차검증은 성능을 재는 절차이고, 최종
+    경계는 가진 자료를 다 써서 정하는 것이 표준이다. 그 성능은 LOEO 가 따로 잰다.
+
+    **주 검증은 LOEO** 다. 앞 3개/뒤 3개 시간 분할은 검증 침수가 12건(R5 는 1건)뿐이라
+    판정이 불가능했고, 설계 문서가 미리 정한 대안(사상 단위 LOEO)으로 넘어간다.
+    시간 분할 결과도 참고로 함께 남긴다.
     """
     from src.data import calibration as C
     from src.data import grades as G
-    from src.data import uncertainty as U
 
-    grade_calibration, calibration = G.calibration_grades(
-        primary_scaled, labels["cal"],
-        tolerance=float(p["cdri.calibration_tolerance"]),
-        min_ratio=float(p["cdri.calibration_min_ratio"]),
+    tolerance = float(p["cdri.calibration_tolerance"])
+    min_ratio = float(p["cdri.calibration_min_ratio"])
+    cx, cy = centroids
+
+    grade_final, calibration = G.calibration_grades(
+        primary_scaled, labels["all"], tolerance=tolerance, min_ratio=min_ratio
     )
-    calibration["sensitivity"] = C.sensitivity(primary_scaled, labels["cal"])
-    calibration["n_calibration_positive"] = int(labels["cal"].sum())
-    calibration["sample"] = "in-sample (캘리브레이션 기간 사상) — 경계 산출에만 쓴다"
+    calibration["sensitivity"] = C.sensitivity(primary_scaled, labels["all"])
+    calibration["n_calibration_positive"] = int(labels["all"].sum())
+    calibration["sample"] = "모든 사상 — 운영 등급의 경계. 성능은 LOEO 로 따로 잰다"
 
-    # 캘리브레이션 자료가 통합을 권고한 등급을 묶어 본 결과도 함께 채점한다 (절차 ④).
-    merged, merge_map = C.merge_weak_grades(grade_calibration, calibration["merge_recommended"])
+    loeo = C.leave_one_event_out(
+        primary_scaled, labels["events"], cx, cy, tolerance=tolerance, min_ratio=min_ratio
+    )
+    grade_split, _ = G.calibration_grades(
+        primary_scaled, labels["cal"], tolerance=tolerance, min_ratio=min_ratio
+    )
     validation = {
-        "calibration": _grade_validation(grade_calibration, labels["val"], p),
-        "calibration_merged": {
-            **merge_map,
-            **_grade_validation(merged, labels["val"], p, merge_map["n_tiers"]),
-        },
+        "primary": "loeo",
+        "loeo": {**loeo, **_criteria(loeo, loeo["bootstrap"], p)},
+        "time_split": _time_split_validation(grade_split, labels["val"], p, cx, cy),
         # Jenks 도 같은 자료로 채점해 둔다. 본안 선택 기준이 아니라 비교 정보다.
-        "jenks": _grade_validation(grade_jenks, labels["val"], p),
-        "cluster_bootstrap": U.cluster_bootstrap_grades(
-            grade_calibration, labels["val"], centroids[0], centroids[1]
-        ),
+        "jenks_time_split": _time_split_validation(grade_jenks, labels["val"], p, cx, cy),
     }
-    validation["reporting_constraint"] = _reporting_constraint(
-        validation,
-        min_ratio=float(p["cdri.calibration_min_ratio"]),
-        lift_min=float(p["cdri.calibration_lift_r4_min"]),
-    )
-    return grade_calibration, calibration, validation
+    validation["reporting_constraint"] = _reporting_constraint(validation, p)
+    return grade_final, calibration, validation
 
 
 def _assign_grades(sub, primary_scaled, percentiles, p) -> dict[str, Any]:

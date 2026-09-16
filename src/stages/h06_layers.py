@@ -229,6 +229,69 @@ def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict
     return split
 
 
+def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list[dict[str, Any]]:
+    """사상 하나씩 따로 채점한다. 성능이 특정 호우 한 건에 기대고 있는지 보는 장치다.
+
+    전체를 합쳐 계산한 AUC 는 큰 사상 하나가 좋으면 나머지가 나빠도 높게 나온다.
+    사상별로 나눠 보면 그 편중이 드러난다.
+
+    음성은 **어느 사상에서도 잠기지 않은 격자**로 둔다. 다른 사상에서 잠긴 칸을 음성으로
+    세면 "맞힌 것"을 틀렸다고 채점하게 된다.
+    """
+    import numpy as np
+
+    from src.data import flood_traces as FT
+    from src.data import layers as L
+
+    rows = []
+    for year in sorted(traces["event_year"].dropna().unique()):
+        subset = traces[traces["event_year"] == year]
+        labels, _ = FT.label_grid(df, subset, min_overlap=min_overlap)
+        keep = labels | ~any_label            # 이 사상의 양성 + 한 번도 안 잠긴 칸
+        n_positive = int(labels.sum())
+        row: dict[str, Any] = {
+            "event_year": str(year),
+            "event_name": (subset["event_name"].dropna().mode().iloc[0]
+                           if subset["event_name"].notna().any() else None),
+            "n_traces": int(len(subset)),
+            "n_positive_grid": n_positive,
+        }
+        # 양성이 너무 적으면 AUC 가 한두 칸에 좌우되므로 계산하지 않는다.
+        if n_positive >= 20:
+            row["auc"] = round(L.roc_auc(labels[keep], scores[keep]), 4)
+            row["top20pct"] = L.top_share_lift(labels[keep], scores[keep], 0.20)
+        else:
+            row["note"] = f"양성 {n_positive}칸 < 20칸 — 사상 단독 판정 보류"
+        # 같은 라벨을 쓰는 김에 진단 변수 중앙값도 여기서 낸다 (공간 조인 재실행 방지).
+        row["median"] = {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS}
+        row["inland_share"] = (round(float(subset["is_inland"].mean()), 3)
+                               if subset["is_inland"].notna().any() else None)
+        rows.append(row)
+    return rows
+
+
+def _event_spread(by_event: list[dict[str, Any]], auc_min: float) -> dict[str, Any]:
+    """사상별 AUC 가 고르게 나왔는지 요약한다. 합산 지표가 숨기는 편차를 드러낸다.
+
+    합산 AUC 는 큰 사상 하나가 좋으면 높게 나온다. 사상별로 나눠 기준 미달 사상을
+    이름으로 적어 두면, 보고서를 쓸 때 그 사실을 빠뜨릴 수 없다.
+    """
+    scored = {r["event_year"]: r["auc"] for r in by_event if "auc" in r}
+    below = sorted(y for y, auc in scored.items() if auc < auc_min)
+    return {
+        "n_scored": len(scored),
+        "min": min(scored.values()) if scored else None,
+        "max": max(scored.values()) if scored else None,
+        "all_above_min": bool(scored) and not below,
+        "events_below_min": below,
+        "note": (
+            "합산 AUC 는 기준을 넘었으나 사상별로는 갈린다. 미달 사상을 함께 보고하지 않으면 "
+            "성능을 과대 진술하게 된다"
+            if below else "사상별 AUC 가 모두 기준을 넘었다 — 성능이 한 호우에 기댄 것이 아니다"
+        ),
+    }
+
+
 def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | None]:
     """실제 침수 기록으로 Layer 1 을 채점한다. (지표, 안내문) 을 돌려준다.
 
@@ -270,6 +333,8 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
         if n_universe >= 3:
             trace["auc_universe"] = round(L.roc_auc(labels[universe], scores[universe]), 4)
             trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
+        trace["by_event"] = _per_event_scores(df, traces, scores, labels, min_overlap)
+        trace["event_auc_spread"] = _event_spread(trace["by_event"], trace["auc_min"])
         trace["diagnosis"] = {
             "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
             "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
@@ -282,6 +347,13 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
         note = (
             f"침수흔적 양성 격자 {n_all}칸 < {min_positive}칸 기준. AUC 는 참고값으로만 기록하고 "
             "예측 성능을 주장하지 않는다. 도시 침수 사상을 담은 자료를 추가로 확보해야 판정이 가능하다"
+        )
+    elif trace.get("event_auc_spread", {}).get("events_below_min"):
+        # 합산 지표만 보고 "검증 통과"라고 쓰면 과대 진술이 된다. 사상 목록을 안내문에 박아 둔다.
+        below = ", ".join(trace["event_auc_spread"]["events_below_min"])
+        note = (
+            f"합산 AUC 는 기준을 넘었으나 {below} 사상은 기준 미달이다. "
+            "성능을 서술할 때 사상별 표(trace.by_event)를 함께 싣는다"
         )
     return trace, note
 

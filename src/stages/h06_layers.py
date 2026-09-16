@@ -53,6 +53,16 @@ TRACE_DIR = "data/raw/flood_traces"
 DIAGNOSIS_COLUMNS = ["elev_m", "slope_deg", "twi", "impervious_frac",
                      "flood_l210_100_frac", "pump_dist_m", "pop_total"]
 
+# 도시성은 **중앙값으로 요약하면 안 된다**. 불투수면 같은 변수는 0 에 몰린 양봉분포라,
+# 절반을 조금 넘는 칸이 0 이면 중앙값이 0 이 되어 "전부 농경지"처럼 보인다. 실제로는
+# 절반이 시가지일 수 있다. 그래서 "조건을 만족하는 칸의 **비율**"로 함께 낸다.
+URBANNESS_SHARES = {
+    "impervious_gt0": ("impervious_frac", lambda v: v > 0),
+    "flood_map_gt0": ("flood_l210_100_frac", lambda v: v > 0),
+    "pump_within_1km": ("pump_dist_m", lambda v: v <= 1000),
+    "river_within_200m": ("river_dist_m", lambda v: v <= 200),
+}
+
 
 def _load_grid_features(crs: str):
     """격자 피처에 도형을 붙인다. Layer 1·3 의 공통 출발점이다."""
@@ -229,6 +239,19 @@ def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict
     return split
 
 
+def _urbanness(frame) -> dict[str, float]:
+    """도시성 지표를 '조건을 만족하는 칸의 비율'로 낸다.
+
+    중앙값을 쓰면 안 되는 이유는 `URBANNESS_SHARES` 주석에 적었다. 비율로 내면
+    창원 전체와 바로 견줄 수 있어 "이 사상이 평균보다 도시적인가"를 판단할 수 있다.
+    """
+    return {
+        name: round(float(test(frame[column]).mean()), 3)
+        for name, (column, test) in URBANNESS_SHARES.items()
+        if column in frame.columns
+    }
+
+
 def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list[dict[str, Any]]:
     """사상 하나씩 따로 채점한다. 성능이 특정 호우 한 건에 기대고 있는지 보는 장치다.
 
@@ -262,8 +285,10 @@ def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list
             row["top20pct"] = L.top_share_lift(labels[keep], scores[keep], 0.20)
         else:
             row["note"] = f"양성 {n_positive}칸 < 20칸 — 사상 단독 판정 보류"
-        # 같은 라벨을 쓰는 김에 진단 변수 중앙값도 여기서 낸다 (공간 조인 재실행 방지).
-        row["median"] = {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS}
+        # 같은 라벨을 쓰는 김에 진단값도 여기서 낸다 (공간 조인 재실행 방지).
+        flooded = df.loc[labels]
+        row["median"] = {c: round(float(flooded[c].median()), 3) for c in DIAGNOSIS_COLUMNS}
+        row["urbanness"] = _urbanness(flooded)
         row["inland_share"] = (round(float(subset["is_inland"].mean()), 3)
                                if subset["is_inland"].notna().any() else None)
         rows.append(row)
@@ -338,6 +363,9 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
         trace["diagnosis"] = {
             "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
             "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
+            # 사상별 비율을 견줄 대조군. 이게 없으면 "0.271 이 높은 건가 낮은 건가"를 알 수 없다.
+            "flooded_urbanness": _urbanness(df.loc[labels]),
+            "city_urbanness": _urbanness(df),
             "n_covered_by_city_flood_map": int((df.loc[labels, "flood_l210_100_frac"] > 0).sum()),
             "note": "시 침수예상도가 이 격자들을 잡았는지 보면, 점수가 낮은 이유가 우리 지수만의 문제인지 알 수 있다",
         }

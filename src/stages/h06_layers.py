@@ -1,7 +1,13 @@
-"""H06 Layer 1 침수취약성 — 기후노출(IDW 강수) × 도시민감도(지형·피복·배수).
+"""H06 Layer 1 침수취약성 · Layer 3 취약계층·대응역량.
 
-근거: 국토부 「도시 기후변화 재해취약성분석 지침」(100m 격자, 노출×민감도, z-score 합산,
-Jenks 4등급 매트릭스). 계산은 `src/data/interpolate.py`·`src/data/layers.py`.
+Layer 1 은 국토부 「도시 기후변화 재해취약성분석 지침」 구조를 따른다 —
+기후노출(IDW 강수) × 도시민감도(지형·피복·배수) → z-score 합산 → Jenks 4등급 매트릭스.
+Layer 3 은 사람 쪽을 노출 E(수)·취약성 V(비율)·대응역량 부족도 D 로 나눈다.
+
+이 파일은 **단계를 조립**한다. 계산은 `src/data/` 의 모듈이 한다
+(interpolate 보간, layers 정규화·집계, sgis 연령, shelters 대피시설, flood_traces 검증 라벨).
+아래 `_` 함수들은 러너가 길어져 읽기 어려워지는 것을 막으려고 단계별로 끊은 것이며,
+각각 "무엇을 구하는가" 하나에만 답한다.
 """
 
 from __future__ import annotations
@@ -15,7 +21,8 @@ from src.utils.config import PROJECT_ROOT
 
 EXPOSURE_SPEC: dict[str, int] = {name: +1 for name in EXPOSURE_VARIABLES}
 
-# 부호: +1 = 값이 클수록 침수 취약, -1 = 값이 작을수록 취약
+# 부호: +1 = 값이 클수록 침수 취약, -1 = 값이 작을수록 취약.
+# 계산 **전에** 물리적 근거로 고정하며 결과를 보고 바꾸지 않는다.
 SENSITIVITY_SPEC: dict[str, int] = {
     "rel_elev_m": -1,              # 주변보다 낮으면 물이 모인다
     "slope_deg": -1,               # 평평하면 배수가 느리다
@@ -26,8 +33,8 @@ SENSITIVITY_SPEC: dict[str, int] = {
     "flood_l210_100_depth_m": +1,  # 창원시 내수침수 예상 침수심 (모형 산출물 = 입력)
     "pump_within_km": +1,          # 배수펌프장 서비스권 = 자연배수 불가지역의 행정적 인정
 }
-# 하천 근접·침수예상도를 뺀 민감도. 홍재주 외(2015)가 지적한 '하천 인접도에 따른 I등급 과다'와
-# 예상도 의존을 확인하는 제외 민감도 (ANALYSIS_PLAN §2-1·2-3).
+# 하천·복개·예상도를 뺀 민감도로 다시 계산해 순위가 유지되는지 본다.
+# 홍재주 외(2015)가 지적한 '하천 인접도에 따른 I등급 과다'와 예상도 의존을 확인하는 점검이다.
 EXCLUDED_FOR_ROBUSTNESS = ("river_proximity", "culvert_proximity", "flood_l210_100_depth_m")
 
 # 선행연구(최유라·한우석 2024) 현장조사 사례지. 독립 성능검증이 아니라 face-validity 점검이다.
@@ -41,6 +48,23 @@ CASE_STUDY_MAPPING = {
 CASE_STUDY_UNMATCHED = ("명서동", "사화동")
 CASE_STUDY_DONG = tuple(n for names in CASE_STUDY_MAPPING.values() for n in names)
 DONG_NAME_FILE = "data/external/adm_dong_names.csv"
+TRACE_DIR = "data/raw/flood_traces"
+# 침수흔적 격자가 왜 그 점수를 받았는지 설명할 때 보는 변수
+DIAGNOSIS_COLUMNS = ["elev_m", "slope_deg", "twi", "impervious_frac",
+                     "flood_l210_100_frac", "pump_dist_m", "pop_total"]
+
+
+def _load_grid_features(crs: str):
+    """격자 피처에 도형을 붙인다. Layer 1·3 의 공통 출발점이다."""
+    import geopandas as gpd
+    import pandas as pd
+
+    features = pd.read_parquet(PROJECT_ROOT / "data/processed/features/grid_features.parquet")
+    grid = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/grid_base.gpkg", layer="grid")
+    return gpd.GeoDataFrame(
+        features.merge(grid[["grid_id", "geometry"]], on="grid_id", how="left"),
+        geometry="geometry", crs=crs,
+    )
 
 
 def _load_dong_names() -> dict[str, str] | None:
@@ -54,33 +78,17 @@ def _load_dong_names() -> dict[str, str] | None:
     return dict(zip(table["adm_cd"], table["adm_name"]))
 
 
-def layer1_flood(ctx: StageContext) -> dict[str, Any]:
-    """통과: IDW 에 쓴 지점 ≥ params.min_idw_stations_per_event, 등급 4개가 모두 나타남,
-    L1 결측 0. 사례지 lift 와 침수흔적 AUC 는 자료가 있을 때만 판정하고, 없으면
-    `case_study_available` / `label_available` 을 false 로 남긴다 (성능 주장 금지)."""
+def _climate_exposure(df, p) -> dict[str, Any]:
+    """관측지점 강수 통계를 격자로 보간해 df 에 붙인다. 보간 메타를 돌려준다.
+
+    지점 cohort 는 h03_stations 가 표시해 둔 `in_rain_cohort` 를 따른다.
+    """
     import geopandas as gpd
     import numpy as np
     import pandas as pd
-    from scipy.stats import spearmanr
 
-    from src.data import flood_traces as FT
     from src.data import interpolate as I
-    from src.data import layers as L
 
-    p = ctx.params
-    n_classes = int(p["layer1.n_classes"])
-    winsor = (float(p["layer1.winsor_lo"]), float(p["layer1.winsor_hi"]))
-    min_stations = int(p["analysis.min_idw_stations_per_event"])
-
-    features = pd.read_parquet(PROJECT_ROOT / "data/processed/features/grid_features.parquet")
-    grid = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/grid_base.gpkg", layer="grid")
-    df = gpd.GeoDataFrame(
-        features.merge(grid[["grid_id", "geometry"]], on="grid_id", how="left"),
-        geometry="geometry", crs=p["analysis.canonical_crs"],
-    )
-    m: dict[str, Any] = {"n_grid": int(len(df)), "n_universe": int(df["universe"].sum())}
-
-    # ── 기후노출: 지점 통계 → IDW ──────────────────────────────────────────
     stations = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/stations.gpkg", layer="stations")
     cohort = stations[(stations["station_type"] == "rain") & stations["in_rain_cohort"]]
     station_xy = pd.DataFrame({
@@ -99,26 +107,31 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
         station_ids=station_xy["station_code"].tolist(),
     )
     centroids = df.geometry.centroid
-    grids, idw_meta = I.interpolate_to_grid(
+    grids, meta = I.interpolate_to_grid(
         station_xy, exposure, np.column_stack([centroids.x, centroids.y]),
         variables=EXPOSURE_VARIABLES,
-        powers=p["layer1.idw_powers"], k=int(p["layer1.idw_k"]), max_dist=float(p["layer1.idw_max_dist_m"]),
+        powers=p["layer1.idw_powers"], k=int(p["layer1.idw_k"]),
+        max_dist=float(p["layer1.idw_max_dist_m"]),
     )
     for name, values in grids.items():
         df[name] = values
-    m["idw"] = idw_meta
-    m["min_idw_stations_required"] = min_stations
+    return meta
 
-    # ── 도시민감도 ───────────────────────────────────────────────────────
-    radius = float(p["layer1.river_proximity_m"])
-    df["river_proximity"] = np.maximum(0.0, 1.0 - df["river_dist_m"] / radius)
-    df["culvert_proximity"] = np.maximum(0.0, 1.0 - df["culvert_dist_m"] / radius).fillna(0.0)
 
-    z_exposure, exposure_detail = L.composite(df, EXPOSURE_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
-    z_sensitivity, sensitivity_detail = L.composite(df, SENSITIVITY_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
-    df["z_exposure"] = z_exposure
-    df["z_sensitivity"] = z_sensitivity
-    df["L1"] = L.minmax(z_exposure + z_sensitivity)
+def _add_proximity(df, radius_m: float) -> None:
+    """하천·복개천 근접도를 만든다. 거리를 0~1 근접도로 뒤집어야 부호가 다른 변수와 합산된다."""
+    import numpy as np
+
+    df["river_proximity"] = np.maximum(0.0, 1.0 - df["river_dist_m"] / radius_m)
+    # 복개 구간이 없는 지역은 거리가 결측이다. 근접도 0(먼 것)으로 두는 것이 맞다.
+    df["culvert_proximity"] = np.maximum(0.0, 1.0 - df["culvert_dist_m"] / radius_m).fillna(0.0)
+
+
+def _classify_layer1(df, z_exposure, z_sensitivity, n_classes: int) -> dict[str, Any]:
+    """두 축을 각각 Jenks 등급으로 나누고 매트릭스로 취약성 I~IV 를 준다 (지침 구조)."""
+    import pandas as pd
+
+    from src.data import layers as L
 
     exposure_breaks = L.jenks_breaks(z_exposure, n_classes)
     sensitivity_breaks = L.jenks_breaks(z_sensitivity, n_classes)
@@ -127,123 +140,163 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
     df["vulnerability_class"] = L.vulnerability_class(df["exposure_class"], df["sensitivity_class"])
     df["vulnerability_grade"] = pd.Series(df["vulnerability_class"]).map(L.ROMAN)
 
-    m["composite"] = {"exposure": exposure_detail, "sensitivity": sensitivity_detail}
-    m["jenks_breaks"] = {
-        "exposure": [round(v, 4) for v in exposure_breaks],
-        "sensitivity": [round(v, 4) for v in sensitivity_breaks],
-    }
-    m["class_counts"] = {
-        L.ROMAN[c]: int((df["vulnerability_class"] == c).sum()) for c in sorted(L.ROMAN)
-    }
-    m["class_counts_universe"] = {
-        L.ROMAN[c]: int(((df["vulnerability_class"] == c) & (df["universe"] == 1)).sum()) for c in sorted(L.ROMAN)
+    universe = df["universe"] == 1
+    return {
+        "jenks_breaks": {
+            "exposure": [round(v, 4) for v in exposure_breaks],
+            "sensitivity": [round(v, 4) for v in sensitivity_breaks],
+        },
+        "class_counts": {L.ROMAN[c]: int((df["vulnerability_class"] == c).sum()) for c in sorted(L.ROMAN)},
+        "class_counts_universe": {
+            L.ROMAN[c]: int(((df["vulnerability_class"] == c) & universe).sum()) for c in sorted(L.ROMAN)
+        },
     }
 
-    # ── 검증 (a) 하천·예상도 제외 민감도 ────────────────────────────────────
+
+def _exclusion_sensitivity(df, z_exposure, universe, winsor) -> dict[str, Any]:
+    """하천·복개·예상도를 빼고 다시 계산했을 때 순위가 얼마나 유지되는가."""
+    from scipy.stats import spearmanr
+
+    from src.data import layers as L
+
     reduced_spec = {k: v for k, v in SENSITIVITY_SPEC.items() if k not in EXCLUDED_FOR_ROBUSTNESS}
     z_reduced, _ = L.composite(df, reduced_spec, winsor_lo=winsor[0], winsor_hi=winsor[1])
-    l1_reduced = L.minmax(z_exposure + z_reduced)
-    universe = df["universe"].to_numpy().astype(bool)
-    rho = float(spearmanr(df["L1"].to_numpy()[universe], l1_reduced[universe]).statistic)
-    m["exclusion_sensitivity"] = {
+    reduced = L.minmax(z_exposure + z_reduced)
+    rho = float(spearmanr(df["L1"].to_numpy()[universe], reduced[universe]).statistic)
+    return {
         "excluded": list(EXCLUDED_FOR_ROBUSTNESS),
         "spearman_rho_universe": round(rho, 4),
-        "note": "하천 근접·침수예상도를 뺐을 때 순위가 얼마나 유지되는가 (홍재주 외 2015)",
+        "note": "하천 근접·복개·침수예상도를 뺐을 때 순위가 얼마나 유지되는가 (홍재주 외 2015)",
     }
 
-    # ── 검증 (b) 사례지 face-validity ──────────────────────────────────────
+
+def _case_study_check(df, universe, lift_min: float) -> dict[str, Any]:
+    """선행연구 현장조사 사례지가 우리 지도에서도 높은 등급인가 (face-validity)."""
     names = _load_dong_names()
     if names is None:
-        m["case_study"] = {"available": False, "reason": f"{DONG_NAME_FILE} 없음 — 행정동 코드-이름 매핑 미확보"}
-    else:
-        df["adm_name"] = df["adm_cd"].map(names)
-        found = sorted({n for n in CASE_STUDY_DONG if (df["adm_name"] == n).any()})
-        in_case = df["adm_name"].isin(CASE_STUDY_DONG).to_numpy()
-        high = df["vulnerability_class"].isin([1, 2]).to_numpy()
-        base = float(high[universe].mean())
-        share = float(high[universe & in_case].mean()) if (universe & in_case).any() else float("nan")
-        m["case_study"] = {
-            "available": True,
-            "mapping": {k: list(v) for k, v in CASE_STUDY_MAPPING.items()},
-            "unmatched_legal_dong": list(CASE_STUDY_UNMATCHED),
-            "dong_found": found,
-            "dong_missing": sorted(set(CASE_STUDY_DONG) - set(found)),
-            "n_grid": int((universe & in_case).sum()),
-            "high_grade_share": round(share, 4),
-            "base_rate": round(base, 4),
-            "lift": round(share / base, 3) if base > 0 else None,
-            "lift_min": float(p["layer1.case_study_lift_min"]),
-            "note": "선행연구 사례지는 독립 성능검증이 아니라 face-validity 점검이다 (하네스 §7)",
-        }
+        return {"available": False, "reason": f"{DONG_NAME_FILE} 없음 — 행정동 코드-이름 매핑 미확보"}
 
-    # ── 검증 (c) 침수흔적 라벨 ─────────────────────────────────────────────
-    vectors, images = FT.find_files(PROJECT_ROOT / "data/raw/flood_traces")
+    df["adm_name"] = df["adm_cd"].map(names)
+    found = sorted({n for n in CASE_STUDY_DONG if (df["adm_name"] == n).any()})
+    in_case = df["adm_name"].isin(CASE_STUDY_DONG).to_numpy()
+    high = df["vulnerability_class"].isin([1, 2]).to_numpy()
+    base = float(high[universe].mean())
+    share = float(high[universe & in_case].mean()) if (universe & in_case).any() else float("nan")
+    return {
+        "available": True,
+        "mapping": {k: list(v) for k, v in CASE_STUDY_MAPPING.items()},
+        "unmatched_legal_dong": list(CASE_STUDY_UNMATCHED),
+        "dong_found": found,
+        "dong_missing": sorted(set(CASE_STUDY_DONG) - set(found)),
+        "n_grid": int((universe & in_case).sum()),
+        "high_grade_share": round(share, 4),
+        "base_rate": round(base, 4),
+        "lift": round(share / base, 3) if base > 0 else None,
+        "lift_min": lift_min,
+        "note": "선행연구 사례지는 독립 성능검증이 아니라 face-validity 점검이다 (하네스 §7)",
+    }
+
+
+def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | None]:
+    """실제 침수 기록으로 Layer 1 을 채점한다. (지표, 안내문) 을 돌려준다.
+
+    표본이 판정에 쓸 만한지를 **먼저** 본다. 양성 격자가 기준 미만이면 AUC 를 참고값으로만
+    남기고 성능을 주장하지 않는다 (하네스 H06 '라벨 부족 시 성능 주장 금지로 전환').
+    """
+    from src.data import flood_traces as FT
+    from src.data import layers as L
+
+    vectors, images = FT.find_files(PROJECT_ROOT / TRACE_DIR)
     if not vectors:
-        m["label_available"] = False
-        m["label_note"] = (
-            f"침수흔적 벡터 자료 없음 (그림 파일 {len(images)}개). 예측 성능을 주장하지 않는다. "
-            "2026-09-14 정보공개 회신분 수령 후 이 노드만 재실행한다"
-        )
-    else:
-        min_overlap = float(p["layer1.trace_min_overlap"])
-        min_positive = int(p["layer1.trace_min_positive"])
-        traces, trace_meta = FT.load(vectors, crs=p["analysis.canonical_crs"])
-        labels, overlap = FT.label_grid(df, traces, min_overlap=min_overlap)
-        df["trace_overlap"] = overlap
-        df["trace_label"] = labels.astype("int8")
-        scores = df["L1"].to_numpy()
-        n_all = int(labels.sum())
-        n_uni = int((labels & universe).sum())
+        return None, f"침수흔적 벡터 자료 없음 (그림 파일 {len(images)}개). 예측 성능을 주장하지 않는다"
 
-        trace: dict[str, Any] = {
-            **trace_meta,
-            "min_overlap": min_overlap,
-            "n_labelled_grid": n_all,
-            "n_labelled_in_universe": n_uni,
-            "min_positive_required": min_positive,
+    min_overlap = float(p["layer1.trace_min_overlap"])
+    min_positive = int(p["layer1.trace_min_positive"])
+    traces, meta = FT.load(vectors, crs=p["analysis.canonical_crs"])
+    labels, overlap = FT.label_grid(df, traces, min_overlap=min_overlap)
+    df["trace_overlap"] = overlap
+    df["trace_label"] = labels.astype("int8")
+
+    scores = df["L1"].to_numpy()
+    n_all, n_universe = int(labels.sum()), int((labels & universe).sum())
+    trace: dict[str, Any] = {
+        **meta,
+        "min_overlap": min_overlap,
+        "n_labelled_grid": n_all,
+        "n_labelled_in_universe": n_universe,
+        "min_positive_required": min_positive,
+        "label_sufficient": n_all >= min_positive,
+        "auc_min": float(p["layer1.trace_auc_min"]),
+        "capture_min": float(p["layer1.trace_top20_capture_min"]),
+    }
+    if n_all >= 3:
+        # 순위대상만으로는 양성이 적을 수 있어 전 격자 기준을 주지표로 쓴다.
+        trace["auc_all_grid"] = round(L.roc_auc(labels, scores), 4)
+        trace["top20pct_all_grid"] = L.top_share_lift(labels, scores, 0.20)
+        if n_universe >= 3:
+            trace["auc_universe"] = round(L.roc_auc(labels[universe], scores[universe]), 4)
+            trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
+        trace["diagnosis"] = {
+            "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
+            "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
+            "n_covered_by_city_flood_map": int((df.loc[labels, "flood_l210_100_frac"] > 0).sum()),
+            "note": "시 침수예상도가 이 격자들을 잡았는지 보면, 점수가 낮은 이유가 우리 지수만의 문제인지 알 수 있다",
         }
-        # 표본이 판정에 쓸 만한가. 전 격자 기준 양성이 기준 미만이면 성능을 판정하지 않는다.
-        trace["label_sufficient"] = n_all >= min_positive
-        if n_all >= 3:
-            # 순위대상만으로는 양성이 너무 적을 수 있어 전 격자 기준도 함께 낸다.
-            trace["auc_all_grid"] = round(L.roc_auc(labels, scores), 4)
-            trace["top20pct_all_grid"] = L.top_share_lift(labels, scores, 0.20)
-            if n_uni >= 3:
-                trace["auc_universe"] = round(L.roc_auc(labels[universe], scores[universe]), 4)
-                trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
-            # 왜 그런 값이 나왔는지 설명할 수 있게 침수 격자의 변수 중앙값을 남긴다.
-            diag_cols = ["elev_m", "slope_deg", "twi", "impervious_frac",
-                         "flood_l210_100_frac", "pump_dist_m", "pop_total"]
-            trace["diagnosis"] = {
-                "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in diag_cols},
-                "city_median": {c: round(float(df[c].median()), 3) for c in diag_cols},
-                "n_covered_by_city_flood_map": int((df.loc[labels, "flood_l210_100_frac"] > 0).sum()),
-                "note": "시 침수예상도가 이 격자들을 잡았는지 보면, 낮은 점수가 우리 지수만의 문제인지 알 수 있다",
-            }
-        trace["auc_min"] = float(p["layer1.trace_auc_min"])
-        trace["capture_min"] = float(p["layer1.trace_top20_capture_min"])
-        m["label_available"] = True
-        m["trace"] = trace
-        if not trace["label_sufficient"]:
-            m["label_note"] = (
-                f"침수흔적 양성 격자 {n_all}칸 < {min_positive}칸 기준. AUC 는 참고값으로만 기록하고 "
-                "예측 성능을 주장하지 않는다 (하네스 H06 '라벨 부족 시 성능 주장 금지로 전환'). "
-                "도시 침수 사상을 담은 자료를 추가로 확보해야 판정이 가능하다"
-            )
 
-    # ── 통과 판정 ─────────────────────────────────────────────────────────
+    note = None
+    if not trace["label_sufficient"]:
+        note = (
+            f"침수흔적 양성 격자 {n_all}칸 < {min_positive}칸 기준. AUC 는 참고값으로만 기록하고 "
+            "예측 성능을 주장하지 않는다. 도시 침수 사상을 담은 자료를 추가로 확보해야 판정이 가능하다"
+        )
+    return trace, note
+
+
+def layer1_flood(ctx: StageContext) -> dict[str, Any]:
+    """통과: IDW 에 쓴 지점 ≥ min_idw_stations_per_event, 등급 I~IV 가 모두 나타남, L1 결측 0.
+    침수흔적 AUC 는 **양성 격자가 trace_min_positive 이상일 때만** 판정한다."""
+    from src.data import layers as L
+
+    p = ctx.params
+    n_classes = int(p["layer1.n_classes"])
+    winsor = (float(p["layer1.winsor_lo"]), float(p["layer1.winsor_hi"]))
+    min_stations = int(p["analysis.min_idw_stations_per_event"])
+
+    df = _load_grid_features(p["analysis.canonical_crs"])
+    universe = df["universe"].to_numpy().astype(bool)
+    m: dict[str, Any] = {"n_grid": int(len(df)), "n_universe": int(universe.sum())}
+
+    m["idw"] = _climate_exposure(df, p)
+    m["min_idw_stations_required"] = min_stations
+
+    _add_proximity(df, float(p["layer1.river_proximity_m"]))
+    z_exposure, exposure_detail = L.composite(df, EXPOSURE_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
+    z_sensitivity, sensitivity_detail = L.composite(df, SENSITIVITY_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
+    df["z_exposure"] = z_exposure
+    df["z_sensitivity"] = z_sensitivity
+    df["L1"] = L.minmax(z_exposure + z_sensitivity)
+    m["composite"] = {"exposure": exposure_detail, "sensitivity": sensitivity_detail}
+    m.update(_classify_layer1(df, z_exposure, z_sensitivity, n_classes))
+
+    m["exclusion_sensitivity"] = _exclusion_sensitivity(df, z_exposure, universe, winsor)
+    m["case_study"] = _case_study_check(df, universe, float(p["layer1.case_study_lift_min"]))
+
+    trace, note = _flood_trace_check(df, universe, p)
+    m["label_available"] = trace is not None
+    if trace:
+        m["trace"] = trace
+    if note:
+        m["label_note"] = note
+
     findings: list[dict[str, Any]] = []
-    if idw_meta["min_stations_used"] < min_stations:
-        findings.append({
-            "code": "too_few_idw_stations",
-            "detail": f"{idw_meta['min_stations_used']} < {min_stations}",
-        })
+    if m["idw"]["min_stations_used"] < min_stations:
+        findings.append({"code": "too_few_idw_stations",
+                         "detail": f"{m['idw']['min_stations_used']} < {min_stations}"})
     if int(df["L1"].isna().sum()):
         findings.append({"code": "l1_missing", "detail": int(df["L1"].isna().sum())})
     if len(m["class_counts"]) != n_classes or min(m["class_counts"].values()) == 0:
         findings.append({"code": "empty_class", "detail": m["class_counts"]})
-    trace = m.get("trace") or {}
-    if trace.get("label_sufficient") and "auc_all_grid" in trace:
+    if trace and trace["label_sufficient"] and "auc_all_grid" in trace:
         if trace["auc_all_grid"] < trace["auc_min"]:
             findings.append({
                 "code": "trace_auc",
@@ -270,7 +323,7 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
 
 
 def _layer1_map(df, out: Path) -> None:
-    """G007 증거용 4면 지도. 데이터 산출물이 아니므로 outputs 에 넣지 않는다."""
+    """노출·민감도·등급·지수를 한 장에 보여주는 4면 지도 (G007 증거)."""
     import matplotlib.pyplot as plt
 
     from src.visualization import style
@@ -302,50 +355,44 @@ LAYER3_MISSING_VARIABLES = {
     "old_building_ratio": "GIS건물통합정보 SHP 미확보 (V-World 키 필요)",
     "basement_building_count": "건축물대장 지하층수 미확보 (건축HUB 키 필요)",
 }
+AGGREGATION_BOUNDARY_DIR = "data/raw/sgis/aggregation_boundaries_2025_2Q"
 
 
-def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
-    """통과: 65세 이상은 확정된 연령 코드북으로만 파생, 집계구 조인율·결측률 기록,
-    대응역량은 높을수록 좋은 방향으로 정규화한 뒤 capacity_deficit = 1 - capacity_norm."""
+def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
+    """집계구 단위 65세 이상 비율을 격자에 붙인다 (중심점이 속한 집계구의 **비율**을 그대로).
+
+    수를 면적 비례로 쪼개지 않는 이유: 비율은 그 지역의 성질이지 면적의 성질이 아니다.
+    """
     import geopandas as gpd
-    import numpy as np
     import pandas as pd
-    from scipy.spatial import cKDTree
 
-    from src.data import layers as L
-    from src.data import sgis, shelters
+    from src.data import sgis
 
-    p = ctx.params
-    n_classes = int(p["layer1.n_classes"])
-    winsor = (float(p["layer1.winsor_lo"]), float(p["layer1.winsor_hi"]))
-    capacity_max = float(p["layer3.capacity_max_dist_m"])
-    year = int(p["features.sgis_year"])
-
-    features = pd.read_parquet(PROJECT_ROOT / "data/processed/features/grid_features.parquet")
-    grid = gpd.read_file(PROJECT_ROOT / "data/processed/spatial/grid_base.gpkg", layer="grid")
-    df = gpd.GeoDataFrame(
-        features[["grid_id", "adm_cd", "gu_code", "universe", "pop_total", "households", "houses"]]
-        .merge(grid[["grid_id", "geometry"]], on="grid_id", how="left"),
-        geometry="geometry", crs=p["analysis.canonical_crs"],
-    )
-    m: dict[str, Any] = {"n_grid": int(len(df)), "n_universe": int(df["universe"].sum())}
-
-    # 65세 이상 비율: 집계구에서 구해 격자 중심점이 속한 집계구 값을 붙인다.
     aggregation = pd.read_parquet(PROJECT_ROOT / "data/processed/canonical/sgis_aggregation.parquet")
     elderly = sgis.elderly_ratio(aggregation, year)
-    shapes = sorted((PROJECT_ROOT / "data/raw/sgis/aggregation_boundaries_2025_2Q").glob("*.shp"))
+
+    shapes = sorted((PROJECT_ROOT / AGGREGATION_BOUNDARY_DIR).glob("*.shp"))
     boundaries = pd.concat([gpd.read_file(q) for q in shapes], ignore_index=True)
     boundaries = gpd.GeoDataFrame(boundaries, geometry="geometry", crs=boundaries.crs).to_crs(df.crs)
     boundaries["spatial_id"] = boundaries["TOT_OA_CD"].astype(str)
+
     centroids = gpd.GeoDataFrame({"grid_id": df["grid_id"]}, geometry=df.geometry.centroid, crs=df.crs)
     joined = gpd.sjoin(centroids, boundaries[["spatial_id", "geometry"]], predicate="within", how="left")
     joined = joined.drop_duplicates(subset="grid_id")[["grid_id", "spatial_id"]]
-    df = df.merge(joined, on="grid_id", how="left").merge(
-        elderly[["spatial_id", "elderly_ratio", "pop_elderly", "pop_age_total"]], on="spatial_id", how="left"
+
+    merged = df.merge(joined, on="grid_id", how="left").merge(
+        elderly[["spatial_id", "elderly_ratio", "pop_elderly", "pop_age_total"]],
+        on="spatial_id", how="left",
     )
+    df[["spatial_id", "elderly_ratio"]] = merged[["spatial_id", "elderly_ratio"]].to_numpy()
+
     universe = df["universe"].to_numpy().astype(bool)
     first_elderly_col = sgis.age_columns(sgis.AGE_BLOCK_TOTAL, min_age=sgis.ELDERLY_FROM_AGE)[0]
-    m["elderly"] = {
+    weighted = float(
+        (df.loc[universe, "elderly_ratio"] * df.loc[universe, "pop_total"]).sum()
+        / df.loc[universe, "pop_total"].sum()
+    )
+    meta = {
         "age_codebook": f"in_age 5세 계급, {sgis.ELDERLY_FROM_AGE}세 이상 = {first_elderly_col} 이후",
         "codebook_verified": "노령화지수(to_in_004) 항등식 대조 — src/data/sgis.py 주석",
         "n_aggregation_units": int(len(elderly)),
@@ -353,12 +400,9 @@ def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
         "join_rate_universe": round(float(df.loc[universe, "spatial_id"].notna().mean()), 4),
         "missing_ratio_universe": round(float(df.loc[universe, "elderly_ratio"].isna().mean()), 4),
         "city_elderly_share": round(float(elderly["pop_elderly"].sum() / elderly["pop_age_total"].sum()), 4),
-        # 단순평균은 면적이 넓은 농촌 집계구가 격자를 많이 차지해 부풀려진다(0.32).
-        # 시 전체와 대조할 수 있는 것은 인구가중 평균이다.
-        "grid_pop_weighted_universe": round(
-            float((df.loc[universe, "elderly_ratio"] * df.loc[universe, "pop_total"]).sum()
-                  / df.loc[universe, "pop_total"].sum()), 4
-        ),
+        # 단순평균은 면적이 넓은 농촌 집계구가 격자를 많이 차지해 부풀려진다.
+        # 시 전체와 비교할 수 있는 것은 인구가중 평균이다.
+        "grid_pop_weighted_universe": round(weighted, 4),
         "grid_unweighted_mean_universe": round(float(df.loc[universe, "elderly_ratio"].mean()), 4),
         "grids_per_aggregation_unit": {
             "median": float(df.loc[universe].groupby("spatial_id").size().median()),
@@ -368,34 +412,65 @@ def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
     }
     # 집계구에 걸치지 못한 격자는 구 중앙값으로 채우고 플래그를 남긴다 (0 대체 금지).
     df["elderly_imputed"] = df["elderly_ratio"].isna().astype("int8")
-    df["elderly_ratio"] = df["elderly_ratio"].fillna(
-        df.groupby("gu_code")["elderly_ratio"].transform("median")
-    ).fillna(df["elderly_ratio"].median())
-
-    # 대응역량: 대피장소·방재기관 최근접 거리 → 가까울수록 1
-    points, shelter_meta = shelters.load(
-        sorted((PROJECT_ROOT / "data/raw/shelters").glob("*.json")), crs=p["analysis.canonical_crs"]
+    df["elderly_ratio"] = (
+        df["elderly_ratio"].fillna(df.groupby("gu_code")["elderly_ratio"].transform("median"))
+        .fillna(df["elderly_ratio"].median())
     )
-    cent_xy = np.column_stack([df.geometry.centroid.x, df.geometry.centroid.y])
+    return meta
+
+
+def _attach_capacity(df, crs: str, max_dist_m: float) -> dict[str, Any]:
+    """대피장소·방재기관 최근접 거리로 대응역량과 그 부족도를 만든다.
+
+    상한을 두는 이유: 그보다 멀면 도보 대피가 어려워 거리 차이가 의미를 잃는다.
+    펌프장은 Layer 1 배수조건에 이미 썼으므로 여기 넣지 않는다 (이중투입 금지).
+    """
+    import numpy as np
+    from scipy.spatial import cKDTree
+
+    from src.data import shelters
+
+    points, meta = shelters.load(sorted((PROJECT_ROOT / "data/raw/shelters").glob("*.json")), crs=crs)
+    centroids = np.column_stack([df.geometry.centroid.x, df.geometry.centroid.y])
     for kind, column in (("shelter", "shelter_dist_m"), ("facility", "facility_dist_m")):
         sub = points[points["kind"] == kind]
         tree = cKDTree(np.column_stack([sub.geometry.x, sub.geometry.y]))
-        df[column] = tree.query(cent_xy)[0]
-    df["capacity_norm"] = 1.0 - np.mean(
-        [np.minimum(df["shelter_dist_m"], capacity_max) / capacity_max,
-         np.minimum(df["facility_dist_m"], capacity_max) / capacity_max], axis=0
-    )
+        df[column] = tree.query(centroids)[0]
+
+    df["capacity_norm"] = 1.0 - np.mean([
+        np.minimum(df["shelter_dist_m"], max_dist_m) / max_dist_m,
+        np.minimum(df["facility_dist_m"], max_dist_m) / max_dist_m,
+    ], axis=0)
     df["capacity_deficit"] = 1.0 - df["capacity_norm"]
-    m["capacity"] = {
-        **shelter_meta,
-        "max_dist_m": capacity_max,
+
+    universe = df["universe"].to_numpy().astype(bool)
+    meta.update({
+        "max_dist_m": max_dist_m,
         "shelter_dist_median_universe": round(float(df.loc[universe, "shelter_dist_m"].median()), 1),
         "facility_dist_median_universe": round(float(df.loc[universe, "facility_dist_m"].median()), 1),
         "capacity_deficit_mean_universe": round(float(df.loc[universe, "capacity_deficit"].mean()), 4),
-        "note": "펌프장 거리는 Layer 1 배수조건으로 이미 썼으므로 대응역량에서 제외 (하네스 §7 이중투입 금지)",
-    }
+        "note": "펌프장 거리는 Layer 1 배수조건으로 이미 썼으므로 대응역량에서 제외 (하네스 §7)",
+    })
+    return meta
 
-    # E(노출, 수) · V(취약성, 비율)
+
+def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
+    """통과: 65세 이상은 확정된 연령 코드북으로만 파생, 집계구 조인율 ≥95%,
+    E·V·capacity_deficit 결측 0 (0 으로 대체하지 않는다)."""
+    from src.data import layers as L
+
+    p = ctx.params
+    n_classes = int(p["layer1.n_classes"])
+    winsor = (float(p["layer1.winsor_lo"]), float(p["layer1.winsor_hi"]))
+
+    df = _load_grid_features(p["analysis.canonical_crs"])
+    df = df[["grid_id", "adm_cd", "gu_code", "universe", "pop_total", "households", "houses", "geometry"]].copy()
+    universe = df["universe"].to_numpy().astype(bool)
+    m: dict[str, Any] = {"n_grid": int(len(df)), "n_universe": int(universe.sum())}
+
+    m["elderly"] = _attach_elderly_ratio(df, int(p["features.sgis_year"]))
+    m["capacity"] = _attach_capacity(df, p["analysis.canonical_crs"], float(p["layer3.capacity_max_dist_m"]))
+
     z_exposure, exposure_detail = L.composite(df, LAYER3_EXPOSURE_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1])
     z_vulnerability, vulnerability_detail = L.composite(
         df, LAYER3_VULNERABILITY_SPEC, winsor_lo=winsor[0], winsor_hi=winsor[1]
@@ -405,6 +480,7 @@ def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
     df["L3"] = df["V"]
     breaks = L.jenks_breaks(df.loc[universe, "V"].to_numpy(), n_classes)
     df["l3_class"] = L.classify(df["V"].to_numpy(), breaks)
+
     m["composite"] = {"exposure": exposure_detail, "vulnerability": vulnerability_detail}
     m["jenks_breaks_v_universe"] = [round(v, 4) for v in breaks]
     m["class_counts_universe"] = {
@@ -436,6 +512,7 @@ def layer3_vuln(ctx: StageContext) -> dict[str, Any]:
 
 
 def _layer3_map(df, out: Path) -> None:
+    """노출·취약성·대응역량 부족도를 나란히 보여주는 3면 지도 (G009 증거)."""
     import matplotlib.pyplot as plt
 
     from src.visualization import style

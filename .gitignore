@@ -75,3 +75,8 @@ artifacts/state/
 *api*key*
 *.key
 secrets.*
+
+# ===== 대용량 원본 (스크립트로 재생성 가능) =====
+# 창원시 도시침수정보시스템 WFS 원본 690MB. src/data/flood_maps.py 로 다시 받고,
+# 파이프라인이 읽는 것은 data/processed/canonical/flood_maps.gpkg 다.
+data/raw/flood_maps/

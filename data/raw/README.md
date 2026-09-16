@@ -32,6 +32,7 @@ git lfs pull
 | `land_cover/middle_2025/` | 기후에너지환경부 환경공간정보서비스 | https://aid.mcee.go.kr/ | 2026-08-19 | 2025 중분류 16개 도엽, EPSG:5186; 불투수면비율 및 내륙수(`L2_CODE=710`) 하천 공간대체 산정 |
 | `river/경상남도_창원시_하천_20250203.csv` | 창원시·공공데이터포털 | https://www.data.go.kr/ | 2026-08-19 | 53개 하천 명칭·시종점 주소·길이; 좌표는 전체 결측이므로 보조 메타데이터로만 사용 |
 | `rivers/osm_waterways.gpkg` | OpenStreetMap (Overpass API) | https://overpass-api.de/api/interpreter | 2026-09-08 | 창원 bbox(35.05~35.40N, 128.35~128.95E) `waterway=river\|stream\|canal\|drain` 728개(창원 경계 교차), 총연장 501km, 복개(tunnel=culvert) 191개. ODbL — 출처표시·동일조건 재배포. md5 `66b928a7f27200954a9de3b35f6a4fce`. 재취득: `.cache_ingest` 삭제 후 취득 스크립트 재실행 |
+| `flood_traces/changwon_info_disclosure_20260916/` | 창원시 정보공개청구 회신 | 정부24 정보공개청구 접수번호 17369500 | 2026-09-16 | 2025-07-16~20 침수흔적도 원본 ZIP(sha256 `66bedfdb2c268a121dae5c5dd841d8deceb5c895e222c8bc67020268713f1aad`)과 해제본; `L100_침수심` 19건, `L110_침수위` 18건, 총 37개 폴리곤; 원본 CRS Korea 2000 Central Belt 2010 |
 
 ## 미보유·제외 데이터
 

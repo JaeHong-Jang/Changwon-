@@ -36,6 +36,8 @@ SENSITIVITY_SPEC: dict[str, int] = {
 # 하천·복개·예상도를 뺀 민감도로 다시 계산해 순위가 유지되는지 본다.
 # 홍재주 외(2015)가 지적한 '하천 인접도에 따른 I등급 과다'와 예상도 의존을 확인하는 점검이다.
 EXCLUDED_FOR_ROBUSTNESS = ("river_proximity", "culvert_proximity", "flood_l210_100_depth_m")
+# 창원시 침수예상도에서 온 변수. 이것만 빼고 다시 채점하면 '우리가 더한 것'이 분리된다.
+FLOOD_MAP_VARIABLES = ("flood_l210_100_depth_m",)
 
 # 선행연구(최유라·한우석 2024) 현장조사 사례지. 독립 성능검증이 아니라 face-validity 점검이다.
 # 논문은 **법정동** 이름을 쓰고 우리 경계는 **행정동**이라 1:1 로 대응하지 않는다.
@@ -317,7 +319,46 @@ def _event_spread(by_event: list[dict[str, Any]], auc_min: float) -> dict[str, A
     }
 
 
-def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | None]:
+def _incremental_value(df, labels, z_exposure, winsor) -> dict[str, Any]:
+    """우리 지수가 **창원시가 이미 가진 자료에 무엇을 더했는지** 잰다.
+
+    시 침수예상도는 Layer 1 의 입력이다. 그래서 "우리 지수가 실제 침수를 잘 맞혔다"는
+    문장에는 시 모형의 성과가 섞여 있다. 예상도 단독 점수와 나란히 놓아야 우리 기여를
+    분리해 말할 수 있다. 이 표가 없으면 남의 성과를 우리 것으로 보고하게 된다.
+
+    세 가지를 같은 라벨로 채점한다.
+      시 예상도 단독 / Layer 1 현행 / Layer 1 에서 예상도 변수를 뺀 것
+    """
+    from src.data import layers as L
+
+    scores = {
+        "city_flood_map_only": df["flood_l210_100_depth_m"].to_numpy(dtype=float),
+        "layer1": df["L1"].to_numpy(dtype=float),
+    }
+    without_map = {k: v for k, v in SENSITIVITY_SPEC.items() if k not in FLOOD_MAP_VARIABLES}
+    z_reduced, _ = L.composite(df, without_map, winsor_lo=winsor[0], winsor_hi=winsor[1])
+    scores["layer1_without_flood_map"] = L.minmax(z_exposure + z_reduced)
+
+    rows = {
+        name: {
+            "auc": round(L.roc_auc(labels, s), 4),
+            "top20pct_capture": L.top_share_lift(labels, s, 0.20)["capture_rate"],
+        }
+        for name, s in scores.items()
+    }
+    gain = rows["layer1"]["auc"] - rows["city_flood_map_only"]["auc"]
+    return {
+        "scores": rows,
+        "auc_gain_over_city_map": round(gain, 4),
+        "removed_variables": list(FLOOD_MAP_VARIABLES),
+        "note": (
+            "시 침수예상도는 Layer 1 의 입력이다. 예상도 단독 AUC 를 함께 보고하지 않으면 "
+            "시 모형의 성과를 우리 것으로 진술하게 된다"
+        ),
+    }
+
+
+def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, Any] | None, str | None]:
     """실제 침수 기록으로 Layer 1 을 채점한다. (지표, 안내문) 을 돌려준다.
 
     표본이 판정에 쓸 만한지를 **먼저** 본다. 양성 격자가 기준 미만이면 AUC 를 참고값으로만
@@ -325,6 +366,7 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
     """
     from src.data import flood_traces as FT
     from src.data import layers as L
+    from src.data import uncertainty as U
 
     vectors, images = FT.find_files(PROJECT_ROOT / TRACE_DIR)
     if not vectors:
@@ -360,6 +402,12 @@ def _flood_trace_check(df, universe, p) -> tuple[dict[str, Any] | None, str | No
             trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
         trace["by_event"] = _per_event_scores(df, traces, scores, labels, min_overlap)
         trace["event_auc_spread"] = _event_spread(trace["by_event"], trace["auc_min"])
+        # 격자 수는 표본 수가 아니다. 유효 표본과 그에 맞는 신뢰구간을 함께 낸다.
+        centroids = df.geometry.centroid
+        cx, cy = centroids.x.to_numpy(), centroids.y.to_numpy()
+        trace["effective_sample"] = U.effective_sample(labels, cx, cy)
+        trace["auc_ci"] = U.cluster_bootstrap_auc(labels, scores, cx, cy)
+        trace["incremental_value"] = _incremental_value(df, labels, z_exposure, winsor)
         trace["diagnosis"] = {
             "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
             "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
@@ -415,7 +463,7 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
     m["exclusion_sensitivity"] = _exclusion_sensitivity(df, z_exposure, universe, winsor)
     m["case_study"] = _case_study_check(df, universe, float(p["layer1.case_study_lift_min"]))
 
-    trace, note = _flood_trace_check(df, universe, p)
+    trace, note = _flood_trace_check(df, universe, p, z_exposure, winsor)
     m["label_available"] = trace is not None
     if trace:
         m["trace"] = trace

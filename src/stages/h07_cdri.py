@@ -253,21 +253,31 @@ def _grade_validation(grades, val_labels, p, n_classes: int = 5) -> dict[str, An
     return table
 
 
+# 덩어리 재표본에서 이 비율 이상 단조로 나와야 "등급이 오를수록 더 잠긴다"고 말한다.
+MONOTONE_SHARE_MIN = 0.95
+
+
 def _reporting_constraint(validation: dict[str, Any], min_ratio: float, lift_min: float) -> dict[str, Any]:
     """검증 결과로 **무엇을 주장해도 되는지**를 정한다. 보고서 문장을 코드가 제한한다.
 
-    등급 체계가 판정 기준을 다 통과하지 못했을 때, 통과한 부분까지 버릴 이유는 없고
-    통과하지 못한 부분을 주장할 권리도 없다. 그 선을 사람 판단이 아니라 지표가 긋게 한다.
+    판단은 점추정이 아니라 **덩어리 단위 불확실성**에 건다. 격자는 독립 관측이 아니라서
+    (붙어 있는 격자 = 같은 침수 한 건) 점추정과 Cochran-Armitage p 값은 확신을 부풀린다.
+    창원 검증 자료에서 R5 의 양성 9칸은 침수 2건이었다.
     """
     table = validation["calibration"]
+    boot = validation["cluster_bootstrap"]
+    lift_lo = boot["top_grade_lift_ci95"][0] if boot.get("available") else None
+    monotone_ok = bool(boot.get("available")) and boot["monotone_share"] >= MONOTONE_SHARE_MIN
     return {
-        "monotone_claim_allowed": table["monotone"] and table["criteria"]["trend_significant"],
-        # 기저 대비 lift 가 기준 이상인 등급만 "실제로 더 자주 잠긴다"고 말할 수 있다.
-        "separable_grades": [
-            f"R{r['grade']}" for r in table["rows"]
-            if r["lift"] is not None and r["lift"] >= lift_min
-        ],
-        # 인접 발생률 비가 기준에 못 미친 쌍은 떼어 주장하지 않고 통합 단계로 보고한다.
+        # p 값만으로는 허용하지 않는다. 덩어리 재표본에서도 단조가 유지돼야 한다.
+        "monotone_claim_allowed": table["monotone"] and table["criteria"]["trend_significant"] and monotone_ok,
+        "monotone_share": boot.get("monotone_share"),
+        "monotone_share_required": MONOTONE_SHARE_MIN,
+        # 구간의 **하한**이 기준을 넘어야 "그 등급은 확실히 더 잠긴다"고 말할 수 있다.
+        "top_grade_separable": lift_lo is not None and lift_lo >= lift_min,
+        "top_grade_lift_point": table["rows"][-1]["lift"],
+        "top_grade_lift_ci95": boot.get("top_grade_lift_ci95"),
+        "top_grade_clusters": boot.get("clusters_by_grade", {}).get(f"R{len(table['rows'])}"),
         "pairs_not_separable": [
             f"R{i + 1}-R{i + 2}" for i, ratio in enumerate(table["adjacent_ratios"])
             if ratio is not None and ratio < min_ratio
@@ -275,16 +285,21 @@ def _reporting_constraint(validation: dict[str, Any], min_ratio: float, lift_min
         "tier_structure_for_report": validation["calibration_merged"]["tier_members"],
         "failed_criteria": table["failed_criteria"],
         "note": (
-            "단조 추세는 검증 사상에서 확인됐다. 인접 발생률 비가 기준에 못 미친 등급쌍은 "
-            "개별 등급으로 주장하지 않고 통합 단계로 보고한다 (CDRI_GRADE_SYSTEM §1③ ④)."
+            "점추정으로는 단조·R5 분리가 보이지만, 검증 양성이 소수의 침수 덩어리라 "
+            "불확실성이 크다. monotone_claim_allowed 와 top_grade_separable 이 거짓이면 "
+            "해당 주장을 보고서에 쓰지 않는다"
         ),
     }
 
 
-def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p):
-    """캘리브레이션 기간으로 경계를 맞추고 검증 기간으로 채점한다. (등급, 경계진단, 검증)."""
+def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p, centroids):
+    """캘리브레이션 기간으로 경계를 맞추고 검증 기간으로 채점한다. (등급, 경계진단, 검증).
+
+    centroids 는 (x, y) 배열 쌍이다. 검증 양성을 침수 덩어리로 묶어 불확실성을 재는 데 쓴다.
+    """
     from src.data import calibration as C
     from src.data import grades as G
+    from src.data import uncertainty as U
 
     grade_calibration, calibration = G.calibration_grades(
         primary_scaled, labels["cal"],
@@ -305,6 +320,9 @@ def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p):
         },
         # Jenks 도 같은 자료로 채점해 둔다. 본안 선택 기준이 아니라 비교 정보다.
         "jenks": _grade_validation(grade_jenks, labels["val"], p),
+        "cluster_bootstrap": U.cluster_bootstrap_grades(
+            grade_calibration, labels["val"], centroids[0], centroids[1]
+        ),
     }
     validation["reporting_constraint"] = _reporting_constraint(
         validation,
@@ -329,7 +347,8 @@ def _assign_grades(sub, primary_scaled, percentiles, p) -> dict[str, Any]:
     grade_percentile = G.percentile_grades(primary_scaled)
 
     grade_calibration, calibration, validation = (
-        _calibrate_and_validate(primary_scaled, labels, grade_jenks, p)
+        _calibrate_and_validate(primary_scaled, labels, grade_jenks, p,
+                                (sub.geometry.centroid.x.to_numpy(), sub.geometry.centroid.y.to_numpy()))
         if scheme == "calibration" else (None, None, {})
     )
 

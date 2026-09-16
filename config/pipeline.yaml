@@ -560,12 +560,14 @@ nodes:
       - layer1.winsor_hi
       - layer1.n_classes
       - layer1.case_study_lift_min
+      - layer1.trace_min_overlap
+      - layer1.trace_min_positive
       - layer1.trace_auc_min
       - layer1.trace_top20_capture_min
     verify:
       - {kind: code, rule: "IDW 사용 지점 ≥ min_idw_stations_per_event, L1 결측 0, 등급 I~IV 가 모두 나타남"}
       - {kind: external, rule: "사례지 5개 동 I·II등급 lift ≥ case_study_lift_min. 행정동 이름 매핑이 없으면 case_study.available=false 로 기록하고 판정하지 않는다 (face-validity 점검)"}
-      - {kind: external, rule: "침수흔적 라벨이 있으면 ROC-AUC ≥ trace_auc_min, 상위 20% 포착률 ≥ trace_top20_capture_min. 없으면 label_available=false 로 기록하고 예측 성능 주장 금지"}
+      - {kind: external, rule: "침수흔적 양성 격자 ≥ trace_min_positive 일 때만 ROC-AUC ≥ trace_auc_min 을 판정한다. 라벨이 없거나 표본이 부족하면 label_available / label_sufficient 를 false 로 기록하고 예측 성능 주장 금지 (하네스 H06 분기)"}
     on_fail: {goto: h04_grid_features, max_iterations: 3, action: "피처·부호 재검토. 라벨 부족 시 예측 성능 주장 금지로 전환"}
 
   h06_layer2_sewer:

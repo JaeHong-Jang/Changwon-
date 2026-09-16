@@ -37,6 +37,8 @@ layer1:
   winsor_hi: 0.99
   n_classes: 4                      # Jenks 등급 수 (국토부 지침 I~IV)
   case_study_lift_min: 1.5          # 사례지 5개 동 I·II등급 lift (face-validity)
+  trace_min_overlap: 0.10           # 격자 면적의 이 비율 넘게 겹쳐야 침수 양성으로 센다
+  trace_min_positive: 30            # 양성 격자가 이보다 적으면 성능을 판정하지 않는다
   trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
   trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
 

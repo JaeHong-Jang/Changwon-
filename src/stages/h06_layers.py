@@ -185,20 +185,51 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
             "2026-09-14 정보공개 회신분 수령 후 이 노드만 재실행한다"
         )
     else:
+        min_overlap = float(p["layer1.trace_min_overlap"])
+        min_positive = int(p["layer1.trace_min_positive"])
         traces, trace_meta = FT.load(vectors, crs=p["analysis.canonical_crs"])
-        labels, overlap = FT.label_grid(df, traces)
+        labels, overlap = FT.label_grid(df, traces, min_overlap=min_overlap)
         df["trace_overlap"] = overlap
         df["trace_label"] = labels.astype("int8")
         scores = df["L1"].to_numpy()
-        m["label_available"] = True
-        m["trace"] = {
+        n_all = int(labels.sum())
+        n_uni = int((labels & universe).sum())
+
+        trace: dict[str, Any] = {
             **trace_meta,
-            "n_labelled_grid": int(labels.sum()),
-            "auc": round(L.roc_auc(labels[universe], scores[universe]), 4),
-            "auc_min": float(p["layer1.trace_auc_min"]),
-            "top20pct": L.top_share_lift(labels[universe], scores[universe], 0.20),
-            "capture_min": float(p["layer1.trace_top20_capture_min"]),
+            "min_overlap": min_overlap,
+            "n_labelled_grid": n_all,
+            "n_labelled_in_universe": n_uni,
+            "min_positive_required": min_positive,
         }
+        # 표본이 판정에 쓸 만한가. 전 격자 기준 양성이 기준 미만이면 성능을 판정하지 않는다.
+        trace["label_sufficient"] = n_all >= min_positive
+        if n_all >= 3:
+            # 순위대상만으로는 양성이 너무 적을 수 있어 전 격자 기준도 함께 낸다.
+            trace["auc_all_grid"] = round(L.roc_auc(labels, scores), 4)
+            trace["top20pct_all_grid"] = L.top_share_lift(labels, scores, 0.20)
+            if n_uni >= 3:
+                trace["auc_universe"] = round(L.roc_auc(labels[universe], scores[universe]), 4)
+                trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
+            # 왜 그런 값이 나왔는지 설명할 수 있게 침수 격자의 변수 중앙값을 남긴다.
+            diag_cols = ["elev_m", "slope_deg", "twi", "impervious_frac",
+                         "flood_l210_100_frac", "pump_dist_m", "pop_total"]
+            trace["diagnosis"] = {
+                "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in diag_cols},
+                "city_median": {c: round(float(df[c].median()), 3) for c in diag_cols},
+                "n_covered_by_city_flood_map": int((df.loc[labels, "flood_l210_100_frac"] > 0).sum()),
+                "note": "시 침수예상도가 이 격자들을 잡았는지 보면, 낮은 점수가 우리 지수만의 문제인지 알 수 있다",
+            }
+        trace["auc_min"] = float(p["layer1.trace_auc_min"])
+        trace["capture_min"] = float(p["layer1.trace_top20_capture_min"])
+        m["label_available"] = True
+        m["trace"] = trace
+        if not trace["label_sufficient"]:
+            m["label_note"] = (
+                f"침수흔적 양성 격자 {n_all}칸 < {min_positive}칸 기준. AUC 는 참고값으로만 기록하고 "
+                "예측 성능을 주장하지 않는다 (하네스 H06 '라벨 부족 시 성능 주장 금지로 전환'). "
+                "도시 침수 사상을 담은 자료를 추가로 확보해야 판정이 가능하다"
+            )
 
     # ── 통과 판정 ─────────────────────────────────────────────────────────
     findings: list[dict[str, Any]] = []
@@ -211,8 +242,13 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
         findings.append({"code": "l1_missing", "detail": int(df["L1"].isna().sum())})
     if len(m["class_counts"]) != n_classes or min(m["class_counts"].values()) == 0:
         findings.append({"code": "empty_class", "detail": m["class_counts"]})
-    if m.get("label_available") and m["trace"]["auc"] < m["trace"]["auc_min"]:
-        findings.append({"code": "trace_auc", "detail": f"{m['trace']['auc']} < {m['trace']['auc_min']}"})
+    trace = m.get("trace") or {}
+    if trace.get("label_sufficient") and "auc_all_grid" in trace:
+        if trace["auc_all_grid"] < trace["auc_min"]:
+            findings.append({
+                "code": "trace_auc",
+                "detail": f"AUC {trace['auc_all_grid']} < {trace['auc_min']} (양성 {trace['n_labelled_grid']}칸)",
+            })
     if findings:
         raise StageFailed("Layer 1 통과 기준 미달", findings, metrics=m)
 

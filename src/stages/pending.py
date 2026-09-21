@@ -1,8 +1,4 @@
-"""아직 구현하지 않은 노드들. 각 함수의 docstring 이 그 노드의 통과 기준·metrics 계약이다.
-
-구현할 때는 이 파일에서 빼내 게이트별 모듈(`h04_features.py` 처럼)로 옮기고
-`config/pipeline.yaml` 의 runner 경로를 함께 고친다. 구현 전까지 한곳에 모아 둔다.
-"""
+"""아직 구현하지 않은 DAG 노드 자리표시자."""
 
 from __future__ import annotations
 

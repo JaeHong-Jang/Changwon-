@@ -14,11 +14,9 @@ from src.data.validate_raw import resolve_files
 from src.pipeline.runner import StageContext, StageFailed
 from src.utils.config import PROJECT_ROOT
 
-# 하네스 §2 기준선: 2015~2024 커버리지 90% 이상인 29지점이 IDW 의 기본 cohort 다.
-# 이보다 줄면 이벤트별 정상지점 24개(min_idw_stations_per_event) 확보가 위태로워진다.
+# IDW 기본 cohort 기준선.
 REQUIRED_COHORT = 29
-# 분석기간에 유효값이 남은 지점이 하나도 없으면 그 자료로는 사례 분석조차 못 한다.
-# 실측(2015~2024): 차룡8교·연덕교 2지점 — 나머지 6지점은 전 기간 0 뿐이다.
+# 분석기간에 유효값이 남은 수위 지점 기준선.
 REQUIRED_USABLE_RIVER_STATIONS = 1
 
 
@@ -44,11 +42,7 @@ def _partition_finding(m: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def rainfall_long(ctx: StageContext) -> dict[str, Any]:
-    """강수 wide→long.
-
-    통과: 원행 분할 무결(canonical ⊎ quarantine == 원본), 정제 후 키 유일,
-    분석기간 cohort ≥ 29지점.
-    """
+    """강수 wide→long. 통과: 원행 분할 무결, 키 유일, cohort ≥ 29지점."""
     canonical, quarantine, m = clean_rainfall(
         ctx.inputs[0],
         climatology=_climatology(ctx),
@@ -70,14 +64,7 @@ def rainfall_long(ctx: StageContext) -> dict[str, Any]:
 
 
 def river_long(ctx: StageContext) -> dict[str, Any]:
-    """하천수위 wide→long.
-
-    통과 기준을 "센티널이 level_cm 에 없다"로 두면 안 된다 — level_cm 은 정의상
-    플래그가 ok 인 셀만 담으므로 그 검사는 어떤 입력에도 참이고, 전 셀이 센티널인
-    파일도 통과한다. 대신 실제로 깨질 수 있는 두 가지를 본다:
-      1) 플래그가 붙은 셀마다 quarantine 기록이 하나씩 있는가 (회계)
-      2) 분석기간에 유효값이 남은 지점이 있는가 (자료로서 쓸모)
-    """
+    """하천수위 wide→long. 통과: 격리 회계 일치, 분석기간 유효 지점 존재."""
     canonical, quarantine, m = clean_river(ctx.inputs[0], climatology=_climatology(ctx))
     _write(ctx, canonical, quarantine)
 
@@ -99,11 +86,7 @@ def river_long(ctx: StageContext) -> dict[str, Any]:
 
 
 def sgis_canonical(ctx: StageContext) -> dict[str, Any]:
-    """헤더 없는 SGIS CSV를 계약 4컬럼으로 읽어 parquet 저장 (하네스 §6-3).
-
-    통과: 파일 수가 계약의 expected_files 와 일치, 키(year+spatial_id+variable) 유일.
-    metrics: 격자·집계구별 files/rows/variables/unique_spatial_ids.
-    """
+    """헤더 없는 SGIS CSV를 계약 4컬럼으로 읽어 parquet 저장."""
     contract = yaml.safe_load(
         (PROJECT_ROOT / "config" / "data_contracts.yaml").read_text(encoding="utf-8")
     )

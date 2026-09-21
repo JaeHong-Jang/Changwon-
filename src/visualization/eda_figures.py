@@ -1,8 +1,4 @@
-"""데이터 확인 EDA 그림 (H02). 판정은 하지 않고 이미 계산된 표를 그리기만 한다.
-
-흑백 인쇄 기준으로 그린다. 기준선은 점선, 기준 미달은 해칭으로 구분하며 색에 의미를
-싣지 않는다. 각 그림은 각주 한 줄로 무엇을 봐야 하는지 스스로 설명한다.
-"""
+"""데이터 확인 EDA 그림 (H02). 이미 계산된 표를 그린다."""
 
 from __future__ import annotations
 
@@ -91,13 +87,7 @@ def river_validity(by_station: pd.Series, path: Path, thresholds: Thresholds = T
 
 
 def grid_population(values: pd.Series, path: Path) -> None:
-    """분석격자 인구 분포.
-
-    y축을 로그로 그리는 이유: 인구 격자의 절반이 10명 이하라 가장 높은 막대가 꼬리보다
-    수천 배 크다. 선형 축이면 인구가 많은 구간의 막대가 1픽셀 미만이 되어 보이지 않는다.
-    확인하려는 것이 "희박한 격자가 대부분이고 시가지 격자가 소수 있는가"이므로
-    두 끝이 모두 보여야 한다.
-    """
+    """분석격자 인구 분포. 희박한 격자와 시가지 꼬리를 함께 보려고 로그축을 쓴다."""
     nonzero = values[values > 0].to_numpy(dtype=float)
     series = pd.Series(nonzero)
     ratio = 0

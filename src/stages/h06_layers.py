@@ -1,14 +1,4 @@
-"""H06 Layer 1 침수취약성 · Layer 3 취약계층·대응역량.
-
-Layer 1 은 국토부 「도시 기후변화 재해취약성분석 지침」 구조를 따른다 —
-기후노출(IDW 강수) × 도시민감도(지형·피복·배수) → z-score 합산 → Jenks 4등급 매트릭스.
-Layer 3 은 사람 쪽을 노출 E(수)·취약성 V(비율)·대응역량 부족도 D 로 나눈다.
-
-이 파일은 **단계를 조립**한다. 계산은 `src/data/` 의 모듈이 한다
-(interpolate 보간, layers 정규화·집계, sgis 연령, shelters 대피시설, flood_traces 검증 라벨).
-아래 `_` 함수들은 러너가 길어져 읽기 어려워지는 것을 막으려고 단계별로 끊은 것이며,
-각각 "무엇을 구하는가" 하나에만 답한다.
-"""
+"""H06 Layer 1 침수취약성 · Layer 3 취약계층·대응역량."""
 
 from __future__ import annotations
 
@@ -22,7 +12,6 @@ from src.utils.config import PROJECT_ROOT
 EXPOSURE_SPEC: dict[str, int] = {name: +1 for name in EXPOSURE_VARIABLES}
 
 # 부호: +1 = 값이 클수록 침수 취약, -1 = 값이 작을수록 취약.
-# 계산 **전에** 물리적 근거로 고정하며 결과를 보고 바꾸지 않는다.
 SENSITIVITY_SPEC: dict[str, int] = {
     "rel_elev_m": -1,              # 주변보다 낮으면 물이 모인다
     "slope_deg": -1,               # 평평하면 배수가 느리다
@@ -33,15 +22,12 @@ SENSITIVITY_SPEC: dict[str, int] = {
     "flood_l210_100_depth_m": +1,  # 창원시 내수침수 예상 침수심 (모형 산출물 = 입력)
     "pump_within_km": +1,          # 배수펌프장 서비스권 = 자연배수 불가지역의 행정적 인정
 }
-# 하천·복개·예상도를 뺀 민감도로 다시 계산해 순위가 유지되는지 본다.
-# 홍재주 외(2015)가 지적한 '하천 인접도에 따른 I등급 과다'와 예상도 의존을 확인하는 점검이다.
+# 하천·복개·예상도를 뺀 민감도 점검 변수.
 EXCLUDED_FOR_ROBUSTNESS = ("river_proximity", "culvert_proximity", "flood_l210_100_depth_m")
-# 창원시 침수예상도에서 온 변수. 이것만 빼고 다시 채점하면 '우리가 더한 것'이 분리된다.
+# 창원시 침수예상도 변수
 FLOOD_MAP_VARIABLES = ("flood_l210_100_depth_m",)
 
-# 선행연구(최유라·한우석 2024) 현장조사 사례지. 독립 성능검증이 아니라 face-validity 점검이다.
-# 논문은 **법정동** 이름을 쓰고 우리 경계는 **행정동**이라 1:1 로 대응하지 않는다.
-# 대응이 확인된 것만 넣는다. 명서동·사화동은 관할 행정동을 확인하지 못해 제외했다.
+# 선행연구 사례지의 법정동·행정동 대응
 CASE_STUDY_MAPPING = {
     "양덕동": ("양덕1동", "양덕2동"),
     "봉암동": ("봉암동",),
@@ -52,13 +38,11 @@ CASE_STUDY_DONG = tuple(n for names in CASE_STUDY_MAPPING.values() for n in name
 DONG_NAME_FILE = "data/external/adm_dong_names.csv"
 TRACE_DIR = "data/raw/flood_traces"
 EVENT_LABEL_PREFIX = "trace_ev_"   # 사상(연도)별 침수 라벨 열 이름 앞머리
-# 침수흔적 격자가 왜 그 점수를 받았는지 설명할 때 보는 변수
+# 침수 격자 진단 변수
 DIAGNOSIS_COLUMNS = ["elev_m", "slope_deg", "twi", "impervious_frac",
                      "flood_l210_100_frac", "pump_dist_m", "pop_total"]
 
-# 도시성은 **중앙값으로 요약하면 안 된다**. 불투수면 같은 변수는 0 에 몰린 양봉분포라,
-# 절반을 조금 넘는 칸이 0 이면 중앙값이 0 이 되어 "전부 농경지"처럼 보인다. 실제로는
-# 절반이 시가지일 수 있다. 그래서 "조건을 만족하는 칸의 **비율**"로 함께 낸다.
+# 도시성 조건별 격자 비율
 URBANNESS_SHARES = {
     "impervious_gt0": ("impervious_frac", lambda v: v > 0),
     "flood_map_gt0": ("flood_l210_100_frac", lambda v: v > 0),
@@ -92,10 +76,7 @@ def _load_dong_names() -> dict[str, str] | None:
 
 
 def _climate_exposure(df, p) -> dict[str, Any]:
-    """관측지점 강수 통계를 격자로 보간해 df 에 붙인다. 보간 메타를 돌려준다.
-
-    지점 cohort 는 h03_stations 가 표시해 둔 `in_rain_cohort` 를 따른다.
-    """
+    """관측지점 강수 통계를 격자로 보간해 df 에 붙인다."""
     import geopandas as gpd
     import numpy as np
     import pandas as pd
@@ -136,7 +117,7 @@ def _add_proximity(df, radius_m: float) -> None:
     import numpy as np
 
     df["river_proximity"] = np.maximum(0.0, 1.0 - df["river_dist_m"] / radius_m)
-    # 복개 구간이 없는 지역은 거리가 결측이다. 근접도 0(먼 것)으로 두는 것이 맞다.
+    # 복개 구간 미존재 시 근접도 0
     df["culvert_proximity"] = np.maximum(0.0, 1.0 - df["culvert_dist_m"] / radius_m).fillna(0.0)
 
 
@@ -211,16 +192,7 @@ def _case_study_check(df, universe, lift_min: float) -> dict[str, Any]:
 
 
 def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict[str, Any]:
-    """사상을 연도 시간순으로 나눠 앞뒤 라벨을 따로 붙인다. 분할 내역을 돌려준다.
-
-    등급 경계를 침수흔적으로 맞추고 **같은** 흔적으로 검증하면 in-sample 순환이 된다
-    (CDRI_GRADE_SYSTEM §1③, 지적사항 3). 앞 사상으로 경계를 정하고 뒤 사상으로 검증하면
-    그 순환이 끊긴다.
-
-    분할 기준은 결과를 보기 전에 정한 규칙이다 — **연도를 시간순으로 세워 앞 cal_share 를
-    캘리브레이션, 나머지를 검증**으로 한다. 홀수면 여분을 캘리브레이션 쪽에 준다.
-    창원 기록은 연도마다 사상이 정확히 하나씩이라 연도 분할이 곧 사상 분할이다.
-    """
+    """사상을 연도 시간순으로 나눠 캘리브레이션·검증 라벨을 붙인다."""
     from src.data import flood_traces as FT
 
     years = sorted(y for y in traces["event_year"].dropna().unique())
@@ -236,25 +208,21 @@ def _time_split_labels(df, traces, min_overlap: float, cal_share: float) -> dict
         labels, _ = FT.label_grid(df, traces[traces["event_year"].isin(subset)], min_overlap=min_overlap)
         df[f"trace_label_{name}"] = labels.astype("int8")
         split[f"n_{name}"] = int(labels.sum())
-    # 사상 단위 교차검증(LOEO)은 사상마다 라벨이 따로 있어야 한다. 연도가 곧 사상이다.
+    # LOEO용 연도별 사상 라벨
     split["event_columns"] = []
     for year in years:
         labels, _ = FT.label_grid(df, traces[traces["event_year"] == year], min_overlap=min_overlap)
         column = f"{EVENT_LABEL_PREFIX}{year}"
         df[column] = labels.astype("int8")
         split["event_columns"].append(column)
-    # 두 쪽 모두 양성이 있어야 캘리브레이션-검증 분리가 성립한다.
+    # 캘리브레이션·검증 양쪽의 양성 확인
     split["usable"] = bool(split["n_cal"] and split["n_val"])
     split["n_both"] = int((df["trace_label_cal"].to_numpy() & df["trace_label_val"].to_numpy()).sum())
     return split
 
 
 def _urbanness(frame) -> dict[str, float]:
-    """도시성 지표를 '조건을 만족하는 칸의 비율'로 낸다.
-
-    중앙값을 쓰면 안 되는 이유는 `URBANNESS_SHARES` 주석에 적었다. 비율로 내면
-    창원 전체와 바로 견줄 수 있어 "이 사상이 평균보다 도시적인가"를 판단할 수 있다.
-    """
+    """도시성 지표를 조건을 만족하는 칸의 비율로 낸다."""
     return {
         name: round(float(test(frame[column]).mean()), 3)
         for name, (column, test) in URBANNESS_SHARES.items()
@@ -263,14 +231,7 @@ def _urbanness(frame) -> dict[str, float]:
 
 
 def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list[dict[str, Any]]:
-    """사상 하나씩 따로 채점한다. 성능이 특정 호우 한 건에 기대고 있는지 보는 장치다.
-
-    전체를 합쳐 계산한 AUC 는 큰 사상 하나가 좋으면 나머지가 나빠도 높게 나온다.
-    사상별로 나눠 보면 그 편중이 드러난다.
-
-    음성은 **어느 사상에서도 잠기지 않은 격자**로 둔다. 다른 사상에서 잠긴 칸을 음성으로
-    세면 "맞힌 것"을 틀렸다고 채점하게 된다.
-    """
+    """사상 하나씩 따로 채점한다. 음성은 어느 사상에서도 잠기지 않은 격자다."""
     import numpy as np
 
     from src.data import flood_traces as FT
@@ -292,17 +253,17 @@ def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list
             "n_traces": int(len(subset)),
             "n_positive_grid": n_positive,
         }
-        # 양성이 너무 적으면 AUC 가 한두 칸에 좌우되므로 계산하지 않는다.
+        # AUC 최소 양성 수
         if n_positive >= 20:
             row["auc"] = round(L.roc_auc(labels[keep], scores[keep]), 4)
             row["top20pct"] = L.top_share_lift(labels[keep], scores[keep], 0.20)
         else:
             row["note"] = f"양성 {n_positive}칸 < 20칸 — 사상 단독 판정 보류"
-        # 같은 라벨을 쓰는 김에 진단값도 여기서 낸다 (공간 조인 재실행 방지).
+        # 사상 라벨별 진단
         flooded = df.loc[labels]
         row["median"] = {c: round(float(flooded[c].median()), 3) for c in DIAGNOSIS_COLUMNS}
         row["urbanness"] = _urbanness(flooded)
-        # 사상별 AUC 가 흔들리는 이유를 읽으려면 격자 수가 아니라 덩어리 수를 봐야 한다.
+        # 사상별 독립 침수 덩어리 수
         row["n_cluster"] = U.effective_sample(labels, cx, cy)["n_cluster"]
         row["inland_share"] = (round(float(subset["is_inland"].mean()), 3)
                                if subset["is_inland"].notna().any() else None)
@@ -311,11 +272,7 @@ def _per_event_scores(df, traces, scores, any_label, min_overlap: float) -> list
 
 
 def _event_spread(by_event: list[dict[str, Any]], auc_min: float) -> dict[str, Any]:
-    """사상별 AUC 가 고르게 나왔는지 요약한다. 합산 지표가 숨기는 편차를 드러낸다.
-
-    합산 AUC 는 큰 사상 하나가 좋으면 높게 나온다. 사상별로 나눠 기준 미달 사상을
-    이름으로 적어 두면, 보고서를 쓸 때 그 사실을 빠뜨릴 수 없다.
-    """
+    """사상별 AUC 편차를 요약한다."""
     scored = {r["event_year"]: r["auc"] for r in by_event if "auc" in r}
     below = sorted(y for y, auc in scored.items() if auc < auc_min)
     return {
@@ -333,18 +290,7 @@ def _event_spread(by_event: list[dict[str, Any]], auc_min: float) -> dict[str, A
 
 
 def _incremental_value(df, labels, z_exposure, winsor, centroids) -> dict[str, Any]:
-    """우리 지수가 **창원시가 이미 가진 자료에 무엇을 더했는지** 잰다.
-
-    시 침수예상도는 Layer 1 의 입력이다. 그래서 "우리 지수가 실제 침수를 잘 맞혔다"는
-    문장에는 시 모형의 성과가 섞여 있다. 세 가지로 분리한다.
-
-    1. **같은 라벨로 세 점수를 채점** — 예상도 단독 / Layer 1 / Layer 1 − 예상도.
-       격자마다 1표인 AUC 와 침수 한 건마다 1표인 AUC 를 함께 낸다.
-    2. **짝지은 차이** — 두 점수의 신뢰구간이 겹친다고 "차이 없음"이라 하면 틀린다.
-       같은 침수로 채점한 두 점수는 강하게 상관돼 있으므로, 같은 재표본에서 차이를 직접 잰다.
-    3. **예상도 안/밖 분리** — 예상도가 0 인 구역에서 예상도는 아무 정보도 주지 않는다
-       (AUC 0.5). 그 구역에서 우리 지수의 AUC 가 곧 **예상도와 무관한 우리 기여**다.
-    """
+    """침수예상도 대비 우리 지수의 추가 기여를 잰다."""
     from src.data import layers as L
     from src.data import uncertainty as U
 
@@ -394,11 +340,7 @@ def _incremental_value(df, labels, z_exposure, winsor, centroids) -> dict[str, A
 
 
 def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, Any] | None, str | None]:
-    """실제 침수 기록으로 Layer 1 을 채점한다. (지표, 안내문) 을 돌려준다.
-
-    표본이 판정에 쓸 만한지를 **먼저** 본다. 양성 격자가 기준 미만이면 AUC 를 참고값으로만
-    남기고 성능을 주장하지 않는다 (하네스 H06 '라벨 부족 시 성능 주장 금지로 전환').
-    """
+    """실제 침수 기록으로 Layer 1 을 채점한다."""
     from src.data import flood_traces as FT
     from src.data import layers as L
     from src.data import uncertainty as U
@@ -429,7 +371,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
         "capture_min": float(p["layer1.trace_top20_capture_min"]),
     }
     if n_all >= 3:
-        # 순위대상만으로는 양성이 적을 수 있어 전 격자 기준을 주지표로 쓴다.
+        # 전체 격자 기준 AUC
         trace["auc_all_grid"] = round(L.roc_auc(labels, scores), 4)
         trace["top20pct_all_grid"] = L.top_share_lift(labels, scores, 0.20)
         if n_universe >= 3:
@@ -437,7 +379,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
             trace["top20pct_universe"] = L.top_share_lift(labels[universe], scores[universe], 0.20)
         trace["by_event"] = _per_event_scores(df, traces, scores, labels, min_overlap)
         trace["event_auc_spread"] = _event_spread(trace["by_event"], trace["auc_min"])
-        # 격자 수는 표본 수가 아니다. 유효 표본과 그에 맞는 신뢰구간을 함께 낸다.
+        # 침수 덩어리 단위 표본·신뢰구간
         centroids = df.geometry.centroid
         cx, cy = centroids.x.to_numpy(), centroids.y.to_numpy()
         trace["effective_sample"] = U.effective_sample(labels, cx, cy)
@@ -446,7 +388,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
         trace["diagnosis"] = {
             "flooded_median": {c: round(float(df.loc[labels, c].median()), 3) for c in DIAGNOSIS_COLUMNS},
             "city_median": {c: round(float(df[c].median()), 3) for c in DIAGNOSIS_COLUMNS},
-            # 사상별 비율을 견줄 대조군. 이게 없으면 "0.271 이 높은 건가 낮은 건가"를 알 수 없다.
+            # 사상별 비율의 전체 격자 대조군
             "flooded_urbanness": _urbanness(df.loc[labels]),
             "city_urbanness": _urbanness(df),
             "n_covered_by_city_flood_map": int((df.loc[labels, "flood_l210_100_frac"] > 0).sum()),
@@ -460,7 +402,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
             "예측 성능을 주장하지 않는다. 도시 침수 사상을 담은 자료를 추가로 확보해야 판정이 가능하다"
         )
     elif trace.get("event_auc_spread", {}).get("events_below_min"):
-        # 합산 지표만 보고 "검증 통과"라고 쓰면 과대 진술이 된다. 사상 목록을 안내문에 박아 둔다.
+        # 성능 기준 미달 사상 명시
         below = ", ".join(trace["event_auc_spread"]["events_below_min"])
         note = (
             f"합산 AUC 는 기준을 넘었으나 {below} 사상은 기준 미달이다. "
@@ -529,7 +471,7 @@ def layer1_flood(ctx: StageContext) -> dict[str, Any]:
         "vulnerability_class", "vulnerability_grade", "L1", "geometry",
     ]
     if "trace_label" in df.columns:
-        # 캘리브레이션·검증 라벨을 따로 실어 H07 이 in-sample 순환 없이 등급 경계를 맞춘다.
+        # H07 캘리브레이션·검증 라벨 분리
         columns[-1:-1] = [
             "trace_overlap", "trace_label", "trace_label_cal", "trace_label_val",
             *sorted(c for c in df.columns if c.startswith(EVENT_LABEL_PREFIX)),
@@ -570,7 +512,7 @@ def _layer1_map(df, out: Path) -> None:
 # V(취약성)는 **비율**, E(노출)는 **수**로 나눈다 (ANALYSIS_PLAN §4 이중계산 방지).
 LAYER3_VULNERABILITY_SPEC: dict[str, int] = {"elderly_ratio": +1}
 LAYER3_EXPOSURE_SPEC: dict[str, int] = {"pop_total": +1, "houses": +1}
-# 아직 확보하지 못해 V 에서 빠진 변수. 보고서 한계와 metrics 에 그대로 남긴다.
+# 미확보 취약성 변수
 LAYER3_MISSING_VARIABLES = {
     "one_person_household_ratio": "SGIS 1인가구 미보유 (100m·집계구 모두)",
     "old_building_ratio": "GIS건물통합정보 SHP 미확보 (V-World 키 필요)",
@@ -580,10 +522,7 @@ AGGREGATION_BOUNDARY_DIR = "data/raw/sgis/aggregation_boundaries_2025_2Q"
 
 
 def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
-    """집계구 단위 65세 이상 비율을 격자에 붙인다 (중심점이 속한 집계구의 **비율**을 그대로).
-
-    수를 면적 비례로 쪼개지 않는 이유: 비율은 그 지역의 성질이지 면적의 성질이 아니다.
-    """
+    """집계구 단위 65세 이상 비율을 격자에 붙인다."""
     import geopandas as gpd
     import pandas as pd
 
@@ -605,8 +544,7 @@ def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
         elderly[["spatial_id", "elderly_ratio", "pop_elderly", "pop_age_total"]],
         on="spatial_id", how="left",
     )
-    # 두 열을 한 numpy 배열로 대입하면 문자열(spatial_id)과 실수(elderly_ratio)가 섞여
-    # object dtype 이 되고, 그대로 gpkg 에 쓰면 비율이 TEXT 로 저장돼 하류에서 깨진다.
+    # 문자열 ID·실수 비율의 dtype 유지
     df["spatial_id"] = merged["spatial_id"].to_numpy()
     df["elderly_ratio"] = merged["elderly_ratio"].to_numpy(dtype=float)
 
@@ -624,8 +562,7 @@ def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
         "join_rate_universe": round(float(df.loc[universe, "spatial_id"].notna().mean()), 4),
         "missing_ratio_universe": round(float(df.loc[universe, "elderly_ratio"].isna().mean()), 4),
         "city_elderly_share": round(float(elderly["pop_elderly"].sum() / elderly["pop_age_total"].sum()), 4),
-        # 단순평균은 면적이 넓은 농촌 집계구가 격자를 많이 차지해 부풀려진다.
-        # 시 전체와 비교할 수 있는 것은 인구가중 평균이다.
+        # 시 전체 비교용 인구가중 평균
         "grid_pop_weighted_universe": round(weighted, 4),
         "grid_unweighted_mean_universe": round(float(df.loc[universe, "elderly_ratio"].mean()), 4),
         "grids_per_aggregation_unit": {
@@ -634,7 +571,7 @@ def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
             "note": "집계구 하나가 격자 여러 개에 같은 비율을 준다 — 배분 불확실성 (ANALYSIS_PLAN §4)",
         },
     }
-    # 집계구에 걸치지 못한 격자는 구 중앙값으로 채우고 플래그를 남긴다 (0 대체 금지).
+    # 미매칭 격자: 구 중앙값 대체·플래그 (0 대체 금지)
     df["elderly_imputed"] = df["elderly_ratio"].isna().astype("int8")
     df["elderly_ratio"] = (
         df["elderly_ratio"].fillna(df.groupby("gu_code")["elderly_ratio"].transform("median"))
@@ -644,11 +581,7 @@ def _attach_elderly_ratio(df, year: int) -> dict[str, Any]:
 
 
 def _attach_capacity(df, crs: str, max_dist_m: float) -> dict[str, Any]:
-    """대피장소·방재기관 최근접 거리로 대응역량과 그 부족도를 만든다.
-
-    상한을 두는 이유: 그보다 멀면 도보 대피가 어려워 거리 차이가 의미를 잃는다.
-    펌프장은 Layer 1 배수조건에 이미 썼으므로 여기 넣지 않는다 (이중투입 금지).
-    """
+    """대피장소·방재기관 최근접 거리로 대응역량 부족도를 만든다."""
     import numpy as np
     from scipy.spatial import cKDTree
 

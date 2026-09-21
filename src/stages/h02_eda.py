@@ -1,8 +1,4 @@
-"""H02 데이터 확인 EDA. 탐색이 아니라 '이 데이터를 써도 되는가'를 판정하는 검증 노드다.
-
-판정은 `src/data/quality.py`, 그림은 `src/visualization/eda_figures.py` 가 맡고
-여기서는 파일을 읽어 넘기고 결과를 문서로 쓰는 일만 한다.
-"""
+"""H02 데이터 확인 EDA."""
 
 from __future__ import annotations
 
@@ -26,13 +22,7 @@ GRID_BASE = PROJECT_ROOT / "data/processed/spatial/grid_base.gpkg"
 
 
 def _read_canonical(name: str) -> pd.DataFrame:
-    """canonical parquet 을 읽는다. `obs_date` 는 정제 단계가 저장한 것을 그대로 쓴다.
-
-    여기서 `observed_at.dt.normalize()` 로 재계산하면 안 된다. 정제 단계는 24시를
-    다음날 00:00 으로 옮기므로, 재계산한 날짜는 정제 단계가 cohort 를 셀 때 쓴 날짜와
-    달라진다(리뷰 M3: 2일치 입력에서 2일 vs 3일). 두 노드가 서로 다른 관측일 수를
-    쓰면서 아무도 오류를 내지 않는 상태가 된다.
-    """
+    """canonical parquet 을 읽는다. `obs_date` 는 정제 단계 값 그대로 쓴다."""
     df = pd.read_parquet(CANONICAL / name)
     if "obs_date" not in df.columns:
         raise StageFailed(

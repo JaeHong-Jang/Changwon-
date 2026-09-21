@@ -9,7 +9,7 @@ import traceback
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from src.pipeline import manifest as mf
 from src.pipeline.graph import Graph, Node
@@ -29,17 +29,17 @@ class StageFailed(RuntimeError):
     ):
         super().__init__(message)
         self.findings = findings or []
-        # 실패해도 "왜"를 설명하는 숫자는 manifest 에 남긴다.
+        # 실패 시 진단 지표
         self.metrics = metrics or {}
 
 
 @dataclass
 class StageContext:
-    """runner 함수가 받는 유일한 인자."""
+    """노드 실행에 필요한 값."""
 
     node: Node
     run_id: str
-    run_dir: Path                 # artifacts/runs/<run_id>/<node_id>/ — 로그·중간 지표 저장처
+    run_dir: Path                 # 로그·중간 지표 저장처
     config: dict[str, Any]
     params: dict[str, Any]        # node.params를 config에서 뽑은 값
     inputs: list[Path]            # 존재하는 입력 파일 (glob 해제됨)
@@ -48,16 +48,6 @@ class StageContext:
 
     def path(self, rel: str) -> Path:
         return PROJECT_ROOT / rel
-
-
-def _load_runner(spec: str) -> Callable[[StageContext], dict[str, Any] | None]:
-    module_name, func_name = spec.split(":", 1)
-    module = importlib.import_module(module_name)
-    return getattr(module, func_name)
-
-
-def _missing_outputs(node: Node) -> list[str]:
-    return [o for o in node.outputs if not (PROJECT_ROOT / o).exists()]
 
 
 def run(
@@ -87,7 +77,7 @@ def run(
         "nodes": {},
     }
     upstream: dict[str, dict[str, str]] = {}
-    # only 모드에서는 상류를 실행하지 않으므로 저장된 출력 checksum을 빌려 쓴다.
+    # only 모드의 상류 출력 checksum
     for dep_id in graph.ancestors(only) if only else ():
         state = mf.load_state(dep_id)
         upstream[dep_id] = state["outputs"] if state else {"__missing__": dep_id}
@@ -95,7 +85,7 @@ def run(
     for node_id in selected:
         node = graph.nodes[node_id]
         record: dict[str, Any] = {"gate": node.gate, "status": None}
-        ctx_ref: StageContext | None = None  # 실패해도 ctx.metrics 를 증거로 남기기 위해
+        ctx_ref: StageContext | None = None  # 실패 시 지표 보존
         started = time.perf_counter()
         try:
             fingerprint, basis = mf.node_fingerprint(node, config, upstream)
@@ -129,9 +119,11 @@ def run(
                 ctx.run_dir.mkdir(parents=True, exist_ok=True)
                 record["started_at"] = datetime.now(timezone.utc).isoformat()
                 log.info("[%s] 실행 시작 (%s)", node_id, node.gate)
-                metrics = _load_runner(node.runner)(ctx) or {}
+                module_name, func_name = node.runner.split(":", 1)
+                module = importlib.import_module(module_name)
+                metrics = getattr(module, func_name)(ctx) or {}
                 record["metrics"] = {**ctx.metrics, **metrics}
-                missing = _missing_outputs(node)
+                missing = [o for o in node.outputs if not (PROJECT_ROOT / o).exists()]
                 if missing:
                     raise StageFailed(
                         f"선언된 출력이 생성되지 않음: {missing}",

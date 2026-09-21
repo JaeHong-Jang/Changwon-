@@ -1,11 +1,4 @@
-"""침수흔적도 로더 — Layer 1 의 검증 라벨 (2026-09-14 정보공개 회신분).
-
-**예상도는 입력, 흔적도는 검증**이다 (ANALYSIS_PLAN §2-3). 이 모듈이 읽은 자료는
-`h04_grid_features` 의 입력이 아니며 Layer 1 산출 뒤 평가에만 쓴다.
-
-회신 파일의 형식을 아직 모르므로 벡터 형식(SHP·GPKG·GeoJSON)을 모두 받아들이고,
-그림 형식(PDF·csd)이면 무엇을 해야 하는지 알려주며 멈춘다.
-"""
+"""침수흔적도 로더. 흔적도는 Layer 1 입력이 아니라 검증 라벨이다."""
 
 from __future__ import annotations
 
@@ -13,14 +6,11 @@ from pathlib import Path
 from typing import Any, Iterable
 
 VECTOR_SUFFIXES = {".shp", ".gpkg", ".geojson", ".json", ".gml", ".kml"}
-# 같은 폴더에 수집 기록·메타데이터가 함께 놓인다. .json 은 GeoJSON 일 수도 있어
-# 확장자만으로는 못 거르므로 이름으로 먼저 걸러 내고, 그래도 안 읽히면 건너뛴다.
+# 수집 기록·메타데이터 파일명 토큰.
 SKIP_NAME_TOKENS = ("metric", "meta", "manifest", "readme", "log")
 IMAGE_SUFFIXES = {".pdf", ".csd", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".dwg", ".dxf"}
 
-# 사상 일자·원인으로 쓸 컬럼 이름 후보 (먼저 맞는 것을 쓴다).
-# F_SAT_YMD·F_RSN_DTL 은 2026-09-16 수령분의 NDMS 표준 스키마다.
-# F_* 는 창원시 회신분(NDMS 표준), FLDN_* 은 행안부 공유플랫폼 API(DSSP-IF-00117) 스키마다.
+# 사상 일자·원인으로 쓸 컬럼 이름 후보.
 DATE_COLUMN_CANDIDATES = (
     "F_SAT_YMD", "FLDN_BGNG_YMD", "침수일자", "발생일자", "사상일자", "피해일자", "일자",
     "OCCUR_DE", "FLUD_DE", "date",
@@ -30,7 +20,7 @@ CAUSE_COLUMN_CANDIDATES = (
 )
 EVENT_COLUMN_CANDIDATES = ("F_DISA_NM", "FLDN_DST_NM", "사상명", "재해명", "EVENT")
 YEAR_COLUMN_CANDIDATES = ("FLDN_YR", "F_YR", "INV_YR", "연도")
-# 침수 원인이 내수(배수 불량·용량 부족)인지 외수(하천 범람·해일)인지. Layer 1 은 내수를 겨냥한다.
+# 내수 침수 원인 토큰.
 INLAND_CAUSE_TOKENS = ("내수", "배수", "우수", "관거", "맨홀", "저지대")
 
 
@@ -80,11 +70,7 @@ def _read_vectors(paths, crs: str):
 
 
 def _drop_duplicate_geometries(gdf):
-    """같은 도형이 여러 레이어에 반복되면 하나만 남긴다. (표, 제거 건수).
-
-    창원시 회신분의 L100(침수심)과 L110(침수위)이 **같은 폴리곤**이었다. 그대로 두면
-    면적과 라벨이 두 배가 된다. 속성이 많은 행을 남겨 사상·원인 정보를 지키다.
-    """
+    """같은 도형이 여러 레이어에 반복되면 하나만 남긴다."""
     before = len(gdf)
     gdf = gdf.assign(
         _wkb=gdf.geometry.apply(lambda g: g.normalize().wkb),
@@ -98,12 +84,7 @@ def _drop_duplicate_geometries(gdf):
 
 
 def _coalesce(gdf, candidates: tuple[str, ...]):
-    """후보 컬럼들을 **행 단위로** 합친다. 앞선 후보의 값이 비면 다음 후보로 채운다.
-
-    두 자료원(창원시 NDMS `F_*`, 행안부 API `FLDN_*`)을 한 표로 합치면 양쪽 컬럼이
-    모두 생기되 각자 자기 행에만 값이 있다. 컬럼을 **하나만** 골라 쓰면 다른 자료원
-    행이 전부 결측이 되어 연도·사상별 분할이 불가능해진다. 그래서 행마다 채운다.
-    """
+    """후보 컬럼들을 행 단위로 합친다. 앞선 후보의 값이 비면 다음 후보로 채운다."""
     import pandas as pd
 
     present = [c for c in candidates if c in gdf.columns]
@@ -127,13 +108,13 @@ def _derive_event_fields(gdf):
     if raw_date is None:
         gdf["event_date"] = pd.NaT
     else:
-        # NDMS·API 모두 YYYYMMDD 문자열이지만, 다른 형식이 섞이면 일반 파서로 한 번 더 시도한다.
+        # YYYYMMDD 우선, 실패하면 일반 파서로 한 번 더 시도한다.
         text = raw_date.astype("string").str.strip()
         parsed = pd.to_datetime(text, format="%Y%m%d", errors="coerce")
         gdf["event_date"] = parsed.fillna(pd.to_datetime(text[parsed.isna()], errors="coerce"))
     gdf["cause"] = raw_cause.astype("string") if raw_cause is not None else None
     gdf["event_name"] = raw_event.astype("string") if raw_event is not None else None
-    # 연도 컬럼이 비는 행은 일자에서 뽑아 채운다. 시간 분할에 쓰는 값이라 결측을 남기지 않는다.
+    # 연도 컬럼이 비는 행은 일자에서 채운다.
     from_date = gdf["event_date"].dt.year.astype("Int64").astype("string")
     gdf["event_year"] = (
         raw_year.astype("string").str.strip().replace("", pd.NA).fillna(from_date)
@@ -188,11 +169,7 @@ def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[st
 
 
 def label_grid(grid, traces, *, min_overlap: float = 0.10):
-    """격자마다 침수흔적과 겹치는지 표시한다. 면적 비율이 `min_overlap` 을 넘으면 양성.
-
-    임계가 0 이면 폴리곤이 모서리만 스쳐도 양성이 된다. 실제 수령분에서 겹침 비율의
-    중앙값이 6%였으므로(대부분 스침), 기본값을 10%로 둔다. 임계는 설정으로 조절한다.
-    """
+    """격자마다 침수흔적과 겹치는지 표시한다. 면적 비율이 `min_overlap` 을 넘으면 양성."""
     import geopandas as gpd
     import numpy as np
 
@@ -202,8 +179,7 @@ def label_grid(grid, traces, *, min_overlap: float = 0.10):
     )
     for row, group in joined.groupby("_row"):
         cell = grid.geometry.iloc[row]
-        # sjoin 의 index_right 는 위치가 아니라 **라벨**이다. iloc 을 쓰면 인덱스가
-        # 0..n-1 이 아닐 때 어긋난다.
+        # sjoin 의 index_right 는 위치가 아니라 라벨이다.
         overlap = traces.geometry.loc[group["index_right"].to_numpy()].intersection(cell).area.sum()
         areas[row] = min(float(overlap) / cell.area, 1.0)
     return areas > min_overlap, areas

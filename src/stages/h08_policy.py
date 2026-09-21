@@ -1,8 +1,4 @@
-"""H08 우선대응 지역 정책화 — 정책카드는 '문장'이 아니라 트리거-행동 계약이다 (RESEARCH_PLAN §0-6).
-
-CDRI 가 위험군(tier) 모드이면 정밀 순위를 주장하지 않는다. 그 경우 표의 `rank` 는
-표시 순서일 뿐이며 `in_robust_core` 와 `grade_final` 이 실제 근거다.
-"""
+"""H08 우선대응 지역 정책화."""
 
 from __future__ import annotations
 
@@ -13,12 +9,11 @@ from typing import Any
 from src.pipeline.runner import StageContext, StageFailed
 from src.utils.config import PROJECT_ROOT
 
-# 공식 기준으로 대체한 트리거 (docs/WORK_PLAN_0914.md §2-4).
-# 시 SOP 확인 전 임의의 시간기준(24h·6h)을 쓰지 않고 기상청 호우특보 발효 기준을 쓴다.
+# 기상청 호우특보 기준 트리거.
 TRIGGER_WATCH = "기상청 호우주의보 (3시간 60mm 또는 12시간 110mm 예상)"
 TRIGGER_WARNING = "기상청 호우경보 (3시간 90mm 또는 12시간 180mm 예상)"
 
-# 주 원인(가법형 기여도 최대 요소)별 행동 계약. 하나의 격자에 하나의 1순위 조치를 준다.
+# 주 원인별 행동 계약.
 ACTION_BY_CAUSE: dict[str, dict[str, str]] = {
     "H": {
         "recommended_action": "우기 전 빗물받이·측구 준설, 호우주의보 시 이동식 펌프·차수판 배치 지점으로 지정",
@@ -64,23 +59,18 @@ GU_NAMES = {"38111": "의창구", "38112": "성산구", "38113": "마산합포�
 
 
 def _suppress_neighbours(frame, radius_m: float, limit: int):
-    """300m NMS — 같은 침수 구역이 인접 격자로 여러 번 뽑히는 것을 막는다 (ANALYSIS_PLAN §5).
-
-    점수가 높은 격자부터 보며, 이미 뽑힌 격자에서 radius_m 안에 있으면 건너뛴다.
-    후보 전체(7만여 격자)의 중심점을 계산하면 낭비이므로 상위 일부만 보고,
-    그것으로 limit 을 못 채우면 범위를 두 배로 넓힌다. 결과는 전체를 훑은 것과 같다.
-    """
+    """NMS 로 인접 격자의 중복 선정을 막는다."""
     import numpy as np
 
     ordered = frame.sort_values("cdri", ascending=False, kind="stable")
-    # 반경 300m·격자 100m 면 하나가 최대 28개를 누르므로 limit*30 이면 거의 항상 충분하다.
+    # NMS 초기 후보 범위
     head = min(len(ordered), max(limit * 30, 512))
     while True:
         window = ordered.iloc[:head]
         xy = np.column_stack([window.geometry.centroid.x, window.geometry.centroid.y])
         chosen: list[int] = []
         for i in range(len(window)):
-            # 이미 뽑힌 점들과의 거리를 한 번에 잰다 (파이썬 반복문 대신 배열 연산).
+            # 기존 선정 지점과의 최소 거리
             if not chosen or np.min(np.hypot(*(xy[i] - xy[chosen]).T)) >= radius_m:
                 chosen.append(i)
                 if len(chosen) == limit:
@@ -91,10 +81,7 @@ def _suppress_neighbours(frame, radius_m: float, limit: int):
 
 
 def _load_candidates() -> tuple[Any, dict[str, Any]]:
-    """CDRI 격자와 확정 산식 이력을 읽는다. (격자, 산식 manifest).
-
-    펌프장 거리는 CDRI 에 들어가지 않는 참고 지표라 피처 표에서 따로 붙인다.
-    """
+    """CDRI 격자와 확정 산식 이력을 읽는다."""
     import geopandas as gpd
     import pandas as pd
 
@@ -109,10 +96,7 @@ def _load_candidates() -> tuple[Any, dict[str, Any]]:
 
 
 def _attach_place_names(out) -> bool:
-    """격자에 구·행정동 이름을 붙인다. 행정동명 확보 여부를 돌려준다.
-
-    사람이 읽는 표에 '38111' 같은 코드만 있으면 현장에서 못 쓴다.
-    """
+    """격자에 구·행정동 이름을 붙인다."""
     import pandas as pd
 
     names_path = PROJECT_ROOT / DONG_NAME_FILE
@@ -126,11 +110,7 @@ def _attach_place_names(out) -> bool:
 
 
 def _build_policy_cards(out, run_id: str):
-    """주 원인에 따라 트리거·담당부서·조치·KPI 를 채운다.
-
-    정책카드는 문장이 아니라 '언제(트리거) 누가(담당) 무엇을(조치) 어떻게 확인(KPI)' 의
-    계약이어야 한다 (RESEARCH_PLAN §0-6). 네 칸 중 하나라도 비면 그 격자는 표에서 뺀다.
-    """
+    """주 원인에 따라 트리거·담당부서·조치·KPI 를 채운다."""
     out["elderly_estimate"] = (out["pop_total"] * out["elderly_ratio"]).round(0)
     for target, source in (
         ("hazard_contribution", "h_contribution"),
@@ -211,9 +191,7 @@ def _write_evaluation(path: Path, out, ranking_mode: str, run_id: str) -> None:
 
 
 def top20(ctx: StageContext) -> dict[str, Any]:
-    """통과: 선정된 격자마다 트리거·담당·조치·KPI 가 모두 채워져 있어야 한다.
-    비어 있으면 그 격자를 표에서 뺀다. 민원 홀드아웃은 비공개라 최종 1회 평가를 수행하지 않고
-    `holdout_evaluated=false` 로 기록한다 (docs/decisions/001)."""
+    """통과: 선정 격자마다 트리거·담당·조치·KPI 가 모두 있어야 한다."""
     p = ctx.params
     top_n = int(p["cdri.top_n"])
     radius = float(p["policy.nms_radius_m"])

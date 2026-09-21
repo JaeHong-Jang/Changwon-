@@ -23,7 +23,7 @@ def _pad(text: str, width: int) -> str:
 def cmd_plan(graph: Graph, args: argparse.Namespace) -> int:
     config = load_config()
     upstream: dict[str, dict[str, str]] = {}
-    # --only 는 상류를 실행하지 않으므로 runner 와 같은 방식으로 저장된 출력을 빌려 쓴다.
+    # only 모드의 상류 출력 checksum
     for dep_id in graph.ancestors(args.only) if args.only else ():
         state = mf.load_state(dep_id)
         upstream[dep_id] = state["outputs"] if state else {"__missing__": dep_id}
@@ -34,7 +34,7 @@ def cmd_plan(graph: Graph, args: argparse.Namespace) -> int:
             fp, _ = mf.node_fingerprint(node, config, upstream)
             cached = mf.is_cached(node, fp)
             status = "cached" if cached else "run"
-            # 실행 전이라 출력 checksum을 모르면 하류는 모두 run으로 표시된다.
+            # 출력 checksum 미확정 시 하류 실행 예정
             upstream[node_id] = mf.load_state(node_id)["outputs"] if cached else {"__pending__": fp}
         except Exception as exc:  # noqa: BLE001
             status = f"error({type(exc).__name__})"

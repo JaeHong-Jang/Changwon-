@@ -1,10 +1,4 @@
-"""Validate immutable raw inputs against ``config/data_contracts.yaml``.
-
-The validator intentionally separates structural failures (``error``) from
-quality decisions that need an explicit cleaning rule (``warning``).  Use
-``--fail-on warning`` for the research-stage gate and ``--fail-on error`` to
-check only that downloads and schemas are intact.
-"""
+"""Validate immutable raw inputs against ``config/data_contracts.yaml``."""
 
 from __future__ import annotations
 
@@ -166,8 +160,7 @@ def apply_waivers(
     waiver_path: Path | None,
     scope: set[str] | None = None,
 ) -> dict[str, Any]:
-    """scope: 이번 실행에서 검증한 dataset 이름. 주면 그 밖의 dataset 을 가리키는 waiver 는
-    판정에서 제외한다 (묶음별 검증에서 다른 묶음 waiver 가 'unused' 로 잡히는 것을 막는다)."""
+    """scope 밖 dataset 의 waiver 는 이번 판정에서 제외한다."""
     entries: list[dict[str, Any]] = []
     invalid: list[dict[str, Any]] = []
     if waiver_path and waiver_path.exists():
@@ -267,7 +260,7 @@ def apply_waivers(
             }
             used.add(fingerprint)
 
-    # scope 밖 dataset 을 가리키는 waiver 는 이번 실행의 판정 대상이 아니다.
+    # scope 밖 waiver 는 이번 판정 대상이 아니다.
     in_scope = {
         fp
         for fp, waiver in by_fingerprint.items()

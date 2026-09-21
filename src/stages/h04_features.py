@@ -1,7 +1,4 @@
-"""H04 격자 피처 결합 — DEM·토지피복·침수예상도·펌프장·인구를 100m 분석격자에 붙인다.
-
-계산은 `src/data/features.py`, 이 파일은 입력 읽기·조립·통과 판정·data_dictionary 작성만 한다.
-"""
+"""H04 격자 피처 결합."""
 
 from __future__ import annotations
 
@@ -45,10 +42,7 @@ CORE = [
 
 
 def _terrain_layers(dem_paths, lat, rel_radius_m: float):
-    """DEM 에서 지형 변수를 만든다. (변수 배열 dict, 메타).
-
-    표고 하나에서 경사·상대고도·TWI·유량누적이 모두 나오므로 한곳에 묶는다.
-    """
+    """DEM 에서 지형 변수를 만든다."""
     from src.data import features as F
 
     elev, meta = F.dem_to_lattice(dem_paths, lat)
@@ -84,10 +78,7 @@ def _land_cover_layers(lc_paths, lat, sub: int, crs: str):
 
 
 def _waterway_layers(lat, sub: int, crs: str):
-    """OSM 하천망에서 하천·복개천까지의 거리를 만든다. (변수 dict, 메타).
-
-    토지피복 내륙수는 폭이 있는 수역만 잡아 소하천·복개천이 빠지므로 중심선을 따로 쓴다.
-    """
+    """OSM 하천망에서 하천·복개천까지의 거리를 만든다."""
     import geopandas as gpd
 
     from src.data import features as F
@@ -110,10 +101,7 @@ def _waterway_layers(lat, sub: int, crs: str):
 
 
 def _flood_map_layers(lat, sub: int, crs: str):
-    """창원시 침수예상도에서 100년 빈도 침수 면적비와 면적가중 침수심을 만든다.
-
-    **예상도는 입력, 흔적도는 검증**이다. 이 노드는 예상도만 쓴다 (ANALYSIS_PLAN §2-3).
-    """
+    """창원시 침수예상도에서 100년 빈도 면적비와 침수심을 만든다."""
     import geopandas as gpd
 
     from src.data import features as F
@@ -141,11 +129,7 @@ def _pump_layers(lat, crs: str):
 
 
 def _attach_population(out, sgis_year: int):
-    """SGIS 인구·가구·주택을 붙이고 순위 대상(universe)을 정한다.
-
-    SGIS 가 발행하지 않은 격자는 0 으로 채우되 `sgis_reported` 로 구분한다.
-    '값이 0' 과 '발행하지 않음' 은 다른 상태다.
-    """
+    """SGIS 인구·가구·주택을 붙이고 순위 대상(universe)을 정한다."""
     import pandas as pd
 
     from src.data import features as F

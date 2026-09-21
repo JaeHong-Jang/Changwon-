@@ -1,8 +1,4 @@
-"""관측지점·배수펌프장 좌표 표 → 분석 CRS 포인트 (H03).
-
-좌표의 원천은 사람이 채우고 검수한 CSV(`data/external/`)와 창원시 배수펌프장 표준데이터다.
-여기서는 표를 검사하고 포인트로 바꾸는 것만 한다. 지오코딩은 하지 않는다.
-"""
+"""관측지점·배수펌프장 좌표 표를 분석 CRS 포인트로 바꾼다."""
 
 from __future__ import annotations
 
@@ -16,7 +12,7 @@ from scipy.spatial import cKDTree
 from src.data.spatial import CANONICAL_CRS
 
 STATION_COLUMNS = ["station_code", "station_name", "station_type", "lat", "lon", "source", "reviewed", "note"]
-# 창원시를 넉넉히 감싸는 위경도 상자. 위도·경도가 뒤바뀐 행(lat=128.x)을 잡는 용도.
+# 창원시를 넉넉히 감싸는 위경도 상자.
 LAT_RANGE = (34.9, 35.6)
 LON_RANGE = (128.3, 129.0)
 
@@ -39,10 +35,7 @@ def to_points(df: pd.DataFrame, lat: str = "lat", lon: str = "lon") -> gpd.GeoDa
 
 
 def station_table(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """stations.csv 를 검사한다. 좌표가 빈 행은 남겨 두고(확보율 계산용) 문제는 metrics 로 돌려준다.
-
-    reviewed=N 은 "실제 설치 위치가 비공개라 근사점을 썼다"는 뜻이므로 `is_proxy` 로 보존한다.
-    """
+    """stations.csv 를 검사한다. 좌표가 빈 행은 확보율 계산용으로 남긴다."""
     missing = [c for c in STATION_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"stations.csv 필수 열 누락: {missing}")
@@ -76,11 +69,7 @@ def station_table(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
 def merge_pump_sources(
     official: pd.DataFrame, geocoded: pd.DataFrame, match_m: float = 50.0
 ) -> tuple[gpd.GeoDataFrame, dict[str, Any]]:
-    """창원시 배수펌프장 표준데이터(공식 좌표)를 기본으로 하고, 공식 목록에 없는 지오코딩 펌프장을 보탠다.
-
-    지오코딩 행은 가장 가까운 공식 펌프장까지 거리가 `match_m` 이하면 같은 시설로 보고 버린다
-    (공식 좌표가 우선). 그보다 멀면 공식 목록에 없는 시설이므로 추가한다 — 이 행만 사람 검수(reviewed)가 필요하다.
-    """
+    """공식 배수펌프장 좌표를 기본으로 하고, 공식 목록에 없는 지오코딩 행만 보탠다."""
     off = official.rename(columns=OFFICIAL_PUMP_COLUMNS)
     missing = [c for c in ("pump_name", "lat", "lon") if c not in off.columns]
     if missing:

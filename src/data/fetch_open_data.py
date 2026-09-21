@@ -1,19 +1,4 @@
-"""로그인·인증키 없이 받을 수 있는 공개 데이터를 내려받는다 (접근신청 #17).
-
-받은 파일은 `data/raw/` 아래에 저장하고 취득일·URL·sha256 을 `manifest` 로 남긴다.
-H00 수집 확인 노드가 그 기록을 읽는다.
-
-    python -m src.data.fetch_open_data            # 전체
-    python -m src.data.fetch_open_data --only a1  # 하나만
-    python -m src.data.fetch_open_data --list     # 목록만 보기
-
-여기 없는 항목:
-- A2 침수흔적도 PDF, A3 대피장소 PDF, A7 홍수위험지도 — 게시판이 JavaScript 로 첨부
-  링크를 만들거나 폼 제출이 필요해 자동화하지 않았다.
-- A9 환경부 하수도통계 — 이미 `data/raw/2025 하수도통계.xlsx` 로 보유 중이다.
-  직접 링크는 `https://www.hasudoinfo.or.kr/bbs/fileDownload.do?atcmtFileId=usn7f8pi0anvmUBtUTfCjWsKZCLVboz6FJMGRGr7JJA%3D&fileSn=1`
-`docs/data_acquisition_todo.md` 의 수동 절차를 따른다.
-"""
+"""로그인·인증키 없이 받을 수 있는 공개 데이터를 내려받는다."""
 
 from __future__ import annotations
 
@@ -44,8 +29,7 @@ class Source:
     description: str
 
 
-# 창원 침수예상도: L200/L210/L220 은 강우 시나리오, 뒤 숫자는 재현기간(년).
-# L300 은 하천 범람 예상도. 건수는 2026-08-22 확인값.
+# 창원 침수예상도 레이어.
 FLOOD_LAYERS = {
     "L200_050": "내수침수 50년", "L200_080": "내수침수 80년",
     "L200_100": "내수침수 100년 (28,544건)", "L200_200": "내수침수 200년",

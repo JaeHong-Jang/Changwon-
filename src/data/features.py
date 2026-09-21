@@ -1,11 +1,4 @@
-"""H04 격자 피처 (ANALYSIS_PLAN §1~2, RESEARCH_HARNESS §6).
-
-SGIS 100m 격자가 EPSG:5179 의 100m 격자망에 정확히 정렬돼 있으므로(`h03_grid_base` 검증),
-모든 변수를 그 격자망 위의 2차원 배열로 계산한 뒤 grid_id 의 (row, col) 로 읽는다.
-폴리곤 변수(토지피복·침수예상도)는 10m 로 래스터화한 뒤 100m 블록 평균 = 면적 비율이다.
-
-여기 있는 함수는 전부 순수 계산이다. 파일 경로·통과 판정은 `src/stages/h04_features.py` 가 맡는다.
-"""
+"""H04 격자 피처 계산."""
 
 from __future__ import annotations
 
@@ -24,7 +17,7 @@ from rasterio.warp import reproject
 from scipy import ndimage
 from scipy.spatial import cKDTree
 
-# 토지피복 중분류 코드 (환경부 EGIS). 100번대 = 시가화·건조지역 → 불투수면 proxy.
+# 토지피복 중분류 코드.
 IMPERVIOUS_CODES = {"110", "120", "130", "140", "150", "160"}
 INLAND_WATER_CODE = "710"
 SEA_CODE = "720"
@@ -82,7 +75,7 @@ def lattice_from_grid(grid: gpd.GeoDataFrame, res: float = 100.0) -> tuple[Latti
     return lat, row, col
 
 
-# ── DEM ────────────────────────────────────────────────────────────────────
+# DEM.
 def dem_to_lattice(dem_paths: Iterable, lat: Lattice, nodata: float = -9999.0) -> tuple[np.ndarray, dict[str, Any]]:
     """DEM 도엽을 mosaic 한 뒤 격자망으로 bilinear resample 한다. NoData 는 NaN."""
     import rasterio
@@ -207,7 +200,7 @@ def twi(elev: np.ndarray, res: float, tanb_floor: float = 0.001) -> tuple[np.nda
         return np.log(a / tanb), acc
 
 
-# ── 폴리곤 → 면적 비율 ────────────────────────────────────────────────────────
+# 폴리곤 → 면적 비율.
 def _block_mean(fine: np.ndarray, factor: int) -> np.ndarray:
     h, w = fine.shape
     return fine.reshape(h // factor, factor, w // factor, factor).mean(axis=(1, 3))
@@ -228,10 +221,7 @@ def area_fraction(geoms: Iterable, lat: Lattice, sub: int = 10) -> np.ndarray:
 def value_fraction_and_mean(
     gdf: gpd.GeoDataFrame, value_col: str, lat: Lattice, sub: int = 10
 ) -> tuple[np.ndarray, np.ndarray]:
-    """겹치는 폴리곤은 값이 큰 쪽이 이기도록 오름차순으로 굽는다.
-
-    (셀 안 폴리곤 면적 비율, 면적가중 평균값) 을 돌려준다. 평균은 폴리곤이 없는 부분을 0 으로 친다.
-    """
+    """셀 안 폴리곤 면적 비율과 면적가중 평균값을 돌려준다."""
     fine = lat.refined(sub)
     if gdf.empty:
         z = np.zeros(lat.shape, dtype="float32")

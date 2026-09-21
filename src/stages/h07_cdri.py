@@ -1,20 +1,4 @@
-"""H07 CDRI 통합·민감도 — 창원형 도시침수 선제대응 우선순위지수.
-
-CDRI = f(Hazard, Exposure, Vulnerability, Capacity 부족도). 국제 표준 공식이 아니라
-본 연구가 정의한 작업명이다 (RESEARCH_PLAN §0-4). 기본은 가중기하평균이며 근거는
-IPCC AR5 의 세 요소 필요조건과 OECD/JRC(2008) 의 비보상성이다. 가법형은 병기해
-Moreira et al.(2021) 이 지적한 기하평균의 과소평가 경향을 확인한다.
-
-Layer 2(하수 역류)는 관로 비공개로 검증할 수 없어 **기본 산식에서 제외**하고 시나리오로만
-넣는다 (docs/decisions/001-layer2-design.md).
-
-최종 등급은 R1~R5 오름차순이며 5가 가장 위험하다 (docs/CDRI_GRADE_SYSTEM.md, decisions/003).
-검증용 `grade_raw` 와 대응표용 `grade_final` 을 분리한다.
-
-이 파일은 **단계를 조립**한다. 계산 자체는 `src/data/layers.py`(정규화·집계·통계)와
-`src/data/grades.py`(등급 체계)에 있다. 아래 `_` 함수들은 `cdri()` 가 너무 길어져
-읽기 어려워지는 것을 막으려고 단계별로 끊어 둔 것이며, 각각 하나의 질문에 답한다.
-"""
+"""H07 CDRI 통합·민감도. 기본 산식은 H·E·V·D 가중기하평균이다."""
 
 from __future__ import annotations
 
@@ -38,7 +22,7 @@ LAYER3_PATH = "data/processed/layers/layer3_vuln.gpkg"
 DONG_NAME_PATH = "data/external/adm_dong_names.csv"
 MAUP_BLOCK_M = 500
 
-# 산출 gpkg 에 남길 열. 순서가 곧 표의 순서다.
+# GPKG 출력 열
 OUTPUT_COLUMNS = [
     "grid_id", "adm_cd", "gu_code", "rank", "cdri", "cdri_raw", "cdri_additive",
     "grade_raw", "grade_final", "grade_jenks", "grade_balica", "grade_percentile",
@@ -65,30 +49,8 @@ def _load_layers():
     return gpd.GeoDataFrame(joined, geometry="geometry", crs=layer3.crs)
 
 
-def _component_matrix(sub, floor: float):
-    """네 구성요소를 [floor, 1] 로 재척도한 (n × 4) 행렬.
-
-    하한을 0 이 아니라 floor 로 두는 이유: minmax 는 최솟값을 정확히 0 으로 만드는데,
-    기하평균에서 0 하나면 전체가 0 이 되어 순위 정보가 통째로 사라진다.
-    """
-    import numpy as np
-
-    from src.data import layers as L
-
-    return np.column_stack([
-        L.rescale_positive(sub["L1"].to_numpy(), floor),
-        L.rescale_positive(sub["E"].to_numpy(), floor),
-        L.rescale_positive(sub["V"].to_numpy(), floor),
-        L.rescale_positive(sub["capacity_deficit"].to_numpy(), floor),
-    ])
-
-
 def _build_variants(matrix, sub, floor: float) -> tuple[dict, dict, dict[str, Any]]:
-    """가중치(동일·엔트로피) × 집계형(곱셈·가법) 조합을 만든다. 민감도 판정의 입력이다.
-
-    Layer 2 산출물이 있으면 H = 0.5·L1 + 0.5·L2 시나리오를 하나 더 얹는다.
-    기본 산식에는 넣지 않는다 (decisions/001).
-    """
+    """민감도 판정용 가중치·집계형 조합을 만든다."""
     import geopandas as gpd
     import numpy as np
 
@@ -151,7 +113,7 @@ def _assess_robustness(variants: dict, primary_name: str, grid_ids, top_n: int) 
         "median_rho": float(np.median([r["spearman_rho_vs_primary"] for r in others])),
         "min_rho": float(min(r["spearman_rho_vs_primary"] for r in others)),
         "min_overlap": int(min(r[f"top{top_n}_overlap"] for r in others)),
-        # 모든 변형의 상위 목록에 공통으로 드는 격자 = 산식 선택과 무관하게 위험한 곳
+        # 모든 변형의 상위 공통 격자
         "robust_core": set.intersection(*tops.values()),
     }
 
@@ -175,11 +137,7 @@ def _maup_check(sub, primary) -> dict[str, Any]:
 
 
 def _attach_contributions(sub, matrix, weights):
-    """기여도(가법형 구성비)와 백분위를 sub 에 붙이고 주 원인을 정한다. 백분위 행렬을 돌려준다.
-
-    **주 원인은 최대 백분위 요소**다 (ANALYSIS_PLAN §5). 구성비의 최댓값을 쓰면 분포가
-    치우친 요소(인구)가 거의 항상 이겨서 조치가 한쪽으로 쏠린다.
-    """
+    """가법형 구성비와 백분위를 붙인다. 주 원인은 최대 백분위 요소다."""
     import numpy as np
     import pandas as pd
 
@@ -197,16 +155,12 @@ def _attach_contributions(sub, matrix, weights):
 
 
 TRACE_LABEL_COLUMNS = ("trace_label", "trace_label_cal", "trace_label_val")
-# 덩어리 재표본에서 이 비율 이상 단조로 나와야 "등급이 오를수록 더 잠긴다"고 말한다.
+# 덩어리 재표본의 단조 비율 기준
 MONOTONE_SHARE_MIN = 0.95
 
 
 def _load_trace_labels(grid_ids) -> dict[str, Any] | None:
-    """Layer 1 이 남긴 침수흔적 라벨을 순위 대상 격자 순서에 맞춰 읽는다.
-
-    전체·시간분할(앞/뒤)·사상별 라벨을 함께 가져온다. 경계를 맞출 때와 채점할 때 서로 다른
-    사상을 써야 in-sample 순환이 생기지 않기 때문이다.
-    """
+    """침수흔적 라벨을 순위 대상 격자 순서에 맞춰 읽는다."""
     import geopandas as gpd
     import numpy as np
     import pandas as pd
@@ -236,12 +190,7 @@ def _load_trace_labels(grid_ids) -> dict[str, Any] | None:
 
 
 def _criteria(table: dict[str, Any], boot: dict[str, Any], p) -> dict[str, Any]:
-    """사전에 정한 다섯 기준으로 채점한다. 추세만은 덩어리 단위 기울기로 판정한다.
-
-    Cochran-Armitage p 는 격자를 독립으로 세서 창원 자료에서 10⁻⁸ 같은 값이 나왔다.
-    같은 '추세 유의' 기준을 덩어리 재표본의 기울기로 바꿔 적용한다
-    (기울기 ≤ 0 인 재표본 비율 < p 기준).
-    """
+    """사전 기준으로 채점한다. 추세는 덩어리 단위 기울기로 판정한다."""
     ratios = [r for r in table["adjacent_ratios"] if r is not None]
     lift_top = table["rows"][-1]["lift"]
     lift_second = table["rows"][-2]["lift"]
@@ -272,11 +221,7 @@ def _time_split_validation(grades, labels, p, cx, cy) -> dict[str, Any]:
 
 
 def _reporting_constraint(validation: dict[str, Any], p) -> dict[str, Any]:
-    """검증 결과로 **무엇을 주장해도 되는지**를 정한다. 보고서 문장을 코드가 제한한다.
-
-    판단은 점추정이 아니라 **주 검증(LOEO)의 덩어리 단위 불확실성**에 건다. 격자는 독립
-    관측이 아니라서(붙어 있는 격자 = 같은 침수 한 건) 점추정은 확신을 부풀린다.
-    """
+    """LOEO 불확실성으로 보고서에 쓸 수 있는 주장을 정한다."""
     primary = validation[validation["primary"]]
     boot = primary["bootstrap"]
     lift_lo, lift_hi = boot["top_grade_lift_ci95"]
@@ -284,14 +229,14 @@ def _reporting_constraint(validation: dict[str, Any], p) -> dict[str, Any]:
     return {
         "based_on": validation["primary"],
         "n_cluster": boot["n_cluster"],
-        # 기울기가 0 이하인 재표본이 기준보다 드물어야 "등급이 오를수록 더 잠긴다"고 쓴다.
+        # 양의 추세 판정 기준
         "trend_claim_allowed": boot["p_slope_nonpositive"] < float(p["cdri.calibration_trend_p_max"]),
         "p_slope_nonpositive": boot["p_slope_nonpositive"],
-        # 다섯 등급이 **모두** 오름차순인 것은 추세보다 훨씬 강한 주장이다.
+        # 전 등급 단조성 기준
         "monotone_claim_allowed": boot["monotone_share"] >= MONOTONE_SHARE_MIN,
         "monotone_share": boot["monotone_share"],
         "monotone_share_required": MONOTONE_SHARE_MIN,
-        # 구간 **하한**으로 판정한다. 점추정이 커도 하한이 1 이하면 "평균보다 더 잠긴다"도 못 쓴다.
+        # lift 구간 하한으로 판정
         "top_grade_above_base": lift_lo > 1.0,
         "top_grade_meets_lift_target": lift_lo >= float(p["cdri.calibration_lift_r5_min"]),
         "top_grade_lift_point": primary["rows"][-1]["lift"],
@@ -310,15 +255,7 @@ def _reporting_constraint(validation: dict[str, Any], p) -> dict[str, Any]:
 
 
 def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p, centroids):
-    """등급 경계를 발생률로 맞추고, 사상 단위 교차검증으로 채점한다. (등급, 경계진단, 검증).
-
-    **운영 등급**은 모든 사상으로 경계를 맞춘다 — 교차검증은 성능을 재는 절차이고, 최종
-    경계는 가진 자료를 다 써서 정하는 것이 표준이다. 그 성능은 LOEO 가 따로 잰다.
-
-    **주 검증은 LOEO** 다. 앞 3개/뒤 3개 시간 분할은 검증 침수가 12건(R5 는 1건)뿐이라
-    판정이 불가능했고, 설계 문서가 미리 정한 대안(사상 단위 LOEO)으로 넘어간다.
-    시간 분할 결과도 참고로 함께 남긴다.
-    """
+    """운영 경계는 전체 사상으로 맞추고, 성능은 LOEO 로 따로 잰다."""
     from src.data import calibration as C
     from src.data import grades as G
 
@@ -343,7 +280,7 @@ def _calibrate_and_validate(primary_scaled, labels, grade_jenks, p, centroids):
         "primary": "loeo",
         "loeo": {**loeo, **_criteria(loeo, loeo["bootstrap"], p)},
         "time_split": _time_split_validation(grade_split, labels["val"], p, cx, cy),
-        # Jenks 도 같은 자료로 채점해 둔다. 본안 선택 기준이 아니라 비교 정보다.
+        # Jenks 참고 비교 (본안 선택에 미사용)
         "jenks_time_split": _time_split_validation(grade_jenks, labels["val"], p, cx, cy),
     }
     validation["reporting_constraint"] = _reporting_constraint(validation, p)
@@ -370,9 +307,7 @@ def _assign_grades(sub, primary_scaled, percentiles, p) -> dict[str, Any]:
         if scheme == "calibration" else (None, None, {})
     )
 
-    # 본안은 결정 003 이 미리 고른 3안(캘리브레이션)이다. 검증 결과로 방식을 갈아타지
-    # 않는다 — 그러면 검증 자료가 선택에 개입해 out-of-sample 이 아니게 된다. 검증은
-    # "무엇을 주장해도 되는지"를 정할 뿐이며, 미달 기준은 지우지 않고 그대로 싣는다.
+    # 결정 003 본안 유지 (검증 결과로 변경 금지)
     grade_raw = grade_calibration if grade_calibration is not None else grade_jenks
     grade_final, review_flag, rules = G.apply_rules(
         grade_raw,
@@ -450,12 +385,7 @@ def _write_grade_by_dong(sub, path: Path) -> int:
 
 
 def _decide_ranking_mode(robustness, top_n: int, min_rho: float, min_overlap: int):
-    """순위를 그대로 보고해도 되는지 정한다. (지표, 모드, 설명).
-
-    강건성 미달은 **실패가 아니라 분기**다 (하네스 H07 on_fail). 임계값을 낮추는
-    재튜닝은 금지이므로 기준은 그대로 두고 산출물의 성격만 바꾼다 — 정밀 순위 대신
-    위험군과 강건 공통집합으로 말한다.
-    """
+    """강건성 기준으로 정밀 순위와 위험군 모드를 가른다."""
     unmet = []
     if robustness["median_rho"] < min_rho:
         unmet.append(f"중위 Spearman rho {round(robustness['median_rho'], 4)} < {min_rho}")
@@ -477,11 +407,7 @@ def _decide_ranking_mode(robustness, top_n: int, min_rho: float, min_overlap: in
 
 
 def _write_outputs(ctx: StageContext, sub, variant_rows, m: dict[str, Any], formula: dict) -> None:
-    """격자 gpkg·민감도표·행정동표·확정 산식 manifest 를 쓴다.
-
-    manifest 를 따로 남기는 이유: 승인 뒤 산식을 바꾸지 않았다는 것을 나중에 대조할 수
-    있어야 한다. `retuning_prohibited` 와 run_id 가 그 증거다.
-    """
+    """격자 gpkg·민감도표·행정동표·확정 산식 manifest 를 쓴다."""
     import pandas as pd
 
     gpkg = next(o for o in ctx.outputs if o.suffix == ".gpkg")
@@ -522,13 +448,7 @@ def _write_outputs(ctx: StageContext, sub, variant_rows, m: dict[str, Any], form
 
 
 def cdri(ctx: StageContext) -> dict[str, Any]:
-    """통과: 가중치·집계형 변형 사이 중위 Spearman ρ ≥ params.min_spearman,
-    TOP 20 중첩 ≥ params.min_top20_overlap, 구성요소 결측 0 대체 없음.
-
-    강건성 미달은 **실패가 아니라 분기**다. 하네스 H07 의 on_fail 은 goto 없이
-    "정밀 순위 대신 위험군(tier) 모드로 보고"라고 정했다. 임계값을 낮추는 재튜닝은
-    금지이므로 기준은 그대로 두고 산출물의 성격만 바꾼다.
-    """
+    """통과: 민감도 강건성 충족, 구성요소 결측 0 대체 없음."""
     import numpy as np
     import pandas as pd
 
@@ -550,9 +470,14 @@ def cdri(ctx: StageContext) -> dict[str, Any]:
         "layer2_reason": "관로 비공개로 검증 불가 — docs/decisions/001-layer2-design.md",
     }
 
-    # 순위 대상 격자만으로 재척도한다. 무인구 격자를 섞으면 분포가 왜곡된다.
+    # 순위 대상 격자 기준 재척도
     sub = df.loc[universe].copy()
-    matrix = _component_matrix(sub, floor)
+    matrix = np.column_stack([
+        L.rescale_positive(sub["L1"].to_numpy(), floor),
+        L.rescale_positive(sub["E"].to_numpy(), floor),
+        L.rescale_positive(sub["V"].to_numpy(), floor),
+        L.rescale_positive(sub["capacity_deficit"].to_numpy(), floor),
+    ])
     if not np.isfinite(matrix).all():
         raise StageFailed(
             "구성요소에 결측이 있다 — 0 으로 대체하지 않고 중단한다",

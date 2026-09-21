@@ -1,15 +1,4 @@
-"""창원 침수예상도(A1) 정규화. 원본은 수정하지 않고 canonical 레이어를 만든다.
-
-원본 WFS 응답의 두 가지 문제를 여기서 고친다.
-
-1. **좌표계가 EPSG:5181** 이다 (중부원점 GRS80, 분석 기준 EPSG:5179 아님).
-   재투영하지 않고 격자와 겹치면 수백 미터가 어긋난다.
-2. **한글 문자열 컬럼이 깨져 있다.** 서버가 cp949 바이트를 latin1 로 잘못 디코딩해
-   내보낸다: `ÁøÇØ` → `진해`. `value.encode("latin1").decode("cp949")` 로 복원한다.
-
-레이어 이름은 `L{종류}_{재현기간}` 이다. L200 내수침수, L210 복합, L220 외수범람,
-L300 하천범람(재현기간 없음).
-"""
+"""창원 침수예상도(A1) 정규화."""
 
 from __future__ import annotations
 
@@ -30,7 +19,7 @@ FLOOD_KINDS = {
     "L300": "하천범람",
 }
 
-# 침수심 구간 문자열 → 대표값(m). 순서를 비교할 수 있어야 위험도 비교가 된다.
+# 침수심 구간 문자열 → 대표값(m).
 DEPTH_MIDPOINT = {
     "~0.5": 0.25,
     "0.5~1.0": 0.75,
@@ -72,8 +61,7 @@ def load_layer(path: Path) -> gpd.GeoDataFrame:
     source_crs = gdf.crs.to_string()
     gdf = gdf.to_crs(TARGET_CRS)
 
-    # pandas 3.0 의 문자열 컬럼은 Arrow 백엔드(dtype "str")라 `dtype == object` 로 걸리지
-    # 않는다. 그 검사를 쓰면 복원이 조용히 건너뛰어진다.
+    # pandas 문자열 dtype 기준으로 cp949 복원 대상을 찾는다.
     for column in gdf.columns:
         if column != "geometry" and pd.api.types.is_string_dtype(gdf[column]):
             gdf[column] = gdf[column].map(repair_cp949)
@@ -84,7 +72,7 @@ def load_layer(path: Path) -> gpd.GeoDataFrame:
     gdf["layer"] = path.stem
     gdf["source_crs"] = source_crs
     gdf["depth_m"] = gdf["F_SHIM"].map(DEPTH_MIDPOINT)
-    # L300 은 행정구역 컬럼 이름이 AMD_CD, 나머지는 ADM_CD 다. 지구명(IDX_NM)도 L300 에만 있다.
+    # L300 은 행정구역 컬럼명이 AMD_CD 다.
     gdf["adm_cd"] = gdf.get("ADM_CD", gdf.get("AMD_CD"))
     gdf["district_name"] = gdf["IDX_NM"] if "IDX_NM" in gdf.columns else pd.NA
 

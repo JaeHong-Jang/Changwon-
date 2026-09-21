@@ -1,10 +1,4 @@
-"""공간자료 처리 (하네스 §6-4). 기준 CRS는 EPSG:5179.
-
-창원시 경계는 별도 다운로드하지 않고 **이미 보유한 SGIS 집계구 경계**(창원 5개 구,
-38111~38115)를 행정동 코드로 dissolve 해서 만든다. 100m 분석격자는 전국 도엽에서
-창원 경계 안의 격자만 선택한다(격자를 자르지 않는다 — 면적이 달라지면 100m 격자
-통계와 맞지 않기 때문).
-"""
+"""공간자료 처리. 기준 CRS는 EPSG:5179."""
 
 from __future__ import annotations
 
@@ -37,10 +31,7 @@ def fix_geometry(gdf: gpd.GeoDataFrame) -> tuple[gpd.GeoDataFrame, int]:
 
 
 def build_boundary(agg_boundary_paths: list[Path]) -> tuple[dict[str, gpd.GeoDataFrame], dict[str, Any]]:
-    """집계구 경계 → 행정동(emd)·구(gu)·시(si) 3단계 경계.
-
-    ADM_CD 는 행정동 코드다. 앞 5자리가 구, 앞 2자리(38)가 시도다.
-    """
+    """집계구 경계에서 행정동·구·시 경계를 만든다."""
     frames = [ensure_crs(gpd.read_file(p)) for p in sorted(agg_boundary_paths)]
     agg = pd.concat(frames, ignore_index=True)
     agg = gpd.GeoDataFrame(agg, geometry="geometry", crs=CANONICAL_CRS)
@@ -80,12 +71,7 @@ def build_boundary(agg_boundary_paths: list[Path]) -> tuple[dict[str, gpd.GeoDat
 def select_grid_in_boundary(
     grid_paths: list[Path], si: gpd.GeoDataFrame, emd: gpd.GeoDataFrame
 ) -> tuple[gpd.GeoDataFrame, dict[str, Any]]:
-    """전국 100m 격자 도엽에서 창원 경계 안의 격자만 고른다.
-
-    격자를 clip 하지 않는다. 격자 **중심점**이 시 경계 안이면 그 격자를 통째로 쓴다
-    (100m 격자 통계는 격자 전체 단위 값이므로 잘린 면적과 맞지 않는다).
-    도엽 전체는 240만 폴리곤이라 시 경계 bbox 로 먼저 걸러 읽는다.
-    """
+    """전국 100m 격자 도엽에서 중심점이 창원 경계 안인 격자만 고른다."""
     bbox = tuple(si.total_bounds)
     frames = []
     read_counts = {}
@@ -108,7 +94,7 @@ def select_grid_in_boundary(
     inside = gpd.sjoin(centroids, si[["geometry"]], predicate="within", how="inner")
     grid = grid[grid["grid_id"].isin(inside["grid_id"])].copy()
 
-    # 행정동 부여도 중심점 기준 (경계에 걸친 격자가 두 동에 중복되지 않게)
+    # 행정동 부여도 중심점 기준.
     cent = gpd.GeoDataFrame(
         {"grid_id": grid["grid_id"]}, geometry=grid.geometry.centroid, crs=CANONICAL_CRS
     )

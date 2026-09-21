@@ -14,7 +14,7 @@ from src.pipeline.runner import StageContext, StageFailed
 from src.stages.h01_contract import GROUPS
 from src.utils.config import PROJECT_ROOT
 
-# 이모지/문구 → 정규화된 상태. docs/data_access_log.md 의 "상태 범례"와 같다.
+# 수집 상태 표기
 STATUS_MAP = {
     "⬜": "미신청",
     "🟡": "대기",
@@ -24,8 +24,7 @@ STATUS_MAP = {
 }
 STATUS_WORDS = {"미신청", "대기", "수령", "거부", "재청구", "미착수"}
 
-# 필요성 등급은 docs/data_access_log.md 의 "필요성" 열에서 읽는다. 코드에 번호를
-# 하드코딩하면 문서와 코드가 갈라지고, 어느 쪽이 맞는지 알 수 없게 된다.
+# 자료 필요성 등급
 NEED_LEVELS = {"필수", "대체가능", "선택"}
 
 
@@ -65,9 +64,7 @@ def _parse_access_log(text: str) -> list[dict[str, Any]]:
 
 
 def access_requests(ctx: StageContext) -> dict[str, Any]:
-    """docs/data_access_log.md 표를 파싱해 access_requests.json 생성.
-    통과: 모든 행에 상태가 있고, REQUIRED_REQUESTS 중 '미신청' 0개 (대기는 통과).
-    미달이면 StageFailed(findings=상태 없음/미신청 필수 항목). metrics: total, received, pending, not_requested."""
+    """docs/data_access_log.md 표를 파싱해 access_requests.json 생성."""
     log_path = ctx.path("docs/data_access_log.md")
     rows = _parse_access_log(log_path.read_text(encoding="utf-8"))
     findings: list[dict[str, Any]] = []
@@ -85,7 +82,7 @@ def access_requests(ctx: StageContext) -> dict[str, Any]:
         "pending": sum(r["status"] == "대기" for r in rows),
         "not_requested": [r["no"] for r in rows if r["status"] == "미신청"],
         "required_pending": [r["no"] for r in rows if r["required"] and r["status"] == "대기"],
-        # 필요성 판단이 비어 있는 행. 판단하지 않은 것을 "필수 아님"으로 넘기면 안 된다.
+        # 필요성 미판정 항목
         "need_unjudged": [r["no"] for r in rows if r["need"] is None],
     }
     out = ctx.outputs[0]
@@ -118,10 +115,7 @@ def _readme_mentions(readme: str, spec: dict[str, Any], name: str) -> bool:
 
 
 def inventory(ctx: StageContext) -> dict[str, Any]:
-    """노드 id 의 묶음(h00_collect_<key>)에 해당하는 dataset 들에 대해 collection_<key>.json 생성:
-    파일 존재·LFS 포인터 여부·크기·sha256, 계약의 취득 메타데이터, data/raw/README.md 언급 여부.
-    통과: 파일 수 == expected_files, 포인터 0, collected_at·source_url 존재. README 미기록은 metrics 로만 기록.
-    metrics: files, bytes, lfs_pointers, missing_metadata, readme_unrecorded."""
+    """수집 묶음별 파일 존재·해시·계약 메타데이터를 확인한다."""
     key = ctx.node.id.removeprefix("h00_collect_")
     if key not in GROUPS:
         raise StageFailed(f"알 수 없는 수집 묶음 '{key}'", [{"code": "unknown_group", "key": key}])

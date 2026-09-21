@@ -1,8 +1,4 @@
-"""Graph 를 mermaid flowchart 로 그린다. DAG 로직과 렌더링을 분리해 둔 파일이다.
-
-라벨 안 자유 텍스트는 반드시 `escape()` 를 거쳐야 한다. YAML 설명에 따옴표가 들어가면
-mermaid 파서가 그 지점에서 멈추고 그림 전체가 원문 텍스트로 떨어진다.
-"""
+"""Graph 를 mermaid flowchart 로 그린다."""
 
 from __future__ import annotations
 
@@ -48,18 +44,14 @@ def render(
     detail: str = "full",
     phase: str | None = None,
 ) -> str:
-    """detail="overview" 는 라벨을 줄인 한 장짜리, "full" 은 규칙까지 적은 상세도.
-
-    phase 를 주면 그 단계만 그리고, 다른 단계로 가는 엣지는 회색 stub 으로 표시한다.
-    useMaxWidth=false 로 원래 크기에 그린다 — 화면 폭에 맞춰 축소되면 글자가 사라진다.
-    """
+    """detail 과 phase 에 맞춰 DAG 그림을 만든다."""
     state = state or {}
     full = detail == "full"
     members = [n for n in graph.nodes.values() if phase is None or n.phase == phase]
     member_ids = {n.id for n in members}
     lines = [INIT, "flowchart TD"]
 
-    # ── 노드: 사각형 + 검증 마름모 + 승인 육각형 ──────────────────────────
+    # 노드와 게이트.
     by_phase: dict[str, list] = {}
     for node in members:
         by_phase.setdefault(node.phase, []).append(node)
@@ -99,7 +91,7 @@ def render(
         if wrap:
             lines.append("    end")
 
-    # ── 단계 밖으로 나가는 노드는 회색 stub ────────────────────────────────
+    # 단계 밖 노드는 회색 stub 으로 표시.
     outside = {
         other
         for n in members
@@ -113,7 +105,7 @@ def render(
             f"    class {other} stub",
         ]
 
-    # ── 엣지: 의존은 그 노드의 마지막 게이트(승인 > 검증 > 노드)에서 나간다 ──
+    # 의존 엣지는 마지막 게이트에서 시작.
     def exit_of(node_id: str) -> str:
         if node_id not in member_ids:
             return node_id
@@ -123,7 +115,7 @@ def render(
     for n in members:
         lines += [f"    {exit_of(dep)} --> {n.id}" for dep in n.depends_on]
 
-    # ── 실패 시 되돌아가는 점선 (goto 없으면 분기 상자) ─────────────────────
+    # 실패 시 되돌아가는 점선.
     for n in members:
         if not n.on_fail:
             continue

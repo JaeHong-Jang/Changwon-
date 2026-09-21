@@ -66,7 +66,7 @@ class Graph:
     def __post_init__(self) -> None:
         self._validate()
         try:
-            # 동일 위상 내에서는 선언 순서를 유지해 실행 순서를 결정적으로 만든다.
+            # 동일 위상 내 선언 순서 유지
             ts = TopologicalSorter({n.id: list(n.depends_on) for n in self.nodes.values()})
             self.order = list(ts.static_order())
         except CycleError as exc:

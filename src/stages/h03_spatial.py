@@ -12,16 +12,7 @@ from src.utils.config import PROJECT_ROOT
 
 
 def boundary(ctx: StageContext) -> dict[str, Any]:
-    """SGIS 집계구 경계(창원 5개 구)를 dissolve 해 행정동·구·시 3단계 경계를 만든다.
-
-    통과: 구 코드가 정확히 38111~38115, 시 면적이 공식 748 km² ±1%,
-    구끼리 겹침이 **격자 1칸(10,000 m²) 미만**.
-
-    겹침 기준을 격자 1칸으로 잡은 이유: 이 경계의 용도는 100m 격자를 구/동에 배정하는
-    것이고, 배정은 격자 중심점 1개로 결정된다. 격자 한 칸보다 작은 접합부 슬리버는
-    어떤 격자의 배정도 바꿀 수 없으므로 분석 결과에 영향이 없다. 실측 겹침 값은
-    metrics 에 항상 남겨 눈으로 확인할 수 있게 한다.
-    """
+    """SGIS 집계구 경계로 행정동·구·시 3단계 경계를 만든다."""
     grid_cell_m2 = float(ctx.params["analysis.grid_size_m"]) ** 2
     paths = [Path(p) for p in sorted(glob.glob(str(PROJECT_ROOT / "data/raw/sgis/aggregation_boundaries_2025_2Q/*.shp")))]
     layers, m = build_boundary(paths)
@@ -53,10 +44,7 @@ def boundary(ctx: StageContext) -> dict[str, Any]:
 
 
 def grid_base(ctx: StageContext) -> dict[str, Any]:
-    """창원시 경계로 SGIS 100m 격자를 선택(중심점 기준)해 분석격자를 만든다.
-
-    통과: grid_id 중복 0, 격자 수가 시 면적 기준 예상치의 ±15% 이내.
-    """
+    """창원시 경계로 SGIS 100m 분석격자를 만든다."""
     import geopandas as gpd
 
     bpath = PROJECT_ROOT / "data/processed/spatial/changwon_boundary.gpkg"
@@ -85,11 +73,7 @@ def grid_base(ctx: StageContext) -> dict[str, Any]:
 
 
 def flood_maps(ctx: StageContext) -> dict[str, Any]:
-    """창원 침수예상도 13개 레이어를 분석 CRS 로 재투영하고 깨진 한글을 복원한다.
-
-    통과: 원본 CRS 가 예상대로 EPSG:5181, 변환 후 EPSG:5179, 침수심 구간이 전부
-    대표값으로 매핑됨, invalid geometry 0. 한글 복원 결과를 metrics 에 남겨 눈으로 본다.
-    """
+    """창원 침수예상도 13개 레이어를 분석 CRS 로 재투영한다."""
     from src.data import flood_maps as fm
 
     paths = [Path(p) for p in sorted(glob.glob(str(PROJECT_ROOT / "data/raw/flood_maps/changwon_wfs/*.geojson")))]
@@ -130,14 +114,7 @@ def _write_layer(out: Path, gdf, layer: str) -> None:
 
 
 def stations(ctx: StageContext) -> dict[str, Any]:
-    """강수 관측지점·수위계 좌표(`data/external/stations.csv`)를 EPSG:5179 포인트로 결합한다.
-
-    통과: 좌표 확보율 ≥ params.min_station_coord_coverage, 위경도 뒤바뀜·중복 코드 없음,
-    전 지점이 창원시 경계 안, 좌표가 있는 강수 cohort(2015~2024 관측일 ≥90%) 지점 수 ≥
-    params.min_idw_stations_per_event. reviewed=N 은 실제 설치 위치 비공개 근사점이므로
-    `is_proxy` 로 남기고 통과 여부에는 쓰지 않는다 (Layer 1 에서 제외 민감도 1회).
-    이벤트별 정상지점 수는 이벤트 정의가 Layer 1 에 있으므로 거기서 판정한다.
-    """
+    """강수 관측지점·수위계 좌표를 EPSG:5179 포인트로 결합한다."""
     import pandas as pd
 
     from src.data.quality import cohort_station_ids
@@ -217,11 +194,7 @@ def _stations_map(pts, si, out: Path) -> None:
 
 
 def pump_stations(ctx: StageContext) -> dict[str, Any]:
-    """배수펌프장 좌표: 창원시 배수펌프장 표준데이터(공식 좌표)를 기본으로, 공식 목록에 없는
-    지오코딩 펌프장(`pump_stations_geocoded.csv`, 사람 검수)을 보탠다.
-
-    통과: 공식 좌표 결측 0, 지오코딩으로 추가된 행 전부 reviewed=Y, 전 지점 창원 경계 안.
-    """
+    """공식 배수펌프장 좌표에 검수된 지오코딩 행을 보탠다."""
     import pandas as pd
 
     from src.data.stations import merge_pump_sources

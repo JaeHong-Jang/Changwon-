@@ -1,9 +1,4 @@
-"""강수 노출 변수 산출과 IDW 공간보간 (ANALYSIS_PLAN §2-2).
-
-관측지점의 강수 통계를 만들고, 그것을 100m 격자로 옮기는 것까지가 이 모듈의 일이다.
-보간 지수(power)는 LOOCV RMSE 로 고른다. 반경 밖 격자는 외삽하지 않고 최근접 값으로
-채운 뒤 플래그를 남긴다.
-"""
+"""강수 노출 변수 산출과 IDW 공간보간."""
 
 from __future__ import annotations
 
@@ -13,7 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
 
-# 노출 변수 정의 (이름 → 설명). Layer 1 문서·data_dictionary 가 이 표를 쓴다.
+# 노출 변수 정의.
 EXPOSURE_VARIABLES: dict[str, str] = {
     "rain_annual_max_1h": "연최대 시간강수의 분석기간 평균 (mm/h)",
     "rain_hours_over_30mm": "시간강수 30mm 이상 발생시간 수의 연평균 (시간/년)",
@@ -46,11 +41,7 @@ def station_exposure(
     station_ids: Sequence[int] | None = None,
     top_k: int = 5,
 ) -> pd.DataFrame:
-    """지점별 강수 노출 변수 4개. 입력은 canonical `rainfall_hourly` (quality_flag 포함).
-
-    결측 시간은 0mm 로 채우지 않는다. 관측이 없는 것과 비가 오지 않은 것은 다르다.
-    3·24시간 누적은 창이 온전히 관측된 구간에서만 계산한다.
-    """
+    """지점별 강수 노출 변수 4개."""
     df = rain[rain["quality_flag"] == "ok"]
     df = df[(df["obs_date"] >= lo) & (df["obs_date"] <= hi)]
     if station_ids is not None:
@@ -88,11 +79,7 @@ def idw(
     k: int = 12,
     max_dist: float = 10_000.0,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """역거리가중 보간. (값, 반경 밖이라 최근접으로 대체했는지 여부) 를 돌려준다.
-
-    반경 `max_dist` 안의 최근접 `k` 지점만 쓴다. 반경 안에 아무 지점도 없으면 외삽 대신
-    최근접 지점 값을 그대로 쓰고 플래그를 세운다 (ANALYSIS_PLAN §2-2 '외삽 금지').
-    """
+    """역거리가중 보간. 반경 밖은 최근접 값으로 대체하고 플래그를 세운다."""
     src_xy = np.asarray(src_xy, dtype=float)
     values = np.asarray(values, dtype=float)
     dst_xy = np.asarray(dst_xy, dtype=float)
@@ -150,10 +137,7 @@ def interpolate_to_grid(
     k: int,
     max_dist: float,
 ) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
-    """노출 변수별로 power 를 고르고 격자에 보간한다.
-
-    `stations` 는 station_code·x·y 를 가진 표, `exposure` 는 station_id 별 변수 표다.
-    """
+    """노출 변수별로 power 를 고르고 격자에 보간한다."""
     merged = stations.merge(exposure, left_on="station_code", right_on="station_id", how="inner")
     src_xy = merged[["x", "y"]].to_numpy(dtype=float)
     grids: dict[str, np.ndarray] = {}

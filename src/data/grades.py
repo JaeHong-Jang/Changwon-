@@ -1,16 +1,4 @@
-"""CDRI 5등급 위험 분류 체계 R1~R5 (docs/CDRI_GRADE_SYSTEM.md, decisions/003).
-
-**방향**: 1~5 오름차순이며 **5가 가장 위험**하다. 국토부 지침의 로마숫자 I~IV(I이 최고 취약,
-내림차순)와 방향이 반대이므로 Layer 1 내부 등급과 혼동하지 않는다. 오름차순으로 둔 이유는
-환경부 하수관로 상태등급(1~5, 5=매우 나쁨)과 방향을 맞춰 하수도사업소 일상 언어와 일치시키기
-위해서다.
-
-**본안 선택**: 침수흔적 양성 격자가 충분하면 발생률 캘리브레이션(3안)이 본안이지만,
-미달이면 Jenks 자연구분(2안)이 본안이고 Balica 고정 경계(1안)는 국제 비교용으로 병기한다.
-
-**raw / final 분리**: 검증은 `grade_raw` 로 한다. 정책 규칙(A·B)을 적용한 `grade_final` 로
-검증하면 규칙이 검증을 밀어 올리는 순환이 생긴다. 대응 행동표만 final 을 쓴다.
-"""
+"""CDRI 5등급 위험 분류 체계. R5가 가장 위험하다."""
 
 from __future__ import annotations
 
@@ -28,9 +16,9 @@ GRADE_NAMES = {
     1: "R1 관찰",
 }
 GRADE_CODES = {5: "R5", 4: "R4", 3: "R3", 2: "R2", 1: "R1"}
-# ColorBrewer YlOrRd 5급. 파랑은 '물'로 오독되므로 쓰지 않는다.
+# ColorBrewer YlOrRd 5급.
 GRADE_COLORS = {5: "#bd0026", 4: "#f03b20", 3: "#fd8d3c", 2: "#fecc5c", 1: "#ffffb2"}
-# 설계 목표 비율 (외부 앵커가 아니라 설계 선택이다 — CDRI_GRADE_SYSTEM §1)
+# 설계 목표 비율.
 TARGET_SHARE = {5: 0.02, 4: 0.08, 3: 0.20, 2: 0.30, 1: 0.40}
 
 MIN_POSITIVE_FOR_CALIBRATION = 100
@@ -44,11 +32,7 @@ DESIGNATED_BUFFER_M = 200
 
 
 def choose_scheme(n_positive: int, has_time_split: bool) -> tuple[str, str]:
-    """본안 등급 방식을 고른다. (방식, 사유) 를 돌려준다.
-
-    발생률 캘리브레이션은 침수흔적 양성 격자가 충분하고 사상을 시간으로 나눌 수 있을 때만
-    쓴다. 그렇지 않으면 경계가 표본에 끌려다녀 재현되지 않는다.
-    """
+    """본안 등급 방식을 고른다. 발생률 캘리브레이션은 표본이 충분할 때만 쓴다."""
     if n_positive >= MIN_POSITIVE_FOR_CALIBRATION and has_time_split:
         return "calibration", (
             f"침수흔적 양성 격자 {n_positive}개 ≥ {MIN_POSITIVE_FOR_CALIBRATION} 이고 시간 분할 가능"
@@ -69,11 +53,7 @@ def jenks_grades(values: np.ndarray) -> tuple[np.ndarray, list[float]]:
 def calibration_grades(
     values: np.ndarray, calibration_labels: np.ndarray, *, tolerance: float, min_ratio: float
 ) -> tuple[np.ndarray, dict[str, Any]]:
-    """실제 침수 발생률로 경계를 맞춘 5등급 (본안 3안). (등급, 경계 진단) 을 돌려준다.
-
-    라벨은 **캘리브레이션 기간 사상만** 써야 한다. 검증 기간 라벨을 섞으면 같은 자료로
-    경계를 맞추고 검증하는 순환이 된다 (CDRI_GRADE_SYSTEM §1③).
-    """
+    """실제 침수 발생률로 경계를 맞춘다. 검증 기간 라벨을 섞지 않는다."""
     from src.data import calibration as C
 
     result = C.calibration_breaks(values, calibration_labels, tolerance=tolerance, min_ratio=min_ratio)
@@ -82,11 +62,7 @@ def calibration_grades(
 
 
 def percentile_grades(values: np.ndarray) -> np.ndarray:
-    """설계 목표 비율(2/8/20/30/40%)을 그대로 강제한 고정 백분위 등급.
-
-    CDRI_GRADE_SYSTEM §1 이 Jenks 의 대안으로 명시한 방식이다. 등급별 격자 수를 미리 정할 수
-    있어 행정 물량 배분에 편하지만, 자료의 자연스러운 단절을 무시한다.
-    """
+    """설계 목표 비율(2/8/20/30/40%)을 그대로 강제한 고정 백분위 등급."""
     a = np.asarray(values, dtype=float)
     cuts = np.quantile(a, [TARGET_SHARE[1],
                            TARGET_SHARE[1] + TARGET_SHARE[2],
@@ -109,16 +85,7 @@ def apply_rules(
     h_percentile: np.ndarray,
     designated_near: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
-    """등급 결정 규칙 A·B·C 를 적용한다. (grade_final, review_flag, metrics).
-
-    A 하한 보장 — L1 백분위가 극단이면 한 단계 올리고, 결과가 R3 미만이면 R3 까지 올린다.
-      기하평균은 한 요소가 극단이어도 나머지가 낮으면 희석된다 (OECD/JRC 2008 보상성).
-    B 취약계층 상향 — V 상위 10% 이면서 H 상위 30% 이면 한 단계 올린다.
-      **의도적 이중 반영이다.** V 는 이미 CDRI 구성요소이므로 통계 보정이 아니라 정책 규칙이다
-      (자연재해위험개선지구 '가'등급 = 인명피해 최우선 논리를 차용).
-    C 기지정 재검토 — 지정지역 근처 격자는 **등급을 바꾸지 않고** 원등급이 R1·R2 면 플래그만 단다.
-      강제 상향하면 지정지역 정합 검증이 순환된다.
-    """
+    """등급 결정 규칙 A·B·C 를 적용한다. 검증은 적용 전 grade_raw 로 한다."""
     raw = np.asarray(grade_raw, dtype=int)
     rule_a = np.asarray(l1_percentile, dtype=float) >= RULE_A_PERCENTILE
     rule_b = (np.asarray(v_percentile, dtype=float) >= RULE_B_V_PERCENTILE) & (

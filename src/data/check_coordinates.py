@@ -1,13 +1,4 @@
-"""손으로 찍은 좌표를 검사한다. 채워 넣은 직후 돌려서 오타를 잡는 용도다.
-
-    python -m src.data.check_coordinates
-
-지도에서 좌표를 옮겨 적을 때 흔한 실수를 잡는다.
-- 위도·경도를 바꿔 적음 (창원은 위도 35, 경도 128 이라 바로 드러난다)
-- 소수점 자리 실수
-- 창원시 경계 밖
-- 여러 지점이 완전히 같은 좌표 (복사·붙여넣기 사고)
-"""
+"""손으로 찍은 좌표를 검사한다."""
 
 from __future__ import annotations
 
@@ -22,7 +13,7 @@ from src.utils.config import PROJECT_ROOT
 EXTERNAL = PROJECT_ROOT / "data" / "external"
 BOUNDARY = PROJECT_ROOT / "data" / "processed" / "spatial" / "changwon_boundary.gpkg"
 
-# 창원시를 넉넉히 감싸는 상자. 이보다 벗어나면 확실히 잘못 적은 것이다.
+# 창원시를 넉넉히 감싸는 상자.
 LAT_RANGE = (34.9, 35.5)
 LON_RANGE = (128.3, 129.0)
 

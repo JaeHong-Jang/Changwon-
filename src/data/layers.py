@@ -1,10 +1,6 @@
-"""지수 합성 도구 — 윈저라이즈·z-score·Jenks 자연구분·취약성 매트릭스.
+"""지수 합성 도구.
 
-근거: 국토부 「도시 기후변화 재해취약성분석 지침」(z-score 표준화 → 합산 → Jenks 4등급 →
-노출×민감도 매트릭스), OECD/JRC(2008) 복합지수 핸드북(정규화·집계).
-
-Jenks 는 외부 패키지(jenkspy·mapclassify) 없이 Fisher 의 최적 1차원 분할을 직접 구현했다.
-정확해를 구하되 분할점 탐색에 divide-and-conquer 최적화를 써서 7만 개 값도 몇 초에 끝난다.
+윈저라이즈, z-score, Jenks 자연구분, 취약성 매트릭스, 복합지수 집계를 모은다.
 """
 
 from __future__ import annotations
@@ -42,19 +38,8 @@ def minmax(a: np.ndarray) -> np.ndarray:
     return np.zeros_like(a) if hi == lo else (a - lo) / (hi - lo)
 
 
-def _prefix_sums(x: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    return (
-        np.concatenate([[0.0], np.cumsum(x)]),
-        np.concatenate([[0.0], np.cumsum(x * x)]),
-    )
-
-
 def jenks_breaks(values: np.ndarray, k: int) -> list[float]:
-    """Fisher-Jenks 자연구분. 등급별 상한값 k개를 오름차순으로 돌려준다.
-
-    급간 내 편차제곱합을 최소화하는 정확해다. dp[m][j] = min_i dp[m-1][i-1] + cost(i, j) 를
-    divide-and-conquer 로 풀어 O(k·n·log n) 이다.
-    """
+    """Fisher-Jenks 자연구분. 등급별 상한값 k개를 오름차순으로 돌려준다."""
     x = np.sort(np.asarray(values, dtype=float))
     x = x[np.isfinite(x)]
     n = x.size
@@ -67,7 +52,8 @@ def jenks_breaks(values: np.ndarray, k: int) -> list[float]:
         # 서로 다른 값이 등급 수보다 적으면 값 자체가 경계다. 남는 등급은 최댓값으로 채운다.
         return [float(v) for v in uniq] + [float(uniq[-1])] * (k - uniq.size)
 
-    s1, s2 = _prefix_sums(x)
+    s1 = np.concatenate([[0.0], np.cumsum(x)])
+    s2 = np.concatenate([[0.0], np.cumsum(x * x)])
 
     def cost(i: np.ndarray, j: int) -> np.ndarray:
         """정렬된 x[i..j] 의 편차제곱합. 누적합으로 O(1) 에 구한다."""
@@ -127,10 +113,7 @@ def vulnerability_class(exposure_class: np.ndarray, sensitivity_class: np.ndarra
 
 
 def composite(frame, spec: dict[str, int], *, winsor_lo: float, winsor_hi: float) -> tuple[np.ndarray, dict]:
-    """부호를 맞춘 z-score 합. `spec` 은 {변수명: +1 높을수록 취약 / -1 낮을수록 취약}.
-
-    동일가중이며, 가중치를 바꾸는 것은 H07 민감도 분석의 일이다.
-    """
+    """부호를 맞춘 z-score 합. `spec` 은 변수별 방향이다."""
     parts = {}
     for name, sign in spec.items():
         z = zscore(winsorize(frame[name].to_numpy(dtype=float), winsor_lo, winsor_hi)) * sign
@@ -241,7 +224,7 @@ def cohen_kappa(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def contribution_share(matrix: np.ndarray, weights: np.ndarray, names: list[str]) -> dict[str, np.ndarray]:
-    """가법형 구성비 w_k·X_k / Σ w_j·X_j. TOP 20 의 '주 원인'을 이 값으로 설명한다."""
+    """가법형 구성비 w_k·X_k / Σ w_j·X_j."""
     weighted = np.asarray(matrix, dtype=float) * np.asarray(weights, dtype=float)
     total = weighted.sum(axis=1, keepdims=True)
     share = np.divide(weighted, total, out=np.zeros_like(weighted), where=total > 0)

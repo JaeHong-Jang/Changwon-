@@ -1,14 +1,11 @@
-"""
-프로젝트 설정 로드 유틸리티
-config/config.yaml 파일을 읽어 딕셔너리로 반환합니다.
-"""
+"""프로젝트 설정 로드 유틸리티."""
 
 import os
 from pathlib import Path
 
 import yaml
 
-# 프로젝트 루트 디렉토리 (src/utils/config.py 기준 2단계 상위)
+# 프로젝트 루트 디렉토리.
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -21,12 +18,7 @@ def load_config(path: str | None = None) -> dict:
 
 
 def load_env():
-    """프로젝트 루트의 .env 파일을 로드합니다.
-
-    python-dotenv는 API 키를 읽을 때만 필요하므로 여기서 지연 임포트한다.
-    모듈 최상단에서 임포트하면 설정만 읽는 파이프라인·노트북까지 이 패키지를
-    요구하게 되어, 없는 환경에서 `from src.pipeline.graph import Graph` 가 실패한다.
-    """
+    """프로젝트 루트의 .env 파일을 로드합니다."""
     dotenv_path = PROJECT_ROOT / ".env"
     if not dotenv_path.exists():
         return

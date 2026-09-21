@@ -1,16 +1,4 @@
-"""H08 결과 확인 EDA — 만든 결과가 상식과 독립 자료에 비추어 말이 되는지 본다.
-
-세 가지를 묻는다.
-
-1. **점수가 한쪽으로 쏠리지 않았나** — CDRI 분포와 등급 구성
-2. **독립 자료와 겹치나** — 창원시 침수예상도(A1)·실제 침수흔적과 TOP 20 의 중첩
-3. **결과가 특정 지역에 몰리지 않았나** — 행정동 편중, 기여도 합
-
-여기서 쓰는 침수예상도는 Layer 1 의 **입력**이므로 중첩률이 높은 것은 당연하다.
-그것으로 성능을 주장할 수 없다(순환). 반면 침수흔적은 입력이 아니므로 실제 근거가 된다.
-두 값을 나란히 놓는 이유는, 예상도와 흔적이 서로 다른 곳을 가리킬 때 그 사실이 보이게
-하기 위해서다.
-"""
+"""H08 결과 확인 EDA. 분포, TOP 20 편중, 침수예상도·침수흔적 대조를 확인한다."""
 
 from __future__ import annotations
 
@@ -24,7 +12,7 @@ CDRI_PATH = "data/processed/layers/cdri.gpkg"
 LAYER1_PATH = "data/processed/layers/layer1_flood.gpkg"
 TOP20_PATH = "reports/tables/top20.csv"
 FLOOD_MAP_PATH = "data/processed/canonical/flood_maps.gpkg"
-# A7 홍수위험지도는 미확보(팀원 과제). 없으면 없다고 기록하고 넘어간다.
+# A7 홍수위험지도 경로
 FLOOD_RISK_DIR = "data/raw/flood_risk"
 DONG_MAX_SHARE = 0.50          # 한 행정동이 TOP 20 의 절반을 넘으면 편중으로 본다
 CONTRIBUTION_TOLERANCE = 1e-3  # 기여도 4성분 합이 1 에서 벗어나도 되는 폭
@@ -59,11 +47,7 @@ def _check_contributions(cdri) -> dict[str, Any]:
 
 
 def _check_dong_concentration(top20) -> dict[str, Any]:
-    """TOP 20 이 한 행정동에 몰려 있지 않은지 본다.
-
-    몰려 있으면 지수가 위험이 아니라 그 동의 어떤 특성(예: 집계구 하나의 고령비율)을
-    따라간다는 뜻일 수 있다.
-    """
+    """TOP 20 이 한 행정동에 몰려 있지 않은지 본다."""
     counts = top20["neighborhood"].value_counts()
     return {
         "n_dong": int(len(counts)),
@@ -77,11 +61,7 @@ def _check_dong_concentration(top20) -> dict[str, Any]:
 
 
 def _overlap_with_flood_map(top20, cdri) -> dict[str, Any]:
-    """TOP 20 이 창원시 침수예상도 구역과 얼마나 겹치나.
-
-    **성능 지표가 아니다.** 침수예상도는 Layer 1 의 입력이므로 겹치는 것이 당연하고,
-    겹치지 않으면 오히려 다른 요소(취약성·대응역량)가 순위를 끌어올렸다는 신호다.
-    """
+    """TOP 20 이 창원시 침수예상도 구역과 얼마나 겹치나."""
     import geopandas as gpd
 
     path = PROJECT_ROOT / FLOOD_MAP_PATH
@@ -104,11 +84,7 @@ def _overlap_with_flood_map(top20, cdri) -> dict[str, Any]:
 
 
 def _overlap_with_traces(top20, cdri) -> dict[str, Any]:
-    """TOP 20 중 실제 침수 기록이 있는 격자 수. 이쪽이 진짜 근거다.
-
-    흔적도는 Layer 1 의 입력이 아니므로 순환이 없다. 다만 20칸은 표본이 작아
-    비율보다 **몇 칸인지**를 그대로 보고한다.
-    """
+    """TOP 20 중 실제 침수 기록이 있는 격자 수."""
     selected = cdri[cdri["grid_id"].isin(top20["grid_id"])]
     if "trace_label" not in selected.columns or selected["trace_label"].isna().all():
         return {"available": False, "reason": "Layer 1 에 침수흔적 라벨이 없다"}
@@ -121,8 +97,7 @@ def _overlap_with_traces(top20, cdri) -> dict[str, Any]:
         "n_top20": int(len(selected)),
         "n_with_trace": int(labels.sum()),
         "share": round(share, 3),
-        # 기준은 **순위 대상 격자**의 발생률이다. 전 격자(산지 포함) 기준이면 분모가
-        # 커져 lift 가 훨씬 크게 나오므로, 어느 모집단인지 반드시 함께 적는다.
+        # lift 기준 모집단: 순위 대상 격자
         "base_population": "순위 대상 격자 (인구 또는 주택이 있는 칸)",
         "base_n": int(len(cdri)),
         "base_rate": round(base, 5),
@@ -164,7 +139,7 @@ def _distribution_figure(cdri, out: Path) -> None:
     axes[1].set_title("등급 구성 (grade_raw, 캘리브레이션 본안)", fontsize=10)
     axes[1].set_ylabel("격자 수")
 
-    # 등급별 실제 침수 발생률 — 등급이 오를수록 올라야 한다.
+    # 등급별 실제 침수 발생률
     rate = cdri.groupby("grade_raw")["trace_label"].mean()
     axes[2].bar([GRADE_CODES[g] for g in rate.index], rate.to_numpy() * 100,
                 color=[GRADE_COLORS[g] for g in rate.index], edgecolor=style.INK, linewidth=0.5)

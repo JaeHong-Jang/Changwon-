@@ -1,8 +1,4 @@
-"""대피장소·방재기관 포인트 (창원 도시침수정보시스템 `api/data/point`).
-
-frequency=1 은 대피장소, frequency=2 는 방재기관이다. 두 파일 모두 위경도(WGS84)를 담은
-JSON 배열이며, Layer 3 의 대응역량(접근성) 변수로 쓴다.
-"""
+"""대피장소·방재기관 포인트."""
 
 from __future__ import annotations
 

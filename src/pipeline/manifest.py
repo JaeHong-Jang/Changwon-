@@ -7,7 +7,6 @@ import importlib
 import json
 import sys
 import platform
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -56,12 +55,7 @@ def config_params(config: dict[str, Any], keys: tuple[str, ...]) -> dict[str, An
 
 
 def runner_code_sha(runner: str) -> dict[str, str]:
-    """runner 가 (간접적으로라도) 끌어오는 프로젝트 내부 모듈 전부의 sha256.
-
-    runner 모듈 하나만 해싱하면 임계값이 있는 src/data/quality.py 를 고쳐도
-    fingerprint 가 그대로여서, 새 기준으로 검증하지 않은 결과가 캐시로 통과한다.
-    임계치 완화가 승인 없이 반영되는 경로이기도 해서 반드시 막아야 한다.
-    """
+    """runner 가 끌어오는 프로젝트 내부 모듈 전부의 sha256."""
     module_name = runner.split(":", 1)[0]
     importlib.import_module(module_name)
     files: dict[str, str] = {}
@@ -80,20 +74,14 @@ def runner_code_sha(runner: str) -> dict[str, str]:
 def node_fingerprint(
     node: Node, config: dict[str, Any], upstream: dict[str, dict[str, str]]
 ) -> tuple[str, dict[str, Any]]:
-    """노드 fingerprint와 그 근거를 반환.
-
-    upstream은 {dep_id: 그 노드 outputs의 checksum}. 상류가 재실행돼도 결과 파일이
-    byte 단위로 같으면 하류는 재실행하지 않고, 결과가 달라지면 반드시 재실행한다.
-    """
+    """노드 fingerprint와 그 근거를 반환."""
     inputs = checksum_paths(resolve_paths(node.inputs))
     basis = {
         "spec": node.spec,
         "code_sha256": runner_code_sha(node.runner),
         "params": config_params(config, node.params),
         "inputs": inputs,
-        # optional 상류가 실패(skipped)하면 그 노드의 outputs 가 없다. 하류를 KeyError 로
-        # 죽이지 않고 "없음"을 fingerprint 에 남긴다 — 나중에 그 상류가 성공하면 값이 바뀌어
-        # 하류가 자동으로 다시 돈다.
+        # optional 상류 실패도 fingerprint 에 남긴다.
         "upstream": {dep: upstream.get(dep, {"__unavailable__": True}) for dep in node.depends_on},
     }
     return _sha_text(json.dumps(basis, sort_keys=True, ensure_ascii=False)), basis
@@ -170,11 +158,7 @@ def load_approval(node_id: str) -> dict[str, Any] | None:
 
 
 def approval_status(node: Node, outputs: dict[str, str]) -> str:
-    """'approved' | 'awaiting_approval' | 'stale_approval' | 'rejected'.
-
-    rejected 는 사람이 명시적으로 거부한 상태다. 승인 없음(awaiting)과 구분해야
-    --continue-past-approval 같은 개발용 우회로도 뚫지 못하게 막을 수 있다.
-    """
+    """'approved' | 'awaiting_approval' | 'stale_approval' | 'rejected'."""
     rec = load_approval(node.id)
     if rec is None:
         return "awaiting_approval"

@@ -1,0 +1,35 @@
+{
+  "method": "exact_interventional_shapley",
+  "output": "fixed_minmax_cdri",
+  "components": [
+    "H",
+    "E",
+    "V",
+    "D"
+  ],
+  "weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ],
+  "background": "all_ranking_universe_grids",
+  "n_background": 10202,
+  "n_coalitions": 16,
+  "baseline": 0.36916610738352446,
+  "output_bounds": [
+    0.10332819342389345,
+    0.5894126495462744
+  ],
+  "max_reconstruction_error": 4.440892098500626e-16,
+  "source_run_id": "20260916T150800Z-140a433-0fe4096d",
+  "source_sha256": {
+    "data/processed/layers/cdri.gpkg": "667fd3c1d0af88964decdc437fd1102eaaf33aedaa3a1c730d4a7ed1433bc0e9",
+    "artifacts/evaluation/primary_formula_manifest.json": "aae479e07011aa62874dff09f1c8c5894f90bfc6a1ca555bf3116f04036bf648",
+    "reports/tables/top20.csv": "cf3a6b6f1967d99b111adaa2b4457521a3c47ece4be066f461929c1dacd78241"
+  },
+  "limits": [
+    "산식 기여도이며 인과효과·침수확률이 아님",
+    "배경 선택과 요소 간 의존성에 민감"
+  ]
+}

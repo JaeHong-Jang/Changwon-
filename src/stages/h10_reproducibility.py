@@ -164,7 +164,11 @@ def _holdout_checksum(metrics):
     actual = {"run_id": run_id, "gates_sha256": canonical_hash(summary["gates"]),
               "development_gates_sha256": canonical_hash(summary["development_gates"])}
     metrics["holdout_actual"] = actual
-    metrics["checks"]["holdout_checksum_unchanged"] = all(actual[key] == reference[key] for key in actual)
+
+    # 실행 식별자 일치는 참고로 남기고 결과 불변은 두 게이트 해시로만 판정한다.
+    metrics["holdout_same_run"] = actual["run_id"] == reference["run_id"]
+    metrics["checks"]["holdout_checksum_unchanged"] = all(
+        actual[key] == reference[key] for key in ("gates_sha256", "development_gates_sha256"))
 
 
 def _feedback(ctx, metrics):

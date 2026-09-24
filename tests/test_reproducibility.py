@@ -385,10 +385,23 @@ class StageFlowTests(unittest.TestCase):
         (folder / "fake/summary.json").write_text(json.dumps(summary), encoding="utf-8")
         stage._holdout_checksum(self.metrics)
         self.assertTrue(self.metrics["checks"]["holdout_checksum_unchanged"])
-        summary["gates"]["pass"] = True
-        (folder / "fake/summary.json").write_text(json.dumps(summary), encoding="utf-8")
-        stage._holdout_checksum(self.metrics)
-        self.assertFalse(self.metrics["checks"]["holdout_checksum_unchanged"])
+        self.assertTrue(self.metrics["holdout_same_run"])
+
+        # 실행 식별자가 달라도 두 해시가 같으면 통과하고 개별 해시 변경은 실패한다.
+        (folder / "rerun").mkdir()
+        for run_id in ("fake", "rerun"):
+            for changed in (None, "gates", "development_gates"):
+                with self.subTest(run_id=run_id, changed=changed):
+                    actual_summary = {key: dict(value) for key, value in summary.items()}
+                    if changed is not None:
+                        actual_summary[changed]["pass"] = not actual_summary[changed]["pass"]
+                    (folder / "latest.json").write_text(json.dumps({"run_id": run_id}), encoding="utf-8")
+                    (folder / run_id / "summary.json").write_text(json.dumps(actual_summary), encoding="utf-8")
+                    stage._holdout_checksum(self.metrics)
+                    self.assertEqual(self.metrics["checks"]["holdout_checksum_unchanged"], changed is None)
+                    self.assertEqual(self.metrics["holdout_same_run"], run_id == reference["run_id"])
+                    self.assertEqual(self.metrics["holdout_actual"]["run_id"], run_id)
+                    self.assertEqual(self.metrics["holdout_reference"], reference)
 
     def test_notebook_error_cells(self):
         """가짜 nbconvert 출력의 오류 셀을 실패로 기록한다."""

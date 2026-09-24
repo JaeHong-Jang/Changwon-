@@ -36,7 +36,6 @@ CASE_STUDY_MAPPING = {
 CASE_STUDY_UNMATCHED = ("명서동", "사화동")
 CASE_STUDY_DONG = tuple(n for names in CASE_STUDY_MAPPING.values() for n in names)
 DONG_NAME_FILE = "data/external/adm_dong_names.csv"
-TRACE_DIR = "data/raw/flood_traces"
 EVENT_LABEL_PREFIX = "trace_ev_"   # 사상(연도)별 침수 라벨 열 이름 앞머리
 # 침수 격자 진단 변수
 DIAGNOSIS_COLUMNS = ["elev_m", "slope_deg", "twi", "impervious_frac",
@@ -345,7 +344,7 @@ def _flood_trace_check(df, universe, p, z_exposure, winsor) -> tuple[dict[str, A
     from src.data import layers as L
     from src.data import uncertainty as U
 
-    vectors, images = FT.find_files(PROJECT_ROOT / TRACE_DIR)
+    vectors, images = FT.files_for("development"), []
     if not vectors:
         return None, f"침수흔적 벡터 자료 없음 (그림 파일 {len(images)}개). 예측 성능을 주장하지 않는다"
 

@@ -1,27 +1,23 @@
-"""침수흔적도 로더. 흔적도는 Layer 1 입력이 아니라 검증 라벨이다."""
+"""침수흔적도 로더: 흔적도는 Layer 1 입력이 아니라 검증 라벨이다."""
 
 from __future__ import annotations
 
+from hashlib import sha256
 from pathlib import Path
 from typing import Any, Iterable
 
-VECTOR_SUFFIXES = {".shp", ".gpkg", ".geojson", ".json", ".gml", ".kml"}
-# 수집 기록·메타데이터 파일명 토큰.
-SKIP_NAME_TOKENS = ("metric", "meta", "manifest", "readme", "log")
-IMAGE_SUFFIXES = {".pdf", ".csd", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".dwg", ".dxf"}
+from src.data.trace_events import _derive_event_fields
+from src.data.trace_labels import label_grid
+from src.data.trace_registry import (
+    PROJECT_ROOT,
+    SKIP_NAME_TOKENS,
+    VECTOR_SUFFIXES,
+    files_for,
+    load_registry,
+    registered_files,
+)
 
-# 사상 일자·원인으로 쓸 컬럼 이름 후보.
-DATE_COLUMN_CANDIDATES = (
-    "F_SAT_YMD", "FLDN_BGNG_YMD", "침수일자", "발생일자", "사상일자", "피해일자", "일자",
-    "OCCUR_DE", "FLUD_DE", "date",
-)
-CAUSE_COLUMN_CANDIDATES = (
-    "F_RSN_DTL", "FLDN_CS_DTL_NM", "침수원인", "원인", "재해원인", "F_RSN_CD", "CAUSE", "cause",
-)
-EVENT_COLUMN_CANDIDATES = ("F_DISA_NM", "FLDN_DST_NM", "사상명", "재해명", "EVENT")
-YEAR_COLUMN_CANDIDATES = ("FLDN_YR", "F_YR", "INV_YR", "연도")
-# 내수 침수 원인 토큰.
-INLAND_CAUSE_TOKENS = ("내수", "배수", "우수", "관거", "맨홀", "저지대")
+IMAGE_SUFFIXES = {".pdf", ".csd", ".jpg", ".jpeg", ".png", ".tif", ".tiff", ".dwg", ".dxf"}
 
 
 class FloodTraceUnavailable(RuntimeError):
@@ -30,6 +26,7 @@ class FloodTraceUnavailable(RuntimeError):
 
 def find_files(root: Path) -> tuple[list[Path], list[Path]]:
     """(벡터 파일, 그림 파일) 로 나눠 돌려준다."""
+    # 없는 경로는 빈 결과로 반환하고 벡터와 그림 파일을 분류한다.
     if not root.exists():
         return [], []
     files = [p for p in root.rglob("*") if p.is_file()]
@@ -42,13 +39,18 @@ def find_files(root: Path) -> tuple[list[Path], list[Path]]:
     return vectors, images
 
 
-def _read_vectors(paths, crs: str):
+def _read_vectors(paths: list[Path], crs: str):
     """벡터 파일들을 한 표로 읽는다. 읽히지 않는 파일은 멈추지 않고 사유만 기록한다."""
+    # 벡터 파일과 속성 표를 읽을 도구를 준비한다.
     import geopandas as gpd
     import pandas as pd
 
+    # 자료원의 좌표계를 분석 좌표계로 맞출 함수를 준비한다.
     from src.data.spatial import ensure_crs
 
+    # 등록된 출처를 연결하고 읽기 실패 사유와 원본 행번호를 보존한다.
+    sources = {path: (source_id, role) for path, source_id, role
+               in registered_files(load_registry(), PROJECT_ROOT)}
     frames, per_file, skipped = [], {}, {}
     for path in paths:
         try:
@@ -61,6 +63,9 @@ def _read_vectors(paths, crs: str):
             continue
         gdf = ensure_crs(gdf, crs)
         gdf["source_file"] = path.name
+        gdf["source_id"], gdf["role"] = sources.get(path.resolve(), (path.stem, "unregistered"))
+        # 원본 행번호는 1부터 세며 중복 제거 뒤에도 바꾸지 않는다.
+        gdf["source_record_id"] = [f"{path.name}#{i + 1}" for i in range(len(gdf))]
         per_file[path.name] = int(len(gdf))
         frames.append(gdf)
     if not frames:
@@ -70,78 +75,54 @@ def _read_vectors(paths, crs: str):
 
 
 def _drop_duplicate_geometries(gdf):
-    """같은 도형이 여러 레이어에 반복되면 하나만 남긴다."""
+    """같은 역할·호우의 도형이 여러 레이어에 반복되면 하나만 남긴다."""
+    # 중복 도형의 호우를 대조할 표 연산 도구를 준비한다.
+    import pandas as pd
+
+    # 도형 표준형·일자 유무·속성 완성도로 중복 제거 우선순위를 만든다.
     before = len(gdf)
     gdf = gdf.assign(
         _wkb=gdf.geometry.apply(lambda g: g.normalize().wkb),
+        _dated=gdf["event_date"].notna(),
         _filled=gdf.notna().sum(axis=1),
     )
-    gdf = (gdf.sort_values("_filled", ascending=False)
-           .drop_duplicates("_wkb")
-           .drop(columns=["_wkb", "_filled"])
+    # 날짜 없는 L100은 같은 연도·도형에 호우가 하나인 경우에만 L110과 묶는다.
+    keys = ["role", "event_year", "_wkb"]
+    dated = gdf[gdf["event_date"].notna()].drop_duplicates(keys + ["storm_id"])
+    unique = dated[~dated.duplicated(keys, keep=False)].set_index(keys)["storm_id"]
+    matched = unique.reindex(pd.MultiIndex.from_frame(gdf[keys])).to_numpy()
+    gdf["_dedup_storm"] = gdf["storm_id"].where(gdf["event_date"].notna(),
+                                               pd.Series(matched, index=gdf.index)).fillna(gdf["storm_id"])
+    # 매칭에 사용한 날짜·호우가 사라지지 않도록 날짜 있는 행부터 남긴다.
+    gdf = (gdf.sort_values(["_dated", "_filled"], ascending=False, kind="stable")
+           .drop_duplicates(["role", "_dedup_storm", "_wkb"])
+           .drop(columns=["_wkb", "_dated", "_filled", "_dedup_storm"])
            .reset_index(drop=True))
     return gdf, before - len(gdf)
 
 
-def _coalesce(gdf, candidates: tuple[str, ...]):
-    """후보 컬럼들을 행 단위로 합친다. 앞선 후보의 값이 비면 다음 후보로 채운다."""
-    import pandas as pd
-
-    present = [c for c in candidates if c in gdf.columns]
-    if not present:
-        return None, None
-    merged = gdf[present[0]].replace("", pd.NA)
-    for column in present[1:]:
-        merged = merged.fillna(gdf[column].replace("", pd.NA))
-    return merged, present
-
-
-def _derive_event_fields(gdf):
-    """자료원마다 다른 컬럼명에서 일자·원인·사상·연도를 뽑아 공통 이름으로 맞춘다."""
-    import pandas as pd
-
-    raw_date, date_cols = _coalesce(gdf, DATE_COLUMN_CANDIDATES)
-    raw_cause, cause_cols = _coalesce(gdf, CAUSE_COLUMN_CANDIDATES)
-    raw_event, event_cols = _coalesce(gdf, EVENT_COLUMN_CANDIDATES)
-    raw_year, year_cols = _coalesce(gdf, YEAR_COLUMN_CANDIDATES)
-
-    if raw_date is None:
-        gdf["event_date"] = pd.NaT
-    else:
-        # YYYYMMDD 우선, 실패하면 일반 파서로 한 번 더 시도한다.
-        text = raw_date.astype("string").str.strip()
-        parsed = pd.to_datetime(text, format="%Y%m%d", errors="coerce")
-        gdf["event_date"] = parsed.fillna(pd.to_datetime(text[parsed.isna()], errors="coerce"))
-    gdf["cause"] = raw_cause.astype("string") if raw_cause is not None else None
-    gdf["event_name"] = raw_event.astype("string") if raw_event is not None else None
-    # 연도 컬럼이 비는 행은 일자에서 채운다.
-    from_date = gdf["event_date"].dt.year.astype("Int64").astype("string")
-    gdf["event_year"] = (
-        raw_year.astype("string").str.strip().replace("", pd.NA).fillna(from_date)
-        if raw_year is not None else from_date
-    )
-    gdf["is_inland"] = (
-        gdf["cause"].str.contains("|".join(INLAND_CAUSE_TOKENS), na=False)
-        if raw_cause is not None else pd.NA
-    )
-    return gdf, {"date_columns": date_cols, "cause_columns": cause_cols,
-                 "event_columns": event_cols, "year_columns": year_cols}
-
-
 def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[str, Any]]:
     """벡터 침수흔적 파일들을 하나의 GeoDataFrame 으로. 좌표계·중복·사상 컬럼까지 정리한다."""
+    # 유효하지 않은 도형을 복원할 함수를 준비한다.
     from src.data.spatial import fix_geometry
 
+    # 입력 경로를 정규화하고 빈 입력을 거부한다.
     paths = [Path(p) for p in paths]
     if not paths:
         raise FloodTraceUnavailable("벡터 침수흔적 파일이 없다")
 
+    # 벡터를 읽고 도형·사상·중복을 정리한 뒤 안정적인 객체 ID를 부여한다.
     merged, per_file, skipped = _read_vectors(paths, crs)
     merged, fixed = fix_geometry(merged)
     merged = merged[merged.geometry.notna() & ~merged.geometry.is_empty].copy()
-    merged, duplicates = _drop_duplicate_geometries(merged)
     merged, column_meta = _derive_event_fields(merged)
+    merged, duplicates = _drop_duplicate_geometries(merged)
+    merged["object_id"] = [
+        sha256(f"{role}|{storm}|".encode() + geometry.normalize().wkb).hexdigest()
+        for role, storm, geometry in zip(merged["role"], merged["storm_id"], merged.geometry)
+    ]
 
+    # 정리된 도형의 면적·사상·품질 지표를 원래 순서로 집계한다.
     is_area = merged.geometry.geom_type.isin(["Polygon", "MultiPolygon"])
     metrics = {
         "n_files": len(paths),
@@ -152,6 +133,7 @@ def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[st
         "n_polygons": int(is_area.sum()),
         "invalid_fixed": fixed,
         "area_km2": round(float(merged.loc[is_area].geometry.area.sum() / 1e6), 3),
+        "union_area_km2": float(merged.loc[is_area].geometry.union_all().area / 1e6),
         **column_meta,
         "date_range": (
             [str(merged["event_date"].min().date()), str(merged["event_date"].max().date())]
@@ -160,6 +142,7 @@ def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[st
         "n_events": int(merged["event_name"].nunique()) if merged["event_name"].notna().any() else None,
         "years": sorted(merged["event_year"].dropna().unique().tolist()),
         "n_years": int(merged["event_year"].nunique()),
+        "n_storms": int(merged["storm_id"].nunique()),
         "n_inland": int(merged["is_inland"].sum()) if merged["is_inland"].notna().any() else None,
         "causes": sorted(merged["cause"].dropna().unique().tolist())[:6] if merged["cause"].notna().any() else None,
         "columns": merged.columns.tolist(),
@@ -168,18 +151,7 @@ def load(paths: Iterable[Path], *, crs: str = "EPSG:5179") -> tuple[Any, dict[st
     return merged, metrics
 
 
-def label_grid(grid, traces, *, min_overlap: float = 0.10):
-    """격자마다 침수흔적과 겹치는지 표시한다. 면적 비율이 `min_overlap` 을 넘으면 양성."""
-    import geopandas as gpd
-    import numpy as np
-
-    areas = np.zeros(len(grid))
-    joined = gpd.sjoin(
-        grid[["geometry"]].reset_index(names="_row"), traces[["geometry"]], predicate="intersects", how="inner"
-    )
-    for row, group in joined.groupby("_row"):
-        cell = grid.geometry.iloc[row]
-        # sjoin 의 index_right 는 위치가 아니라 라벨이다.
-        overlap = traces.geometry.loc[group["index_right"].to_numpy()].intersection(cell).area.sum()
-        areas[row] = min(float(overlap) / cell.area, 1.0)
-    return areas > min_overlap, areas
+def load_holdout(*, crs: str = "EPSG:5179") -> tuple[Any, dict[str, Any]]:
+    """최종 평가용 홀드아웃 정본만 읽는다."""
+    # 홀드아웃 역할로 등록된 파일만 공통 로더에 전달한다.
+    return load(files_for("holdout"), crs=crs)

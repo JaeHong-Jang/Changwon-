@@ -1,0 +1,37 @@
+# 경로는 저장소 루트 기준이며 홀드아웃은 정본 L110만 허용한다.
+sources:
+  changwon_ndms_2025:
+    role: development
+    provider: 창원시 정보공개 회신 (2026-09-16)
+    paths:
+      - data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp
+      - data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp
+    notes: 2025-07 사상. L100·L110 동일 도형은 중복 제거한다.
+  safetydata_dssp_if_00117:
+    role: development
+    provider: 행정안전부 재난안전데이터공유플랫폼 API (DSSP-IF-00117)
+    paths:
+      - data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg
+    notes: 2006~2019 기록. collection_metrics.json은 자료가 아니다.
+  changwon_2023:
+    role: holdout
+    provider: 창원시 정보공개 회신 (2026-09-24)
+    paths:
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shp
+    notes: 2022·2023 사상. EPSG:5187 정본만 사용하고 중부원점 사본과 L100 세분은 제외한다.
+  changwon_2024_mirae:
+    role: holdout
+    provider: 창원시 정보공개 회신 (미래, 2026-09-24)
+    paths:
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shp
+    notes: 2024-07·09 사상. EPSG:5186 L110 정본.
+  changwon_2024_ido:
+    role: holdout
+    provider: 창원시 정보공개 회신 (이도, 2026-09-24)
+    paths:
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shp
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shp
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shp
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shp
+      - data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shp
+    notes: 2024-09 사상. EPSG:5187, UTF-8, A_CHA_NM 토지이용 속성 보존.

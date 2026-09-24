@@ -1,0 +1,194 @@
+{
+ "run_id": "holdout_20260924T093854Z_ae9c122_85559f26",
+ "command": "python -m src.models.holdout_eval",
+ "started_utc": "2026-09-24T09:38:54.510249+00:00",
+ "git_head": "ae9c122",
+ "code_sha256": {
+  "src/models/holdout_eval.py": "b355036e7547e8835b03265d709cffb2bdf575bb0bf7fc798c803b2d00ce6673",
+  "src/data/validation.py": "a5268116b82513ca4325699b11eba038f9aadda27ad45ebb0d0d5e558546f855",
+  "src/data/flood_traces.py": "0103d2bc8e599ccbded361af136bae747a6aa0479011550ab79d2a883ab58dac",
+  "src/models/benchmark.py": "742dc1330080fc8cfb48318df88bee7bfa5d2503a9b2f869f54e55c4288409ce",
+  "config/flood_traces.yaml": "6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8"
+ },
+ "input_sha256": {
+  "data/processed/layers/layer1_flood.gpkg": "3f5fb14ed169983798d9e5858454c1099950cc14e8aef2e288d7bbfeba204142",
+  "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+  ".omc/benchmark/final_model.joblib": "f1deb206ac593dcc039f4e8d8629d103f9da1456ce0509b91033cda01a4002ad",
+  ".omc/benchmark/prespec.json": "896da482b114b90a55f7020f779075faec7f6eb2abef841b047c537f8d3bed56"
+ },
+ "prespec_run_id": "P005_dev_20260924T091820Z",
+ "score_roles": {
+  "L1": "pre_registered",
+  "rf_F0": "frozen",
+  "rf_F0_pre2020": "frozen_sensitivity",
+  "city_flood_map": "reference",
+  "past_flood_pre2022": "reference",
+  "L1_without_flood_map": "post_hoc",
+  "z_sensitivity": "post_hoc",
+  "z_exposure": "post_hoc"
+ },
+ "holdout": {
+  "n_traces": 196,
+  "n_storms": 4,
+  "union_area_km2": 9.546202081806902,
+  "invalid_fixed": 1,
+  "date_typo_repairs": 2
+ },
+ "polygons_by_storm": {
+  "2022-09-06": 5,
+  "2023-08-10": 3,
+  "2024-07-24": 5,
+  "2024-09-20": 183
+ },
+ "polygons_by_subset": {
+  "all": 196,
+  "urban": 57,
+  "agricultural": 119,
+  "no_landuse_attr": 20
+ },
+ "n_background_cells": 72953,
+ "gate_definition": {
+  "auc_min": 0.7,
+  "top20_capture_min": 0.5,
+  "unit": "격자 1표, 10% 합집합 겹침 라벨, 음성 = 나머지 격자"
+ },
+ "gates": {
+  "L1": {
+   "auc_cell": 0.4357,
+   "auc_cell_ci95": [
+    0.3856,
+    0.5962
+   ],
+   "auc_cluster": 0.6025,
+   "auc_cluster_ci95": [
+    0.5439,
+    0.661
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0734,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "rf_F0": {
+   "auc_cell": 0.8761,
+   "auc_cell_ci95": [
+    0.8406,
+    0.889
+   ],
+   "auc_cluster": 0.8337,
+   "auc_cluster_ci95": [
+    0.8077,
+    0.8585
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.8666,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "rf_F0_pre2020": {
+   "auc_cell": 0.8508,
+   "auc_cell_ci95": [
+    0.8302,
+    0.859
+   ],
+   "auc_cluster": 0.8287,
+   "auc_cluster_ci95": [
+    0.8034,
+    0.8525
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.7198,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "city_flood_map": {
+   "auc_cell": 0.4501,
+   "auc_cell_ci95": [
+    0.4406,
+    0.4811
+   ],
+   "auc_cluster": 0.4941,
+   "auc_cluster_ci95": [
+    0.4554,
+    0.5399
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.026,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "past_flood_pre2022": {
+   "auc_cell": 0.524,
+   "auc_cell_ci95": [
+    0.4069,
+    0.7144
+   ],
+   "auc_cluster": 0.5634,
+   "auc_cluster_ci95": [
+    0.4945,
+    0.6325
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.1942,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "L1_without_flood_map": {
+   "auc_cell": 0.4387,
+   "auc_cell_ci95": [
+    0.388,
+    0.6002
+   ],
+   "auc_cluster": 0.6053,
+   "auc_cluster_ci95": [
+    0.5463,
+    0.6645
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0781,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "z_sensitivity": {
+   "auc_cell": 0.7348,
+   "auc_cell_ci95": [
+    0.7197,
+    0.757
+   ],
+   "auc_cluster": 0.7616,
+   "auc_cluster_ci95": [
+    0.7345,
+    0.7898
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.2249,
+   "passes_auc": true,
+   "passes_capture": false
+  },
+  "z_exposure": {
+   "auc_cell": 0.1468,
+   "auc_cell_ci95": [
+    0.0864,
+    0.341
+   ],
+   "auc_cluster": 0.3459,
+   "auc_cluster_ci95": [
+    0.2753,
+    0.4176
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0158,
+   "passes_auc": false,
+   "passes_capture": false
+  }
+ },
+ "note": "L1 만 사전 게이트 대상이다. rf_F0 는 개발 자료로 동결한 뒤 처음 채점했지만 특징 후보군은 리더가 홀드아웃 진단을 본 뒤 정했다. post_hoc 점수는 확증 근거가 아니다"
+}

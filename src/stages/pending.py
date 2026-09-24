@@ -43,9 +43,3 @@ def alert_draft(ctx: StageContext) -> dict[str, Any]:
     """고정 TOP 20 + 유효 예보로 내부 검토용 문안 1건과 화면 1장.
     만료·단위·timezone 불일치 예보는 차단. metrics: forecast_valid, elapsed_s."""
     _todo("alert_draft")
-
-
-def reproducibility(ctx: StageContext) -> dict[str, Any]:
-    """빈 processed 환경 전체 재실행 + feedback_manifest 필수키·checksum·version 검사.
-    통과: 홀드아웃 결과 checksum 불변. metrics: checks_passed, holdout_checksum_unchanged."""
-    _todo("reproducibility")

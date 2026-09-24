@@ -25,6 +25,33 @@ def write_json(path: Path, value: Any) -> None:
                           encoding="utf-8")
 
 
+def atomic_write_json(path: Path, value: Any) -> None:
+    """같은 폴더의 임시 JSON을 동기화한 뒤 원자적으로 교체한다."""
+    # 기존 공통 함수는 바꾸지 않고 원자적 저장 의존성만 불러온다.
+    import os
+    import tempfile
+
+    # 쓰기·동기화·교체 실패 시 기존 파일을 보존하고 임시 파일을 지운다.
+    path = Path(path)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                         prefix=f".{path.name}.", suffix=".tmp", delete=False) as output:
+            temporary = Path(output.name)
+            output.write(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+            output.flush()
+            os.fsync(output.fileno())
+        os.replace(temporary, path)
+    except BaseException as error:
+        # 정리 오류는 메모로 남기고 원래 저장 예외를 그대로 전파한다.
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as cleanup_error:
+                error.add_note(f"임시 파일 정리 실패: {temporary}: {cleanup_error}")
+        raise
+
+
 def vector_manifest(paths: list[Path], root: Path) -> dict[str, str]:
     """벡터 파일과 같은 이름의 부속 파일(.dbf·.shx·.prj·.cpg 등)의 해시."""
     # 같은 stem 을 가진 파일을 모두 모은다

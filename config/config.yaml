@@ -65,6 +65,19 @@ cdri:
 policy:
   nms_radius_m: 300                 # 같은 침수 구역이 인접 격자로 중복 선정되는 것을 막는다
 
+# ----- H10 재현성·환류 검증 -----
+h10:
+  workspace_parent: null
+  rerun_timeout_s: 3600
+  run_notebooks: true
+  keep_workspace: false
+  compare_patterns:
+    - data/processed/**/*.gpkg
+    - data/processed/**/*.parquet
+    - data/processed/**/*.csv
+    - reports/tables/*.csv
+    - artifacts/evaluation/primary_formula_manifest.json
+
 analysis:
   random_seed: 42
   test_size: 0.2

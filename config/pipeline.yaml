@@ -711,13 +711,17 @@ nodes:
     phase: P4
     title: 재현성·환류 검증
     description: 빈 processed 환경 전체 재실행 + 환류 manifest 검증
-    runner: src.stages.pending:reproducibility
+    runner: src.stages.h10_reproducibility:reproducibility
     depends_on: [h08_result_review]
     inputs: []
     outputs:
       - artifacts/evaluation/feedback_manifest.json
-    params: []
+    params:
+      - h10.workspace_parent
+      - h10.rerun_timeout_s
+      - h10.run_notebooks
+      - h10.keep_workspace
+      - h10.compare_patterns
     verify:
       - {kind: code, rule: "빈 processed 에서 전체 재실행 pass, 홀드아웃 결과 checksum 불변, feedback manifest 필수키"}
     on_fail: {goto: h00_access_requests, max_iterations: 2, action: "마지막 성공 run 으로 복귀하고 실패 원인 기록. 전체 재실행이므로 P1 처음부터"}
-

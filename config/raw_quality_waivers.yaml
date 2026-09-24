@@ -1,73 +1,76 @@
 version: 1
 
 # Waiver는 오류를 정상값으로 인정하는 문서가 아니다. 불변 raw에 남겨 둔 finding을
-# H02 quarantine/정제 단계로 넘기기 위한 한시적 승인이다. fingerprint에 포함된 건수나
+# H02 quarantine/정제 단계로 넘기기 위한 승인이다. fingerprint에 포함된 건수나
 # 임계치가 바뀌면 자동으로 일치하지 않아 재검토가 필요하다.
 # 연장 이력
 # 2026-08-22 → 2026-09-05 (2주). 사유: 강수·수위 코드북(접근신청 #7)을 아직 받지 못했다.
 # 정보공개청구 회신 예상일(9/2) 직후로 맞춰, 회신 내용으로 재판정할 수 있게 한다.
-# 다음 연장 때는 회신 여부와 재판정 결과를 여기에 적는다.
+# 2026-09-24 재판정 → 2027-09-30. 코드북은 회신되지 않았다. 코드북 없이 원본 자료만으로 8건 모두
+# 의미를 확정했다(아래 reason). 처리 방식은 기존 H02 규칙과 같아 분석 결과는 바뀌지 않는다.
+# 만료일은 원본 갱신 주기(1년)에 맞췄다. 원본이 바뀌면 fingerprint 불일치로 기한과 무관하게 재검토된다.
+# 재판정은 사용자(팀장) 지시로 리더 에이전트가 수행했다.
 waivers:
   - fingerprint: 6f592793668045b2
     dataset: rainfall_hourly
     code: exact_duplicates
     owner: R1 데이터·공간분석
-    reason: 원본을 수정하지 않고 H02에서 중복 원행을 보존한 뒤 정규화해야 함
+    reason: "확정: 완전중복 2,067행은 같은 행의 반복이다. 원본은 두고 H02에서 1건만 쓴다"
     cleaning_rule: H02-R01 완전중복 quarantine 후 1건 유지, 행수 보존식 제출
-    expires_on: 2026-09-05
+    expires_on: 2027-09-30
 
   - fingerprint: fdb58cb73cbcaebc
     dataset: rainfall_hourly
     code: duplicate_keys
     owner: R1 데이터·공간분석
-    reason: 완전중복 외 지점-일자 충돌을 셀 비교·코드북 확인 후 결정해야 함
-    cleaning_rule: H02-R02 충돌행 분리, 값이 다르면 자동 선택 금지
-    expires_on: 2026-09-05
+    reason: "확정: 지점-일자 충돌 21건은 한쪽 0·다른쪽 값, 또는 둘 다 다른 값이다. 어느 쪽이 맞는지 근거가 없어 그 지점-일자를 결측으로 둔다"
+    cleaning_rule: H02-R02 충돌행 분리, 값이 다르면 자동 선택 금지(해당 지점-일자 결측)
+    expires_on: 2027-09-30
 
   - fingerprint: fba9852b8d431775
     dataset: rainfall_hourly
     code: invalid_dates
     owner: R1 데이터·공간분석
-    reason: 2022-02-29·30·31 원행을 임의 날짜로 보정하지 않고 격리해야 함
+    reason: "확정: 중앙동 2022-02-29·30·31 3행은 달력에 없는 날짜이고 강수가 모두 0이다. 보정하지 않고 제외한다"
     cleaning_rule: H02-R03 잘못된 날짜 3행 quarantine
-    expires_on: 2026-09-05
+    expires_on: 2027-09-30
 
   - fingerprint: d61f0a58eafecdfa
     dataset: rainfall_hourly
     code: numeric_range
     owner: R1 데이터·공간분석
-    reason: 음수 144셀과 300mm 초과 1셀의 코드 의미를 확인해야 함
-    cleaning_rule: H02-R04 원값·원행 보존, 코드북 확인 전 이벤트 분석 제외
-    expires_on: 2026-09-05
+    reason: "확정: 음수 144셀(최소 -89mm, 5개 지점·주로 2024~2025년 24시 칸)은 강수로 불가능한 기록 장비 오류, 1시간 881.4mm 1셀(화천민원 2023-11-23)은 국내 최고 기록의 6배로 불가능한 값이다. 모두 결측으로 둔다"
+    cleaning_rule: H02-R04 원값·원행 보존, 해당 셀 결측 처리(이벤트 분석 제외)
+    expires_on: 2027-09-30
 
   - fingerprint: c984955c3c8229e9
     dataset: rainfall_hourly
     code: date_range
     owner: R1 데이터·공간분석
-    reason: 1958년 9행은 현대 관측망과 연속되지 않아 코드북 확인이 필요함
+    reason: "확정: 1958년 9행은 분석 기간(2015~2024) 밖의 고립 관측이다. 제외한다"
     cleaning_rule: H02-R05 2000년 이전 9행 quarantine, 2015~2024 고정기간 사용
-    expires_on: 2026-09-05
+    expires_on: 2027-09-30
 
   - fingerprint: cd8284ca77a5ff98
     dataset: river_level_hourly
     code: sentinel_values
     owner: R1 데이터·공간분석
-    reason: 4종 값은 센티널 후보이며 실제 수위로 집계하면 극값이 왜곡됨
-    cleaning_rule: H02-W01 코드북 확인 후 결측 전환, 원값·플래그 보존
-    expires_on: 2026-09-05
+    reason: "확정: 9321.0 등 4종 값은 같은 값이 수백 번 반복되는 표시값(센티널)이며 실제 수위가 아니다. 결측으로 둔다"
+    cleaning_rule: H02-W01 센티널 결측 전환, 원값·플래그 보존
+    expires_on: 2027-09-30
 
   - fingerprint: 82462d3f63c2f3bc
     dataset: river_level_hourly
     code: numeric_range
     owner: R1 데이터·공간분석
-    reason: 단위·코드북 확정 전 광범위 후보범위 밖 18셀을 실제 수위로 사용할 수 없음
-    cleaning_rule: H02-W02 -100~1000 밖 18셀 quarantine, 원값·원행 보존 후 코드북으로 재판정
-    expires_on: 2026-09-05
+    reason: "확정: -35760·1990 등 -100~1000 밖 18셀은 수위로 불가능한 값이다. 결측으로 둔다"
+    cleaning_rule: H02-W02 -100~1000 밖 18셀 quarantine, 원값·원행 보존
+    expires_on: 2027-09-30
 
   - fingerprint: 92ef07610bf1f539
     dataset: river_level_hourly
     code: temporal_coverage
     owner: R1 데이터·공간분석
-    reason: 센티널 제외 유효일 기준으로 2015~2024 커버리지 90% 충족 수위계가 없음
+    reason: "확정: 센티널 제외 유효일 기준으로 2015~2024 커버리지 90% 충족 수위계가 없다. 수위는 보조 사례로만 쓴다"
     cleaning_rule: H02-W03 수위를 도시 전체 공간검증·음성라벨에서 제외하고 특정 호우 보조 사례로만 사용
-    expires_on: 2026-09-05
+    expires_on: 2027-09-30

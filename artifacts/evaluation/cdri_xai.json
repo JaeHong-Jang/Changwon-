@@ -22,11 +22,11 @@
     0.5894126495462744
   ],
   "max_reconstruction_error": 4.440892098500626e-16,
-  "source_run_id": "20260924T134155Z-9e8c4a7-0fe4096d",
+  "source_run_id": "20260924T161642Z-3277828-cdee32d3",
   "source_sha256": {
-    "data/processed/layers/cdri.gpkg": "1e38ea2988469049136fc872de7996313e2c417f36ab50d8a6cb60fa2f7dc0ca",
-    "artifacts/evaluation/primary_formula_manifest.json": "a1d24a5dd833de3fc0f064164f8059f2c2078e980b6713d795f1483c3e8ab125",
-    "reports/tables/top20.csv": "be6d1873abf76add68ef45f35f2ea34291548be650e79bfd7e7f5c0e15eaa4ae"
+    "data/processed/layers/cdri.gpkg": "f3e0e7293377db2c9366f6c881981f7ed7fcfb354a60eec2184436372005d7d9",
+    "artifacts/evaluation/primary_formula_manifest.json": "73dfb321b2aa2055e4f12e3bf11c3a3988e0641e8014903f2ceaaa31d99c3689",
+    "reports/tables/top20.csv": "c2c4efa720e5e9d4275195efeb52b556ee5a0487752d70776b8bff57f9042e62"
   },
   "limits": [
     "산식 기여도이며 인과효과·침수확률이 아님",

@@ -1,6 +1,6 @@
 # 데이터 확인 EDA — 이상 징후
 
-> 생성: `python -m src.pipeline run --only h02_eda_data_check` (run_id `20260924T134155Z-9e8c4a7-0fe4096d`)
+> 생성: `python -m src.pipeline run --only h02_eda_data_check` (run_id `20260924T161642Z-3277828-cdee32d3`)
 > **판단** 칸은 사람이 채운다. 데이터원인이면 그 묶음의 수집 노드로,
 > 정제원인이면 해당 정제 노드로 돌아간다 (`config/pipeline.yaml` 의 on_fail).
 

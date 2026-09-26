@@ -1,6 +1,6 @@
 {
-  "n_files": 453,
-  "bytes": 105959301,
+  "n_files": 458,
+  "bytes": 106064695,
   "missing_files": [],
   "by_decision": {
     "exclude": {
@@ -12,8 +12,8 @@
       "bytes": 18274969
     },
     "open": {
-      "n_files": 335,
-      "bytes": 25407483
+      "n_files": 340,
+      "bytes": 25512877
     },
     "restricted": {
       "n_files": 5,
@@ -23,15 +23,15 @@
   "by_category": {
     "code/open": {
       "n_files": 165,
-      "bytes": 2272863
+      "bytes": 2274019
     },
     "derived_data/restricted": {
       "n_files": 5,
       "bytes": 62259225
     },
     "docs/open": {
-      "n_files": 59,
-      "bytes": 941829
+      "n_files": 62,
+      "bytes": 965865
     },
     "frozen_models/open": {
       "n_files": 39,
@@ -54,8 +54,8 @@
       "bytes": 17395643
     },
     "results/open": {
-      "n_files": 71,
-      "bytes": 14846944
+      "n_files": 73,
+      "bytes": 14927146
     }
   },
   "license_files": []

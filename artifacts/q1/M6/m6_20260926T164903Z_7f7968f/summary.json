@@ -2,8 +2,8 @@
   "run_id": "m6_20260926T164903Z_7f7968f",
   "steps": {
     "compare": {
-      "started_utc": "2026-09-26T16:49:03.008857+00:00",
-      "git_head": "7f7968f",
+      "started_utc": "2026-09-26T17:11:01.736566+00:00",
+      "git_head": "885a40c",
       "source_dirty": false,
       "command": "python -m src.repro.m6_run --steps compare --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f --holdout-run holdout_20260926T164805Z_7f7968f_84ef30a7",
       "result": {
@@ -27,8 +27,8 @@
       }
     },
     "chronology": {
-      "started_utc": "2026-09-26T16:53:21.497263+00:00",
-      "git_head": "ea691cc",
+      "started_utc": "2026-09-26T17:11:02.689139+00:00",
+      "git_head": "885a40c",
       "source_dirty": false,
       "command": "python -m src.repro.m6_run --steps chronology --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f",
       "result": {
@@ -38,13 +38,13 @@
       }
     },
     "zenodo": {
-      "started_utc": "2026-09-26T16:54:17.142568+00:00",
-      "git_head": "ea691cc",
+      "started_utc": "2026-09-26T17:11:52.302860+00:00",
+      "git_head": "885a40c",
       "source_dirty": false,
       "command": "python -m src.repro.m6_run --steps zenodo --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f",
       "result": {
-        "n_files": 453,
-        "bytes": 105959301,
+        "n_files": 458,
+        "bytes": 106064695,
         "by_decision": {
           "exclude": {
             "n_files": 2,
@@ -55,8 +55,8 @@
             "bytes": 18274969
           },
           "open": {
-            "n_files": 335,
-            "bytes": 25407483
+            "n_files": 340,
+            "bytes": 25512877
           },
           "restricted": {
             "n_files": 5,
@@ -80,9 +80,9 @@
     "xgboost": "3.4.1"
   },
   "code_sha256": {
-    "src/repro/m6_run.py": "fd955e67906349c196e9720e3d1ee2cfed4e783ebd0a2a39ba7a55eb4afb2fab",
-    "src/repro/run_compare.py": "0bc6271f4413801f458680302982e178a93dcbfdbe2a07f02174dfd57dec8f3f",
-    "src/repro/audit_check.py": "22f73ae284d446f97e0b4599b31e10e379e76fb61804ffe723f989556afce6e4",
+    "src/repro/m6_run.py": "378a9b9170de18a87dc90569abc58bc9cbc756673d84ab21581f42a61c7c359e",
+    "src/repro/run_compare.py": "052c04d0448180e9b56a7dedd0c438df94f9bd51aa50d2b544e5143e260eab96",
+    "src/repro/audit_check.py": "bfcb8f9d2b5f937f63aa5bc6ae3ad39770782a9a657216fa07be6ca475c965e9",
     "src/repro/chronology.py": "81c8db6338a3049768a4fb633a660b841062c1c4f634a3d658f088e541ef1663",
     "src/repro/deposit_manifest.py": "fdbb539c1d34a0b0c844f6225a3c492990a63df25b01f019d96adaed6d0868d7",
     "src/data/reproducibility.py": "d16ac754781974d8640930e1e0069f8c10bad521f8f8ac6f2b9530e222f2028c",

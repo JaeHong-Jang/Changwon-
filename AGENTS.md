@@ -98,6 +98,7 @@ H10 재현성 노드 구현·통과(run 20260924T163108Z-e25f3f2: 6개 검사 �
 | 무작위효과 통합 (REML·DL·수정 HKSJ·예측구간·Q·I²·Q-profile) | `src/data/validation/meta_analysis.py` |
 | Q1 M2 사상 단위 보고: 효과 크기·집합별 통합·판정·SE 점검·숲 그림·실행 (절차 `docs/q1/M2_protocol.md`) | `src/models/m2_effects.py`, `m2_pooling.py`, `m2_decision.py`, `m2_se_check.py`, `m2_forest.py`, `m2_run.py` |
 | Q1 M4 라벨 규칙 × 격자 크기: 굵은 격자·흔적 자국·라벨 규칙·가중 AUC·객체 분해·생존·채점·판정·정합·실행 (절차 `docs/q1/M4_protocol.md`) | `src/data/coarse_grid.py`, `trace_footprint.py`, `label_rules.py`, `src/data/validation/weighted_auc.py`, `decomposition.py`, `src/models/m4_survival.py`, `m4_metrics.py`, `m4_decision.py`, `m4_checks.py`, `m4_run.py` |
+| Q1 M4S 분해식의 일반성 (가상 자료): 경관·인벤토리·탐지력·시나리오·Δ* 공식, 가중치 집중·공분산 형태, 복제 채점·요약·판정·창원 기준점·그림·실행 (절차 `docs/q1/M4S_protocol.md`) | `src/synth/landscape.py`, `inventory.py`, `detectability.py`, `scenarios.py`, `tilt.py`, `src/data/validation/weight_concentration.py`, `src/models/m4s_measure.py`, `m4s_summary.py`, `m4s_decision.py`, `m4s_anchor.py`, `m4s_figure.py`, `m4s_run.py` |
 | Q1 M6 재현성: 실행 비교·라벨 감사 재확인·연대표·기탁 목록·실행 (절차 `docs/q1/M6_protocol.md`) | `src/repro/run_compare.py`, `audit_check.py`, `chronology.py`, `deposit_manifest.py`, `m6_run.py`, `config/m6_chronology.yaml` |
 
 ## 7. 작업 흐름 (오케스트라 하네스)

@@ -97,6 +97,7 @@ H10 재현성 노드 구현·통과(run 20260924T163108Z-e25f3f2: 6개 검사 �
 | Q1 M1 자명 기준선: HAND·기준선 점수·배경 층·사전 판정·실행 (절차 `docs/q1/M1_protocol.md`) | `src/data/hand.py`, `src/models/m1_scores.py`, `m1_strata.py`, `m1_decision.py`, `m1_run.py` |
 | 무작위효과 통합 (REML·DL·수정 HKSJ·예측구간·Q·I²·Q-profile) | `src/data/validation/meta_analysis.py` |
 | Q1 M2 사상 단위 보고: 효과 크기·집합별 통합·판정·SE 점검·숲 그림·실행 (절차 `docs/q1/M2_protocol.md`) | `src/models/m2_effects.py`, `m2_pooling.py`, `m2_decision.py`, `m2_se_check.py`, `m2_forest.py`, `m2_run.py` |
+| Q1 M4 라벨 규칙 × 격자 크기: 굵은 격자·흔적 자국·라벨 규칙·가중 AUC·객체 분해·생존·채점·판정·정합·실행 (절차 `docs/q1/M4_protocol.md`) | `src/data/coarse_grid.py`, `trace_footprint.py`, `label_rules.py`, `src/data/validation/weighted_auc.py`, `decomposition.py`, `src/models/m4_survival.py`, `m4_metrics.py`, `m4_decision.py`, `m4_checks.py`, `m4_run.py` |
 
 ## 7. 작업 흐름 (오케스트라 하네스)
 

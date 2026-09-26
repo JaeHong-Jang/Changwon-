@@ -1,0 +1,193 @@
+{
+ "run_id": "m4_20260926T170511Z_1edf87c",
+ "started_utc": "2026-09-26T17:05:11.390457+00:00",
+ "git_head": "1edf87c",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. .venv/bin/python -m src.models.m4_run",
+ "role": "post_hoc — 홀드아웃 결과를 본 뒤 설계한 라벨 규칙·격자 크기 민감도. 홀드아웃은 채점에만 쓴다 (AGENTS §2-2)",
+ "protocol": "docs/q1/M4_protocol.md",
+ "include_holdout": true,
+ "rules": [
+  "any",
+  "f01",
+  "f10",
+  "f25",
+  "f50",
+  "center",
+  "rep_point",
+  "soft"
+ ],
+ "sizes_m": [
+  100,
+  200,
+  500,
+  1000
+ ],
+ "n_blocks": {
+  "100": 75400,
+  "200": 19483,
+  "500": 3393,
+  "1000": 942
+ },
+ "n_background_blocks": {
+  "100": 72953,
+  "200": 18560,
+  "500": 3063,
+  "1000": 771
+ },
+ "hand": {
+  "dem": {
+   "dem_source_res_m": 90.0,
+   "dem_resampling": "bilinear",
+   "dem_mosaic_shape": [
+    631,
+    771
+   ],
+   "dem_nodata_cells": 0
+  },
+  "elev_max_abs_diff": 0.0,
+  "osm": {
+   "n_cells": 170929,
+   "n_stream_cells": 5525,
+   "n_reach_stream": 92142,
+   "n_reach_flow_end": 78787,
+   "n_flow_end_cells": 2525
+  },
+  "acc": {
+   "n_cells": 170929,
+   "n_stream_cells": 10662,
+   "n_reach_stream": 165394,
+   "n_reach_flow_end": 5535,
+   "n_flow_end_cells": 2487,
+   "min_cells": 100
+  },
+  "max_abs_diff_vs_m1": 0.0
+ },
+ "train_events": {
+  "2006": [],
+  "2012": [
+   2006
+  ],
+  "2014": [
+   2006,
+   2012
+  ],
+  "2016": [
+   2006,
+   2012,
+   2014
+  ],
+  "2019": [
+   2006,
+   2012,
+   2014,
+   2016
+  ],
+  "2025": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2022-09-06": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2023-08-10": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2024-07-24": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2024-09-20": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "HOLDOUT_ALL": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ]
+ },
+ "checks": {
+  "m1": {
+   "available": true,
+   "m1_run": "artifacts/q1/M1/m1_20260926T160821Z_a181f6c",
+   "n_compared": 156,
+   "max_abs_diff": 7.771561172376096e-16,
+   "by_metric": {
+    "cell_auc": 2.220446049250313e-16,
+    "object_auc": 7.771561172376096e-16
+   }
+  },
+  "official_holdout": {
+   "available": true,
+   "official_run": "artifacts/evaluation/holdout_2022_2024/holdout_20260924T100939Z_ae9c122-dirty_cf388a23",
+   "official_auc": 0.4357,
+   "official_capture": 0.0734,
+   "m4_auc": 0.43567407715165746,
+   "m4_capture": 0.0734017363851618,
+   "same": true
+  },
+  "identity_max_abs_diff": 1.5543122344752192e-15
+ },
+ "code_sha256": {
+  "src/models/m4_run.py": "2cff3d71532da36630defacbd9a09b6be16506bc41c4faed49e7de41411a1763",
+  "src/models/m4_metrics.py": "6f07315cead6c2e732b11373fb22d536503fbbed94b6b017238a6a4d1d8cee39",
+  "src/models/m4_decision.py": "e4cfdda7a280b63a00ea23b3c697292424e6c1aa0a161c78bef7a272bf717722",
+  "src/models/m4_survival.py": "d5513b22ffc37871a4b7c3986759d8d2659555a1af359187ea4c5d2f3f81a7b6",
+  "src/models/m4_checks.py": "1613c0110875c23e95ab6eba8acd43de89625a1232871959557ad12a4efd6ac9",
+  "src/data/coarse_grid.py": "cd1aee834e18ead81e371ba9c1c1d6bd32ec3f93ed8eecb23e3895ec797c037a",
+  "src/data/trace_footprint.py": "d7f97e3105e5d19da2e422e8f2b069ae5239079b3262198746c1a4d4a48a23c3",
+  "src/data/label_rules.py": "e771c9d366a547b792f563970b153c150c080a7b8ecf4954bc67254ac7c97b57",
+  "src/data/validation/weighted_auc.py": "233b82ba78a8c29aa5c284852bafbadf93535d179e94cf5b763b076b221a457e",
+  "src/data/validation/decomposition.py": "e54d6b9b8e38565a7e0aeec4044a88731020db953487009289682fc65a1680c3",
+  "src/data/validation/_common.py": "0fd136cffb9422aaf99eadaf60f56f0c4f5ffc356508e52230dce9e677eb2e3c",
+  "src/data/validation/curves.py": "be655646c5fd49d7afa4ca53692d0c8eb0eaff9e76595f83a06dcb89b419cee9",
+  "src/models/m1_run.py": "06f09a8d5cce9a859ed3118dd34020b7251298954b5d058d2fb1f1e680b5b133",
+  "src/models/m1_scores.py": "fc363da2891a6b3197ff10270f9173ea17087fdac6ed378286d3d65ad84ee21e",
+  "src/data/hand.py": "0cf61d144567a3503a22a5cbaf3623fc175ab80efe25c04692ad1d7c67d3501d",
+  "src/data/features.py": "3d146df91463acb72f3e2ce8357186445752bd2334845a315f1632f2cd5ee3ea",
+  "src/models/features.py": "f8a99ae6d70d6298b5c0e5c214f630a5a5319825904e5f9468d3bdb827d9f583",
+  "src/models/estimators.py": "bde89fae3307bafabc1990219d60cd4ed118e0564cb258126e120e1874aae7c7",
+  "src/models/label_audit.py": "1b8106ba94845be0f049dba1f411fccdcada8d856910e8883580249e2b7ef1c3",
+  "src/data/flood_traces.py": "4ef687183774c0d81267fb3992641520722efec241e5ee9b11ee243168e9fcb9",
+  "docs/q1/M4_protocol.md": "20d1c3ee2b3444a42f18702422f48068459e202a0d89543b3c489a7f25f4b96f"
+ },
+ "input_sha256": {
+  "data/processed/layers/layer1_flood.gpkg": "0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350",
+  "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+  "data/raw/rivers/osm_waterways.gpkg": "7047fd38c251bdd12a595b2f4f89b4121cd04f43842227477c144261ce1bd894",
+  ".omc/benchmark/final_model.joblib": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+  ".omc/benchmark/prespec.json": "482db397d5e72529ed4602133bedc5df2f4ada48a5a0d0a281cb38929be230e3"
+ },
+ "packages": {
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "geopandas": "1.1.4",
+  "pyogrio": "0.13.0",
+  "shapely": "2.1.2",
+  "scipy": "1.18.1",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1"
+ },
+ "verdict": "C-c 부분 지지: 비관행 규칙 또는 격자 크기를 바꿔야 L1 게이트 판정이 뒤집힌다"
+}

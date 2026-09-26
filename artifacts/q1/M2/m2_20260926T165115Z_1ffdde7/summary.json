@@ -1,0 +1,70 @@
+{
+ "run_id": "m2_20260926T165115Z_1ffdde7",
+ "started_utc": "2026-09-26T16:51:15.989160+00:00",
+ "git_head": "1ffdde7",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. .venv/bin/python -m src.models.m2_run --n-boot 1000",
+ "role": "post_hoc — M1 사상별 결과(홀드아웃 포함)를 본 뒤의 사상 단위 재요약. 홀드아웃 원본은 읽지 않는다",
+ "protocol": "docs/q1/M2_protocol.md",
+ "input": {
+  "artifacts/q1/M1/m1_20260926T160821Z_a181f6c/metrics_long.csv": "6aa93c04f15a79c0f4601c31f604217d14c6d26cc4f15e1f4a72ffe688695d78"
+ },
+ "n_effect_rows": 1460,
+ "n_included": 1094,
+ "exclusions": {
+  "auc_missing_or_boundary": 241,
+  "positive_cells_lt_5": 76,
+  "polygons_lt_3": 49
+ },
+ "se_check": {
+  "n_boot": 1000,
+  "seed": 42,
+  "events": [
+   "2006",
+   "2012",
+   "2014",
+   "2016",
+   "2019",
+   "2025"
+  ],
+  "holdout_read": false,
+  "input_sha256": {
+   "data/processed/layers/layer1_flood.gpkg": "0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350",
+   "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+   "artifacts/q1/M1/m1_20260926T160821Z_a181f6c/hand.parquet": "64e5a41b01127ac276464773cd4daff0473b7b3ba37cf62645100b7c8f9dd598",
+   ".omc/benchmark/final_model.joblib": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+   ".omc/benchmark/prespec.json": "482db397d5e72529ed4602133bedc5df2f4ada48a5a0d0a281cb38929be230e3"
+  },
+  "development_trace_files": [
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp",
+   "data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg"
+  ]
+ },
+ "code_sha256": {
+  "src/models/m2_run.py": "e75134e7061cf5e7b824d537ca007d09912da7642728e4b2963ef64dffd088ad",
+  "src/models/m2_effects.py": "950cc641cfbb3c2a4e30f818cdb1ec3f3b8e5d99790c5cf44e2e01ed188463ee",
+  "src/models/m2_pooling.py": "f34fefb56eef83a7ef904130be6f9b512b13d2d0645964d262c247190e42c4d9",
+  "src/models/m2_decision.py": "24ab8aa5323b3175f54d96c62fca58e77f3a8f824ebf2f876c060b4d72d8d89f",
+  "src/models/m2_se_check.py": "f2f6dc5e8d4032346fa60e2c49260d31ad7363536be6dc6fcb87dadc85d35e59",
+  "src/models/m2_forest.py": "3a419d3c2833dd9663c1e24e0068eb04cef1e59845dfa32a056988df3d579377",
+  "src/data/validation/meta_analysis.py": "2c175d9801301e0976384b66fae964d3d55f4f35f4cca8234f1262f6a4633e0d",
+  "src/data/uncertainty.py": "f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21",
+  "src/data/trace_labels.py": "a4c947b10b363dd5daece2b6cba1b1cb77a33f893e07e1950e7d8514e7149c7b",
+  "src/models/m1_scores.py": "fc363da2891a6b3197ff10270f9173ea17087fdac6ed378286d3d65ad84ee21e",
+  "docs/q1/M2_protocol.md": "0ad502bdd8ea3450bcf96dacc5327a74030d46f8d96a7bc81f9b47e52a471692"
+ },
+ "packages": {
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "geopandas": "1.1.4",
+  "pyogrio": "0.13.0",
+  "shapely": "2.1.2",
+  "scipy": "1.18.1",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1"
+ },
+ "R3_primary": "사상 수준에서 구분되지 않는다",
+ "R4_statement": "쓰지 않는다 (표에만 둔다)"
+}

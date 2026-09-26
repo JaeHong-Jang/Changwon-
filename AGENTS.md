@@ -95,6 +95,8 @@ H10 재현성 노드 구현·통과(run 20260924T163108Z-e25f3f2: 6개 검사 �
 | 1단계 사상 발생: 사전분포 로지스틱·지표·예보/특보 특징·검증·실행 | `src/forecast/logit_prior.py`, `event_metrics.py`, `forecast_features.py`, `warning_features.py`, `trigger_eval.py`, `trigger_run.py`, `time_utils.py` |
 | 2단계 위치·결합: 공간 재적합·보정·사상별 라벨·결합 평가·시나리오 지도·실행 | `src/forecast/spatial_refit.py`, `location_calibration.py`, `storm_cell_labels.py`, `combined_eval.py`, `scenario_maps.py`, `combined_run.py` |
 | Q1 M1 자명 기준선: HAND·기준선 점수·배경 층·사전 판정·실행 (절차 `docs/q1/M1_protocol.md`) | `src/data/hand.py`, `src/models/m1_scores.py`, `m1_strata.py`, `m1_decision.py`, `m1_run.py` |
+| 무작위효과 통합 (REML·DL·수정 HKSJ·예측구간·Q·I²·Q-profile) | `src/data/validation/meta_analysis.py` |
+| Q1 M2 사상 단위 보고: 효과 크기·집합별 통합·판정·SE 점검·숲 그림·실행 (절차 `docs/q1/M2_protocol.md`) | `src/models/m2_effects.py`, `m2_pooling.py`, `m2_decision.py`, `m2_se_check.py`, `m2_forest.py`, `m2_run.py` |
 
 ## 7. 작업 흐름 (오케스트라 하네스)
 

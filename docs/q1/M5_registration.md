@@ -1,23 +1,23 @@
 # M5 등록 기록 — 절차 고정 해시
 
 > 대상: `docs/q1/M5_protocol.md` (M5 단계 A, 다른 도시 자료를 보기 전에 고정).
-> 이 파일은 절차 문서의 커밋 해시를 적으려고 **절차 커밋 다음 커밋**에서 만든다 (파일이 자기 커밋 해시를 담을 수 없어서다).
+> 아래 해시는 **절차 커밋 다음 커밋**에서 채웠다 (절차 파일이 자기 커밋 해시를 담을 수 없어서다). 틀은 초안 커밋 `365bcc2` 에서 만들었다.
 
 ## 고정한 절차
 
 | 항목 | 값 |
 |---|---|
 | 파일 | `docs/q1/M5_protocol.md` |
-| 절차 커밋 | `@@COMMIT@@` (`@@COMMIT_DATE@@`) |
+| 절차 커밋 | `f80f73629d588d68d87eff187679f53cde2115da` (`2026-09-26 16:57:20 +0000`) |
 | 브랜치 | `cloud/M5A` (origin 에 푸시) |
-| 파일 SHA256 | `@@SHA256@@` |
-| git blob | `@@BLOB@@` |
+| 파일 SHA256 | `68818ca765939c005580e80f8b5fdae2f016fe9aa6387722343edc32f784385d` |
+| git blob | `cf6d59c3bae24c447e56c51061b5df13978afeef` |
 
 확인 명령 (누구나 같은 값이 나와야 한다):
 
 ```bash
-git show @@COMMIT_SHORT@@:docs/q1/M5_protocol.md | sha256sum    # → @@SHA256@@
-git rev-parse @@COMMIT_SHORT@@:docs/q1/M5_protocol.md            # → @@BLOB@@
+git show f80f736:docs/q1/M5_protocol.md | sha256sum    # → 68818ca765939c005580e80f8b5fdae2f016fe9aa6387722343edc32f784385d
+git rev-parse f80f736:docs/q1/M5_protocol.md            # → cf6d59c3bae24c447e56c51061b5df13978afeef
 ```
 
 ## 외부 등록 (사용자가 채운다)

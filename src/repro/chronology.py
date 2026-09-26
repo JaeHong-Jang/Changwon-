@@ -67,8 +67,9 @@ def resolve(spec: dict[str, Any], root: Path) -> dict[str, Any]:
         if kind == "json":
             utc, verified, evidence = json_time(root, spec["path"], spec["key"]), True, f"{spec['path']}#{spec['key']}"
         elif kind == "run_id":
-            exists = (root / spec["path"]).exists()
-            utc, verified, evidence = parse_time(spec["run_id"]), exists, f"{spec['path']} ({spec['run_id']})"
+            target = root / spec["path"]
+            found = target.is_dir() or (target.is_file() and spec["run_id"] in target.read_text(encoding="utf-8"))
+            utc, verified, evidence = parse_time(spec["run_id"]), found, f"{spec['path']} ({spec['run_id']})"
         elif kind == "git":
             utc, subject = git_time(root, spec["commit"])
             verified = spec.get("quote", "") in subject

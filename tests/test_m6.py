@@ -132,18 +132,24 @@ class ChronologyTest(unittest.TestCase):
                 con.execute("create table gpkg_contents (table_name text, last_change text)")
                 con.execute("insert into gpkg_contents values ('l', '2026-09-24T16:18:26.027Z')")
             (root / "d.md").write_text("지수 확정 뒤 받았다", encoding="utf-8")
+            (root / "l.jsonl").write_text('{"x": "run 20260907T143417Z-40c24a6"}\n', encoding="utf-8")
             subprocess.run(["git", "init", "-q"], cwd=root, check=True)
             specs = [{"id": "j", "source": "json", "path": "a.json", "key": "x.t"},
                      {"id": "g", "source": "gpkg", "path": "g.gpkg"},
                      {"id": "d", "source": "doc", "path": "d.md", "quote": "확정 뒤", "date": "2026-09-24"},
                      {"id": "n", "source": "none", "evidence": "기록 없음"},
-                     {"id": "c", "source": "git", "commit": "deadbeef"}]
+                     {"id": "c", "source": "git", "commit": "deadbeef"},
+                     {"id": "r", "source": "run_id", "path": "l.jsonl", "run_id": "20260907T143417Z-40c24a6"},
+                     {"id": "q", "source": "run_id", "path": "l.jsonl", "run_id": "20260907T000000Z-other"}]
             table = resolve_all(specs, root).set_index("id")
         self.assertEqual(table.loc["j", "kst"], "2026-09-24T18:18:20+09:00")
         self.assertEqual(table.loc["g", "utc"], "2026-09-24T16:18:26+00:00")
         self.assertEqual(table.loc["d", "kst"], "2026-09-24")
         self.assertTrue(table.loc["d", "verified"] and table.loc["n", "verified"])
         self.assertFalse(table.loc["c", "verified"])
+        self.assertEqual(table.loc["r", "utc"], "2026-09-07T14:34:17+00:00")
+        self.assertTrue(table.loc["r", "verified"])
+        self.assertFalse(table.loc["q", "verified"])
         self.assertTrue(table.loc["c", "evidence"].startswith("해석 실패"))
 
     def test_doc_quote_missing(self):

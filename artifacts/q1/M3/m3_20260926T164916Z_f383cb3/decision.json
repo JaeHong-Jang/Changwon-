@@ -1,0 +1,560 @@
+{
+ "rule": "median(nested_rf) < median(rf_F1_wf) - 0.02 이면 고정 구성 낙관 판정",
+ "E_nest": [
+  "2014",
+  "2016",
+  "2019",
+  "2023-08-10",
+  "2024-09-20",
+  "2025"
+ ],
+ "primary": {
+  "events": [
+   "2014",
+   "2016",
+   "2019",
+   "2023-08-10",
+   "2024-09-20",
+   "2025"
+  ],
+  "evaluable": true,
+  "nested_rf": [
+   0.8387,
+   0.9106,
+   0.9682,
+   0.8656,
+   0.8505,
+   0.865
+  ],
+  "rf_F1_wf": [
+   0.8522,
+   0.9009,
+   0.9717,
+   0.8919,
+   0.8428,
+   0.8546
+  ],
+  "median_nested_rf": 0.8653,
+  "median_rf_F1_wf": 0.8732,
+  "median_gap": 0.0079,
+  "median_paired_diff": -0.0021,
+  "within_margin": true,
+  "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+  "nested_higher_by_margin": false
+ },
+ "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+ "m1_recheck": {
+  "slope_vs_nested": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2023-08-10",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "slope_neg": [
+    0.8132,
+    0.8711,
+    0.9132,
+    0.8308,
+    0.9226,
+    0.9524
+   ],
+   "nested_rf": [
+    0.8387,
+    0.9106,
+    0.9682,
+    0.8656,
+    0.8505,
+    0.865
+   ],
+   "median_slope_neg": 0.8921,
+   "median_nested_rf": 0.8653,
+   "median_gap": -0.0268,
+   "median_paired_diff": 0.0302,
+   "within_margin": true,
+   "verdict": "M1 의 C-b 폐기 판정은 중첩 선택에서도 유지된다"
+  },
+  "slope_vs_fixed": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2023-08-10",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "slope_neg": [
+    0.8132,
+    0.8711,
+    0.9132,
+    0.8308,
+    0.9226,
+    0.9524
+   ],
+   "rf_F1_wf": [
+    0.8522,
+    0.9009,
+    0.9717,
+    0.8919,
+    0.8428,
+    0.8546
+   ],
+   "median_slope_neg": 0.8921,
+   "median_rf_F1_wf": 0.8732,
+   "median_gap": -0.0189,
+   "median_paired_diff": 0.0344,
+   "within_margin": true
+  }
+ },
+ "secondary": {
+  "nested_all_vs_fixed": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2023-08-10",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_all": [
+    0.8136,
+    0.9106,
+    0.9746,
+    0.8686,
+    0.8071,
+    0.8038
+   ],
+   "rf_F1_wf": [
+    0.8522,
+    0.9009,
+    0.9717,
+    0.8919,
+    0.8428,
+    0.8546
+   ],
+   "median_nested_all": 0.8411,
+   "median_rf_F1_wf": 0.8732,
+   "median_gap": 0.0322,
+   "median_paired_diff": 0.0295,
+   "within_margin": false,
+   "verdict": "고정 구성 walk-forward 는 설정 선택에 쓴 미래 정보로 0.02 넘게 낙관적이다",
+   "nested_higher_by_margin": false
+  },
+  "m1_recheck_nested_all": {
+   "slope_vs_nested": {
+    "events": [
+     "2014",
+     "2016",
+     "2019",
+     "2023-08-10",
+     "2024-09-20",
+     "2025"
+    ],
+    "evaluable": true,
+    "slope_neg": [
+     0.8132,
+     0.8711,
+     0.9132,
+     0.8308,
+     0.9226,
+     0.9524
+    ],
+    "nested_all": [
+     0.8136,
+     0.9106,
+     0.9746,
+     0.8686,
+     0.8071,
+     0.8038
+    ],
+    "median_slope_neg": 0.8921,
+    "median_nested_all": 0.8411,
+    "median_gap": -0.0511,
+    "median_paired_diff": 0.0191,
+    "within_margin": true,
+    "verdict": "M1 의 C-b 폐기 판정은 중첩 선택에서도 유지된다"
+   },
+   "slope_vs_fixed": {
+    "events": [
+     "2014",
+     "2016",
+     "2019",
+     "2023-08-10",
+     "2024-09-20",
+     "2025"
+    ],
+    "evaluable": true,
+    "slope_neg": [
+     0.8132,
+     0.8711,
+     0.9132,
+     0.8308,
+     0.9226,
+     0.9524
+    ],
+    "rf_F1_wf": [
+     0.8522,
+     0.9009,
+     0.9717,
+     0.8919,
+     0.8428,
+     0.8546
+    ],
+    "median_slope_neg": 0.8921,
+    "median_rf_F1_wf": 0.8732,
+    "median_gap": -0.0189,
+    "median_paired_diff": 0.0344,
+    "within_margin": true
+   }
+  },
+  "dev_only": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_rf": [
+    0.8387,
+    0.9106,
+    0.9682,
+    0.865
+   ],
+   "rf_F1_wf": [
+    0.8522,
+    0.9009,
+    0.9717,
+    0.8546
+   ],
+   "median_nested_rf": 0.8878,
+   "median_rf_F1_wf": 0.8777,
+   "median_gap": -0.01,
+   "median_paired_diff": -0.0031,
+   "within_margin": true,
+   "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+   "nested_higher_by_margin": false
+  },
+  "holdout_only": {
+   "events": [
+    "2023-08-10",
+    "2024-09-20"
+   ],
+   "evaluable": true,
+   "nested_rf": [
+    0.8656,
+    0.8505
+   ],
+   "rf_F1_wf": [
+    0.8919,
+    0.8428
+   ],
+   "median_nested_rf": 0.8581,
+   "median_rf_F1_wf": 0.8673,
+   "median_gap": 0.0093,
+   "median_paired_diff": 0.0093,
+   "within_margin": true,
+   "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+   "nested_higher_by_margin": false
+  },
+  "object_auc": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2022-09-06",
+    "2023-08-10",
+    "2024-07-24",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_rf": [
+    0.8192,
+    0.9182,
+    0.9111,
+    0.8291,
+    0.8718,
+    0.7849,
+    0.8416,
+    0.8625
+   ],
+   "rf_F1_wf": [
+    0.8293,
+    0.9074,
+    0.9133,
+    0.8606,
+    0.8956,
+    0.8002,
+    0.8394,
+    0.856
+   ],
+   "median_nested_rf": 0.852,
+   "median_rf_F1_wf": 0.8583,
+   "median_gap": 0.0062,
+   "median_paired_diff": 0.0062,
+   "within_margin": true,
+   "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+   "nested_higher_by_margin": false
+  },
+  "capture_0.2": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2023-08-10",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_rf": [
+    0.7121,
+    0.8824,
+    0.9821,
+    0.7222,
+    0.7193,
+    0.8
+   ],
+   "rf_F1_wf": [
+    0.6742,
+    0.8588,
+    0.9821,
+    0.9444,
+    0.7616,
+    0.96
+   ],
+   "median_nested_rf": 0.7611,
+   "median_rf_F1_wf": 0.9016,
+   "median_gap": 0.1405,
+   "median_paired_diff": 0.0212,
+   "within_margin": false,
+   "verdict": "고정 구성 walk-forward 는 설정 선택에 쓴 미래 정보로 0.02 넘게 낙관적이다",
+   "nested_higher_by_margin": false
+  },
+  "flat_stratum": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2023-08-10",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_rf": [
+    0.6321,
+    0.7704,
+    0.9017,
+    0.5698,
+    0.5325,
+    0.5645
+   ],
+   "rf_F1_wf": [
+    0.662,
+    0.7386,
+    0.913,
+    0.654,
+    0.5104,
+    0.5364
+   ],
+   "median_nested_rf": 0.6009,
+   "median_rf_F1_wf": 0.658,
+   "median_gap": 0.0571,
+   "median_paired_diff": -0.0054,
+   "within_margin": false,
+   "verdict": "고정 구성 walk-forward 는 설정 선택에 쓴 미래 정보로 0.02 넘게 낙관적이다",
+   "nested_higher_by_margin": false
+  },
+  "nested_all_object_auc": {
+   "events": [
+    "2014",
+    "2016",
+    "2019",
+    "2022-09-06",
+    "2023-08-10",
+    "2024-07-24",
+    "2024-09-20",
+    "2025"
+   ],
+   "evaluable": true,
+   "nested_all": [
+    0.7687,
+    0.9182,
+    0.9156,
+    0.8496,
+    0.8783,
+    0.8044,
+    0.842,
+    0.7991
+   ],
+   "rf_F1_wf": [
+    0.8293,
+    0.9074,
+    0.9133,
+    0.8606,
+    0.8956,
+    0.8002,
+    0.8394,
+    0.856
+   ],
+   "median_nested_all": 0.8458,
+   "median_rf_F1_wf": 0.8583,
+   "median_gap": 0.0125,
+   "median_paired_diff": 0.0043,
+   "within_margin": true,
+   "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+   "nested_higher_by_margin": false
+  },
+  "selection_gap": [
+   {
+    "test_event": "2014",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=2,min_samples_leaf=200",
+    "selection_score": 0.765,
+    "cell_gate": 0.8387,
+    "cluster_gate": 0.8139,
+    "inner_minus_outer_cluster": -0.0489
+   },
+   {
+    "test_event": "2014",
+    "score": "nested_all",
+    "config": "frequency_ratio|F0|n_bins=10,alpha=1.0",
+    "selection_score": 0.7751,
+    "cell_gate": 0.8136,
+    "cluster_gate": 0.7362,
+    "inner_minus_outer_cluster": 0.0389
+   },
+   {
+    "test_event": "2016",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8053,
+    "cell_gate": 0.9106,
+    "cluster_gate": 0.9129,
+    "inner_minus_outer_cluster": -0.1076
+   },
+   {
+    "test_event": "2016",
+    "score": "nested_all",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8053,
+    "cell_gate": 0.9106,
+    "cluster_gate": 0.9129,
+    "inner_minus_outer_cluster": -0.1076
+   },
+   {
+    "test_event": "2019",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8363,
+    "cell_gate": 0.9682,
+    "cluster_gate": 0.9055,
+    "inner_minus_outer_cluster": -0.0692
+   },
+   {
+    "test_event": "2019",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8364,
+    "cell_gate": 0.9746,
+    "cluster_gate": 0.9207,
+    "inner_minus_outer_cluster": -0.0843
+   },
+   {
+    "test_event": "2025",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8498,
+    "cell_gate": 0.865,
+    "cluster_gate": 0.8663,
+    "inner_minus_outer_cluster": -0.0165
+   },
+   {
+    "test_event": "2025",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8524,
+    "cell_gate": 0.8038,
+    "cluster_gate": 0.8015,
+    "inner_minus_outer_cluster": 0.0509
+   },
+   {
+    "test_event": "2022-09-06",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8498,
+    "cell_gate": NaN,
+    "cluster_gate": NaN,
+    "inner_minus_outer_cluster": NaN
+   },
+   {
+    "test_event": "2022-09-06",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8524,
+    "cell_gate": NaN,
+    "cluster_gate": NaN,
+    "inner_minus_outer_cluster": NaN
+   },
+   {
+    "test_event": "2023-08-10",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8498,
+    "cell_gate": 0.8656,
+    "cluster_gate": 0.8754,
+    "inner_minus_outer_cluster": -0.0256
+   },
+   {
+    "test_event": "2023-08-10",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8524,
+    "cell_gate": 0.8686,
+    "cluster_gate": 0.8784,
+    "inner_minus_outer_cluster": -0.026
+   },
+   {
+    "test_event": "2024-07-24",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8498,
+    "cell_gate": NaN,
+    "cluster_gate": NaN,
+    "inner_minus_outer_cluster": NaN
+   },
+   {
+    "test_event": "2024-07-24",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8524,
+    "cell_gate": NaN,
+    "cluster_gate": NaN,
+    "inner_minus_outer_cluster": NaN
+   },
+   {
+    "test_event": "2024-09-20",
+    "score": "nested_rf",
+    "config": "random_forest|F0|max_depth=4,min_samples_leaf=400",
+    "selection_score": 0.8498,
+    "cell_gate": 0.8505,
+    "cluster_gate": 0.8267,
+    "inner_minus_outer_cluster": 0.0231
+   },
+   {
+    "test_event": "2024-09-20",
+    "score": "nested_all",
+    "config": "xgboost|F0|max_depth=3",
+    "selection_score": 0.8524,
+    "cell_gate": 0.8071,
+    "cluster_gate": 0.8259,
+    "inner_minus_outer_cluster": 0.0265
+   }
+  ]
+ }
+}

@@ -1,0 +1,872 @@
+﻿score,unit,stratum,storm,metric,value,ci_lo,ci_hi,n_units,test_event,role,year,n_polygons,train_events,nested_status,run_id
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.898343431163811,0.8397,0.9326,107,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.8878,0.8397,0.9326,3,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.8692,,,107,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.7579637844915906,,,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.8851852285358418,0.8552468977782755,0.9169236063529796,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.678595103554585,0.5039,0.7777,105,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.6407,0.5039,0.7777,3,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.3429,,,105,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.24001671897237797,,,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.6107649231404799,0.5153409269348501,0.710408521851861,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.3947178376147735,0.1498,0.6396,2,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.3947,0.1498,0.6396,2,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.0,,,2,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.0,,,7,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.3613016355792806,0.22359059309146206,0.5073019149002204,7,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.685614849187935,0.4767,0.7738,89,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.6467,0.4767,0.7738,3,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.3258,,,89,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.19484796536717117,,,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.6267469389865379,0.536108040771584,0.7206979637663911,19,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.5769230769230769,0.4847,0.7249,10,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5777,0.4863,0.7134,5,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.2,,,10,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.0908978263911525,,,11,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.5839769669677404,0.5240811144840446,0.6599196565209248,11,2006,development,2006,19,[],학습 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.8717151957228564,0.7418,0.9193,206,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.722,0.6254,0.8105,14,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.801,,,206,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.46090645425928456,,,30,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.7802727624157164,0.6516,0.8201,206,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.6855,0.6108,0.7615,14,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.6068,,,206,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.3539044767420271,,,30,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.7753672623638705,0.7163622424416699,0.8294166719230898,30,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.697930200561218,0.6369362334778746,0.7535203145185495,30,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.6800229165789977,0.451,0.7957,187,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.5007,0.3443,0.6677,10,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.4064,,,187,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.2621751000242639,,,23,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.46014012778085095,0.2921,0.5566,187,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.3818,0.2199,0.5503,10,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.0963,,,187,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.11871338342992975,,,23,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.5360798765691385,0.41141335810922197,0.6423171049723052,23,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.3949921315911424,0.2965060003246751,0.5030798149690167,23,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.7760470390072977,0.4348,0.8572,108,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.5356,0.3171,0.7175,11,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.7037,,,108,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.401778190690566,,,19,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.5955982059038281,0.3741,0.6899,108,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.4977,0.3137,0.668,11,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.3889,,,108,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.2753364670901899,,,19,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.5254148913022568,0.36245434240455116,0.6733274659221778,19,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.45386645603372217,0.3222684513257402,0.579031872365534,19,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.5118926200327143,0.2816,0.6408,40,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.531,0.3602,0.6796,8,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.075,,,40,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.09563771439442127,,,12,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.5030573462907726,0.2244,0.626,40,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.5169,0.3573,0.6568,8,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.125,,,40,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,0.10655641050907831,,,12,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.5222484851117406,0.35940201185510334,0.6647157854175472,12,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.4840152539198019,0.32720129344923216,0.6224515476655386,12,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8246372095436174,0.544,0.9157,105,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.6541,0.5003,0.7919,15,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.7143,,,105,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.4281984788516285,,,25,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.6212991128906747,0.4284,0.7016,105,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5917,0.4498,0.724,15,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.4095,,,105,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.3024908646229182,,,25,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.6243831431375301,0.5081218580356489,0.7446949079223957,25,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.5221615290172287,0.4275052691073582,0.6203031295647065,25,2012,development,2012,31,[2006],선택 불가,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.8131576499973429,0.7106,0.8533,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.7288,0.6483,0.8031,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.6212,,,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.44781738219282347,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.8522077070862744,0.778,0.8831,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.817,0.7714,0.8673,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.6742,,,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.5161249078528557,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.8387390170236134,0.7813,0.8643,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.8139,0.7671,0.865,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.7121,,,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.578920835145582,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.8135554205497608,0.7065,0.8549,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.7362,0.6643,0.8098,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.6061,,,132,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.39917660831373236,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.7776172656544723,0.7319439395770762,0.8196836420394911,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8293385571693932,0.7972314851879627,0.8602143424195294,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.8191922796410506,0.7841935658080629,0.8535311046850829,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.7687290795074535,0.7230476480378173,0.812616277783112,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.5828271898051537,0.4291,0.6518,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.4472,0.3392,0.5478,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.215,,,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.13242106046167673,,,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.6619902894137906,0.4964,0.7381,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.5458,0.4026,0.6889,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.4579,,,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.352517589289003,,,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.6320992643160317,0.5017,0.6949,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.5507,0.4226,0.6814,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.3925,,,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.327299207572125,,,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.5853893303101877,0.3803,0.6714,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.4417,0.3049,0.589,13,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.2804,,,107,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.17078547607610103,,,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.48867738041348724,0.4276346733654628,0.5543478435717956,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.5652316261289961,0.48658151026321256,0.6463402541748537,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.5639489784251932,0.4857252782434552,0.6440654648108171,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.44721995047440244,0.3733070434007216,0.5316431345099232,43,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.563245387135713,0.2198,0.718,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.3698,0.1763,0.5728,9,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.2333,,,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.13327535831091128,,,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.6569029142955682,0.4523,0.7665,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.5208,0.3264,0.7226,9,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.3667,,,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.2471507296686505,,,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,0.6515623383341955,0.4696,0.7726,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,0.5401,0.3479,0.7371,9,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.4,,,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.2694233787802686,,,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,0.520831177789274,0.1825,0.7364,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,0.3342,0.1372,0.5571,9,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.2333,,,30,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.10847441571863352,,,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.3765805722232139,0.2691938407266148,0.4913339475012429,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.4655355348185612,0.3310429939926226,0.5952537126645604,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.4687029955959061,0.33607503288680246,0.5928136941817559,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.3315271386680471,0.21790809641196848,0.4530651534424292,24,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.5459573006075803,0.3737,0.6314,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.4818,0.3532,0.6237,10,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.1875,,,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.1844026974264901,,,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.6704547509403028,0.4701,0.762,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.6007,0.4577,0.7517,10,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.4375,,,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,0.3159070829988029,,,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,0.6350216088822451,0.4666,0.7143,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,0.5787,0.4615,0.7055,10,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.4062,,,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,0.30110794902353755,,,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,0.6382953394734304,0.4006,0.7516,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,0.5521,0.4146,0.7077,10,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.3438,,,64,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,0.2457550818719947,,,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.5171569775186928,0.43320331607254114,0.5981903743206295,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.596554020088018,0.5063197858339565,0.6838659991100245,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,0.5732110944379925,0.4923364556411505,0.6534600861752925,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.550558892076504,0.45682103198716034,0.6499382413328292,29,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.6451135066050683,0.4232,0.7696,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5601,0.3975,0.7167,14,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.4894,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.36337975301881353,,,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7060697486826529,0.5552,0.7982,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.6708,0.5359,0.7981,14,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.5319,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.44471409221617186,,,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.6996469614590863,0.5411,0.7995,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.661,0.5253,0.7894,14,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.4894,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.3738825313621475,,,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.5978754832018606,0.3865,0.7215,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5144,0.3524,0.6652,14,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.2766,,,47,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.22291668815026028,,,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.5365006149932228,0.4399716478975401,0.6341365310079949,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.6148815628181067,0.5238341441223451,0.7032894191668009,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.6016972008992197,0.5028080087587135,0.7015032524624971,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.4866754588330629,0.3897011495832447,0.5909308766443921,38,2014,development,2014,47,"[2006, 2012]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.8710982008116287,0.7752,0.9201,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.8573,0.7814,0.9209,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.8294,,,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.752140652410471,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.9009228561822177,0.8667,0.9155,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.9049,0.8593,0.9457,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.8588,,,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.8216960086919121,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.9106010978098537,0.8713,0.9263,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.9129,0.8606,0.9518,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.8824,,,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.8710437934592002,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.9106010978098537,0.8713,0.9263,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.9129,0.8606,0.9518,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.8824,,,170,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.8710437934592002,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.855174793438586,0.7890361433773839,0.9072882093659966,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.907361802580625,0.872050413708203,0.9390096495539905,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.9181651868973348,0.8798640458166513,0.9484234733094962,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.9181651868973348,0.8798640458166513,0.9484234733094962,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.7064701321505535,0.5855,0.7624,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.6697,0.5826,0.7536,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.4286,,,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.24511321887899104,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.7386189754056304,0.6655,0.8127,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.7707,0.6575,0.8772,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.513,,,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.5284431984507745,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.7704102197188237,0.7054,0.8288,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.7955,0.6987,0.8924,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.5909,,,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.6140001699019767,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.7704102197188237,0.7054,0.8288,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.7955,0.6987,0.8924,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.5909,,,154,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.6140001699019767,,,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.6353762602438633,0.541172626595695,0.7266432705923904,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.7502028469189442,0.6681403139114757,0.8280407123601168,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.7795509416618897,0.6931717332880809,0.8517978406549921,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.7795509416618897,0.6931717332880809,0.8517978406549921,21,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.7337565547981122,0.5649,0.8177,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.6979,0.5709,0.823,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.5687,,,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.4849944100259006,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.7366229680125852,0.6399,0.7888,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.7511,0.6336,0.8567,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.525,,,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.5412882282743193,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,0.7564594257996854,0.6507,0.8107,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,0.7663,0.6378,0.869,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.5813,,,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.6244753319091577,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,0.7564594257996854,0.6507,0.8107,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,0.7663,0.6378,0.869,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.5813,,,160,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.6244753319091577,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.6857883149412167,0.5705948579782187,0.7827972460906851,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.7440239396265853,0.639969457454649,0.8270356183633353,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.7672147269726162,0.6578420770567827,0.8469322469172694,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.7672147269726162,0.6578420770567827,0.8469322469172694,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.8307131901840491,0.8307,0.8307,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.8307,0.8307,0.8307,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.9999041411042945,0.9999,0.9999,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.9999,0.9999,0.9999,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,1.0,,,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.8680874929893437,0.8680874929893437,0.8680874929893437,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8245689266046764,0.6325,0.913,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.7968,0.6672,0.9084,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.75,,,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.7267442659364736,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8295292798892601,0.7153,0.8757,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.8237,0.7253,0.9041,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.7576,,,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.7545027278817502,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8486052180193193,0.7162,0.896,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.8361,0.7287,0.9228,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.7955,,,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.7944188499798484,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8486052180193193,0.7162,0.896,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.8361,0.7287,0.9228,6,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.7955,,,132,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.7944188499798484,,,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.7931679978765962,0.6736490979273377,0.8908911881230706,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.8428646285372897,0.7716815199385124,0.9050476504977542,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.8701671464676413,0.7995102345843959,0.9245828163762915,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.8701671464676413,0.7995102345843959,0.9245828163762915,20,2016,development,2016,21,"[2006, 2012, 2014]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.9131891249279496,0.7921,0.9244,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.8676,0.7921,0.9244,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.9286,,,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.5608191553154864,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.9717274150183539,0.7886,0.9761,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.9121,0.7886,0.9761,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.9821,,,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.6988923900256243,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.968226804485332,0.779,0.9743,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.9055,0.779,0.9743,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.9821,,,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.6988923900256243,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.9745614400995055,0.8128,0.9801,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.9207,0.8128,0.9801,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,1.0,,,56,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,1.0,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.8795802700696598,0.8379386656266077,0.9274797813225432,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.9132502124893644,0.8581910502736322,0.9777496420962298,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.9110652187974214,0.8520963431501275,0.9736944419777612,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.9156198143059421,0.8675571681422257,0.9785505663124293,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.7284520540869157,0.3154,0.751,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.5834,0.3154,0.751,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.4727,,,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.2570643235425725,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.9130083562139159,0.3407,0.9266,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.73,0.3407,0.9266,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.8545,,,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.5096447287874241,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.9016895207594102,0.2965,0.9154,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.7054,0.2965,0.9154,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.8,,,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.4794116146820554,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.9222069464256623,0.4039,0.9344,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.7537,0.4039,0.9344,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.8182,,,55,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.4956940000205935,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.5795963935223164,0.43645761160882424,0.748294522538035,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.709770931357231,0.5287943555772864,0.9238386411403661,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.6965182681867221,0.4977609129284918,0.9094184623687303,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.7131295160235981,0.5514388887227559,0.9274978242053227,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.7756626084693521,0.4004,0.8064,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.6413,0.4004,0.8064,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.5882,,,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.3463623526700759,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.8636529062060329,0.259,0.8839,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.6651,0.259,0.8839,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.7255,,,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.4357886434486882,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,0.8686748237245956,0.2527,0.8926,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,0.6645,0.2527,0.8926,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.7451,,,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.4482318766692776,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,0.898653841461927,0.347,0.9214,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,0.7149,0.347,0.9214,3,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.7451,,,51,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.4482318766692776,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.6371131045390666,0.4994693917682066,0.8000388990306652,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.6450100714090512,0.4459932955014977,0.8714492387162247,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.6543737022897131,0.44798067938782843,0.8747503448488049,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.6817382669709602,0.5052944521785074,0.9068482380889691,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.0,,,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,1.0,,,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,1.0,,,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,1.0,,,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.7687044307347167,0.7687044307347167,0.7687044307347167,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.9970835670218733,0.9970835670218733,0.9970835670218733,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,0.9506449803701627,0.9506449803701627,0.9506449803701627,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.9958496915311273,0.9958496915311273,0.9958496915311273,1,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.8825581793585286,0.7855,0.9078,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.8295,0.7005,0.9294,4,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.7391,,,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.44215865126977105,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.9271912512629074,0.7473,0.9405,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.8394,0.6213,0.9654,4,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.8478,,,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.5044535886182314,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.932770519033512,0.7497,0.951,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.841,0.6199,0.9708,4,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.8261,,,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.4976551498312283,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.9473035858006404,0.7754,0.9643,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.861,0.6616,0.9766,4,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.9565,,,46,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.5661647141023529,,,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.7994558671931626,0.7101278516593886,0.9050417896991165,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.7872894086730148,0.652458689891946,0.93302222555677,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.7955965588035205,0.6545699384404698,0.9400230952325828,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.7984769859985849,0.6785493709413857,0.9571688742478848,7,2019,development,2019,7,"[2006, 2012, 2014, 2016]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.952440464344942,0.9394,0.9624,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.9496,0.9348,0.9619,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,1.0,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.9701574882408333,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.85457592039801,0.8347,0.8765,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.856,0.837,0.8751,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.96,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.8977440272828101,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.8649889220563848,0.8392,0.89,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.8663,0.8406,0.8903,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.8,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.7524555328326783,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.8037651741293532,0.7553,0.8504,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.8015,0.7508,0.8469,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.52,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.4475574147742003,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.9532667075046692,0.9344731813870263,0.9664762576314271,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8559792627169517,0.8355955079941585,0.87693949344774,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.8624879339330382,0.837429151919542,0.8878670889588183,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.7991007960879815,0.7607587963560265,0.84175601992768,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.8435200139683094,0.8007,0.8762,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.834,0.7856,0.8746,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.76,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.7448335428947824,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.5363909380592781,0.475,0.6039,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.5405,0.4821,0.5997,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.0,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.5645056528002095,0.4841,0.6431,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.5679,0.4879,0.6439,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.0,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.42401850800995244,0.3041,0.5475,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.4209,0.2984,0.5351,14,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.04,,,25,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.040617149726582924,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.8354091972862859,0.769219947944758,0.88193214362197,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.5198455724241319,0.46625834562080154,0.5814258767764836,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.5386442277834236,0.4684744565249246,0.6135866336539695,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.39091622929916087,0.2960467889576963,0.4972953905038522,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,1.0,,,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.0,,,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.0,,,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.0,,,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.9406908537910059,0.9406908537910059,0.9406908537910059,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.4347708016510971,0.4347708016510971,0.4347708016510971,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.6065609385183576,0.6065609385183576,0.6065609385183576,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.026287203997393004,0.026287203997393004,0.026287203997393004,1,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.8270601010733826,0.781,0.8637,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.821,0.7775,0.8619,12,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.6522,,,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.6139718589159787,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.6741135196090715,0.6113,0.7493,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.6845,0.6206,0.7543,12,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.2609,,,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,0.20728381639324958,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,0.6739193083573487,0.5913,0.7581,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,0.6821,0.5995,0.7617,12,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.3043,,,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,0.1962077468352457,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,0.552547717495719,0.4376,0.6853,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,0.571,0.4535,0.6871,12,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.1739,,,23,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,0.1339888817039678,,,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.8495016880973485,0.8138688485823996,0.8840252666390613,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.6736793932085394,0.6275744493507909,0.7287958187853895,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,0.6642535733257562,0.6058702751667521,0.728929603674621,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.5286413561737576,0.4314551255871601,0.6245851229798565,18,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.9337254901960784,0.8803,0.9872,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.9337,0.8803,0.9872,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,1.0,,,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.75,,,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.6322058823529412,0.5734,0.691,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.6322,0.5734,0.691,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.0,,,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.6729901960784314,0.6291,0.7169,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.673,0.6291,0.7169,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.0,,,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.22573529411764706,0.1884,0.2631,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.2257,0.1884,0.2631,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,2,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.0,,,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.8350708934799549,0.618075117370892,0.9685147148686597,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.5337107702458562,0.3146844027125717,0.6816502590304154,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.5639967571018324,0.31515388628064683,0.7155617023287494,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.2564141551293262,0.14607459572248305,0.3894736230479491,4,2025,development,2025,18,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.2,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.6000108853563687,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.6,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.6,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.7721715443495709,0.7279873528143941,0.8253862075582911,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8606011672691304,0.7658442689921576,0.9500034268638713,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.8291111182652008,0.7535239158417555,0.9067621619398789,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.8495665524274816,0.7939695063737493,0.9051751127438215,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.4,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.2,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.19760696509289596,0.04199388577138622,0.38502462102925566,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.562104474752852,0.29833273052337306,0.8258762189823308,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.45948272401145174,0.2384076197508755,0.6859087822991156,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.5035540224344631,0.340650576490052,0.6665018827845902,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.31883629878645187,0.1997842638774877,0.4788181620682164,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.46954310734013693,0.2130162603026941,0.7260699543775799,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.38467445704348097,0.14526821145197244,0.6173259532102677,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.4420283395290701,0.2327531813392611,0.6513358135998262,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.0,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.4,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.4,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.2,,,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.5484829877521097,0.4310922144191907,0.6950443401147626,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.6692762737817792,0.44571863163258796,0.8818988002086593,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.6057812396626565,0.409560724726102,0.803372978612415,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.6419417091989438,0.47404512940466903,0.8098620239958267,5,2022-09-06,holdout,2022,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.8308437911791497,0.7832,0.875,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.841,0.7832,0.875,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.5556,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.6106278425477619,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.8918961644247522,0.8475,0.9413,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.8985,0.8475,0.9413,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.9444,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.899423864220464,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.8656129963239088,0.8262,0.914,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.8754,0.8262,0.914,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.7222,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.7278842155434261,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.8685672087943187,0.824,0.9128,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.8784,0.824,0.9128,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.8333,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.8259169711176947,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.8516470605020993,0.800647446763012,0.88608396235955,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8956295902796229,0.8543239761795934,0.9469357979097772,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.8718159870376647,0.8290566779248864,0.8966118940564288,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.8783051530184673,0.8301987359218203,0.9036603630203525,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.44356199453074996,0.2869,0.5888,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.4771,0.2869,0.5888,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.1111,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.09554018295854537,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.653988722096158,0.5148,0.8105,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.6743,0.5148,0.8105,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.2778,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.27186726009304235,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.5697559686584822,0.4449,0.7193,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.6002,0.4449,0.7193,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.1667,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.15565226342538016,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.579548980818836,0.4393,0.7141,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.6101,0.4393,0.7141,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.2222,,,18,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.19783577493625384,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.48883101773024246,0.297896745375206,0.6327506225441756,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.6631892384173351,0.5071822897250429,0.8159799922411982,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.5825805576952101,0.4230812046597961,0.7021668154578712,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.6012010268691736,0.4277682775936726,0.7065570387136675,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.4947589531680441,0.377,0.6394,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.548,0.377,0.6394,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.1333,,,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.06265788608653623,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.5588808539944904,0.4184,0.7346,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.5938,0.4184,0.7346,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.1333,,,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.06265788608653623,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,0.4850447658402204,0.3788,0.777,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,0.5779,0.3788,0.777,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.1333,,,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.06265788608653623,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,0.5148691460055096,0.3934,0.7628,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,0.5972,0.3934,0.7628,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.1333,,,15,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.06265788608653623,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.5459762936268177,0.3802412278940734,0.6530140082650039,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.5958359005699133,0.4108728259898946,0.7317904135454555,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.570901652864916,0.35801822688481094,0.7935546849330518,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.6021435719906622,0.39017770368446536,0.7805782209113867,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.6350651840490797,0.6351,0.6351,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.6351,0.6351,0.6351,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.0,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.14974124016182103,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.8560199386503068,0.856,0.856,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.856,0.856,0.856,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,0.35291869295844475,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,0.792465490797546,0.7925,0.7925,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,0.7925,0.7925,0.7925,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,0.0,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,0.9099884969325154,0.91,0.91,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,0.91,0.91,0.91,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,1.0,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,0.7228897943895974,,,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.6781931519054996,0.6781931519054996,0.6781931519054996,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.736951043604872,0.736951043604872,0.736951043604872,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,0.7104118647112068,0.7104118647112068,0.7104118647112068,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.7707173721530629,0.7707173721530629,0.7707173721530629,1,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7310015075690672,0.548,0.8143,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.6884,0.5625,0.829,4,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.4545,,,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.47120154550989773,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7970936922953408,0.6635,0.8512,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.748,0.6633,0.8327,4,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.4545,,,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.4369603723395583,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7465589067002079,0.6655,0.821,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.7203,0.5833,0.8384,4,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.4545,,,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.47120154550989773,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7321923979268695,0.5683,0.818,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.684,0.55,0.8423,4,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.4545,,,11,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.47120154550989773,,,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.7212340222157271,0.5640661857983648,0.8107109780214367,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.7591174906177325,0.6466143093013937,0.8753468993686019,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.7271051451454866,0.6065266569001513,0.8229642883025324,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.7152487352903972,0.5428800803533553,0.8193047491944515,3,2023-08-10,holdout,2023,3,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.2940557820270751,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.41604877946659446,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.45736401433266954,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.5445368772021313,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.7220625150243893,0.5404717706207419,0.8666829391820109,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8001912048337092,0.6885566928901844,0.9068976867310978,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.7848587147954948,0.664344727815293,0.9053727017756966,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.8044450048602769,0.7000482314295845,0.9009018702300337,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.22112501157446188,,,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.29689326138213334,,,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.22793559757170728,,,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.16550746284265994,,,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.40940786230602155,0.16674440714688157,0.6633564615413964,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.5351224307638809,0.23583685290936438,0.7611665018517386,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.5392617660421691,0.25000795710465534,0.7885829292586328,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.5547000296654138,0.32682052277896223,0.7507628093312781,4,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.17296091463207244,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.08686916844479552,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.09225546042157111,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.22615635049429433,,,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.44950299884505257,0.17636396043003394,0.7226420372600711,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.4687638070236663,0.21637537240707433,0.7211522416402584,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.566323613234826,0.3111515180851727,0.765379419945023,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.5459260510303882,0.30337631494958645,0.7568042477001994,5,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,1.0,,,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,1.0,,,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,1.0,,,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,1.0,,,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.8680874929893438,0.8680874929893438,0.8680874929893438,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.997195737521032,0.997195737521032,0.997195737521032,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,1.0,1.0,1.0,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.9995513180033652,0.9995513180033652,0.9995513180033652,1,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.6666666666666666,,,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.8231253859799842,,,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.9355761088230924,,,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.0,,,0,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.8026121738932979,,,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.8352262965837868,0.5985368382541958,0.973813249869588,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.8761108716952258,0.7892013909173102,0.9708920187793427,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.9061132736101786,0.8474718762472028,0.9757955138236828,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.8760187123969615,0.7726049113171234,0.9765779864371412,3,2024-07-24,holdout,2024,5,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,observed-label_auc,0.9225589273389702,0.8555,0.9438,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,ALL,ALL,observed-label_auc,0.8306,0.7857,0.8669,52,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,ALL,ALL,capture_0.2,0.8995,,,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,capture_0.2,0.5750833635764037,,,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,observed-label_auc,0.8427513224372053,0.8199,0.8515,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,ALL,ALL,observed-label_auc,0.8187,0.7917,0.8433,52,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,ALL,ALL,capture_0.2,0.7616,,,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,capture_0.2,0.6193676839051979,,,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,observed-label_auc,0.8504986401027569,0.8274,0.859,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,ALL,ALL,observed-label_auc,0.8267,0.7994,0.8512,52,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,ALL,ALL,capture_0.2,0.7193,,,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,capture_0.2,0.6244020189089505,,,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,observed-label_auc,0.8070723680177361,0.7891,0.8452,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,ALL,ALL,observed-label_auc,0.8259,0.797,0.8516,52,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,ALL,ALL,capture_0.2,0.5287,,,1254,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,capture_0.2,0.63420277746221,,,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,ALL,ALL,observed-label_auc,0.8189433457412396,0.7963193438642692,0.8388699425388694,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,ALL,ALL,observed-label_auc,0.8394428837685657,0.823560111133783,0.8555444567899652,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,ALL,ALL,observed-label_auc,0.8416081524425344,0.8253818637678504,0.8572860295780811,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,ALL,ALL,observed-label_auc,0.8420351763837296,0.8275158972368983,0.8576750295544434,183,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,observed-label_auc,0.7707035169105423,0.5974,0.8231,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,FLAT,ALL,observed-label_auc,0.5704,0.4971,0.6355,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,FLAT,ALL,capture_0.2,0.5707,,,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,capture_0.2,0.24870238647542406,,,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,observed-label_auc,0.5103883935711828,0.4754,0.5345,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,FLAT,ALL,observed-label_auc,0.5025,0.4437,0.5605,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,FLAT,ALL,capture_0.2,0.0321,,,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,capture_0.2,0.2354346170074613,,,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,observed-label_auc,0.532510399450371,0.4944,0.5571,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,FLAT,ALL,observed-label_auc,0.5227,0.462,0.5816,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,FLAT,ALL,capture_0.2,0.0625,,,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,capture_0.2,0.21926432108329125,,,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,observed-label_auc,0.4355637725922228,0.3835,0.5486,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,FLAT,ALL,observed-label_auc,0.543,0.4815,0.5991,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,FLAT,ALL,capture_0.2,0.0773,,,1216,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,capture_0.2,0.21892246901491313,,,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,FLAT,ALL,observed-label_auc,0.5433367776896189,0.5034232695752509,0.5852199910663389,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,FLAT,ALL,observed-label_auc,0.571070251592712,0.5340880779670213,0.6099028710229654,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,FLAT,ALL,observed-label_auc,0.5785201879857224,0.5429147718327662,0.6156489278534569,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,FLAT,ALL,observed-label_auc,0.5874231132961706,0.5534167171059187,0.6251038452452804,163,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,observed-label_auc,0.6659923014068145,0.5663,0.8357,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,URBAN,ALL,observed-label_auc,0.7085,0.5491,0.8514,11,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,URBAN,ALL,capture_0.2,0.4762,,,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,capture_0.2,0.323814747723072,,,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,observed-label_auc,0.5804660503854219,0.2985,0.6868,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,URBAN,ALL,observed-label_auc,0.4631,0.2849,0.6514,11,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,URBAN,ALL,capture_0.2,0.3333,,,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,capture_0.2,0.2964446563676351,,,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,observed-label_auc,0.5202752591629995,0.3065,0.6349,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,URBAN,ALL,observed-label_auc,0.4639,0.2786,0.6527,11,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,URBAN,ALL,capture_0.2,0.2857,,,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,capture_0.2,0.27880759030436947,,,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,observed-label_auc,0.49482658475836067,0.201,0.6107,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,URBAN,ALL,observed-label_auc,0.3848,0.1824,0.6011,11,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,URBAN,ALL,capture_0.2,0.3333,,,21,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,capture_0.2,0.2801623034738897,,,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,URBAN,ALL,observed-label_auc,0.5555325075449611,0.48192544233807694,0.6212852841794831,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,URBAN,ALL,observed-label_auc,0.5915001872876376,0.5143389171494241,0.6669547348939174,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,URBAN,ALL,observed-label_auc,0.5698134696600449,0.4903939538970846,0.6467664580847838,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,URBAN,ALL,observed-label_auc,0.5524715542627863,0.47373814069390957,0.6370468115507842,68,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,observed-label_auc,0.7818269684220438,0.6294,0.8265,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,AGRI,ALL,observed-label_auc,0.566,0.4975,0.6265,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,AGRI,ALL,capture_0.2,0.5225,,,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,capture_0.2,0.20964971161036697,,,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,observed-label_auc,0.6565349265486227,0.6207,0.6774,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,AGRI,ALL,observed-label_auc,0.6298,0.5745,0.68,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,AGRI,ALL,capture_0.2,0.2545,,,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,capture_0.2,0.30236554381695085,,,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,observed-label_auc,0.6542574437392474,0.6209,0.6743,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,AGRI,ALL,observed-label_auc,0.6341,0.5789,0.6827,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,AGRI,ALL,capture_0.2,0.2806,,,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,capture_0.2,0.3122114205693707,,,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,observed-label_auc,0.5484451833447951,0.5009,0.6483,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,AGRI,ALL,observed-label_auc,0.6347,0.581,0.6826,47,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,AGRI,ALL,capture_0.2,0.1754,,,1112,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,capture_0.2,0.24189163505710046,,,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,AGRI,ALL,observed-label_auc,0.5725185590145807,0.5270166379126437,0.6231732301030755,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,AGRI,ALL,observed-label_auc,0.6341120867650545,0.5984808507634706,0.6722598267431436,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,AGRI,ALL,observed-label_auc,0.641192159221615,0.6057779537293442,0.6800927462693578,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,AGRI,ALL,observed-label_auc,0.6472457086858845,0.6134208564535344,0.6817753329333738,109,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,observed-label_auc,0.7784268009103503,0.7124,0.8363,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.749,0.689,0.8055,61,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,cell_gate,UNIVERSE,ALL,capture_0.2,0.5833,,,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,capture_0.2,0.34630692899233895,,,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.566038017844185,0.4938,0.629,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5447,0.4884,0.5967,61,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,cell_gate,UNIVERSE,ALL,capture_0.2,0.125,,,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,capture_0.2,0.2884564073664119,,,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,observed-label_auc,0.5820232617586912,0.5147,0.6376,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.5719,0.5132,0.6278,61,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,cell_gate,UNIVERSE,ALL,capture_0.2,0.25,,,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,capture_0.2,0.3269557953376991,,,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,observed-label_auc,0.4511598926380368,0.376,0.531,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cluster_gate,UNIVERSE,ALL,observed-label_auc,0.4712,0.4108,0.5336,61,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,cell_gate,UNIVERSE,ALL,capture_0.2,0.125,,,96,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,capture_0.2,0.2839459997226908,,,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+slope_neg,object,UNIVERSE,ALL,observed-label_auc,0.6468513909917664,0.599886613364878,0.6910603043722989,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+rf_F1_wf,object,UNIVERSE,ALL,observed-label_auc,0.6002198689244468,0.5527504845651943,0.6475055754142879,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_rf,object,UNIVERSE,ALL,observed-label_auc,0.608167894543037,0.559519449966604,0.656212420110726,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3
+nested_all,object,UNIVERSE,ALL,observed-label_auc,0.5823775315452522,0.5352642540755909,0.6311489143814312,134,2024-09-20,holdout,2024,183,"[2006, 2012, 2014, 2016, 2019]",선택,m3_20260926T164916Z_f383cb3

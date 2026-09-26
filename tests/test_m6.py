@@ -67,6 +67,9 @@ class RunCompareTest(unittest.TestCase):
         self.assertEqual(RC.verdict(True, j2, True), "mismatch")
         j2, _ = RC.compare_metrics(metrics([0.4357, 0.7348], ("reference", "post_hoc")), base)
         self.assertEqual(j2["mismatch_score_role"], 1)
+        extra = pd.concat([base, base.iloc[:1].assign(score="extra")], ignore_index=True)
+        j2, _ = RC.compare_metrics(extra, base)
+        self.assertEqual((j2["only_new"], j2["mismatch_n_units"], j2["mismatch_n_polygons"]), (1, 0, 0))
         s = summary()
         sums = RC.compare_summaries(summary(auc=0.5), s, RC.gate_hashes(s))
         self.assertFalse(sums["J1"]["pass"])
@@ -109,6 +112,11 @@ class AuditCheckTest(unittest.TestCase):
         self.assertFalse(compare_polygon_tables(base.iloc[:1], base)["pass"])
         nan = base.assign(area_m2=[float("nan"), float("nan")])
         self.assertTrue(compare_polygon_tables(nan, nan)["pass"])
+        cells = base.assign(n_cells=[3, 4])
+        upcast = compare_polygon_tables(cells.assign(n_cells=[3.0, 4.0]), cells)
+        self.assertTrue(upcast["pass"], upcast)
+        self.assertEqual(compare_polygon_tables(cells.assign(n_cells=[3.0, None]), cells)["mismatch_counts"],
+                         {"n_cells": 1})
 
 
 class ChronologyTest(unittest.TestCase):

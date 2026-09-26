@@ -10,21 +10,22 @@
 
 | 처리 | 분류 | 파일 | 바이트 | 뜻 |
 |---|---|---:|---:|---|
-| open | code | 165 | 2,272,863 | 코드·설정·노트북·테스트 |
-| open | docs | 59 | 941,829 | 절차·보고·연구 문서, 원본 설명(`data/raw/README.md`, `open_data_manifest.json`) |
-| open | results | 71 | 14,846,944 | 평가·post-hoc·Q1 산출, `reports/` |
+| open | code | 165 | 2,274,019 | 코드·설정·노트북·테스트 |
+| open | docs | 62 | 965,865 | 절차·보고·연구 문서, 원본 설명(`data/raw/README.md`, `open_data_manifest.json`) |
+| open | results | 73 | 14,927,146 | 평가·post-hoc·Q1 산출, `reports/` |
 | open | frozen_models | 39 | 6,956,727 | 동결 RF(v1·v2)·사전 명세·분할 |
 | open | raw_open | 1 | 389,120 | `data/raw/rivers/osm_waterways.gpkg` (ODbL) |
 | restricted | derived_data | 5 | 62,259,225 | `artifacts/processed_snapshot/**` (격자 인구·흔적 라벨 포함) |
 | hash_only | raw_restricted | 94 | 879,326 | 창원시 정보공개 흔적(2025·2022~2024), 행안부 API 흔적 |
 | hash_only | raw_third_party | 17 | 17,395,643 | 강수·수위·펌프장 CSV, DEM, 대피시설, `data/external/*.csv` |
 | exclude | internal | 2 | 17,624 | `.fablize/` 하네스 진행 기록 |
-| **합계** | | **453** | **105,959,301** | |
+| **합계** | | **458** | **106,064,695** | |
 
 - 라이선스 파일: **없음** (`zenodo_summary.json` → `license_files: []`).
 - 간이 개인정보 검사: open 대상 문서·표에서 이메일·휴대전화 정규식에 걸린 것은 DOI·실수 값의 오탐뿐이었다.
-- 해시는 목록 생성 시점 작업 트리 기준이다. 목록 뒤에 고친 파일(`docs/q1/M6.md`, 이 문서, M6 실행 폴더의 `summary.json`)은
-  해시가 달라진다. **기탁 직전에 태그 커밋에서 같은 명령을 다시 실행해 목록을 새로 만든다.**
+- 해시는 목록 생성 시점 작업 트리 기준이다. 목록 뒤에 고친 파일은 해시가 달라진다: `docs/q1/M6.md`, 이 문서,
+  M6 실행 폴더의 `summary.json`·`zenodo_manifest.csv`·`zenodo_summary.json`(목록에는 직전 판이 적혀 있다).
+  **기탁 직전에 태그 커밋에서 같은 명령을 다시 실행해 목록을 새로 만든다.**
 
 ## 2. 기탁 구성 제안
 

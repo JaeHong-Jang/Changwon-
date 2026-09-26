@@ -100,14 +100,17 @@ def step_audit(out: Path) -> dict[str, Any]:
               "pass": abs(_pick(stored[role], path, item) - value) <= half}
              for (role, path, item), (value, half) in CITED_AUDIT.items()]
 
-    # 산출 폴더만 바꿔 두 역할을 다시 감사하고 요약·폴리곤 표를 저장본과 비교한다 (저장본은 덮어쓰지 않는다)
-    A.OUTPUT = out / "label_audit"
+    # 산출 폴더만 잠시 바꿔 두 역할을 다시 감사하고 저장본과 비교한 뒤 모듈 설정을 되돌린다 (저장본은 덮어쓰지 않는다)
+    original, A.OUTPUT = A.OUTPUT, out / "label_audit"
     rerun = {}
-    for role in ("development", "holdout"):
-        summary = A.run(role)
-        tables = [pd.read_csv(folder / f"{role}_polygons.csv") for folder in (A.OUTPUT, LABEL_AUDIT_DIR)]
-        rerun[role] = {"summary": compare_audit_summary(summary, stored[role]),
-                       "polygons": compare_polygon_tables(*tables)}
+    try:
+        for role in ("development", "holdout"):
+            summary = A.run(role)
+            tables = [pd.read_csv(folder / f"{role}_polygons.csv") for folder in (A.OUTPUT, LABEL_AUDIT_DIR)]
+            rerun[role] = {"summary": compare_audit_summary(summary, stored[role]),
+                           "polygons": compare_polygon_tables(*tables)}
+    finally:
+        A.OUTPUT = original
     result = {"cited_vs_stored": cited, "cited_pass": all(c["pass"] for c in cited), "rerun_vs_stored": rerun,
               "rerun_pass": all(r["summary"]["pass"] and r["polygons"]["pass"] for r in rerun.values()),
               "stored_run_ids": {role: s["run_id"] for role, s in stored.items()}}

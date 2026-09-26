@@ -302,6 +302,7 @@ events:
     commit: b2b9cdc
     quote: 계산 전 절차 고정
     precision: 상한
+    note: M1 은 홀드아웃을 채점하는 새 post-hoc 설계라 설계 변경으로 분류한다 (V9 와 다른 이유)
   - id: V8
     class: 설계 변경
     event: Q1 M1 공식 실행 — 사전 규칙상 C-b 폐기
@@ -316,6 +317,7 @@ events:
     commit: b834248
     quote: 계산 전 절차 고정
     precision: 상한
+    note: M6 은 기존 채점을 같은 코드로 다시 돌리는 재실행이라 재실행·검증으로 분류한다
   - id: V10
     class: 재실행·검증
     event: Q1 M6 공식 홀드아웃 재실행 (-dirty 없음)

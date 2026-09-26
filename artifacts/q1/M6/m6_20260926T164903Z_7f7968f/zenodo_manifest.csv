@@ -92,7 +92,7 @@ artifacts/q1/M1/m1_20260926T160821Z_a181f6c/hand.parquet,results,open,1588368,64
 artifacts/q1/M1/m1_20260926T160821Z_a181f6c/median_table.csv,results,open,27110,99dd2094dd4a52fdad703090878e0cf5638309efb6dff5ef92544e6fbea1f9d7,점수·지표·요약
 artifacts/q1/M1/m1_20260926T160821Z_a181f6c/metrics_long.csv,results,open,366141,6aa93c04f15a79c0f4601c31f604217d14c6d26cc4f15e1f4a72ffe688695d78,점수·지표·요약
 artifacts/q1/M1/m1_20260926T160821Z_a181f6c/summary.json,results,open,3718,bbb767af8dda845c71559e5f9885cfb13d7e4a6ac76a2ef52dff1402f5fadcc3,점수·지표·요약
-artifacts/q1/M6/m6_20260926T164903Z_7f7968f/chronology.csv,results,open,11172,5a133c8285efcd63608b692c08855b1607ceb182bb1f2d1772e5f45d6277265b,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/chronology.csv,results,open,11396,bbb016e45f38173e066f6db9922b4172faee323459c424faaaa969907269a41c,점수·지표·요약
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/holdout_compare.json,results,open,12799,f34d0c6ce6542dd9627fb62414cdaae8d95fa5453bb867b220660baed80a0b8a,점수·지표·요약
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/development_polygons.csv,results,open,24415,f9ce2b0028ed08b70398a6bf8cc4639ec25adc7d43b8f557d78c7071a62b2fc8,점수·지표·요약
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/development_summary.json,results,open,2005,98230d47ccdde5a0797114a8210016142e4ece12d92d1ddc26f3f2876a04782e,점수·지표·요약
@@ -100,12 +100,14 @@ artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/holdout_polygons.csv,res
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/holdout_summary.json,results,open,1869,4f100d8712377de5dc471bf84e6163b6e9ccb996d6e169177d9011ebaba78482,점수·지표·요약
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit_compare.json,results,open,2948,cebe23f9f69d5549d0e7892562c69e84fbe93994cd4271bf5941a771e88b8210,점수·지표·요약
 artifacts/q1/M6/m6_20260926T164903Z_7f7968f/metrics_diff.csv,results,open,386488,7eb55ac0bd1d9210da7fb0d3b5eba309fed3aa7f5cdbb629131d9b207a84c8eb,점수·지표·요약
-artifacts/q1/M6/m6_20260926T164903Z_7f7968f/summary.json,results,open,2621,462462b576ef4d0f242896d2163d71a39ce796be2657d3835232914e5437fb14,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/summary.json,results,open,3416,6a9e009e51d504e914c02adbdbc00fb31611036de011f52e548101f483b7fed8,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/zenodo_manifest.csv,results,open,78079,0f0f2bfe6971de20d3a304204f6ddb9b74cc0699bdbd11eaecacafb06eb751fa,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/zenodo_summary.json,results,open,1104,39e79541a3fef25371e27db71c0b1f8f88d96c474958ffa225afe0205b7de126,점수·지표·요약
 config/config.yaml,code,open,6469,cdee32d38195be0b9791aa49b8bd89fe83f1f929fc6454f4407fd291c7bf8059,코드·설정
 config/data_contracts.yaml,code,open,9767,ef1714d4f803254835d24e3eb48f657693d7770de34e2750b5f95186c2ceba6b,코드·설정
 config/flood_traces.yaml,code,open,2195,6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8,코드·설정
 config/holdout_reference.yaml,code,open,506,ded997ef959577f72b17988113cd2614e8e0ea0285e8378ccce4a519935facc5,코드·설정
-config/m6_chronology.yaml,code,open,12278,982bdb69ba2bc35b50b8c76e28cec7c98c65040a4c79a5adae7aa33870fe9674,코드·설정
+config/m6_chronology.yaml,code,open,12524,01d93a8cfc81c2c3de7d8234b4b92533f30ded0bfd1ef3af4a2bba161d1c5453,코드·설정
 config/pipeline.yaml,code,open,40275,9bb9097f863d994f46ea8f36d28be9f26ba1e7244765bb712732890d35b354b4,코드·설정
 config/raw_quality_waivers.yaml,code,open,4281,bf5d14c7e2c8a2011ad8d402b27299a1863ab7d20d5a8ff6e2d38738e744ec7c,코드·설정
 data/external/README.md,docs,open,915,036be3a19db9c667f4ddfd194f09f82fa48ed616ab74c6537292bae88bcc79f3,프로젝트가 쓴 설명·목록
@@ -255,8 +257,11 @@ docs/eda_data_check.md,docs,open,5781,dcd8fc86490710667db0c870ad3d3036008175265c
 docs/q1/M1.md,docs,open,13022,8493b7df1563a03fb3c641d77459df1a159a0ec0d7375ca1f5589e0e02a31666,절차·보고·연구 문서
 docs/q1/M1_protocol.md,docs,open,8215,e311fe108472bb62c47806c3414b8aaa0f2bea2fadae47775d4b4fd44b5f1bb4,절차·보고·연구 문서
 docs/q1/M1_review.md,docs,open,14161,65a4715b4300c21c44d5ae1f51655137f09565416523f8b1a9a7455c00d9116a,절차·보고·연구 문서
+docs/q1/M6.md,docs,open,13035,84a0e540276c12beb2d1d680f5c114b74490d603954a34b3cbcafaaff662b6d9,절차·보고·연구 문서
 docs/q1/M6_chronology.md,docs,open,12324,7e498aee2a984ce8acc1c6e9966bd3eac692baef376f956018bc821dbd916813,절차·보고·연구 문서
 docs/q1/M6_protocol.md,docs,open,10818,a136585271d8b63e55c396e5eacc7af2e741d8bfd00367ce87b9a64f2699a1f8,절차·보고·연구 문서
+docs/q1/M6_review.md,docs,open,5828,de397104b037498d09827329d5c36f65d28315f82bdd213155504cc302c5abc3,절차·보고·연구 문서
+docs/q1/M6_zenodo.md,docs,open,5173,dc21936853a3069609aa22f2ffe95e5039d7e7de45aea8eeac99f5eb8ffac0d6,절차·보고·연구 문서
 docs/references/.gitkeep,docs,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,절차·보고·연구 문서
 docs/references/정보공개청구_문안.md,docs,open,3570,28cfe6149e00d24c0a03b38e580d94d60d23ab3a6686fae3aa8e2e15b6e0f4f1,절차·보고·연구 문서
 docs/report_checklist.md,docs,open,3713,a0a9fb6d7a16b3b52a364808d468049f1ddaa45c07f1f843bba7f2de3a72d5cb,절차·보고·연구 문서
@@ -393,11 +398,11 @@ src/pipeline/mermaid.py,code,open,5323,190167a517a5df6ba014a58c58ee4f3162714c63c
 src/pipeline/report.py,code,open,1386,cb733729a6acd7889baac2364c05262c9d23d9ba1d6c3934f23b1164530c968e,코드·설정
 src/pipeline/runner.py,code,open,9466,a700295cae66c36eeb8ebaa07ee8d78ea45a9cce7333508c39581bedd4c6ea82,코드·설정
 src/repro/__init__.py,code,open,94,e379e4b0e1cd79a73188eab4066b2bfbaddc7392fa5564a87b021001038dc825,코드·설정
-src/repro/audit_check.py,code,open,2497,22f73ae284d446f97e0b4599b31e10e379e76fb61804ffe723f989556afce6e4,코드·설정
+src/repro/audit_check.py,code,open,2426,bfcb8f9d2b5f937f63aa5bc6ae3ad39770782a9a657216fa07be6ca475c965e9,코드·설정
 src/repro/chronology.py,code,open,5012,81c8db6338a3049768a4fb633a660b841062c1c4f634a3d658f088e541ef1663,코드·설정
 src/repro/deposit_manifest.py,code,open,4395,fdbb539c1d34a0b0c844f6225a3c492990a63df25b01f019d96adaed6d0868d7,코드·설정
-src/repro/m6_run.py,code,open,10374,fd955e67906349c196e9720e3d1ee2cfed4e783ebd0a2a39ba7a55eb4afb2fab,코드·설정
-src/repro/run_compare.py,code,open,6562,0bc6271f4413801f458680302982e178a93dcbfdbe2a07f02174dfd57dec8f3f,코드·설정
+src/repro/m6_run.py,code,open,10477,378a9b9170de18a87dc90569abc58bc9cbc756673d84ab21581f42a61c7c359e,코드·설정
+src/repro/run_compare.py,code,open,6873,052c04d0448180e9b56a7dedd0c438df94f9bd51aa50d2b544e5143e260eab96,코드·설정
 src/stages/__init__.py,code,open,32,8058750679bd70e2ed47904627d9d3540cbb3a0f4db24030c490f697d90c5b40,코드·설정
 src/stages/h00_collect.py,code,open,7746,fad92877dc2f6f89b3c001c88e49ecebd8a30ac0a5595621f57c5adde0ce0fe5,코드·설정
 src/stages/h01_contract.py,code,open,2200,176a8cfc499d6b2b2b47f05e86dd00ee789951f2d31eda55896ca68f17d70e3f,코드·설정
@@ -442,7 +447,7 @@ tests/test_hand.py,code,open,3341,d2b41f12b97a0f6053191cdbdf706512002b79ed522a90
 tests/test_index_uncertainty.py,code,open,3513,e402612aa8075a51e91a72f9fa0fe9595c54f4283a3bfdcb9c3b2ccfa41401e5,코드·설정
 tests/test_layers.py,code,open,7634,f4104a3bad8df272214bc2345f60310369187ed0093a70424de94957548f7a57,코드·설정
 tests/test_m1.py,code,open,4678,8ce13811ab8d082fd04a77c91f4a6a06fdb6a0c98b783ae68e6f1241c11cd9b9,코드·설정
-tests/test_m6.py,code,open,11315,381fac6c26949e9a1607ceceb7f9f58dd4ab6f3d52ed461ae7a450bb4c50fb1e,코드·설정
+tests/test_m6.py,code,open,11882,ea9e6f1b4ebd77214769f5702920582ad8bd86920497725fe5bb148bc6f02bff,코드·설정
 tests/test_normalize.py,code,open,11225,5663da41f421a4cc13d616e2e9b35ab03fe4e7ee4964b38e03f8a920334f4c09,코드·설정
 tests/test_pipeline.py,code,open,19242,9a77565e67cf777ff2bd08beb806c21759a8a036d1d40a41a1e2cad1fac49a12,코드·설정
 tests/test_quality.py,code,open,11797,f55a4bae38f5a43143a65c577a5adffac736c078248957b9330fff5a1c7e0709,코드·설정

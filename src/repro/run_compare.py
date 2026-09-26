@@ -50,13 +50,16 @@ def first_difference(a: Any, b: Any, path: str = "$") -> str:
     return f"{path}: {left} ≠ {right}"
 
 
-def _same(a: Any, b: Any) -> np.ndarray:
-    """두 열을 결측끼리 같다고 보고 원소별로 비교한다."""
+def same_values(a: Any, b: Any) -> np.ndarray:
+    """두 열을 원소별로 비교한다: 결측끼리 같고, 숫자는 dtype 이 달라도 값으로(1267 = 1267.0) 본다."""
     import pandas as pd
 
-    # 결측 위치가 같으면 같은 값으로 친다
+    # 결측 위치가 같으면 같다고 치고, 논리형이 아닌 숫자 열은 실수 값으로, 나머지는 값 그대로 비교한다
     both_na = pd.isna(a).to_numpy() & pd.isna(b).to_numpy()
-    return both_na | (a.astype(str).to_numpy() == b.astype(str).to_numpy())
+    kinds = pd.api.types
+    if all(kinds.is_numeric_dtype(s) and not kinds.is_bool_dtype(s) for s in (a, b)):
+        return both_na | (a.to_numpy(float) == b.to_numpy(float))
+    return both_na | a.eq(b).fillna(False).to_numpy(bool)
 
 
 def compare_metrics(new: Any, ref: Any) -> tuple[dict[str, Any], Any]:
@@ -82,7 +85,7 @@ def compare_metrics(new: Any, ref: Any) -> tuple[dict[str, Any], Any]:
         out[f"na_mismatch_{col}"] = int(na_mismatch.sum())
         bad |= (na_mismatch | (diff > 0)).to_numpy()
     for col in METRIC_EXACT:
-        unequal = ~_same(merged[f"{col}_new"], merged[f"{col}_ref"]) & both.to_numpy()
+        unequal = ~same_values(merged[f"{col}_new"], merged[f"{col}_ref"]) & both.to_numpy()
         out[f"mismatch_{col}"] = int(unequal.sum())
         bad |= unequal
 

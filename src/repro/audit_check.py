@@ -6,7 +6,7 @@ from typing import Any
 
 import numpy as np
 
-from src.repro.run_compare import first_difference
+from src.repro.run_compare import first_difference, same_values
 
 POLYGON_TOLERANCE = 1e-6
 
@@ -32,18 +32,16 @@ def compare_polygon_tables(new: Any, stored: Any) -> dict[str, Any]:
     if out["columns_new_only"] or out["columns_stored_only"] or len(new) != len(stored):
         return out | {"pass": False}
 
-    # 열마다 결측 위치를 맞춘 뒤 실수는 차이, 그 밖은 문자열 일치로 비교한다
+    # 두 쪽 모두 실수 열이면 결측 위치와 최대 절대차를, 그 밖(정수·문자·논리)은 값 일치를 본다
     worst, mismatches = 0.0, {}
     for col in stored.columns:
         a, b = new[col].reset_index(drop=True), stored[col].reset_index(drop=True)
-        na = a.isna().to_numpy() != b.isna().to_numpy()
         if pd.api.types.is_float_dtype(a) and pd.api.types.is_float_dtype(b):
             diff = np.nanmax(np.abs(a.to_numpy(float) - b.to_numpy(float)), initial=0.0)
             worst = max(worst, float(diff))
-            count = int(na.sum())
+            count = int((a.isna().to_numpy() != b.isna().to_numpy()).sum())
         else:
-            same = (a.isna() & b.isna()).to_numpy() | (a.astype(str).to_numpy() == b.astype(str).to_numpy())
-            count = int((~same).sum())
+            count = int((~same_values(a, b)).sum())
         if count:
             mismatches[col] = count
     return out | {"max_abs_diff_float": worst, "mismatch_counts": mismatches,

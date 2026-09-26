@@ -1,0 +1,119 @@
+{
+ "run_id": "m3_20260926T164916Z_f383cb3",
+ "started_utc": "2026-09-26T16:49:16.405307+00:00",
+ "git_head": "f383cb3",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. .venv/bin/python -m src.models.m3_run --n-boot 1000",
+ "role": "post_hoc — M1·홀드아웃 결과를 본 뒤 설계한 중첩 시간순 선택. 홀드아웃은 채점에만 쓴다 (AGENTS §2-2)",
+ "protocol": "docs/q1/M3_protocol.md",
+ "include_holdout": true,
+ "n_boot": 1000,
+ "prespec_run_id": "P005_dev_20260924T094916Z",
+ "n_configs": {
+  "nested_rf": 6,
+  "nested_all": 24
+ },
+ "priors": [
+  [
+   2006,
+   2012
+  ],
+  [
+   2006,
+   2012,
+   2014
+  ],
+  [
+   2006,
+   2012,
+   2014,
+   2016
+  ],
+  [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ]
+ ],
+ "strata_n_cells": {
+  "FLAT": 22934,
+  "URBAN": 9695,
+  "AGRI": 10433,
+  "UNIVERSE": 10202
+ },
+ "checks": {
+  "benchmark_loeo": {
+   "held_events": [
+    "2014",
+    "2025"
+   ],
+   "max_abs_diff": 0.0,
+   "diffs": {
+    "2014:grid_auc": 0.0,
+    "2014:cluster_auc": 0.0,
+    "2014:top20_capture": 0.0,
+    "2025:grid_auc": 0.0,
+    "2025:cluster_auc": 0.0,
+    "2025:top20_capture": 0.0
+   }
+  },
+  "m1_reproduction": {
+   "scores": [
+    "rf_F1_wf",
+    "slope_neg"
+   ],
+   "units": "all",
+   "n_rows": 473,
+   "n_missing_in_reference": 0,
+   "n_nan_mismatch": 0,
+   "max_abs_diff": 2.220446049250313e-16,
+   "passes": true
+  }
+ },
+ "n_undated_dev_polygons_excluded": 2,
+ "elapsed_seconds": 298.8,
+ "code_sha256": {
+  "src/models/m3_run.py": "c68e8e741839bcb17b29345977c899372c6462a7887a63107a213aed43d2abfd",
+  "src/models/m3_configs.py": "643263e9b0a1042e1929756310cb8eb5587bb2aff1465c45710cd1fa9e54902a",
+  "src/models/m3_select.py": "65146af7d4202af984df413a1a957d685e7de2110a0e98cc33d2a9de19b83bf5",
+  "src/models/m3_checks.py": "3cc25a35ec91ce69d4ad4036fedfd5ef34e9e14b48c20b661b067da3e89bb7a7",
+  "src/models/m3_decision.py": "ff639b37913bd57ce1f093940576f047151e6b762e1e1f5a4f88bd172ae6b05f",
+  "src/models/prior_fit.py": "e5d018c1c569f9729c415b0a4566585d7dd45751ad18ac923c1fdcddd42490a5",
+  "src/models/m1_decision.py": "3a6d95858fac669e98b084707ba78a086a0175e1f08e1e75f110710ff769ad23",
+  "src/models/m1_scores.py": "763a8cab995c023fd17fc2f21212d338d487a1bdcb72919bf695699738298ac1",
+  "src/models/m1_strata.py": "0a988a9903e93d9cef1ab4bdf265a48a9ef34e266f688daa0436deeccae3c854",
+  "src/models/folds.py": "66b03ac443038189daf25e658a5ed94e62b93b018207a9055598b5852e63d457",
+  "src/models/scoring.py": "466e67604585c23a02b8ba4c39171fd49e2f81192911f363cab70b04c62b9730",
+  "src/models/estimators.py": "bde89fae3307bafabc1990219d60cd4ed118e0564cb258126e120e1874aae7c7",
+  "src/models/features.py": "f8a99ae6d70d6298b5c0e5c214f630a5a5319825904e5f9468d3bdb827d9f583",
+  "src/data/uncertainty.py": "f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21",
+  "src/data/validation/evaluate.py": "49cfe9f4a86904b562f7dac3436c57fbe9c67fd608857ed9c3a32ad71c575751",
+  "src/data/validation/auc.py": "ec04b6caed647c4fadd6b6f3de54dfb02a0fd6261096eb363ec174ada4a44504",
+  "src/data/validation/curves.py": "be655646c5fd49d7afa4ca53692d0c8eb0eaff9e76595f83a06dcb89b419cee9",
+  "src/data/flood_traces.py": "4ef687183774c0d81267fb3992641520722efec241e5ee9b11ee243168e9fcb9",
+  "docs/q1/M3_protocol.md": "3a6888098648a01447097af698708f39950c7927417297fd76024863188ea371"
+ },
+ "input_sha256": {
+  "data/processed/layers/layer1_flood.gpkg": "0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350",
+  "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+  ".omc/benchmark/final_model.joblib": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+  ".omc/benchmark/prespec.json": "482db397d5e72529ed4602133bedc5df2f4ada48a5a0d0a281cb38929be230e3",
+  ".omc/benchmark/results_dev.csv": "99f9ba10b449e9e4e004e763b20234daa0aa3a354ea73ec37322cb9761541fd7",
+  "artifacts/q1/M1/m1_20260926T160821Z_a181f6c/metrics_long.csv": "6aa93c04f15a79c0f4601c31f604217d14c6d26cc4f15e1f4a72ffe688695d78"
+ },
+ "packages": {
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "geopandas": "1.1.4",
+  "pyogrio": "0.13.0",
+  "shapely": "2.1.2",
+  "scipy": "1.18.1",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1"
+ },
+ "verdict": "설정 선택의 미래 정보가 격자 AUC 중앙값을 0.02 넘게 올리지 않았다",
+ "m1_recheck": "M1 의 C-b 폐기 판정은 중첩 선택에서도 유지된다"
+}

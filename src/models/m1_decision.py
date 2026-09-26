@@ -11,10 +11,10 @@ BASELINES = ("slope_neg", "relelev_neg", "twi", "impervious", "hand_neg", "hand_
 
 
 def compare(long: pd.DataFrame, trivial: str, model: str, *, unit: str = "cell_gate", stratum: str = "ALL",
-            roles: tuple[str, ...] = ("development", "holdout")) -> dict:
-    """두 점수가 모두 있고 최소 표본을 넘는 사상에서 AUC 중앙값과 짝 차이 중앙값을 구한다."""
-    # 해당 단위·층·역할의 사상별 AUC 를 점수별 열로 편다
-    rows = long[(long["unit"] == unit) & (long["stratum"] == stratum) & (long["metric"] == "observed-label_auc")
+            roles: tuple[str, ...] = ("development", "holdout"), metric: str = "observed-label_auc") -> dict:
+    """두 점수가 모두 있고 최소 표본을 넘는 사상에서 지표(기본 AUC) 중앙값과 짝 차이 중앙값을 구한다."""
+    # 해당 단위·층·역할·지표의 사상별 값을 점수별 열로 편다
+    rows = long[(long["unit"] == unit) & (long["stratum"] == stratum) & (long["metric"] == metric)
                 & (long["storm"] == "ALL") & long["role"].isin(roles) & long["score"].isin([trivial, model])]
     wide = rows.set_index(["test_event", "score"])["value"].unstack()
     units = rows.set_index(["test_event", "score"])["n_units"].unstack().reindex(wide.index)

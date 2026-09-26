@@ -16,8 +16,8 @@ def compare(long: pd.DataFrame, trivial: str, model: str, *, unit: str = "cell_g
     # 해당 단위·층·역할의 사상별 AUC 를 점수별 열로 편다
     rows = long[(long["unit"] == unit) & (long["stratum"] == stratum) & (long["metric"] == "observed-label_auc")
                 & (long["storm"] == "ALL") & long["role"].isin(roles) & long["score"].isin([trivial, model])]
-    wide = rows.pivot_table(index="test_event", columns="score", values="value", aggfunc="first")
-    units = rows.pivot_table(index="test_event", columns="score", values="n_units", aggfunc="first")
+    wide = rows.set_index(["test_event", "score"])["value"].unstack()
+    units = rows.set_index(["test_event", "score"])["n_units"].unstack().reindex(wide.index)
     if trivial not in wide or model not in wide:
         return {"events": [], "evaluable": False}
 

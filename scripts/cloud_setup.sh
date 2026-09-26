@@ -18,7 +18,9 @@ if grep -q 'filter=lfs' .gitattributes 2>/dev/null; then
 fi
 
 # 가상환경과 의존성 (shap 은 설명 분석용 추가)
-python3 -m venv .venv
+# rasterio>=1.5 는 Python 3.12 이상이 필요하다 (3.11 에서 설치 실패, M1 세션 보고)
+PYBIN=$(command -v python3.12 || command -v python3.13 || command -v python3)
+"$PYBIN" -m venv .venv
 .venv/bin/pip install -q --upgrade pip
 .venv/bin/pip install -q -r requirements.txt shap
 

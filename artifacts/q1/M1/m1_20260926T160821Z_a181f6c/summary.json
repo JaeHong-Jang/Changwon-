@@ -1,0 +1,135 @@
+{
+ "run_id": "m1_20260926T160821Z_a181f6c",
+ "started_utc": "2026-09-26T16:08:21.614427+00:00",
+ "git_head": "a181f6c",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. .venv/bin/python -m src.models.m1_run --n-boot 1000",
+ "role": "post_hoc — 홀드아웃 결과를 본 뒤 설계한 자명 기준선 비교. 홀드아웃은 채점에만 쓴다 (AGENTS §2-2)",
+ "protocol": "docs/q1/M1_protocol.md",
+ "include_holdout": true,
+ "n_boot": 1000,
+ "hand": {
+  "dem": {
+   "dem_source_res_m": 90.0,
+   "dem_resampling": "bilinear",
+   "dem_mosaic_shape": [
+    631,
+    771
+   ],
+   "dem_nodata_cells": 0
+  },
+  "elev_max_abs_diff": 0.0,
+  "osm": {
+   "n_cells": 170929,
+   "n_stream_cells": 5525,
+   "n_reach_stream": 92142,
+   "n_reach_flow_end": 78787,
+   "n_flow_end_cells": 2525
+  },
+  "acc": {
+   "n_cells": 170929,
+   "n_stream_cells": 10662,
+   "n_reach_stream": 165394,
+   "n_reach_flow_end": 5535,
+   "n_flow_end_cells": 2487,
+   "min_cells": 100
+  }
+ },
+ "strata_n_cells": {
+  "FLAT": 22934,
+  "URBAN": 9695,
+  "AGRI": 10433,
+  "UNIVERSE": 10202
+ },
+ "train_events": {
+  "2006": [],
+  "2012": [
+   2006
+  ],
+  "2014": [
+   2006,
+   2012
+  ],
+  "2016": [
+   2006,
+   2012,
+   2014
+  ],
+  "2019": [
+   2006,
+   2012,
+   2014,
+   2016
+  ],
+  "2025": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2022-09-06": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2023-08-10": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2024-07-24": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ],
+  "2024-09-20": [
+   2006,
+   2012,
+   2014,
+   2016,
+   2019
+  ]
+ },
+ "n_undated_dev_polygons_excluded": 2,
+ "code_sha256": {
+  "src/models/m1_run.py": "06f09a8d5cce9a859ed3118dd34020b7251298954b5d058d2fb1f1e680b5b133",
+  "src/models/m1_scores.py": "fc363da2891a6b3197ff10270f9173ea17087fdac6ed378286d3d65ad84ee21e",
+  "src/models/m1_strata.py": "0a988a9903e93d9cef1ab4bdf265a48a9ef34e266f688daa0436deeccae3c854",
+  "src/models/m1_decision.py": "d6e734639b9cff961c703e66a240af6051615bbb61da15c73a6aa7ce6ce529f7",
+  "src/data/hand.py": "2af9bc49e01a0dcd9e113d578af23773950ca2c3421b124d7f0c2d8df94564d4",
+  "src/data/features.py": "3d146df91463acb72f3e2ce8357186445752bd2334845a315f1632f2cd5ee3ea",
+  "src/models/features.py": "f8a99ae6d70d6298b5c0e5c214f630a5a5319825904e5f9468d3bdb827d9f583",
+  "src/models/estimators.py": "bde89fae3307bafabc1990219d60cd4ed118e0564cb258126e120e1874aae7c7",
+  "src/data/validation/evaluate.py": "49cfe9f4a86904b562f7dac3436c57fbe9c67fd608857ed9c3a32ad71c575751",
+  "src/data/validation/auc.py": "ec04b6caed647c4fadd6b6f3de54dfb02a0fd6261096eb363ec174ada4a44504",
+  "src/data/validation/curves.py": "be655646c5fd49d7afa4ca53692d0c8eb0eaff9e76595f83a06dcb89b419cee9",
+  "src/data/flood_traces.py": "4ef687183774c0d81267fb3992641520722efec241e5ee9b11ee243168e9fcb9",
+  "docs/q1/M1_protocol.md": "e311fe108472bb62c47806c3414b8aaa0f2bea2fadae47775d4b4fd44b5f1bb4"
+ },
+ "input_sha256": {
+  "data/processed/layers/layer1_flood.gpkg": "0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350",
+  "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+  "data/raw/rivers/osm_waterways.gpkg": "7047fd38c251bdd12a595b2f4f89b4121cd04f43842227477c144261ce1bd894",
+  ".omc/benchmark/final_model.joblib": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+  ".omc/benchmark/prespec.json": "482db397d5e72529ed4602133bedc5df2f4ada48a5a0d0a281cb38929be230e3"
+ },
+ "packages": {
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "geopandas": "1.1.4",
+  "pyogrio": "0.13.0",
+  "shapely": "2.1.2",
+  "scipy": "1.18.1",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1"
+ },
+ "verdict": "C-b 폐기"
+}

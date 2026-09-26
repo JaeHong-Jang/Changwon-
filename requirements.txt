@@ -2,6 +2,7 @@
 pandas>=2.0
 numpy>=1.24
 scipy>=1.10
+pyarrow>=14        # parquet 읽기 (클라우드 M1 세션에서 누락 확인)
 
 # ===== 시각화 =====
 matplotlib>=3.7

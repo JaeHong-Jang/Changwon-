@@ -1,0 +1,454 @@
+path,category,decision,bytes,sha256,basis
+.env.example,code,open,486,f574af5e8053f37415f401b36b0d5dc7e1ee7427f28308363f80bad0f04a7070,코드·설정
+.fablize/goals.json,internal,exclude,11234,4eafc3dc5e39d400b4ab02e71682f169743504a899e8076411ea92152cce7d47,하네스 내부 진행 기록
+.fablize/ledger.jsonl,internal,exclude,6390,f1642478176b1d49887d7a153ffae3f46d937885072a3fa034aff495dbb89f86,하네스 내부 진행 기록
+.gitattributes,code,open,103,d787f9e621bae8188baf74012cb8828fbbdca7f610009447fa6554b974de5ec4,코드·설정
+.github/pull_request_template.md,code,open,887,761ad50d08a4f6854bef1bc33f27accc701d03bec3346474abc53e9d92e1f188,코드·설정
+.gitignore,code,open,1733,71331606ede56b6295cb823cf53d37f01a3fcd7bd7f6122e8c9b18a044ad0a5c,코드·설정
+AGENTS.md,code,open,11330,dd0518f5486ca76b7cc975316d31930c4922f5676a8e2159b4a0ae3c025546b0,코드·설정
+CLAUDE.md,code,open,124,4a490832eece27b4a5ff2e26a24ec3c92e87c7927dd4e46056de7e21db6a48dc,코드·설정
+CONTRIBUTING.md,code,open,8118,16e4481c48833b4964eef5b196f5d25f9d12d98c24bdce0146b253f1a33f3fc3,코드·설정
+README.md,code,open,9415,3b84ffd1ee9db357f1e2a598e947f7a254255d7a8332b569c89ca3523adeaeea,코드·설정
+app/.gitkeep,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+artifacts/README.md,results,open,667,22c62723b8b34bcfb6503c9c42fc5b4d16cb9cb4e30b097df6a485a1212fba50,점수·지표·요약
+artifacts/evaluation/cdri_xai.json,results,open,1005,6a6cd0b7e9ed6d93a33312e06e53d48fe82c395289a088ff58ff57e0350f144a,점수·지표·요약
+artifacts/evaluation/feedback_manifest.json,results,open,10542,aa5583eba0243a32ce01e9e7fda82b3d8aca0b7e55c2a8911b99e339f983f3c2,점수·지표·요약
+artifacts/evaluation/final_holdout_evaluation.json,results,open,526,31107ae65d3bc741e8a5c1709577e1734e016c18c74eec4c008dacba19a94e85,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T093854Z_ae9c122_85559f26/metrics.csv,results,open,397427,f623f83f0b2e295772dc374a49e5a34d29871b18086eddbf3724859077b0938d,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T093854Z_ae9c122_85559f26/summary.json,results,open,4708,d99be83132ad653285caee8f3d6be5f9837519be1c7d564d79ef494ca08369b3,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T100313Z_ae9c122-dirty_c5a33847/metrics.csv,results,open,943675,6d00bb5d7be2de7387f0309b6acd1571a34ecd095559a36cb2be3dc49a2f727a,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T100313Z_ae9c122-dirty_c5a33847/summary.json,results,open,17025,a46f5edfea8f6a03b12c30f5bc6fb4750758e7edd29a7682456ea3f894af5302,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T100939Z_ae9c122-dirty_cf388a23/metrics.csv,results,open,943675,129a767f593f2d594c3c7a279dadca2533a0883102329b629862e20a8d81d1d2,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T100939Z_ae9c122-dirty_cf388a23/summary.json,results,open,19311,5908eec72587ff2415c8e11bc95ce31cfd3f5a203f2ae9813242396678486de5,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T104608Z_ae9c122-dirty_4af97d5d/metrics.csv,results,open,943675,50c4427b3c39d3a25b5994016feda1a302b462c05d709da9d850e51b4e80e65b,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260924T104608Z_ae9c122-dirty_4af97d5d/summary.json,results,open,20432,fe2797b5db6e40e7e99afd9811aaf6c7ce5f494fa1e19dc46619b9d47791a3fc,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260926T164805Z_7f7968f_84ef30a7/metrics.csv,results,open,909747,5ac958cb66d13d0536c060397b917135088ff994e66ede1f71b6a26e8d1a0461,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/holdout_20260926T164805Z_7f7968f_84ef30a7/summary.json,results,open,20427,992faaff1872adf2842a2519e55a33eb90f80f48e59f1d38f9d3482cbf2a4fb9,점수·지표·요약
+artifacts/evaluation/holdout_2022_2024/latest.json,results,open,55,0b94d3c29cedd6959007e15699e03a1a54622e013f13d0e9c4548ae65851563b,점수·지표·요약
+artifacts/evaluation/label_audit/development_polygons.csv,results,open,24414,acffdf2f9db726703b1d1a0433f1549d656d997653ecda94b420417660ae7356,점수·지표·요약
+artifacts/evaluation/label_audit/development_summary.json,results,open,2005,3a76053233766b4a334c292b3b6efbdafca1d663bb910d58a30314601e474f96,점수·지표·요약
+artifacts/evaluation/label_audit/holdout_polygons.csv,results,open,34143,ccc678583146ded359eca9fd3ff74b20d7a447b2ce8d293532244f816990972c,점수·지표·요약
+artifacts/evaluation/label_audit/holdout_summary.json,results,open,1869,c4658dac107eb508a03299ca0a7303b5a76051298cc7212ec9989e63a368a44b,점수·지표·요약
+artifacts/evaluation/primary_formula_manifest.json,results,open,1088,73dfb321b2aa2055e4f12e3bf11c3a3988e0641e8014903f2ceaaa31d99c3689,점수·지표·요약
+artifacts/frozen/benchmark/development_crs.json,frozen_models,open,1281,ac266c18812f7d7e5fd5035ef4a16e5ca43862bd2fc5eb4f8d6844db559b6983,동결 모델·사전 명세
+artifacts/frozen/benchmark/final_model.joblib,frozen_models,open,113474,8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a,동결 모델·사전 명세
+artifacts/frozen/benchmark/fold_assignments.csv,frozen_models,open,3938385,c27875ae89489a59b9f0ea4f80678f11dfc4a8690761965d73751b3a1271297a,동결 모델·사전 명세
+artifacts/frozen/benchmark/fold_audit.json,frozen_models,open,13097,b9cdb777e98a236e5b8c3d1c5ce8d0a90ef227b3cef5490599a638b0cae189ac,동결 모델·사전 명세
+artifacts/frozen/benchmark/gates_all_folds.csv,frozen_models,open,16386,de04fb8e6d18efdce1a2d68dd99f0096df00eb357f935728c4e3a31a0fa335be,동결 모델·사전 명세
+artifacts/frozen/benchmark/gates_dev.csv,frozen_models,open,2315,55b089563d419e48a209e42bd19b1c2d359c1e7d279b88d7010aeb66a0a96c0a,동결 모델·사전 명세
+artifacts/frozen/benchmark/prespec.json,frozen_models,open,14999,482db397d5e72529ed4602133bedc5df2f4ada48a5a0d0a281cb38929be230e3,동결 모델·사전 명세
+artifacts/frozen/benchmark/protocol_dev.json,frozen_models,open,8863,aeae18016552ab20cd3fca534b2f0879b787c54d6979f2477d390dca3b62ffb7,동결 모델·사전 명세
+artifacts/frozen/benchmark/report_dev.md,frozen_models,open,6140,35717728c4c98a2f72a7f8055672db1803affac92d88487b0eee6b7818f1acf0,동결 모델·사전 명세
+artifacts/frozen/benchmark/reproduce_review.py,frozen_models,open,2388,6bad919b8710f0ae3e1dd4b90c0f11618d86441565554515298776b8d29bb68c,동결 모델·사전 명세
+artifacts/frozen/benchmark/results_dev.csv,frozen_models,open,83708,99f9ba10b449e9e4e004e763b20234daa0aa3a354ea73ec37322cb9761541fd7,동결 모델·사전 명세
+artifacts/frozen/benchmark/summarize_dev.py,frozen_models,open,6119,0dac55f599dd5082b8fad161df2154173cd3089e83114d37bd805dd425151044,동결 모델·사전 명세
+artifacts/frozen/benchmark/tuning_audit.json,frozen_models,open,189769,e6a6a1761fc9fa26f955044fe34000889340b38c36846ae27ec34a98702e82ca,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/final_model.joblib,frozen_models,open,114914,f1deb206ac593dcc039f4e8d8629d103f9da1456ce0509b91033cda01a4002ad,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/fold_assignments.csv,frozen_models,open,1553548,f2ee5ba66b71d0402ee06b2ea87c4cc714ac4abfc1dcca2fefb0cf5c0facf72c,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/fold_audit.json,frozen_models,open,13097,9140f2cfd7856a79acbe7f95eb9f3e1263d7057aabbbd27fa751e3f3e9d4c1a5,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/gates_all_folds.csv,frozen_models,open,16383,35dc532e6f35d8d9f71539f33689d552731cdc05e9c4a0fc8115b975c5045b68,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/gates_dev.csv,frozen_models,open,2316,79bbe4b5765ef253ca518d67bb0efb9058e38bd5ae808a32716cea43a6f72cc9,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/prespec.json,frozen_models,open,10580,896da482b114b90a55f7020f779075faec7f6eb2abef841b047c537f8d3bed56,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/protocol_dev.json,frozen_models,open,5364,4fac7c56157f5f19c56a78fc851b7e36980544d876ddb1bf0bfe4f42161c7e08,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/report_dev.md,frozen_models,open,7830,2dd997821afc235c19ad371604cc7eeb3b02c6ef835702e3ef3562cab878e1ba,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/results_dev.csv,frozen_models,open,83687,a9e7efbec74444a8b6e297b5bd8b78a445b0077bf143d2fd6bcf8cb54f30c6f7,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/source/src/models/benchmark.py,frozen_models,open,23705,742dc1330080fc8cfb48318df88bee7bfa5d2503a9b2f869f54e55c4288409ce,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/source/src/models/folds.py,frozen_models,open,5249,e4a4083752d48e862c4637dd6d1ff2ad3383f0662d6d93b188207afb6b311a7c,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/source/tests/test_benchmark.py,frozen_models,open,7519,1709d2eb705f750dedcf98878f4864f7290795cf5fb462b281c51a054b234b24,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/tuning_audit.json,frozen_models,open,189744,ec57d40406058d58354d911e45895546c03d674e5b6ff91205e8e25eb7000299,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/validation_scope_note.json,frozen_models,open,1189,7762fedad1d7471b7de9052c550e5623477d6ab6331154bdcf7f33c85b305b37,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/verification.json,frozen_models,open,956,69f7bf51624a7a4d7ec2b9114dab5c960edc18c57e6546148fb85ae028d81d8e,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1/verify_dev.py,frozen_models,open,5595,210f547b4a7fc3472474ac5f63708d62b1a7ec6bdb6c822a1573b39e05b2d7f5,동결 모델·사전 명세
+artifacts/frozen/benchmark/v1_manifest.json,frozen_models,open,2526,16329f5147ef4cf846a293e8f51c59b210da25a8a091243f8758651ae582bdd6,동결 모델·사전 명세
+artifacts/frozen/benchmark/validation_scope_note.json,frozen_models,open,731,c6c66e8e34b495696130c60211e4dc3e3b1b6ff3a49514e06fcba739bbca03ee,동결 모델·사전 명세
+artifacts/frozen/benchmark/verification.json,frozen_models,open,1116,94ffd3645645df36aab0f09672684b45ec0398f8fd21fd771e2afed1bc3a084c,동결 모델·사전 명세
+artifacts/frozen/benchmark/verify_dev.py,frozen_models,open,8026,d5040c624a5040b857d590de06d48933b085b630079a8ec9c4ce692c913df399,동결 모델·사전 명세
+artifacts/frozen/uncertainty/design_effects.csv,frozen_models,open,844,d92667e09c01d51a355290d309909a7d19b597b69a44c10c4ee02cd711ca49c7,동결 모델·사전 명세
+artifacts/frozen/uncertainty/design_metrics.csv,frozen_models,open,171031,627f8a26af63e6aa54fc5f7f620fb602f2fbcd5edf6310afb1fad5916c5f2adc,동결 모델·사전 명세
+artifacts/frozen/uncertainty/rank90_top50.csv,frozen_models,open,40082,1496054539695a441ed84be5203da29a86401091cc571aef2d1223d0bbf42029,동결 모델·사전 명세
+artifacts/frozen/uncertainty/robust_priorities.csv,frozen_models,open,172,e916801404f85ddf220d09722d24601f0dd351237e5f01a28b555e5a7f311131,동결 모델·사전 명세
+artifacts/frozen/uncertainty/summary.json,frozen_models,open,2792,b2e634b9081bf35fa3364f7666407ec1cea79c777f7ccd3f20f2e6189b925371,동결 모델·사전 명세
+artifacts/frozen/uncertainty/top20_inclusion.csv,frozen_models,open,290807,22ef8eac335c4f84fd0bcb896354539cb1b70f20d4186e1447f6457433699686,동결 모델·사전 명세
+artifacts/posthoc/20260926/api_scan.py,results,open,1350,15d034e9ba529ab7251cd6aa2e670fa12db3cae3d8590dcdbf587bc84ce6899d,점수·지표·요약
+artifacts/posthoc/20260926/api_scan_summary.json,results,open,13274,93070697b996a80c6713c2bd8d6dff0e16d2782c6f75fc0b598bfc0bbac24fdd,점수·지표·요약
+artifacts/posthoc/20260926/compare.py,results,open,7242,eb0a525b566a51cafee41bf804c1d9c0481a64e25cd3bd4ce0b3c1d7965c4ef7,점수·지표·요약
+artifacts/posthoc/20260926/posthoc_h_20260926T134611Z_3d14fc1/cdri_variants.parquet,results,open,468162,1e903b3d2cee245231fd684579ef9d904dfa4740cdc3ab484b66716d9e07a56e,점수·지표·요약
+artifacts/posthoc/20260926/posthoc_h_20260926T134611Z_3d14fc1/h_variants.parquet,results,open,2625121,5cf2e89ff1d000e60fe530a7d6daf2f57b6c677ce15a82c7718bf6fc4fab768d,점수·지표·요약
+artifacts/posthoc/20260926/posthoc_h_20260926T134611Z_3d14fc1/summary.json,results,open,9660,9739ff1e2fe42b167d9140612e71219bb571f57e6de4ffdbf44a50cc59b2d2b5,점수·지표·요약
+artifacts/posthoc/20260926/posthoc_h_20260926T134611Z_3d14fc1/top20.csv,results,open,3525,3d0ff1a1239d113d0bf96635e26dc20c15a6897052b84974e51f1444c986322b,점수·지표·요약
+artifacts/posthoc/20260926/robust_20260926T135911Z_3d14fc1/summary.json,results,open,2416,1116e9e91c4145f23962c0bd7e6485c6df65c3b2db8bcbdce119baa8131c7540,점수·지표·요약
+artifacts/posthoc/20260926/robust_20260926T135911Z_3d14fc1/walkforward_variants.csv,results,open,4933,2a1b82eebd265aa8bed6bb6eec4938093b432b2efea13f09be0faa07303a3cda,점수·지표·요약
+artifacts/posthoc/20260926/robust_explain.py,results,open,6332,08be9f33293377ed910f6f940f73f34e2ca984c5f6ff46707091577be6582ede,점수·지표·요약
+artifacts/posthoc/20260926/walkforward.py,results,open,5056,3cb108c00b09edbf28571e370ac6690c250e429e007e978e746b2d4eb5e99b10,점수·지표·요약
+artifacts/posthoc/20260926/walkforward_20260926T135215Z_3d14fc1/metrics_long.csv,results,open,26587,adb0cb605a19fb22de6beb6c33f065efe9e05f698b9deda393635d4a57d9eb96,점수·지표·요약
+artifacts/posthoc/20260926/walkforward_20260926T135215Z_3d14fc1/summary.json,results,open,1010,72457ed58477400ce03a13c45f5f3757e4b2930f32e318444a5115e9c9881bfe,점수·지표·요약
+artifacts/processed_snapshot/SHA256SUMS,derived_data,restricted,361,ba7526390fb48f91d91b0dae8294d8ce6edd597439c7b1c1c3168f26de9435e9,"격자 인구(SGIS)·흔적 라벨을 담은 파생 자료, 원본 조건 확인 전 제한"
+artifacts/processed_snapshot/features/grid_features.parquet,derived_data,restricted,4316848,092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157,"격자 인구(SGIS)·흔적 라벨을 담은 파생 자료, 원본 조건 확인 전 제한"
+artifacts/processed_snapshot/layers/cdri.gpkg,derived_data,restricted,4902912,f3e0e7293377db2c9366f6c881981f7ed7fcfb354a60eec2184436372005d7d9,"격자 인구(SGIS)·흔적 라벨을 담은 파생 자료, 원본 조건 확인 전 제한"
+artifacts/processed_snapshot/layers/layer1_flood.gpkg,derived_data,restricted,26464256,0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350,"격자 인구(SGIS)·흔적 라벨을 담은 파생 자료, 원본 조건 확인 전 제한"
+artifacts/processed_snapshot/layers/layer3_vuln.gpkg,derived_data,restricted,26574848,6a6888d50283d6842853b1ab154392937ccdb2780e5c7568dec5e7e9c70fa2f5,"격자 인구(SGIS)·흔적 라벨을 담은 파생 자료, 원본 조건 확인 전 제한"
+artifacts/q1/M1/m1_20260926T160821Z_a181f6c/decision.json,results,open,8653,93bcb6321166f8f141e9595f67bf85a05b994e21f5c443b6199927fe195dad30,점수·지표·요약
+artifacts/q1/M1/m1_20260926T160821Z_a181f6c/hand.parquet,results,open,1588368,64e5a41b01127ac276464773cd4daff0473b7b3ba37cf62645100b7c8f9dd598,점수·지표·요약
+artifacts/q1/M1/m1_20260926T160821Z_a181f6c/median_table.csv,results,open,27110,99dd2094dd4a52fdad703090878e0cf5638309efb6dff5ef92544e6fbea1f9d7,점수·지표·요약
+artifacts/q1/M1/m1_20260926T160821Z_a181f6c/metrics_long.csv,results,open,366141,6aa93c04f15a79c0f4601c31f604217d14c6d26cc4f15e1f4a72ffe688695d78,점수·지표·요약
+artifacts/q1/M1/m1_20260926T160821Z_a181f6c/summary.json,results,open,3718,bbb767af8dda845c71559e5f9885cfb13d7e4a6ac76a2ef52dff1402f5fadcc3,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/chronology.csv,results,open,11172,5a133c8285efcd63608b692c08855b1607ceb182bb1f2d1772e5f45d6277265b,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/holdout_compare.json,results,open,12799,f34d0c6ce6542dd9627fb62414cdaae8d95fa5453bb867b220660baed80a0b8a,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/development_polygons.csv,results,open,24415,f9ce2b0028ed08b70398a6bf8cc4639ec25adc7d43b8f557d78c7071a62b2fc8,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/development_summary.json,results,open,2005,98230d47ccdde5a0797114a8210016142e4ece12d92d1ddc26f3f2876a04782e,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/holdout_polygons.csv,results,open,34153,b0328146e6739850f2c49a7c6f365bfa37d692d589074db7fd9435fb38673a51,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit/holdout_summary.json,results,open,1869,4f100d8712377de5dc471bf84e6163b6e9ccb996d6e169177d9011ebaba78482,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/label_audit_compare.json,results,open,2948,cebe23f9f69d5549d0e7892562c69e84fbe93994cd4271bf5941a771e88b8210,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/metrics_diff.csv,results,open,386488,7eb55ac0bd1d9210da7fb0d3b5eba309fed3aa7f5cdbb629131d9b207a84c8eb,점수·지표·요약
+artifacts/q1/M6/m6_20260926T164903Z_7f7968f/summary.json,results,open,2621,462462b576ef4d0f242896d2163d71a39ce796be2657d3835232914e5437fb14,점수·지표·요약
+config/config.yaml,code,open,6469,cdee32d38195be0b9791aa49b8bd89fe83f1f929fc6454f4407fd291c7bf8059,코드·설정
+config/data_contracts.yaml,code,open,9767,ef1714d4f803254835d24e3eb48f657693d7770de34e2750b5f95186c2ceba6b,코드·설정
+config/flood_traces.yaml,code,open,2195,6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8,코드·설정
+config/holdout_reference.yaml,code,open,506,ded997ef959577f72b17988113cd2614e8e0ea0285e8378ccce4a519935facc5,코드·설정
+config/m6_chronology.yaml,code,open,12278,982bdb69ba2bc35b50b8c76e28cec7c98c65040a4c79a5adae7aa33870fe9674,코드·설정
+config/pipeline.yaml,code,open,40275,9bb9097f863d994f46ea8f36d28be9f26ba1e7244765bb712732890d35b354b4,코드·설정
+config/raw_quality_waivers.yaml,code,open,4281,bf5d14c7e2c8a2011ad8d402b27299a1863ab7d20d5a8ff6e2d38738e744ec7c,코드·설정
+data/external/README.md,docs,open,915,036be3a19db9c667f4ddfd194f09f82fa48ed616ab74c6537292bae88bcc79f3,프로젝트가 쓴 설명·목록
+data/external/adm_dong_names.csv,raw_third_party,hash_only,4893,28cd7e5ac7b43ba5f28a3529b7f2b367e5d1b9b9bd87b514f049ce47f85401fb,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/external/pump_stations_geocoded.csv,raw_third_party,hash_only,4536,cf7b5f208b2c4653b8028845bed6c78a5b590c9b43957b3c6b3a634d8ce3fa99,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/external/stations.csv,raw_third_party,hash_only,12382,3becfc4a83cb10bb490f696b20426a49dc0811ed1c2cab6dde739f5bafc3a085,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/processed/README.md,docs,open,1618,26439db25108506c8121cc21ea7e5cccb2299232c9f3f678b48e99dbdb783a56,프로젝트가 쓴 설명·목록
+data/raw/README.md,docs,open,8249,abf2d8a927a0006d1792ef7d18883175197c7cfb88b75a9d29ea2203060c06eb,프로젝트가 쓴 설명·목록
+data/raw/dem/public_dem_2025/35810.img,raw_third_party,hash_only,596749,5dddaaf7b05ee3fa7542425fafd5dcbfeefab652da97ff0a183220d6e4c1c033,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/dem/public_dem_2025/35811.img,raw_third_party,hash_only,596749,dcc82ba0de03a95bcf95acc06ac980e22d04b4b448f756fc88120a8beb31699d,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/dem/public_dem_2025/35812.img,raw_third_party,hash_only,596749,3355a451c2feb357d471c9ba3e15f42ee6e9b1498dc64136ff51bad412f275f6,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/dem/public_dem_2025/35814.img,raw_third_party,hash_only,596749,991bf41d5e6b895cb6a0021399cf6eee7d7e787efb48ae8bf9ef0e20e9e020e6,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/dem/public_dem_2025/35815.img,raw_third_party,hash_only,596749,793d3c52c70b7e7e786c19b1ce6a1f8cc6dff693f05385c841a936146fc2d9d9,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/dem/public_dem_2025/35816.img,raw_third_party,hash_only,596749,a4d88bf1b30c8254509d275e84af880bfb6002cbbfb7b3ed3f126623e2646ea3,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.dbf,raw_restricted,hash_only,1309,7946c9ed804026a3bb16ce4692561aea35b9eab45ed3dbb5e9f78e52ed5498bc,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp,raw_restricted,hash_only,4700,2d413db4c2db63eb158da9ec475652acb5b7278dcdcb71d68333843007dbd517,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shx,raw_restricted,hash_only,252,3c6042c07d1014bd095dcd9ba5237c8d408ac273e05c51f983211bfbab0942de,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.dbf,raw_restricted,hash_only,7026,c654ec85a36dc2a1b620485a1fc774ec387df0295a0e66140e2ce480e6d1573a,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp,raw_restricted,hash_only,4648,89f279f22fc38dc99fd5baed680674e8364ae3cd010fb1af76c37a411e095c76,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shx,raw_restricted,hash_only,244,02f68b906184349adf37e72643b4ca376e240c3553a63ba86fd379d4aa9fa914,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.dbf,raw_restricted,hash_only,1280,d3b42cd96119cfb258f8c88cee829a847f57025c1f83750e8123e6d277ec7913,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.prj,raw_restricted,hash_only,413,bf9ecc19461c8097681c023a9352164b9538ebb6ba7dc970035c7414bae2323c,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.shp,raw_restricted,hash_only,19552,d70f306aa9ed60f345c00b69f881180af4e26cdeef23616a90db7e843f6c62e3,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.shx,raw_restricted,hash_only,236,fd227d9f85175c3fcfbe6ffcfa78786e09c11df359321b6e77a48fcfa52bfee6,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.dbf,raw_restricted,hash_only,3466,7055b951bf97885721e350f3e786f379707aad0904528d64977de54bddbdbaa2,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.prj,raw_restricted,hash_only,413,bf9ecc19461c8097681c023a9352164b9538ebb6ba7dc970035c7414bae2323c,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shp,raw_restricted,hash_only,17288,23b2394903b3c7e0b5eeb7ad8c76e5939ae62ee6431eb5e382633902a88beb57,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shx,raw_restricted,hash_only,164,043f973b9bbd0bec515ec88d4a6d8e8b420896e29b414d71cd9b42bcb0dabc93,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.dbf,raw_restricted,hash_only,1280,d3b42cd96119cfb258f8c88cee829a847f57025c1f83750e8123e6d277ec7913,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.shp,raw_restricted,hash_only,19552,b9ba7d0f32c2a8142b34be1cc592058c46f824a080aede58b2c2944e46eaafd0,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수심_L100/L100_000_5670000_2024_4812000000_0001.shx,raw_restricted,hash_only,236,18c6f6511c103bcbb984804e7581f241e06ad1c528f06b1cb01411e553de7e8d,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.dbf,raw_restricted,hash_only,3466,7055b951bf97885721e350f3e786f379707aad0904528d64977de54bddbdbaa2,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shp,raw_restricted,hash_only,17288,c154cbcbceb1e38d7ad3bd030082902f3260585a13f9750ef52c6d5902d5a9f3,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2023/02_중부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shx,raw_restricted,hash_only,164,66b3da5cd80c6cd985797f34f2c024a9a932e7f5c4fa13900fd1cca7ee559dd3,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.dbf,raw_restricted,hash_only,45365,b4c0b10acd28936c72e6be4c5f70bc77c319b2e73217621ae41c2f2a72f30e4b,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.shp,raw_restricted,hash_only,36632,ddab42d8c53874ea31367608517c86efa8b80c05a9a66bab8609b9a8bef45cea,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMSL_L100_마산합포구.shx,raw_restricted,hash_only,796,58cf0b4fc1c7152060b9a46e348a9d798255d540cd7300e2b8dea063344309f0,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.dbf,raw_restricted,hash_only,87358,05564ee157c76a205e24d70a3f3d022151a1f5bdecaca01e633e96eb8d270de4,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shp,raw_restricted,hash_only,36632,d3849c37801eda5e82df927fe6992d46c017b89f541840f119e405ebbbf711ee,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shx,raw_restricted,hash_only,796,bf191aad8b14c6c76f8f0d32ea211f6a39f06017272c1a00c360c40b75bdb674,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.dbf,raw_restricted,hash_only,3488,feed6086b8d92556a057ac6d2928d87355ebcc244197d48f7c83f86fbb7633cf,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.shp,raw_restricted,hash_only,1468,d729923b29bad235708ad8784c6522357d913edd1f9945137272edf992fefb1d,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMSL_L100_마산회원구.shx,raw_restricted,hash_only,148,3a1e2cacd30307e318632085674bfb773b86bc8542b74962cfcc7f025c008659,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.dbf,raw_restricted,hash_only,6682,d8338d3455c70ede06f08e3f3ccb2bf0780834537d6834984b13585c8e7707ae,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shp,raw_restricted,hash_only,1468,c6fcfd99d6d23852308546a2d2802dc1eb92fab24c2409c513d440f6fdf7ecc4,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shx,raw_restricted,hash_only,148,3a1e2cacd30307e318632085674bfb773b86bc8542b74962cfcc7f025c008659,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.dbf,raw_restricted,hash_only,2971,cafaebde9a0ac9d8ede3a1e75cc6f2f4701883385cc0dedeec8b4bcf4e9c82fc,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.shp,raw_restricted,hash_only,1276,ef3f5993bdb1175e485fdc1a6a5e2a6f3f456f4577039e7acdf38bb3685e3cb0,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMSL_L100_성산구.shx,raw_restricted,hash_only,140,662fc15daafeb801604dbd2b6815711c1493219d3be8f0c776e095b45a6d909a,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.dbf,raw_restricted,hash_only,5686,8aa9835fe24e2432791b1aaff3a82d35f53b114268cda6ccbce8fad6ccc39089,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shp,raw_restricted,hash_only,1276,adf6072f3f21e21fc84e7634b5ba76ec264ad233b2c61a454e2c29d92f075c5f,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shx,raw_restricted,hash_only,140,662fc15daafeb801604dbd2b6815711c1493219d3be8f0c776e095b45a6d909a,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.dbf,raw_restricted,hash_only,8658,d1d74112567305ed920c2cf15dbb5701d2515988963fcd0a643bc03990a4a418,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.shp,raw_restricted,hash_only,5524,05bfd34493798a9c81932923a1e27158b3e6713ad7f9718b8b6dfbd3a4555eb0,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMSL_L100_진해구.shx,raw_restricted,hash_only,228,aace013f4f39fdea205ce3b1ee2e1b94cc17a02cb041d9885099c1b0af0d27a2,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.dbf,raw_restricted,hash_only,16642,d2e0810fafda6c64622f2ef8316ab9db9f3849a057548e3173db29b20b937152,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shp,raw_restricted,hash_only,5524,a0e4dca031fde7c8feb4555b695d1690e558064fdae51b9723ac9568d5e46320,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shx,raw_restricted,hash_only,228,aace013f4f39fdea205ce3b1ee2e1b94cc17a02cb041d9885099c1b0af0d27a2,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.dbf,raw_restricted,hash_only,32440,784b0a92215aee2d23efa9e0225bf01df149f53b82b56b4feadbebfac4c75571,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.shp,raw_restricted,hash_only,34576,a516ead0c7888f14fd46861a8fac3be05d8796e6791c1a5e3648439482490809,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMSL_L100_의창구.shx,raw_restricted,hash_only,596,aef3b86105e04a9f845e4e71024b4122a2ac88a063abf3a7f97e25c8b0322712,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.cpg,raw_restricted,hash_only,5,3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.dbf,raw_restricted,hash_only,62458,bab92cf9509cc86fea91c12a981841122192c4f56c3acdc7dea12ec848830ea3,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.prj,raw_restricted,hash_only,422,3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.qmd,raw_restricted,hash_only,793,7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shp,raw_restricted,hash_only,34528,47fe3dad1fbf9c0c42cea81d805427d7e983e3c482bf2779b5e68ba25efe1b95,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shx,raw_restricted,hash_only,596,52327a553851a6cfe4cede6b37e4ce7186ad4a18af3feb2e08a5f622d3250abe,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L100_침수심.dbf,raw_restricted,hash_only,1360,e7b6d92a76c031f186d416b016e6dd46d077043c126306a57263d864cde567b5,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L100_침수심.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L100_침수심.shp,raw_restricted,hash_only,10632,a91701f816d82447052462aef6e51df9893e0cd0a43f523b4edd9424ca51bfa7,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L100_침수심.shx,raw_restricted,hash_only,244,561d95cc481716321c5bcf1721b5004240dea1ef5400faa7cb181ece1369586b,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.dbf,raw_restricted,hash_only,4866,99a86ee28d9293714d77e61594f96493c30dac007eb7a8ae1f7c1bd88cc5bf76,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.prj,raw_restricted,hash_only,422,dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shp,raw_restricted,hash_only,9920,ee9e441161fb821a84249b5e259acf147b1d9bf09bf763dde9002614fadd68ae,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shx,raw_restricted,hash_only,196,f724b950bb2fb4ef8727413d38070cee81e821c65785ab5989b70c187de1ca36,"창원시 정보공개 제공, 재배포 허락 미확인 (PAPER_ROADMAP §7)"
+data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg,raw_restricted,hash_only,299008,5df8b3e3771115eeee1114c785425d74bc966da0ce87809236c45b8ecdbee29a,재난안전데이터공유플랫폼 이용 조건 미확인
+data/raw/flood_traces/safetydata_dssp_if_00117/collection_metrics.json,raw_restricted,hash_only,923,976f6757290ec6e6be97e82363342e77da6bc7d52eb731a3f0f66c9a1528f789,재난안전데이터공유플랫폼 이용 조건 미확인
+data/raw/open_data_manifest.json,docs,open,6800,8b7dbe0c49188357d31a2d65e7f43ebd6939021903708bcb53f97f9df6bd78e8,프로젝트가 쓴 설명·목록
+data/raw/river/경상남도_창원시_하천_20250203.csv,raw_third_party,hash_only,8176,ded88dd5967a89e2a7d200530708590922b40bc5bad77b31650150167d3a6a55,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/rivers/osm_waterways.gpkg,raw_open,open,389120,7047fd38c251bdd12a595b2f4f89b4121cd04f43842227477c144261ce1bd894,"ODbL (docs/data_access_log.md #19, data/raw/README.md) — 출처 표시·동일 조건"
+data/raw/shelters/changwon_facility_frequency2.json,raw_third_party,hash_only,101004,24f8e05da16a4332f5b3df71782317c8d4953651f6df5bafa64e3774f8e04ca5,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/shelters/changwon_shelter_frequency1.json,raw_third_party,hash_only,86134,f8f4d07ea5e2b95b9a33bb6226caa93e0b707b453c1712dc0b351db2ae3c97bc,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/경상남도 창원시_시간별 강수량_20250923.csv,raw_third_party,hash_only,12597778,38866ebc0ad1e924e4af49250f7ff80208e32c9e6210878f6c6d875c4b8b1177,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/경상남도 창원시_하천수위 통계_20250922.csv,raw_third_party,hash_only,896642,fb5e223565d5618b0df7c9924b22070cc9e4c8b7b3a9622c9d744928896ddf2c,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/경상남도_창원시_배수펌프장 현황_20250801.csv,raw_third_party,hash_only,1348,f380cfc77e14275f53ff59ad67208214550bd0dde7b374108466034d0d333fe4,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/경상남도_창원시_배수펌프장_20260731.csv,raw_third_party,hash_only,3131,0d80334ac20dbb26aad10b5840b3bd9614547ddd1f18bcf2c67da35e288ce636,"제3자 자료, 저장소에 이용 조건 기록 없음"
+data/raw/전국배수펌프장표준데이터_20260905.csv,raw_third_party,hash_only,99125,47e9de7b76180a3d6581f689602ad178d1038589e083bd72c8edd2dcb81560be,"제3자 자료, 저장소에 이용 조건 기록 없음"
+docs/ANALYSIS_PLAN.md,docs,open,17400,266300ceebbb5cec9502738be4efd2fa19f2fe4332156079b5ce436cb3a9a238,절차·보고·연구 문서
+docs/CDRI_GRADE_SYSTEM.md,docs,open,24091,c7e43c0dcecbbeb7bc74f98225bcde6b55196714ffc13008e9cf9e11c49a52c5,절차·보고·연구 문서
+docs/CLOUD_TASKS.md,docs,open,7462,487ae33c6cb8b73cb516d81f1292cc7a2bdcdeaeb9f88a064f732cfee8cb4da5,절차·보고·연구 문서
+docs/DATA_CATALOG.md,docs,open,43219,40e15d9540eff654735f9e6a80f87f41a03f525c9ebf515c66016af8d3770d0c,절차·보고·연구 문서
+docs/FORECAST_PROTOCOL.md,docs,open,16218,90bd8a7d147e6113339d8b105ede46fd1c302bbacda38b02aa31fd4296ab3b42,절차·보고·연구 문서
+docs/FORECAST_RESULTS.md,docs,open,7449,d6907f12a2963d63fe673eb273b9f775f083923b2e4888942f32bae7f0a957be,절차·보고·연구 문서
+docs/LITERATURE.md,docs,open,37075,702a3c5b9ae6e739fd5e6128c3c5cb2c55a36aee511ae56e589ef20f708be211,절차·보고·연구 문서
+docs/METHODOLOGY.md,docs,open,68744,5a86ebd5f08e07cb22235734b0b9d4de8f226bdc31f5a60d93511bf343a3fd44,절차·보고·연구 문서
+docs/PAPER_ROADMAP.md,docs,open,14095,b83e66df45ce44fa07783b6b555cef7c71aadca42f40967d2c2ffdc30355499f,절차·보고·연구 문서
+docs/PIPELINE_DAG.md,docs,open,16725,89454a18c45d67ecc48ae1dd0427b1e69fff84a2ea5302ec8a0abbd3e83042c5,절차·보고·연구 문서
+docs/PROJECT_STATUS.md,docs,open,23564,3329097b14a9c67038324d41dc953b26411d70c01e69c6feb4257c96c26f3d1e,절차·보고·연구 문서
+docs/RESEARCH_HARNESS.md,docs,open,22394,cd49c6396504aac4c4ca73517685f8045ff3535cd195f91cf9966ae8b5cce4aa,절차·보고·연구 문서
+docs/RESEARCH_PLAN.md,docs,open,51062,cd360f68dd250c11ebc2b15e7d5f74d17d5d29fc983afb7d2a3bd1b85bc126f5,절차·보고·연구 문서
+docs/REVIEW_0916.md,docs,open,18771,4fdd09dd125024b2d90a7904eb18022b0e2b97e44a0db9cac100769c67f57e1d,절차·보고·연구 문서
+docs/SCHEDULE.md,docs,open,8916,df8e51963b7fe9986d03e470334023eb278e1545388376bf8ab2fcda24aee7be,절차·보고·연구 문서
+docs/TEAM_TASKS.md,docs,open,15260,ae48bc8f4ffb9ed1b86f73e3e96dcb1b255749182b7fb5feab1d1fd46109e553,절차·보고·연구 문서
+docs/WORK_PLAN_0914.md,docs,open,21688,af389c14fabcf3e66fb71b27307e68571bd355d5f7d97c4c6f7454794cbdae32,절차·보고·연구 문서
+docs/XAI.md,docs,open,3322,dd7a4c27778251dd94418c77b1878a7452c9d37a85f873a4f7fdaac12202ac72,절차·보고·연구 문서
+docs/XAI_WORK_PLAN_0917.md,docs,open,3876,5cf5b6cdfcfe0055852c8dacb872afe9adf72cd0f3e1e5c6613b8eeea3ace9f5,절차·보고·연구 문서
+docs/data_access_log.md,docs,open,10326,f7bec51d3205ce747f67eb06fe2daf64f9fd76ecdb728b030ee6c80e23f8762d,절차·보고·연구 문서
+docs/data_acquisition_todo.md,docs,open,7603,bf4bd682e6908be1b49fbe1ddd2da578f73e4036446ad5913bd2054a48a233da,절차·보고·연구 문서
+docs/data_dictionary.md,docs,open,4532,96d677fe32c1e6da7d35ece177724e5c997c08e6e0b43c9f4ddb2484295757e7,절차·보고·연구 문서
+docs/data_gap.md,docs,open,5285,08e77606c76c724a9375ec400cd55d169ef3da7ebc01132d1759e87e1f2691f9,절차·보고·연구 문서
+docs/decisions/001-layer2-design.md,docs,open,6471,cf55f721f6378b593621b2458d470d1128155737d7621423a2926ae3d0eec0d2,절차·보고·연구 문서
+docs/decisions/002-ai-positioning.md,docs,open,1562,b2da2b3e7e0de64c9f1822c82d47aa6f5d63fbaf41f54af4150c3ea9b9e1ce21,절차·보고·연구 문서
+docs/decisions/003-grade-system.md,docs,open,5197,488719c4c1c731b03c60093225e8277dd46f3dc0e600231cb54b350c51a589d8,절차·보고·연구 문서
+docs/decisions/README.md,docs,open,1405,34bcce758168e075631591674b01d90acabe9ed037b8562ab0267fbee9f699d4,절차·보고·연구 문서
+docs/eda_data_check.md,docs,open,5781,dcd8fc86490710667db0c870ad3d3036008175265c35b0134be041bccb4884c4,절차·보고·연구 문서
+docs/q1/M1.md,docs,open,13022,8493b7df1563a03fb3c641d77459df1a159a0ec0d7375ca1f5589e0e02a31666,절차·보고·연구 문서
+docs/q1/M1_protocol.md,docs,open,8215,e311fe108472bb62c47806c3414b8aaa0f2bea2fadae47775d4b4fd44b5f1bb4,절차·보고·연구 문서
+docs/q1/M1_review.md,docs,open,14161,65a4715b4300c21c44d5ae1f51655137f09565416523f8b1a9a7455c00d9116a,절차·보고·연구 문서
+docs/q1/M6_chronology.md,docs,open,12324,7e498aee2a984ce8acc1c6e9966bd3eac692baef376f956018bc821dbd916813,절차·보고·연구 문서
+docs/q1/M6_protocol.md,docs,open,10818,a136585271d8b63e55c396e5eacc7af2e741d8bfd00367ce87b9a64f2699a1f8,절차·보고·연구 문서
+docs/references/.gitkeep,docs,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,절차·보고·연구 문서
+docs/references/정보공개청구_문안.md,docs,open,3570,28cfe6149e00d24c0a03b38e580d94d60d23ab3a6686fae3aa8e2e15b6e0f4f1,절차·보고·연구 문서
+docs/report_checklist.md,docs,open,3713,a0a9fb6d7a16b3b52a364808d468049f1ddaa45c07f1f843bba7f2de3a72d5cb,절차·보고·연구 문서
+docs/research_reports/00_context_brief.md,docs,open,3707,9dffdde58f21483914318746a8b7861d4ddd72b25c4791c776f62cbb0d7fbed2,절차·보고·연구 문서
+docs/research_reports/D1.md,docs,open,20017,bb9cbf0d922c7c28384e1e940a044baec0d49c9fa70579674f50a5c732956ed6,절차·보고·연구 문서
+docs/research_reports/D2.md,docs,open,40910,64392c8816767313b8ae906ed8a4aa1ba8cc7d8800c5c1d2a87c4ef58bc47231,절차·보고·연구 문서
+docs/research_reports/D3.md,docs,open,19845,5a1a778854a17a3481a2d5d4aaaf8011862bbf9905e5877fe2b963a0184ff374,절차·보고·연구 문서
+docs/research_reports/F1.md,docs,open,30832,df4d725092fb804e0b318d52635b4a0ce33ba4b10f000263e675ae9e6e2e96f2,절차·보고·연구 문서
+docs/research_reports/F2.md,docs,open,31306,207560bbafbe1ad2a1f323805c0418028d3936ffa8fa346a3fa06f568938bc65,절차·보고·연구 문서
+docs/research_reports/N1.md,docs,open,36127,0b1823ef534787b2bef89adf4b0d3b642c6845866544e6cd1e886db61145a29e,절차·보고·연구 문서
+docs/research_reports/N2.md,docs,open,39584,fecb0c8ec8ea275e9d3611ef814204e7b471940fbe2c23c5bcf1a70e1030cbb3,절차·보고·연구 문서
+docs/research_reports/Q1_literature.md,docs,open,5426,49a1bd2941f7506c0dfed159369d1857cc60633e1138104038e7bdcad77b8df6,절차·보고·연구 문서
+docs/research_reports/Q1_review.md,docs,open,7840,cb98c9af3a8edf36a43c4371e88c45f3828a006ca2117e042779f6823515ac7a,절차·보고·연구 문서
+docs/research_reports/Q1_verify.md,docs,open,2680,112605a52adc7ad94693567e5f8990695c5225a922d8f998491343f7210a47ae,절차·보고·연구 문서
+docs/research_reports/R1.md,docs,open,32707,e2097d791cc0d6b77d31943053801f3c647dd7b9ecb3ba35f1b6b70e8ea74166,절차·보고·연구 문서
+docs/research_reports/R2.md,docs,open,34225,7c633ad8b7f2a43a1c036632f3fee32982747c0610bb9da9426bfbaf821d25a1,절차·보고·연구 문서
+docs/research_reports/R3.md,docs,open,32122,f346bd94c1d6fab3a3e6f49d600f3e4be18a5969c5dd9d267d4d48a8e819c49d,절차·보고·연구 문서
+docs/research_reports/R4.md,docs,open,38565,355b351d6745c84dc7e6b8d7ce1b31fa328bd0a98786ed37a99f9a9e2b159404,절차·보고·연구 문서
+docs/research_reports/doi_check.tsv,docs,open,3814,fbf5d3ce301294f36a9bfcac09149de164aeb90212c3e648d1cb360b5c83f3dd,절차·보고·연구 문서
+docs/result_review.md,docs,open,2182,1d95e76413a7bc63670c5319741feea98e932d4ef2999ff13e6c951a20fb90ee,절차·보고·연구 문서
+docs/submission/.gitkeep,docs,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,절차·보고·연구 문서
+docs/좌표_입력_안내.md,docs,open,7042,230429720fee3e1f99a631688e5728c9e09a31f00a23753ae53b476732168310,절차·보고·연구 문서
+notebooks/01_data_collection.ipynb,code,open,39942,8fc2204f4f6a3562488e32ebbf57b58f80e2cedb0d3d3b40e192dd5c033cf40d,코드·설정
+notebooks/02_eda.ipynb,code,open,353157,9c6260d6c32c261217a50f11d01808c4bd270501603f12b6244d66d025ce2ca8,코드·설정
+notebooks/03_preprocessing.ipynb,code,open,324608,f9b06de1ec2514dde3ed1864c106ee215c52482cc5c34201a6d71efc2614443e,코드·설정
+notebooks/04_modeling.ipynb,code,open,312227,b2017d4fef00cfed12eef4eed76fb211bbf8cbc9d72943f21602483c57885c12,코드·설정
+notebooks/05_visualization.ipynb,code,open,58138,502ffa13ba4da9fae91af41746c5ad3d1c9540709e0e9b72768c490b2d839203,코드·설정
+reports/figures/.gitkeep,results,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,점수·지표·요약
+reports/figures/cdri_distribution.png,results,open,52296,0c218f0ff1f190fc7998a08535b40c85c6127235138248a2fc5c4c339b8206c7,점수·지표·요약
+reports/figures/cdri_map.png,results,open,178228,acc31629565024de20f9206574c92282bab49592a2fdb58eed48ba9ae61153a9,점수·지표·요약
+reports/figures/eda_data_check/rainfall_annual_totals.png,results,open,52562,f5bfc45a4e5b8d6077058c5fe7d646ebc7604362caebc07f182db40a26c59cd1,점수·지표·요약
+reports/figures/eda_data_check/rainfall_station_coverage.png,results,open,86016,98ef5f7674b68d20062a46813730cbdb8e088239931047e0c91fdb74f85b883a,점수·지표·요약
+reports/figures/eda_data_check/river_level_validity.png,results,open,44841,60e81d484c0a66461334d6dd59ee6adb24046fdb433d1ad2ef1ef51fd547fe1e,점수·지표·요약
+reports/figures/eda_data_check/sgis_population_map.png,results,open,57685,dc1022a4f8a529cf2596315910db7fee979b8ed4c23911412384c4f76b2af451,점수·지표·요약
+reports/figures/grid_features_check.png,results,open,952019,ef5f61d7df1dd34140c2a377c9db69cd5ddc3e853503d52994df43b1e04eddc3,점수·지표·요약
+reports/figures/layer1_map.png,results,open,651757,e2217d8ba9faf411cd723c22f6fc477dd9855775c836eff0bf34ba0609b486f3,점수·지표·요약
+reports/figures/layer3_map.png,results,open,328893,cc5940fd8787f76ad21cf15a1ebe9db78500ab66b2cf0698bd06355d8859c571,점수·지표·요약
+reports/figures/result_review/cdri_distribution.png,results,open,79821,8f3d065108e7ad25f494baaf1bc95100d09065c24948438319f67d0e22fca0df,점수·지표·요약
+reports/figures/result_review/top20_vs_flood_maps.png,results,open,278604,ae32c1323ba9b36a89798ac59b89a7b41ea65475b201c2dc9d0a057e2d3a34ee,점수·지표·요약
+reports/figures/stations_map.png,results,open,195314,de4887f1761067e7c16a0081c5d4f75d5c4014144076c0e95f5a0d0d1bb61a42,점수·지표·요약
+reports/figures/top20_by_district.png,results,open,41634,6afc1d50c68adeef0a29d8ce289c7764e9e246014d166030d87acd4a61ccc792,점수·지표·요약
+reports/figures/xai/cdri_shap_summary.png,results,open,64694,d39a7e43b1a21e899889401ab48c23a63d3c8c1fa2d8294eb2436953ce67e10a,점수·지표·요약
+reports/figures/xai/top20_shap.png,results,open,148242,6a73598f59b030fc83c643d74401fbcb9423d447d942b9ce70d6a926b4f26cb2,점수·지표·요약
+reports/final/.gitkeep,results,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,점수·지표·요약
+reports/tables/.gitkeep,results,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,점수·지표·요약
+reports/tables/cdri_xai.csv,results,open,1668019,aa2cd29d302d230d02ac176d9c55d7aaaffa628bbf5b09b404ea25b34743227d,점수·지표·요약
+reports/tables/cdri_xai_summary.csv,results,open,218,bbfaf2a4683bea8cda191b5672a68baab46ef931bbb967f7ed4eb3da61dd2421,점수·지표·요약
+reports/tables/grade_by_dong.csv,results,open,2977,9354479c716877c5d9ab6c73d5ba79e0672f0b56f3d207eca8e11a6cd18529a0,점수·지표·요약
+reports/tables/sensitivity.csv,results,open,186,d310fae0ebf5b875552a0c49081403e04147642670eff13d96e5a19183a92a3e,점수·지표·요약
+reports/tables/top20.csv,results,open,15574,c2c4efa720e5e9d4275195efeb52b556ee5a0487752d70776b8bff57f9042e62,점수·지표·요약
+reports/tables/top20_xai.csv,results,open,3820,5d57ca1acd8fe3ac5c937c3fb55f231c9de89ee62ce7ec7a8205be82ef51a32b,점수·지표·요약
+requirements.txt,code,open,908,3c879a4440bd6b2126e6e16157d703cd7be898fc52df1befc5ff7c2cdb006252,코드·설정
+scripts/cloud_setup.sh,code,open,2148,074d2a7bec064f0a20940c51b14b613ae431ff203ac5b47f193e1421cb50219a,코드·설정
+src/__init__.py,code,open,66,4d01518d28c88521b71679d69be98ee32357de2bacab765b9afef824a306cafa,코드·설정
+src/agent/__init__.py,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+src/data/__init__.py,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+src/data/calibration.py,code,open,10959,d710ac2d260731a22c0e6c66148193990cb97d45b819531dc5328c813f1e31d0,코드·설정
+src/data/check_coordinates.py,code,open,3282,e1e7462138c7ce0b73dbb28ddfe97a8ddc64b6eebc67dc48cc94003ed633883d,코드·설정
+src/data/explain.py,code,open,1987,4a0e4b8e50a36dafb7be53e6faa8093a07fd49e491697edaac0953eb841a6880,코드·설정
+src/data/features.py,code,open,10522,3d146df91463acb72f3e2ce8357186445752bd2334845a315f1632f2cd5ee3ea,코드·설정
+src/data/feedback_manifest.py,code,open,8064,05f4cd37dfcf78f95073190b0a4caa0b1812f3148035f78d2d454b6e11dc9f7a,코드·설정
+src/data/fetch_open_data.py,code,open,4664,0959e05cb5a25803fa925cf3ceb7a1eb65557606e5199ad67c87d6bb0d2aba55,코드·설정
+src/data/flood_maps.py,code,open,4917,40559a5a2a232b72128b9293876bbbe420271b3d451d5b554bec180ee6b0e81e,코드·설정
+src/data/flood_traces.py,code,open,7354,4ef687183774c0d81267fb3992641520722efec241e5ee9b11ee243168e9fcb9,코드·설정
+src/data/grades.py,code,open,6603,3caaec7ba09ef0cb33afe840d96b10e5cfe74e945109a8badc31edaeefe82538,코드·설정
+src/data/hand.py,code,open,5962,0cf61d144567a3503a22a5cbaf3623fc175ab80efe25c04692ad1d7c67d3501d,코드·설정
+src/data/index_design.py,code,open,1546,c39f9a648686997a1e57199de08008c3c5971aaf8fc3f8cea015e9189e37d263,코드·설정
+src/data/index_uncertainty.py,code,open,12473,59893ec7bc1bfbf888e462c56b9dc9e402709d991713a21dbc1c241ffac58a65,코드·설정
+src/data/interpolate.py,code,open,6521,e6065050630c4d66f2b9674fa151c96b729a440d121fa88cbdc77a156002d080,코드·설정
+src/data/layers.py,code,open,10102,ac3bd91cb0a4b21de70d3500f401161178304d852c9d366430a4e1bdb06a5331,코드·설정
+src/data/normalize.py,code,open,13819,c2f82f497cc799a20f4cdaefad8cfb352229ee30a5aec84f0c759fcac5a77ecf,코드·설정
+src/data/quality.py,code,open,11456,bbb3eea32ff33c1e39046d424625008f903aa584847baabdf49740af9d81e756,코드·설정
+src/data/reproducibility.py,code,open,7066,d16ac754781974d8640930e1e0069f8c10bad521f8f8ac6f2b9530e222f2028c,코드·설정
+src/data/safetydata.py,code,open,5281,fcb366b19d7c7101fdf6a36ac88ba9dabc94c362360f4d24d43dc426331ed550,코드·설정
+src/data/sgis.py,code,open,4321,0f2071a13d4f3430cc22bfef474d6859c642b04db1762346f756c8514bc3a974,코드·설정
+src/data/shelters.py,code,open,1818,0afbdf9ad09042b1ac9d9608ce09c1ee7f885c918fe6fe699c39f12be6c882e0,코드·설정
+src/data/spatial.py,code,open,4530,f58cf6e57233006a7ca807b5dfe84154b04fed262acf16081e7968991ba03c1b,코드·설정
+src/data/stations.py,code,open,5640,84cc85aa4bb171fc58936eca2991f3480839c495a497a3002f25964cac76cc8f,코드·설정
+src/data/trace_events.py,code,open,5969,98f6e0e70f813d43ed670d42ea35d8cfd7b68837fab94ca8e2e2c33c86aac33c,코드·설정
+src/data/trace_labels.py,code,open,1245,a4c947b10b363dd5daece2b6cba1b1cb77a33f893e07e1950e7d8514e7149c7b,코드·설정
+src/data/trace_registry.py,code,open,2403,3fa2653d7b67ba4b3e6fa6b3dd433e7dc521bc83f432c0542aca90cc4782f9ef,코드·설정
+src/data/uncertainty.py,code,open,10202,f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21,코드·설정
+src/data/validate_raw.py,code,open,48154,e21a88178a37dd4c9ccf95287352b080379e14b676a02e53192eb6cdae678011,코드·설정
+src/data/validation/__init__.py,code,open,354,55a8c78c9f45162b792bc8f91791a25ea5d5d0fee16749fb5b4886109a295624,코드·설정
+src/data/validation/_common.py,code,open,2775,0fd136cffb9422aaf99eadaf60f56f0c4f5ffc356508e52230dce9e677eb2e3c,코드·설정
+src/data/validation/auc.py,code,open,4557,ec04b6caed647c4fadd6b6f3de54dfb02a0fd6261096eb363ec174ada4a44504,코드·설정
+src/data/validation/curves.py,code,open,6798,be655646c5fd49d7afa4ca53692d0c8eb0eaff9e76595f83a06dcb89b419cee9,코드·설정
+src/data/validation/evaluate.py,code,open,11610,49cfe9f4a86904b562f7dac3436c57fbe9c67fd608857ed9c3a32ad71c575751,코드·설정
+src/data/validation/resampling.py,code,open,4199,2a2a5b797c6b8574feb92309064105668690212f744d58a9cbee5235862b826c,코드·설정
+src/forecast/__init__.py,code,open,129,fc811997dfbc7c9ac03ee006d6351c4e9c2b08a746a5e33c33e15c1849d20e69,코드·설정
+src/forecast/catalog_run.py,code,open,6247,8ea5406bd4d52c54d47e8b0778e0bc5575416ca0856c7cb0072f1dbc7b4e7c0e,코드·설정
+src/forecast/collect_run.py,code,open,5118,a30391d48beaa42d94d835f53ee566cc1abd10b465cadb0bc064b46a605780bb,코드·설정
+src/forecast/combined_eval.py,code,open,6559,1d693965cb34f4a643f6eec957bbf0e34a3de2b2c399c1ae9e745bc13a484398,코드·설정
+src/forecast/combined_run.py,code,open,17046,488b0b63d97de6404c348772e903dcf30377b038358d42a3c8f5ca1642139ad5,코드·설정
+src/forecast/event_metrics.py,code,open,4646,adff2d0d1aaf7fe8d05c4b532eec949026f3e23f1423b9e9552ce5df55a2e594,코드·설정
+src/forecast/forecast_features.py,code,open,7307,e3902abaf3c00c09a22cf74ecf1a10b77b6ee6338e14f381d5cd413c85206a59,코드·설정
+src/forecast/forecast_plan.py,code,open,5568,2ff5c47467af2f5cfe3d33ff2a56776f0a146c81742e2a9b691323e6fbdeea46,코드·설정
+src/forecast/kma_client.py,code,open,11128,51f1495f9d4aee11563567c21e3d75efdf7bbb198188c1d929a6f3866cb1c6c3,코드·설정
+src/forecast/kma_grid.py,code,open,3262,db8e9bdd1a9ec5ad125b1c00b51a5e65dec102e301b5a5bba41ff05efcb2c191,코드·설정
+src/forecast/location_calibration.py,code,open,5347,15c48c6268917103fa8d499d961b06da6e3f79efd97025edd5320416d75a1dca,코드·설정
+src/forecast/logit_prior.py,code,open,4045,1ca9265257ccc166d6cc36859906acc102cc995c3821ac8471f8edf78ed4a2f5,코드·설정
+src/forecast/scenario_maps.py,code,open,4222,c21dc8e537212abc135dd0b0c459f894fb2eda310e9f63562d81e5dc8a05b7ae,코드·설정
+src/forecast/spatial_refit.py,code,open,3511,7a89642654cc4cb5462d7fd9949f3ffe6ddd9321fc9457a377377ab72928f13f,코드·설정
+src/forecast/storm_cell_labels.py,code,open,3335,31fab54dce3060e665d2a2cf035d4ab1a8592b3b504b1d8fad5b38b7b8e8e47a,코드·설정
+src/forecast/storm_labels.py,code,open,6401,2b2ec72b77ec05972447550c380cd34648e38499e7e2c2a26060807d8d9c76e4,코드·설정
+src/forecast/storms.py,code,open,5454,e5bbc303d3b56dd153faff15331a20962dea069823b389bb267cee584268d1b7,코드·설정
+src/forecast/time_utils.py,code,open,708,3e78c3411eecfede9a73993afc87fd378149ea498fd4b2bacfa21f050ccbd912,코드·설정
+src/forecast/trigger_eval.py,code,open,12543,6947ed57eef7b1ccfad49e139967692527d8751abceac493f4ce158322bab8ef,코드·설정
+src/forecast/trigger_run.py,code,open,7655,89013516171d22c288dbce4bcdbcac4a0e3fa551a4a5a7b7f9222397c1d44da0,코드·설정
+src/forecast/warning_features.py,code,open,2144,9cf7f40d759dd3a573031317f20e0f82247622f36cc4cff0cc23267dc19f3f1e,코드·설정
+src/forecast/warnings.py,code,open,3238,eab89e343fa5d67d84d21793a5d754aab7c083475f908da2aeadebcbc807323b,코드·설정
+src/forecast/warnings_run.py,code,open,7753,fe34eae5cb7be3120a8bc20cc7e0ad90dc34475c3b1a50fbc074b44886591e14,코드·설정
+src/models/__init__.py,code,open,64,9796a244e66d0e6e05b4ee1f3b8ae461d1203c02c3a87ba7656f5f00ef2cd1f4,코드·설정
+src/models/benchmark.py,code,open,20130,e512b44ece64f155e2c01939ec7859df93dc38096772624bc49633e69003f62b,코드·설정
+src/models/estimators.py,code,open,4807,bde89fae3307bafabc1990219d60cd4ed118e0564cb258126e120e1874aae7c7,코드·설정
+src/models/features.py,code,open,3746,f8a99ae6d70d6298b5c0e5c214f630a5a5319825904e5f9468d3bdb827d9f583,코드·설정
+src/models/folds.py,code,open,7775,66b03ac443038189daf25e658a5ed94e62b93b018207a9055598b5852e63d457,코드·설정
+src/models/gates.py,code,open,1708,45cb8ecb147494a0a2eafa71b57a291e33493a81f3f3b06626ab1e3d2bda4cd3,코드·설정
+src/models/holdout_eval.py,code,open,7307,d66249706469efb48b643997b73f01af0bf93ea91330daeffcd908027088b45e,코드·설정
+src/models/holdout_scores.py,code,open,5648,802f9e7637c43009a0ea0dfcf719a294cae16d29ea432e1492415ffc956e4e2e,코드·설정
+src/models/label_audit.py,code,open,5642,1b8106ba94845be0f049dba1f411fccdcada8d856910e8883580249e2b7ef1c3,코드·설정
+src/models/m1_decision.py,code,open,4427,140b040bfa50f05c0a01009c5d3b8d730516b226df296ee6acac8980219d704e,코드·설정
+src/models/m1_run.py,code,open,8772,06f09a8d5cce9a859ed3118dd34020b7251298954b5d058d2fb1f1e680b5b133,코드·설정
+src/models/m1_scores.py,code,open,1894,fc363da2891a6b3197ff10270f9173ea17087fdac6ed378286d3d65ad84ee21e,코드·설정
+src/models/m1_strata.py,code,open,950,0a988a9903e93d9cef1ab4bdf265a48a9ef34e266f688daa0436deeccae3c854,코드·설정
+src/models/provenance.py,code,open,3477,87a18cff258e40b7c242b760554674bf85e9172e5325e573b8b797b488864841,코드·설정
+src/models/scoring.py,code,open,1588,466e67604585c23a02b8ba4c39171fd49e2f81192911f363cab70b04c62b9730,코드·설정
+src/models/tuning.py,code,open,1431,1602cdd1603bd8c021646555d1556f1f16d93fcdbadb1937fcad8a9e2c9462dc,코드·설정
+src/pipeline/__init__.py,code,open,295,945037349312ffeddebe11d56523a4c7eba6ff8e1d108cecb53a629965ea6f91,코드·설정
+src/pipeline/__main__.py,code,open,8354,874b2d51ad8f60b5094339b49a4cdb2a0c564177be549e34ede9a3caf64f486b,코드·설정
+src/pipeline/graph.py,code,open,8669,fa7be9ac5cde8d3c5d20de103d7fac3178097de843b699fecf52f51566d980c7,코드·설정
+src/pipeline/manifest.py,code,open,7840,38ed653ae98291f2879f1ba83773f7371918c5d57b7f892f781e74f17655ee50,코드·설정
+src/pipeline/mermaid.py,code,open,5323,190167a517a5df6ba014a58c58ee4f3162714c63c43656d00b2e861ce846a941,코드·설정
+src/pipeline/report.py,code,open,1386,cb733729a6acd7889baac2364c05262c9d23d9ba1d6c3934f23b1164530c968e,코드·설정
+src/pipeline/runner.py,code,open,9466,a700295cae66c36eeb8ebaa07ee8d78ea45a9cce7333508c39581bedd4c6ea82,코드·설정
+src/repro/__init__.py,code,open,94,e379e4b0e1cd79a73188eab4066b2bfbaddc7392fa5564a87b021001038dc825,코드·설정
+src/repro/audit_check.py,code,open,2497,22f73ae284d446f97e0b4599b31e10e379e76fb61804ffe723f989556afce6e4,코드·설정
+src/repro/chronology.py,code,open,5012,81c8db6338a3049768a4fb633a660b841062c1c4f634a3d658f088e541ef1663,코드·설정
+src/repro/deposit_manifest.py,code,open,4395,fdbb539c1d34a0b0c844f6225a3c492990a63df25b01f019d96adaed6d0868d7,코드·설정
+src/repro/m6_run.py,code,open,10374,fd955e67906349c196e9720e3d1ee2cfed4e783ebd0a2a39ba7a55eb4afb2fab,코드·설정
+src/repro/run_compare.py,code,open,6562,0bc6271f4413801f458680302982e178a93dcbfdbe2a07f02174dfd57dec8f3f,코드·설정
+src/stages/__init__.py,code,open,32,8058750679bd70e2ed47904627d9d3540cbb3a0f4db24030c490f697d90c5b40,코드·설정
+src/stages/h00_collect.py,code,open,7746,fad92877dc2f6f89b3c001c88e49ecebd8a30ac0a5595621f57c5adde0ce0fe5,코드·설정
+src/stages/h01_contract.py,code,open,2200,176a8cfc499d6b2b2b47f05e86dd00ee789951f2d31eda55896ca68f17d70e3f,코드·설정
+src/stages/h02_eda.py,code,open,6474,19a8981e0490adc54b36079110d374320fa4b44ab355ba27ec5eba789171866e,코드·설정
+src/stages/h02_normalize.py,code,open,5089,29d21edb194d28fb415477a4d9c3440709a97d9e6107c63590360cf0b8172af1,코드·설정
+src/stages/h03_spatial.py,code,open,10082,15d96b50c98e75365624c859f12d9b29f548f066c8e85573746d3afd7031b0f2,코드·설정
+src/stages/h04_features.py,code,open,14123,d6ac206b44081de48cc87dc164e14cb23e8b6df576c5fe59363969b879ea9405,코드·설정
+src/stages/h06_layers.py,code,open,33019,36acc6ed749790e4bcda2454fbd59abe4a9467dee3eff1dff8c4e77f25a8d188,코드·설정
+src/stages/h07_cdri.py,code,open,25371,bcd2ab02ae8244cd1a0817b008ab8773d7df9ee11e26d116fcb191da5a7e1b1e,코드·설정
+src/stages/h08_policy.py,code,open,10906,99db026662e5f89faa9e93185d0277f7d234015cac51f1e0698fce8403157845,코드·설정
+src/stages/h08_review.py,code,open,13138,0597db430e6d58fd1e2b643403cd0d58335878f8b06dd9e843c140c0f5736f56,코드·설정
+src/stages/h10_reproducibility.py,code,open,15592,2bba6dcd1b00d03f96288777d6d1ad60eca010228ae17ef3671cbd5da261b442,코드·설정
+src/stages/pending.py,code,open,2074,5da0d6824a680ec4e89f6625daedb885d38f12034c42f2b4e4d17572afa01316,코드·설정
+src/utils/__init__.py,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+src/utils/config.py,code,open,1269,d3cf096a8c841e2fed255ede86f83de81fb12807fc0dede1a359341bfe52675c,코드·설정
+src/visualization/__init__.py,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+src/visualization/eda_figures.py,code,open,4851,fa78c9931c55c9d807188fc5225ea190f75451fe783841ff9c247b93301b7b4c,코드·설정
+src/visualization/style.py,code,open,2819,e9dc7a3bcc12b596d2c7caebd6131e6a8bb76ba7d537c50e45387d46532b4767,코드·설정
+tests/.gitkeep,code,open,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,코드·설정
+tests/fixtures/kma/grid_PCP_2022011005_2022011006.txt.gz,code,open,2508,2e9d4f23b049f1f5d8b9acdc367c0da203b434d34577dd3b7bc5405db6202fd5,코드·설정
+tests/fixtures/kma/grid_R06_2014011005_2014011006_missing.txt.gz,code,open,1541,30737631e5f1aa85b00d9847540c2a56828a9523752bd628bbb922b3cc8261d2,코드·설정
+tests/fixtures/kma/grid_R06_2014011005_2014011009.txt.gz,code,open,3636,0e6e34e81a36db72f0b5a59044286d1c34d04d075208a792971dd9f47c1b672b,코드·설정
+tests/fixtures/kma/grid_R12_2012011005_2012011009.txt.gz,code,open,3382,3db74715fb2ad96e86232423ce0272022ff1a4c0160c4e6c1c57071ee9e18b58,코드·설정
+tests/fixtures/kma/grid_TMP_2024022505_2024022506.txt.gz,code,open,8383,2296bbf0345aa5f97b12f74b29ca617779d1dc658ef77559649276d9040029a1,코드·설정
+tests/fixtures/kma/wrn_met_data_201501.txt.gz,code,open,10841,423ac4f8d5e6bdcb63e9d7310f727d9f227d9a5df5944d80b68f7d098cf8d17e,코드·설정
+tests/fixtures/kma/wrn_reg_latest.txt.gz,code,open,5285,9f931558674b4f7d4342c0883a781fa9e1ab2a829f10eabab0761820cf943dbf,코드·설정
+tests/test_benchmark.py,code,open,9602,30acc8e7e3d1a7fe2240b453167121c1e16121969f1b4ee9f3082dbc1bcc96a1,코드·설정
+tests/test_calibration.py,code,open,8334,8318b36ce187d8578ce9bb50b5eec55fdc9910ab9733a4a08a8fda78b914f15d,코드·설정
+tests/test_explain.py,code,open,2819,44eeeb0866fd43530739cee222f5904aba54efb922770cc0ba16e43a0357116b,코드·설정
+tests/test_features.py,code,open,5124,addb4d65268ce86149726d4823ac06fd71d61e96b86131c75aec2b133422124b,코드·설정
+tests/test_feedback_manifest.py,code,open,10651,36db2619c67459692b2a00d6d5ff99eac061533f21c533a6ca55ce4086dc7849,코드·설정
+tests/test_flood_traces.py,code,open,15757,88303630a41e4c781c84ed782b90d7cce8a5032648e7c7a393d78e66c22755e0,코드·설정
+tests/test_forecast_combined.py,code,open,22830,9e5f56ec65796d79349c6fccb2b841e0d5727db80fa65541fdc8d6f731ddd876,코드·설정
+tests/test_forecast_kma.py,code,open,29618,9dd95ce7c7116fa1717bc3fdb8e7657324a3cbf966d823f8df91a7960f3dc0ce,코드·설정
+tests/test_forecast_storms.py,code,open,18144,62b1aa9da525ecc90a9c0bda25c3cd7f9fb88127b0effdc3d7f9e3a6df6c2c5a,코드·설정
+tests/test_forecast_trigger.py,code,open,45766,0794612ebad1609211009cada6b8a36a47996a9fe3194908336c30df8554788b,코드·설정
+tests/test_gates.py,code,open,3598,42f61a2421e95f9d101a4933ccefbd5ba0bb257ac01658acb294f42c232efb84,코드·설정
+tests/test_grades.py,code,open,5632,687e471d6b09f8614660115acd63b4cf3b731e592bf2ea68dc65260db3fbc5fa,코드·설정
+tests/test_h00_collect.py,code,open,7136,5f014b837b3d1cbdf33cad38c74a67bf02269e6faa6a1e20b1dc24edeaaea0b8,코드·설정
+tests/test_h08_review.py,code,open,3162,1392241ac998c98a914b656068e14acb4f7970be1ee95074f77b881a9f021803,코드·설정
+tests/test_hand.py,code,open,3341,d2b41f12b97a0f6053191cdbdf706512002b79ed522a905559844e8cab008688,코드·설정
+tests/test_index_uncertainty.py,code,open,3513,e402612aa8075a51e91a72f9fa0fe9595c54f4283a3bfdcb9c3b2ccfa41401e5,코드·설정
+tests/test_layers.py,code,open,7634,f4104a3bad8df272214bc2345f60310369187ed0093a70424de94957548f7a57,코드·설정
+tests/test_m1.py,code,open,4678,8ce13811ab8d082fd04a77c91f4a6a06fdb6a0c98b783ae68e6f1241c11cd9b9,코드·설정
+tests/test_m6.py,code,open,11315,381fac6c26949e9a1607ceceb7f9f58dd4ab6f3d52ed461ae7a450bb4c50fb1e,코드·설정
+tests/test_normalize.py,code,open,11225,5663da41f421a4cc13d616e2e9b35ab03fe4e7ee4964b38e03f8a920334f4c09,코드·설정
+tests/test_pipeline.py,code,open,19242,9a77565e67cf777ff2bd08beb806c21759a8a036d1d40a41a1e2cad1fac49a12,코드·설정
+tests/test_quality.py,code,open,11797,f55a4bae38f5a43143a65c577a5adffac736c078248957b9330fff5a1c7e0709,코드·설정
+tests/test_reproducibility.py,code,open,39788,cd4f2fe7d7091fde9cb0b036d5451dbcf0a1adb410271aeada7835fecd6f06ce,코드·설정
+tests/test_sgis_age.py,code,open,1877,cc60a0f2b6e1cccc6cc73c3ec852f6ed2f65bb98737fb586cd818da8a5f1095e,코드·설정
+tests/test_stations.py,code,open,3800,4765854915ec4e6dc8e6afa1c9972cc06232ab3b2c538e2caf91e622cfc535c7,코드·설정
+tests/test_uncertainty.py,code,open,10682,8b136ea23d548efbaf3142cd8a6e45e7572db090924e31e50e1bdb2d043162e6,코드·설정
+tests/test_validate_raw.py,code,open,24737,17b40000c753510444ad7dfa20560bbfbe85a236c2c8a65fe42ce237d2ecafc2,코드·설정
+tests/test_validation.py,code,open,11387,88d6e4f8f49b409d017758f77fb98029a518517ca154457756caaa5964ebf998,코드·설정

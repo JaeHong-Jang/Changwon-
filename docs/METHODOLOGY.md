@@ -994,6 +994,9 @@ R4→R5)에서만 발생률이 오르고, **R1·R2·R3 은 사실상 같다**(0.
 run_id `holdout_20260924T100939Z_ae9c122-dirty_cf388a23`,
 `artifacts/evaluation/holdout_2022_2024/holdout_20260924T100939Z_ae9c122-dirty_cf388a23/summary.json`과
 같은 폴더의 `metrics.csv`다. 이후 표의 수치는 이 실행에서 왔다.
+이 실행은 코드 미커밋 상태(`-dirty`)였다. 커밋 상태 재실행(M6, run_id `holdout_20260926T164805Z_7f7968f_84ef30a7`)은
+게이트 해시가 같아 표의 수치가 모두 같다. 다만 사전 고정 비교 규칙(`docs/q1/M6_protocol.md` §2.3)으로는 불일치다.
+실행 메타 `union_area_km2` 가 2.0e-13 km², 면적·객체 단위 지표가 최대 1.8e-12 다르다 (`docs/q1/M6.md`).
 
 | 사상 | 폴리곤 |
 |---|---:|
@@ -1029,8 +1032,8 @@ L1은 사전 게이트 두 개 모두 탈락했다. RF-F1은 개발 자료의 �
 | 농경지 119개 | 0.608 [0.574, 0.642] | 0.818 [0.800, 0.834] | 0.450 |
 
 라벨 감사 출처는 `python -m src.models.label_audit development`와 `holdout`,
-run_id `label_audit_development_20260924T095654Z_40523c56`와
-`label_audit_holdout_20260924T095656Z_40523c56`다
+run_id `label_audit_development_20260924T104040Z_1b8106ba`와
+`label_audit_holdout_20260924T104628Z_1b8106ba`다 (2026-09-27 정정, M6)
 (`artifacts/evaluation/label_audit/development_summary.json`, `holdout_summary.json`).
 10% 규칙에서 양성 격자를 남기는 폴리곤은 개발 145개 중 95.2%(면적 중앙값 8,750 m²),
 홀드아웃 196개 중 66.3%(3,590 m²)다.

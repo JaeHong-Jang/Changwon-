@@ -1,0 +1,130 @@
+{
+  "cited_vs_stored": [
+    {
+      "role": "development",
+      "path": "all",
+      "item": "n",
+      "cited": 145,
+      "stored": 145,
+      "pass": true
+    },
+    {
+      "role": "development",
+      "path": "all",
+      "item": "survive_grid_10pct",
+      "cited": 0.952,
+      "stored": 0.952,
+      "pass": true
+    },
+    {
+      "role": "development",
+      "path": "all",
+      "item": "median_area_m2",
+      "cited": 8750,
+      "stored": 8750.1,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "all",
+      "item": "n",
+      "cited": 196,
+      "stored": 196,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "all",
+      "item": "survive_grid_10pct",
+      "cited": 0.663,
+      "stored": 0.663,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "all",
+      "item": "median_area_m2",
+      "cited": 3590,
+      "stored": 3589.6,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "by_land_class.urban",
+      "item": "n",
+      "cited": 57,
+      "stored": 57,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "by_land_class.urban",
+      "item": "survive_grid_10pct",
+      "cited": 0.123,
+      "stored": 0.123,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "by_land_class.agricultural",
+      "item": "n",
+      "cited": 119,
+      "stored": 119,
+      "pass": true
+    },
+    {
+      "role": "holdout",
+      "path": "by_land_class.agricultural",
+      "item": "survive_grid_10pct",
+      "cited": 0.975,
+      "stored": 0.975,
+      "pass": true
+    }
+  ],
+  "cited_pass": true,
+  "rerun_vs_stored": {
+    "development": {
+      "summary": {
+        "run_id_new": "label_audit_development_20260926T164903Z_1b8106ba",
+        "run_id_stored": "label_audit_development_20260924T104040Z_1b8106ba",
+        "first_difference": "",
+        "pass": true
+      },
+      "polygons": {
+        "columns_new_only": [],
+        "columns_stored_only": [],
+        "n_rows_new": 145,
+        "n_rows_stored": 145,
+        "max_abs_diff_float": 3.406512405490503e-08,
+        "mismatch_counts": {
+          "object_id": 9
+        },
+        "pass": false
+      }
+    },
+    "holdout": {
+      "summary": {
+        "run_id_new": "label_audit_holdout_20260926T164905Z_1b8106ba",
+        "run_id_stored": "label_audit_holdout_20260924T104628Z_1b8106ba",
+        "first_difference": "",
+        "pass": true
+      },
+      "polygons": {
+        "columns_new_only": [],
+        "columns_stored_only": [],
+        "n_rows_new": 196,
+        "n_rows_stored": 196,
+        "max_abs_diff_float": 1.5247496776282787e-07,
+        "mismatch_counts": {
+          "object_id": 47
+        },
+        "pass": false
+      }
+    }
+  },
+  "rerun_pass": false,
+  "stored_run_ids": {
+    "development": "label_audit_development_20260924T104040Z_1b8106ba",
+    "holdout": "label_audit_holdout_20260924T104628Z_1b8106ba"
+  }
+}

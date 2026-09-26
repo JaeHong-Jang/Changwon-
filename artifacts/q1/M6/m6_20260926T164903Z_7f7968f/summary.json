@@ -1,0 +1,94 @@
+{
+  "run_id": "m6_20260926T164903Z_7f7968f",
+  "steps": {
+    "compare": {
+      "started_utc": "2026-09-26T16:49:03.008857+00:00",
+      "git_head": "7f7968f",
+      "source_dirty": false,
+      "command": "python -m src.repro.m6_run --steps compare --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f --holdout-run holdout_20260926T164805Z_7f7968f_84ef30a7",
+      "result": {
+        "new_run_id": "holdout_20260926T164805Z_7f7968f_84ef30a7",
+        "verdict": "mismatch",
+        "secondary_verdict": "mismatch"
+      }
+    },
+    "audit": {
+      "started_utc": "2026-09-26T16:49:03.746183+00:00",
+      "git_head": "7f7968f",
+      "source_dirty": false,
+      "command": "python -m src.repro.m6_run --steps audit --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f",
+      "result": {
+        "cited_pass": true,
+        "rerun_pass": false,
+        "stored_run_ids": {
+          "development": "label_audit_development_20260924T104040Z_1b8106ba",
+          "holdout": "label_audit_holdout_20260924T104628Z_1b8106ba"
+        }
+      }
+    },
+    "chronology": {
+      "started_utc": "2026-09-26T16:53:21.497263+00:00",
+      "git_head": "ea691cc",
+      "source_dirty": false,
+      "command": "python -m src.repro.m6_run --steps chronology --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f",
+      "result": {
+        "n_events": 42,
+        "n_verified": 42,
+        "unverified": []
+      }
+    },
+    "zenodo": {
+      "started_utc": "2026-09-26T16:54:17.142568+00:00",
+      "git_head": "ea691cc",
+      "source_dirty": false,
+      "command": "python -m src.repro.m6_run --steps zenodo --out-dir artifacts/q1/M6/m6_20260926T164903Z_7f7968f",
+      "result": {
+        "n_files": 453,
+        "bytes": 105959301,
+        "by_decision": {
+          "exclude": {
+            "n_files": 2,
+            "bytes": 17624
+          },
+          "hash_only": {
+            "n_files": 111,
+            "bytes": 18274969
+          },
+          "open": {
+            "n_files": 335,
+            "bytes": 25407483
+          },
+          "restricted": {
+            "n_files": 5,
+            "bytes": 62259225
+          }
+        },
+        "license_files": [],
+        "missing_files": []
+      }
+    }
+  },
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "geopandas": "1.1.4",
+    "pyogrio": "0.13.0",
+    "shapely": "2.1.2",
+    "scipy": "1.18.1",
+    "sklearn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "code_sha256": {
+    "src/repro/m6_run.py": "fd955e67906349c196e9720e3d1ee2cfed4e783ebd0a2a39ba7a55eb4afb2fab",
+    "src/repro/run_compare.py": "0bc6271f4413801f458680302982e178a93dcbfdbe2a07f02174dfd57dec8f3f",
+    "src/repro/audit_check.py": "22f73ae284d446f97e0b4599b31e10e379e76fb61804ffe723f989556afce6e4",
+    "src/repro/chronology.py": "81c8db6338a3049768a4fb633a660b841062c1c4f634a3d658f088e541ef1663",
+    "src/repro/deposit_manifest.py": "fdbb539c1d34a0b0c844f6225a3c492990a63df25b01f019d96adaed6d0868d7",
+    "src/data/reproducibility.py": "d16ac754781974d8640930e1e0069f8c10bad521f8f8ac6f2b9530e222f2028c",
+    "src/models/label_audit.py": "1b8106ba94845be0f049dba1f411fccdcada8d856910e8883580249e2b7ef1c3",
+    "src/models/provenance.py": "87a18cff258e40b7c242b760554674bf85e9172e5325e573b8b797b488864841",
+    "docs/q1/M6_protocol.md": "a136585271d8b63e55c396e5eacc7af2e741d8bfd00367ce87b9a64f2699a1f8"
+  },
+  "protocol": "docs/q1/M6_protocol.md"
+}

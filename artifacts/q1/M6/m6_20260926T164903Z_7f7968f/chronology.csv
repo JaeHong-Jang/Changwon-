@@ -1,0 +1,43 @@
+id,class,utc,kst,precision,event,source,evidence,verified,note
+I1,입력,2026-08-20T03:08:55+00:00,2026-08-20T12:08:55+09:00,상한,강수 기후 통계 기간 2015-01-01 ~ 2024-12-31 고정 — 홀드아웃 연도(2022~2024)를 포함,git,commit 07db975 «research: 침수 대응 연구 하네스 체계화»,True,config/config.yaml climatology_start·climatology_end 가 이 커밋에서 추가됨 (git log -S climatology_end)
+I2,입력,,2026-08-19,일,"시간별 강수량 원본(창원시, 2025-09-23 판) 수집",doc,data/raw/README.md «| `경상남도 창원시_시간별 강수량_20250923.csv` |»,True,
+I3,입력,,2026-08-19,일,"공개 DEM(2025 판, 90 m) 수집",doc,data/raw/README.md «| `dem/public_dem_2025/` |»,True,
+I4,입력,,2026-08-19,일,토지피복 2025 중분류(불투수율 원천) 수집,doc,data/raw/README.md «| `land_cover/middle_2025/` |»,True,
+I5,입력,,2026-08-19,일,SGIS 100 m 격자 통계(2024)·경계(2025) 수집,doc,data/raw/README.md «| `sgis/grid_statistics_100m_2024/` |»,True,
+I6,입력,,2026-08-19,일,배수펌프장 현황(2025-08-01 판) 수집,doc,data/raw/README.md «| `경상남도_창원시_배수펌프장 현황_20250801.csv` |»,True,
+I7,입력,,2026-08-22,일,시 침수예상도 WFS(복합 100년 L210_100 포함) 수집,doc,data/raw/README.md «`flood_maps/changwon_wfs/L210_100.geojson`»,True,
+I8,입력,,2026-09-08,일,OSM 하천 중심선(하천·복개천 근접도 원천) 수집,doc,data/raw/README.md «| `rivers/osm_waterways.gpkg` |»,True,
+F1,동결,2026-08-19T05:12:40+00:00,2026-08-19T14:12:40+09:00,상한,"사전 게이트(격자 AUC ≥ 0.70, 상위 20% 포착 ≥ 0.50) 를 방법론 규격 문서에 처음 기록",git,"commit e706cb6 «docs: 2차 딥리서치 — 방법론 규격(ANALYSIS_PLAN), 필독 문헌 55건 검증(LITERATURE), 데이터 카탈로그 A15·B17(DATA_CATALOG) + 스토리 G002~G010 정밀화»",True,docs/ANALYSIS_PLAN.md 의 'ROC-AUC ≥0.70 … 상위 20% 격자의 흔적 포착률 ≥50%' 가 이 커밋에서 추가됨
+F2,동결,2026-09-07T14:34:17+00:00,2026-09-07T23:34:17+09:00,초,L1 첫 계산 실행 (h06_layer1_flood 통과 기록),run_id,.fablize/ledger.jsonl (20260907T143417Z-40c24a6-a5043674),True,하네스 체크포인트 G007
+F3,동결,2026-09-07T14:38:09+00:00,2026-09-07T23:38:09+09:00,상한,L1 구현 커밋 — 노출·민감도 산식(±1 동일 가중)과 config 게이트 상수 trace_auc_min 0.70·trace_top20_capture_min 0.50,git,commit a1c2743 «pipeline: Layer 1 침수취약성 구현 + 회신 반영 결정 001 (A1·A4)»,True,
+F4,동결,2026-09-07T15:50:00+00:00,2026-09-08T00:50:00+09:00,상한,L1 산식의 마지막 변경 — 민감도 축에 culvert_proximity 추가 (이후 SENSITIVITY_SPEC·EXPOSURE_SPEC 불변),git,"commit 85fc544 «data: 하천선·행정동 이름 확보 → 복개천 변수 추가, 사례지 검증 통과»",True,254162b·140a433·4647f47·ae9c122 의 h06_layers.py 에서 두 명세를 AST 로 비교해 동일함을 확인 (M6 세션)
+F5,동결,2026-09-16T08:15:31+00:00,2026-09-16T17:15:31+09:00,상한,"개발 흔적(API 125건 + 시 2025)으로 L1 게이트 첫 판정 — AUC 0.750, 포착 54.4%, '가중치·산식 무변경'",git,commit dfab756 «data: 행안부 침수흔적도 API 수집 → Layer 1 외적 검증 게이트 통과 (AUC 0.750)»,True,9/24 홀드아웃 실행의 development_gates L1 도 0.7504·0.5436 으로 같다
+F6,동결,2026-09-16T12:33:04+00:00,2026-09-16T21:33:04+09:00,상한,"검증 방법 정정(유사복제·순환) — 결론 일부 철회, L1 산식은 불변",git,commit 140a433 «fix: 유사복제·순환을 바로잡자 앞서 보고한 결론 여러 개가 무너졌다»,True,
+F7,동결,2026-09-16T15:10:35+00:00,2026-09-17T00:10:35+09:00,상한,검증 방법 정정(침수 1건 1표·사상 단위 교차검증) — L1 산식 불변,git,"commit 4647f47 «fix: 원인 1·2 수정 — 침수 1건 = 1표, 짝지은 비교, 사상 단위 교차검증»",True,
+F8,동결,2026-09-21T09:14:14+00:00,2026-09-21T18:14:14+09:00,상한,홀드아웃 채점 시점의 git HEAD — 주석·docstring 정리(AST 보존),git,commit ae9c122 «refactor: 주석·docstring 간소화 및 문서·노트북 정돈 — AST 보존 및 설명 압축»,True,
+R1,입수,,2026-09-14,일,창원시 정보공개 침수흔적도(2025 사상) 전자파일 교부,doc,docs/data_access_log.md «**2026-09-14** 교부»,True,
+R2,입수,2026-09-16T05:32:25+00:00,2026-09-16T14:32:25+09:00,상한,2025 창원 흔적 SHP(개발) 저장소 반입,git,commit 7dd40a8 «data: add 2025 Changwon flood trace shapefiles»,True,
+R3,입수,,2026-09-16,일,행안부 침수흔적도 API(DSSP-IF-00117) 수령 — 창원 125건(개발),doc,docs/data_access_log.md «✅ 수령 (2026-09-16)»,True,
+R4,입수,,2026-09-24,일,창원시 2022~2024 침수흔적도(홀드아웃) 수집 — 지수 확정 뒤,doc,data/raw/README.md «### 2026-09-24 추가 침수흔적도»,True,
+R5,입수,2026-09-24T12:08:17+00:00,2026-09-24T21:08:17+09:00,상한,"홀드아웃 원본 저장소 커밋 (로컬 반입은 이보다 먼저, S1 참고)",git,commit 0aec04a «data: 2022~2024 창원 침수흔적도 원본 반입 — 지수 확정 뒤 받은 홀드아웃»,True,
+S0,최초 채점,,,미기록,"특징 후보군(F0/F1/F2)을 정한 홀드아웃 진단 — 시각 기록 없음 (R4 이후, S1 이전으로만 한정)",doc,docs/PAPER_ROADMAP.md «특징 후보군(F0/F1/F2)은 리더가 홀드아웃 진단을 본 뒤 정했다»,True,D1.md 도 '검증 가능한 선행 기록이 없다'고 적음. 구간 2026-09-24(KST) ~ 2026-09-24T09:18:20Z
+S1,최초 채점,2026-09-24T09:18:20+00:00,2026-09-24T18:18:20+09:00,초,"RF v1 사전 명세 생성 — 같은 세션의 전체 unittest 가 홀드아웃을 읽음(채점은 안 함, holdout_read true)",json,artifacts/frozen/benchmark/v1/prespec.json#created_at_utc,True,"validation_execution.full_unittest_holdout_read = true, 동결 frozen_at_utc 09:21:45Z"
+S2,최초 채점,2026-09-24T09:38:54+00:00,2026-09-24T18:38:54+09:00,초,"첫 공식 홀드아웃 채점 실행 — L1 격자 AUC 0.4357, 포착 0.0734, 게이트 탈락",json,artifacts/evaluation/holdout_2022_2024/holdout_20260924T093854Z_ae9c122_85559f26/summary.json#started_utc,True,이 실행은 source_dirty 를 기록하지 않던 판의 코드다
+D1,설계 변경,2026-09-24T09:49:16+00:00,2026-09-24T18:49:16+09:00,초,"RF v2 사전 명세 — LOEO 분할 누수·근접도 대리값 수정, 선택이 RF-F0 → RF-F1 로 바뀜",json,artifacts/frozen/benchmark/prespec.json#created_at_utc,True,"revision.type = 'post-hoc review correction; 최초 사전등록 아님', frozen_at_utc 09:51:51Z"
+D2,설계 변경,2026-09-24T10:03:13+00:00,2026-09-24T19:03:13+09:00,초,홀드아웃 재채점 — v2 동결 모델·2019년까지 재학습 점수 추가 (-dirty),json,artifacts/evaluation/holdout_2022_2024/holdout_20260924T100313Z_ae9c122-dirty_c5a33847/summary.json#started_utc,True,
+D3,설계 변경,2026-09-24T10:09:39+00:00,2026-09-24T19:09:39+09:00,초,"홀드아웃 재채점 — 개발 게이트 추가, 문서가 인용하는 실행 (-dirty)",json,artifacts/evaluation/holdout_2022_2024/holdout_20260924T100939Z_ae9c122-dirty_cf388a23/summary.json#started_utc,True,
+D4,설계 변경,2026-09-24T10:40:40+00:00,2026-09-24T19:40:40+09:00,초,라벨 감사(개발) 저장 실행 — 코드 해시 1b8106ba,run_id,artifacts/evaluation/label_audit/development_summary.json (label_audit_development_20260924T104040Z_1b8106ba),True,
+D5,설계 변경,2026-09-24T10:46:08+00:00,2026-09-24T19:46:08+09:00,초,"홀드아웃 재채점 — 9/24 마지막 실행, 게이트 해시는 D3 과 같음 (-dirty)",json,artifacts/evaluation/holdout_2022_2024/holdout_20260924T104608Z_ae9c122-dirty_4af97d5d/summary.json#started_utc,True,
+D6,설계 변경,2026-09-24T10:46:28+00:00,2026-09-24T19:46:28+09:00,초,라벨 감사(홀드아웃) 저장 실행 — 코드 해시 1b8106ba,run_id,artifacts/evaluation/label_audit/holdout_summary.json (label_audit_holdout_20260924T104628Z_1b8106ba),True,
+D7,설계 변경,2026-09-24T12:08:42+00:00,2026-09-24T21:08:42+09:00,상한,홀드아웃 평가·라벨 감사 코드와 결과 커밋 (L1 탈락 기록),git,commit 22211b4 «analysis: 2022~2024 홀드아웃 평가·라벨 감사 — L1 게이트 탈락 기록»,True,
+D8,설계 변경,2026-09-24T12:08:43+00:00,2026-09-24T21:08:43+09:00,상한,논문화 로드맵·방법론 정정 커밋 — '강수 축 역방향' 서술이 처음 나타남,git,commit f718e98 «docs: 논문화 로드맵·방법론 정정·에이전트 작업 규칙»,True,docs/research_reports/Q1_verify.md 6(k)
+V1,재실행·검증,2026-09-24T13:49:51+00:00,2026-09-24T22:49:51+09:00,상한,전체 파이프라인 재실행 — 9/16 산출 재현 확인,git,"commit 6be8ab4 «chore: 전체 파이프라인 재실행 — 9/16 결과 재현 확인, run_id 갱신»",True,
+V2,재실행·검증,2026-09-24T16:18:26+00:00,2026-09-25T01:18:26+09:00,초,가공 스냅샷의 layer1_flood.gpkg 기록 시각 (CDRI 산식 동결 run 20260924T161642Z-3277828),gpkg,artifacts/processed_snapshot/layers/layer1_flood.gpkg#gpkg_contents.last_change,True,9/24 홀드아웃 실행들이 읽은 layer1_flood.gpkg(3f5fb14e…)보다 뒤에 쓰인 파일 (0a731462…)
+V3,재실행·검증,2026-09-24T16:39:16+00:00,2026-09-25T01:39:16+09:00,상한,H10 재현성 검증 6개 검사 통과 기록 (run 20260924T163108Z-e25f3f2),git,commit 1140b65 «chore: H10 재현성 검증 통과 기록 — 6개 검사 전부 통과»,True,
+V4,설계 변경,2026-09-26T13:46:11+00:00,2026-09-26T22:46:11+09:00,초,post-hoc 분석 — CDRI 의 H 교체,json,artifacts/posthoc/20260926/posthoc_h_20260926T134611Z_3d14fc1/summary.json#started_utc,True,
+V5,설계 변경,2026-09-26T13:52:15+00:00,2026-09-26T22:52:15+09:00,초,post-hoc 분석 — 사상별 시간순 평가(walk-forward),json,artifacts/posthoc/20260926/walkforward_20260926T135215Z_3d14fc1/summary.json#started_utc,True,
+V6,설계 변경,2026-09-26T13:59:11+00:00,2026-09-26T22:59:11+09:00,초,post-hoc 분석 — 설정 강건성·설명,run_id,artifacts/posthoc/20260926/robust_20260926T135911Z_3d14fc1 (robust_20260926T135911Z_3d14fc1),True,
+V7,설계 변경,2026-09-26T16:00:35+00:00,2026-09-27T01:00:35+09:00,상한,Q1 M1 절차 고정 커밋 (계산 전),git,commit b2b9cdc «docs(q1/M1): 계산 전 절차 고정 — 자명 기준선·HAND·층·사전 판정 규칙»,True,
+V8,설계 변경,2026-09-26T16:08:21+00:00,2026-09-27T01:08:21+09:00,초,Q1 M1 공식 실행 — 사전 규칙상 C-b 폐기,json,artifacts/q1/M1/m1_20260926T160821Z_a181f6c/summary.json#started_utc,True,
+V9,재실행·검증,2026-09-26T16:42:40+00:00,2026-09-27T01:42:40+09:00,상한,Q1 M6 절차 고정 커밋 (재실행 전),git,commit b834248 «docs(q1/M6): 계산 전 절차 고정 — 홀드아웃 재실행 판정 규칙·run_id 정정·연대표·Zenodo 목록 규칙»,True,
+V10,재실행·검증,2026-09-26T16:48:05+00:00,2026-09-27T01:48:05+09:00,초,Q1 M6 공식 홀드아웃 재실행 (-dirty 없음),json,artifacts/evaluation/holdout_2022_2024/holdout_20260926T164805Z_7f7968f_84ef30a7/summary.json#started_utc,True,

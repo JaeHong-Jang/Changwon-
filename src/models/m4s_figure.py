@@ -15,7 +15,7 @@ LIMIT = 0.4
 
 
 def gap_map(summary: pd.DataFrame, path: Path) -> None:
-    """행 = 객체 수(200, 30), 열 = Δ*·soft·f10 인 발산 색 격자 그림을 저장한다."""
+    """행 = 객체 수(200, 30), 열 = Δ*·soft·f10 인 발산 색 격자 그림을 저장한다 (괄호 = P10)."""
     import matplotlib
 
     matplotlib.use("Agg")
@@ -26,12 +26,12 @@ def gap_map(summary: pd.DataFrame, path: Path) -> None:
     cmap = LinearSegmentedColormap.from_list("gap", [NEGATIVE, MIDPOINT, POSITIVE])
     a = summary[summary["block"] == "A"]
     sigmas, betas = sorted(a["shape"].unique()), sorted(a["beta"].unique())
-    fig, axes = plt.subplots(2, 3, figsize=(12, 7.2), constrained_layout=True)
+    fig, axes = plt.subplots(2, 3, figsize=(14, 7.6), constrained_layout=True)
 
     # 칸마다 값과 (실현 차이면) P10 을 적는다
     for r, n in enumerate((200, 30)):
-        for c, (title, rule) in enumerate((("Δ* (formula, area weights)", None), ("soft: median gap", "soft"),
-                                           ("f10: median gap", "f10"))):
+        for c, (title, rule) in enumerate((("Δ* (formula, area weights)", None), ("soft: median gap (P10)", "soft"),
+                                           ("f10: median gap (P10)", "f10"))):
             ax = axes[r, c]
             part = a[(a["n_obj"] == n) & (a["rule"] == (rule or "soft"))]
             col = "delta_star" if rule is None else "gap_median"
@@ -40,9 +40,10 @@ def gap_map(summary: pd.DataFrame, path: Path) -> None:
             image = ax.imshow(grid.to_numpy(), cmap=cmap, vmin=-LIMIT, vmax=LIMIT, origin="lower", aspect="auto")
             for i in range(len(betas)):
                 for j in range(len(sigmas)):
-                    value = grid.iat[i, j]
-                    text = f"{value:+.2f}" if rule is None else f"{value:+.2f}\nP10 {p10.iat[i, j]:.2f}"
-                    ax.text(j, i, text, ha="center", va="center", fontsize=7.5, color=INK)
+                    value = round(float(grid.iat[i, j]), 2) + 0.0
+                    shown = "0.00" if value == 0 else f"{value:+.2f}"
+                    text = shown if rule is None else f"{shown}\n({p10.iat[i, j]:.2f})"
+                    ax.text(j, i, text, ha="center", va="center", fontsize=8, color=INK)
             ax.set_xticks(range(len(sigmas)), [f"{s:g}" for s in sigmas])
             ax.set_yticks(range(len(betas)), [f"{b:+g}" for b in betas])
             ax.set_xlabel("size dispersion σ (sd of ln area)")

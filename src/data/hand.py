@@ -61,7 +61,8 @@ def d8_receivers(filled: np.ndarray, res: float) -> np.ndarray:
         rt = slice(max(-dr, 0), h + min(-dr, 0))
         ct = slice(max(-dc, 0), w + min(-dc, 0))
         shifted[rt, ct] = z[rs, cs]
-        drop = (z - shifted) / dist
+        with np.errstate(invalid="ignore"):
+            drop = (z - shifted) / dist
         better = drop > best
         best = np.where(better, drop, best)
         recv = np.where(better, (rows + dr) * w + (cols + dc), recv)

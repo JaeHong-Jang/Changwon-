@@ -22,7 +22,7 @@ def compare(long: pd.DataFrame, trivial: str, model: str, *, unit: str = "cell_g
         return {"events": [], "evaluable": False}
 
     # 두 점수가 유한하고 최소 표본 이상인 사상만 남겨 중앙값을 비교한다
-    keep = wide[trivial].notna() & wide[model].notna() & (units[model] >= MIN_UNITS[unit])
+    keep = wide[trivial].notna() & wide[model].notna() & (units[[trivial, model]].min(axis=1) >= MIN_UNITS[unit])
     w = wide[keep]
     if w.empty:
         return {"events": [], "evaluable": False}

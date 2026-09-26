@@ -272,6 +272,7 @@ class DecisionTest(unittest.TestCase):
         table = D.verdict_table(long, events)
         self.assertTrue(D.decide(table)["verdict"].startswith("C-c 부분 지지"))
         self.assertEqual(set(table.loc[table["flip"], "config_class"]), {"size_only"})
+        self.assertEqual({f["n_events"] for f in D.decide(table)["L1_material_flips"]}, {1, 2})
 
     def test_min_positive_cells_blocks_evaluation(self):
         """양성 칸이 5 미만이면 V1·V2 모두 평가하지 않는다."""

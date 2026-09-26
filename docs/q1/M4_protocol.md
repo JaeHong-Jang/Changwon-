@@ -167,3 +167,13 @@ A − Ã = [A − mean_{k∈S} A_k] + [mean_{k∈S} A_k − mean_{k∈S} Ã_k] +
   `survival_summary.csv`, `verdicts.csv`, `decision.json`, `summary.json`.
 - 보고: `docs/q1/M4.md` (AGENTS §4 형식).
 - 정합 확인 (실행 후 보고): R 에서 격자·객체 AUC 가 M1 `metrics_long.csv` 와 같고, `HOLDOUT_ALL` 의 L1 이 공식 0.436/0.073 과 같아야 한다.
+
+## 9. 실행 후 명확화 (2026-09-26, 첫 공식 run `m4_20260926T164939Z_390f3fc` 뒤, **post-hoc 표기**)
+
+교차 리뷰(`docs/q1/M4_review.md`)가 절차 문면과 구현이 어긋날 수 있는 곳 두 군데를 짚었다. 판정 규칙·임계·설정은 바꾸지 않는다. 두 곳 모두 공식 run 에서 수치 영향이 0 임을 확인했다.
+
+- §6 의 생존 객체 집합 S 는 구현에서 {k : W_k > 0 이고 Ã_k 가 유한}이다 (같은 객체 위에서 A_k 와 Ã_k 를 비교하려고).
+  공식 run 의 3,456 조합 전부에서 W_k > 0 이면서 Ã_k 가 결측인 객체는 0개다 (`decomposition.csv` → `n_survive_no_At`).
+- §5 의 포착은 AUC 와 같이 점수 결측 칸을 분자·분모·면적 기준에서 모두 뺀다.
+  공식 run 에서 양성 칸 중 점수가 결측인 칸은 모든 조합에서 0개다. 참조 설정 포착과 M1(`top_share_lift`)의 최대차는 5e-5 로, M1 이 소수 넷째 자리로 반올림해 생긴 차이다.
+- `decision.json` 의 L1 실질 뒤집힘 목록에 `n_events`·`events` 열을 더한다 (리뷰 지적, 출력만 바뀐다).

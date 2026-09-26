@@ -154,7 +154,8 @@ def decide(table: pd.DataFrame) -> dict[str, Any]:
     # 관행 설정 → 그 밖 설정 순으로 실질 뒤집힘을 찾는다
     conventional = l1[[(r, int(s)) in CONVENTIONAL for r, s in zip(l1["rule"], l1["size_m"])]]
     flipped = l1[l1["material_flip"]]
-    listing = flipped[["verdict", "rule", "size_m", "config_class", "auc", "capture", "margin", "ref_margin"]]
+    listing = flipped[["verdict", "rule", "size_m", "config_class", "auc", "capture", "margin", "ref_margin",
+                       "n_events", "events"]]
     if conventional["material_flip"].any():
         verdict = "C-c 지지: 해상도를 그대로 두고 관행 래스터화 규칙만 바꿔도 L1 게이트 판정이 뒤집힌다"
     elif len(flipped):

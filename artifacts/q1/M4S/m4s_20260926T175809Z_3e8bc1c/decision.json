@@ -1,0 +1,919 @@
+{
+ "P1": {
+  "max_identity_abs_diff": 6.994405055138486e-15,
+  "max_sklearn_abs_diff": 2.55351295663786e-15,
+  "n_sklearn_checked": 752,
+  "max_cov_abs_diff": 1.3775985615154504e-12,
+  "n_cov_checked": 150396,
+  "n_rows": 150400,
+  "pass": true
+ },
+ "P2": {
+  "pass": true,
+  "n": 42,
+  "n_fail": 0,
+  "fails": []
+ },
+ "P3": {
+  "pass": true,
+  "rule": "soft",
+  "n_divergent_zone": 15,
+  "n_null_zone": 8,
+  "n_fail": 0,
+  "rows": [
+   {
+    "scenario_no": 3,
+    "block": "A",
+    "shape": 0.5,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.055008852533911856,
+    "zone": "null",
+    "gap_median": -0.0580348819022638,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 5,
+    "block": "A",
+    "shape": 0.5,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.003107774066129443,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 7,
+    "block": "A",
+    "shape": 0.5,
+    "beta": 0.5,
+    "mu0": 0.95,
+    "delta_star": 0.05003345336594234,
+    "zone": "null",
+    "gap_median": 0.0452943793359919,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 11,
+    "block": "A",
+    "shape": 1.0,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.21195436743202095,
+    "zone": "divergent",
+    "gap_median": -0.2032821363487989,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 15,
+    "block": "A",
+    "shape": 1.0,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.0002782559408139873,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 19,
+    "block": "A",
+    "shape": 1.0,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.15940826199094882,
+    "zone": "divergent",
+    "gap_median": 0.15514526100108456,
+    "p10": 0.995,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 21,
+    "block": "A",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.3207404512418122,
+    "zone": "divergent",
+    "gap_median": -0.2960664166359055,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 23,
+    "block": "A",
+    "shape": 1.5,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.1756959017826848,
+    "zone": "divergent",
+    "gap_median": -0.162648702752145,
+    "p10": 0.91,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 25,
+    "block": "A",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.003102261227050762,
+    "p10": 0.015,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 29,
+    "block": "A",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.21203804063799447,
+    "zone": "divergent",
+    "gap_median": 0.20388850537258302,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 31,
+    "block": "A",
+    "shape": 2.0,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.42075433108202875,
+    "zone": "divergent",
+    "gap_median": -0.37135269770988666,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 33,
+    "block": "A",
+    "shape": 2.0,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.23863786781702145,
+    "zone": "divergent",
+    "gap_median": -0.2061088249075394,
+    "p10": 0.96,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 35,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.003173912283509994,
+    "p10": 0.015,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 37,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 0.5,
+    "mu0": 0.95,
+    "delta_star": 0.1652415794262272,
+    "zone": "divergent",
+    "gap_median": 0.14391820814594614,
+    "p10": 0.92,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 39,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.2482273329206528,
+    "zone": "divergent",
+    "gap_median": 0.22577792183905204,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 105,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 0.55,
+    "delta_star": -0.32074045124181216,
+    "zone": "divergent",
+    "gap_median": -0.3021627537224037,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 106,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -0.5,
+    "mu0": 0.55,
+    "delta_star": -0.1863521909139677,
+    "zone": "divergent",
+    "gap_median": -0.17779940150766804,
+    "p10": 0.97,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 107,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 0.55,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.001895255569376364,
+    "p10": 0.015,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 108,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.5,
+    "mu0": 0.55,
+    "delta_star": 0.15849245376118115,
+    "zone": "divergent",
+    "gap_median": 0.1511768870858095,
+    "p10": 0.915,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 109,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 0.55,
+    "delta_star": 0.2524098233487193,
+    "zone": "divergent",
+    "gap_median": 0.2412871834967001,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 110,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 1.45,
+    "delta_star": -0.30045579336299416,
+    "zone": "divergent",
+    "gap_median": -0.27924026487248804,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 112,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 1.45,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.0036775778341958665,
+    "p10": 0.01,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 114,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 1.45,
+    "delta_star": 0.1597259069896796,
+    "zone": "divergent",
+    "gap_median": 0.14930730885018634,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   }
+  ]
+ },
+ "P3_prime": {
+  "pass": true,
+  "rule": "f10",
+  "n_divergent_zone": 15,
+  "n_null_zone": 8,
+  "n_fail": 0,
+  "rows": [
+   {
+    "scenario_no": 3,
+    "block": "A",
+    "shape": 0.5,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.055008852533911856,
+    "zone": "null",
+    "gap_median": -0.03627709857475381,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 5,
+    "block": "A",
+    "shape": 0.5,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.002023025402099088,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 7,
+    "block": "A",
+    "shape": 0.5,
+    "beta": 0.5,
+    "mu0": 0.95,
+    "delta_star": 0.05003345336594234,
+    "zone": "null",
+    "gap_median": 0.031660621150184365,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 11,
+    "block": "A",
+    "shape": 1.0,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.21195436743202095,
+    "zone": "divergent",
+    "gap_median": -0.1454285671323775,
+    "p10": 0.98,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 15,
+    "block": "A",
+    "shape": 1.0,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -3.147154358745796e-05,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 19,
+    "block": "A",
+    "shape": 1.0,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.15940826199094882,
+    "zone": "divergent",
+    "gap_median": 0.12090941940645866,
+    "p10": 0.9,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 21,
+    "block": "A",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.3207404512418122,
+    "zone": "divergent",
+    "gap_median": -0.23287557656693458,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 23,
+    "block": "A",
+    "shape": 1.5,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.1756959017826848,
+    "zone": "divergent",
+    "gap_median": -0.1263395375755671,
+    "p10": 0.775,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 25,
+    "block": "A",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.0006606591118060168,
+    "p10": 0.005,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 29,
+    "block": "A",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.21203804063799447,
+    "zone": "divergent",
+    "gap_median": 0.17138596083437246,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 31,
+    "block": "A",
+    "shape": 2.0,
+    "beta": -1.0,
+    "mu0": 0.95,
+    "delta_star": -0.42075433108202875,
+    "zone": "divergent",
+    "gap_median": -0.31325759856543256,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 33,
+    "block": "A",
+    "shape": 2.0,
+    "beta": -0.5,
+    "mu0": 0.95,
+    "delta_star": -0.23863786781702145,
+    "zone": "divergent",
+    "gap_median": -0.17151690341000186,
+    "p10": 0.935,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 35,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 0.0,
+    "mu0": 0.95,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.0019967611310698907,
+    "p10": 0.01,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 37,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 0.5,
+    "mu0": 0.95,
+    "delta_star": 0.1652415794262272,
+    "zone": "divergent",
+    "gap_median": 0.12719711867149508,
+    "p10": 0.87,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 39,
+    "block": "A",
+    "shape": 2.0,
+    "beta": 1.0,
+    "mu0": 0.95,
+    "delta_star": 0.2482273329206528,
+    "zone": "divergent",
+    "gap_median": 0.20387317147756884,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 105,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 0.55,
+    "delta_star": -0.32074045124181216,
+    "zone": "divergent",
+    "gap_median": -0.24073416454763705,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 106,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -0.5,
+    "mu0": 0.55,
+    "delta_star": -0.1863521909139677,
+    "zone": "divergent",
+    "gap_median": -0.13852525209514416,
+    "p10": 0.895,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 107,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 0.55,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.001917578047583468,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 108,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.5,
+    "mu0": 0.55,
+    "delta_star": 0.15849245376118115,
+    "zone": "divergent",
+    "gap_median": 0.12302430579944612,
+    "p10": 0.82,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 109,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 0.55,
+    "delta_star": 0.2524098233487193,
+    "zone": "divergent",
+    "gap_median": 0.19946197717775993,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 110,
+    "block": "D",
+    "shape": 1.5,
+    "beta": -1.0,
+    "mu0": 1.45,
+    "delta_star": -0.30045579336299416,
+    "zone": "divergent",
+    "gap_median": -0.21418519707224248,
+    "p10": 1.0,
+    "class": "벌어짐",
+    "ok": true
+   },
+   {
+    "scenario_no": 112,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 0.0,
+    "mu0": 1.45,
+    "delta_star": 0.0,
+    "zone": "null",
+    "gap_median": -0.0025734270797174164,
+    "p10": 0.0,
+    "class": "없음",
+    "ok": true
+   },
+   {
+    "scenario_no": 114,
+    "block": "D",
+    "shape": 1.5,
+    "beta": 1.0,
+    "mu0": 1.45,
+    "delta_star": 0.1597259069896796,
+    "zone": "divergent",
+    "gap_median": 0.13245140128634625,
+    "p10": 0.975,
+    "class": "벌어짐",
+    "ok": true
+   }
+  ]
+ },
+ "verdict": "일반성 지지: 격자 AUC 와 객체 AUC 의 0.1 이상 차이는 크기 분산과 크기–탐지 결합이 함께 있을 때 생기며, 그 방향과 크기가 §5.3 공식으로 예측된다. 창원 고유의 성질이 아니다.",
+ "secondary": {
+  "S1": {
+   "pass": true,
+   "rows": [
+    {
+     "scenario_no": 34,
+     "block": "A",
+     "shape": 2.0,
+     "n_obj": 30,
+     "p10": 0.13,
+     "n_eff_median": 7.715998754437077
+    },
+    {
+     "scenario_no": 44,
+     "block": "A",
+     "shape": 2.5,
+     "n_obj": 30,
+     "p10": 0.185,
+     "n_eff_median": 5.180723672072432
+    },
+    {
+     "scenario_no": 54,
+     "block": "A",
+     "shape": 3.0,
+     "n_obj": 30,
+     "p10": 0.19,
+     "n_eff_median": 4.2016050002911225
+    }
+   ]
+  },
+  "S2": {
+   "pass": true,
+   "n_nonzero": 28,
+   "n_sign_fail": 0,
+   "n_zero": 16,
+   "n_zero_fail": 0,
+   "fails": []
+  },
+  "S3": {
+   "pass": false,
+   "n": 61,
+   "max_abs_gap_median": 0.05050376191923167,
+   "fails": [
+    {
+     "scenario_no": 59,
+     "block": "A",
+     "shape": 3.0,
+     "beta": 1.0,
+     "gap_median": -0.05050376191923167
+    }
+   ]
+  },
+  "S4": {
+   "pass": true,
+   "rows": [
+    {
+     "scenario_no": 1,
+     "shape": 0.5,
+     "beta": -1.0,
+     "top10_share_median": 0.21679007704138892,
+     "theory": 0.21723908042730522,
+     "ok": true
+    },
+    {
+     "scenario_no": 3,
+     "shape": 0.5,
+     "beta": -0.5,
+     "top10_share_median": 0.21644482070184207,
+     "theory": 0.21723908042730522,
+     "ok": true
+    },
+    {
+     "scenario_no": 5,
+     "shape": 0.5,
+     "beta": 0.0,
+     "top10_share_median": 0.21550646104143517,
+     "theory": 0.21723908042730522,
+     "ok": true
+    },
+    {
+     "scenario_no": 7,
+     "shape": 0.5,
+     "beta": 0.5,
+     "top10_share_median": 0.2159592872067,
+     "theory": 0.21723908042730522,
+     "ok": true
+    },
+    {
+     "scenario_no": 9,
+     "shape": 0.5,
+     "beta": 1.0,
+     "top10_share_median": 0.21748049035816844,
+     "theory": 0.21723908042730522,
+     "ok": true
+    },
+    {
+     "scenario_no": 11,
+     "shape": 1.0,
+     "beta": -1.0,
+     "top10_share_median": 0.38062970370843924,
+     "theory": 0.389143691645361,
+     "ok": true
+    },
+    {
+     "scenario_no": 13,
+     "shape": 1.0,
+     "beta": -0.5,
+     "top10_share_median": 0.37896657970045655,
+     "theory": 0.389143691645361,
+     "ok": true
+    },
+    {
+     "scenario_no": 15,
+     "shape": 1.0,
+     "beta": 0.0,
+     "top10_share_median": 0.3859005772549977,
+     "theory": 0.389143691645361,
+     "ok": true
+    },
+    {
+     "scenario_no": 17,
+     "shape": 1.0,
+     "beta": 0.5,
+     "top10_share_median": 0.3822133088349924,
+     "theory": 0.389143691645361,
+     "ok": true
+    },
+    {
+     "scenario_no": 19,
+     "shape": 1.0,
+     "beta": 1.0,
+     "top10_share_median": 0.3764779456841395,
+     "theory": 0.389143691645361,
+     "ok": true
+    },
+    {
+     "scenario_no": 21,
+     "shape": 1.5,
+     "beta": -1.0,
+     "top10_share_median": 0.5621335492491883,
+     "theory": 0.5864601343061464,
+     "ok": true
+    },
+    {
+     "scenario_no": 23,
+     "shape": 1.5,
+     "beta": -0.5,
+     "top10_share_median": 0.564011170469231,
+     "theory": 0.5864601343061464,
+     "ok": true
+    },
+    {
+     "scenario_no": 25,
+     "shape": 1.5,
+     "beta": 0.0,
+     "top10_share_median": 0.5727519530749601,
+     "theory": 0.5864601343061464,
+     "ok": true
+    },
+    {
+     "scenario_no": 27,
+     "shape": 1.5,
+     "beta": 0.5,
+     "top10_share_median": 0.5681405768783039,
+     "theory": 0.5864601343061464,
+     "ok": true
+    },
+    {
+     "scenario_no": 29,
+     "shape": 1.5,
+     "beta": 1.0,
+     "top10_share_median": 0.5722482364986083,
+     "theory": 0.5864601343061464,
+     "ok": true
+    }
+   ]
+  },
+  "S5": {
+   "pass": true,
+   "rows": [
+    {
+     "scenario_no": 60,
+     "counts": "equal",
+     "upsilon": 0.0,
+     "beta": -0.5,
+     "max_event_share_median": 0.30148171487405895,
+     "ok": true
+    },
+    {
+     "scenario_no": 61,
+     "counts": "equal",
+     "upsilon": 0.0,
+     "beta": 0.0,
+     "max_event_share_median": 0.3105374646953465,
+     "ok": true
+    },
+    {
+     "scenario_no": 62,
+     "counts": "equal",
+     "upsilon": 0.0,
+     "beta": 0.5,
+     "max_event_share_median": 0.3084906282509683,
+     "ok": true
+    },
+    {
+     "scenario_no": 63,
+     "counts": "equal",
+     "upsilon": 0.5,
+     "beta": -0.5,
+     "max_event_share_median": 0.30135720058974974,
+     "ok": true
+    },
+    {
+     "scenario_no": 64,
+     "counts": "equal",
+     "upsilon": 0.5,
+     "beta": 0.0,
+     "max_event_share_median": 0.30917802227319235,
+     "ok": true
+    },
+    {
+     "scenario_no": 65,
+     "counts": "equal",
+     "upsilon": 0.5,
+     "beta": 0.5,
+     "max_event_share_median": 0.3105859564688376,
+     "ok": true
+    },
+    {
+     "scenario_no": 66,
+     "counts": "skewed",
+     "upsilon": 0.0,
+     "beta": -0.5,
+     "max_event_share_median": 0.5670247336498742,
+     "ok": true
+    },
+    {
+     "scenario_no": 67,
+     "counts": "skewed",
+     "upsilon": 0.0,
+     "beta": 0.0,
+     "max_event_share_median": 0.5568853764015711,
+     "ok": true
+    },
+    {
+     "scenario_no": 68,
+     "counts": "skewed",
+     "upsilon": 0.0,
+     "beta": 0.5,
+     "max_event_share_median": 0.5841806777177092,
+     "ok": true
+    },
+    {
+     "scenario_no": 69,
+     "counts": "skewed",
+     "upsilon": 0.5,
+     "beta": -0.5,
+     "max_event_share_median": 0.5884753560759426,
+     "ok": true
+    },
+    {
+     "scenario_no": 70,
+     "counts": "skewed",
+     "upsilon": 0.5,
+     "beta": 0.0,
+     "max_event_share_median": 0.5789447284613003,
+     "ok": true
+    },
+    {
+     "scenario_no": 71,
+     "counts": "skewed",
+     "upsilon": 0.5,
+     "beta": 0.5,
+     "max_event_share_median": 0.6016650646231316,
+     "ok": true
+    }
+   ]
+  },
+  "S6": {
+   "pass": true,
+   "spearman": 0.8854261704681873,
+   "n_anchors": 50,
+   "L1_HOLDOUT_ALL_delta_hat": -0.40568887375018414
+  }
+ }
+}

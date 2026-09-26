@@ -1,7 +1,7 @@
 {
- "run_id": "m4_20260926T164939Z_390f3fc",
- "started_utc": "2026-09-26T16:49:39.449070+00:00",
- "git_head": "390f3fc",
+ "run_id": "m4_20260926T170511Z_1edf87c",
+ "started_utc": "2026-09-26T17:05:11.390457+00:00",
+ "git_head": "1edf87c",
  "source_dirty": false,
  "command": "PYTHONPATH=. .venv/bin/python -m src.models.m4_run",
  "role": "post_hoc — 홀드아웃 결과를 본 뒤 설계한 라벨 규칙·격자 크기 민감도. 홀드아웃은 채점에만 쓴다 (AGENTS §2-2)",
@@ -151,7 +151,7 @@
  "code_sha256": {
   "src/models/m4_run.py": "2cff3d71532da36630defacbd9a09b6be16506bc41c4faed49e7de41411a1763",
   "src/models/m4_metrics.py": "6f07315cead6c2e732b11373fb22d536503fbbed94b6b017238a6a4d1d8cee39",
-  "src/models/m4_decision.py": "9eb008a8af817925f1b3a99af737817b8b78ab8396a321e60fa561a9a28c66f0",
+  "src/models/m4_decision.py": "e4cfdda7a280b63a00ea23b3c697292424e6c1aa0a161c78bef7a272bf717722",
   "src/models/m4_survival.py": "d5513b22ffc37871a4b7c3986759d8d2659555a1af359187ea4c5d2f3f81a7b6",
   "src/models/m4_checks.py": "1613c0110875c23e95ab6eba8acd43de89625a1232871959557ad12a4efd6ac9",
   "src/data/coarse_grid.py": "cd1aee834e18ead81e371ba9c1c1d6bd32ec3f93ed8eecb23e3895ec797c037a",
@@ -169,7 +169,7 @@
   "src/models/estimators.py": "bde89fae3307bafabc1990219d60cd4ed118e0564cb258126e120e1874aae7c7",
   "src/models/label_audit.py": "1b8106ba94845be0f049dba1f411fccdcada8d856910e8883580249e2b7ef1c3",
   "src/data/flood_traces.py": "4ef687183774c0d81267fb3992641520722efec241e5ee9b11ee243168e9fcb9",
-  "docs/q1/M4_protocol.md": "3177e490aaebcbebb9a849b9aa67aa175265de5e708aaced0f0cbe103eae6399"
+  "docs/q1/M4_protocol.md": "20d1c3ee2b3444a42f18702422f48068459e202a0d89543b3c489a7f25f4b96f"
  },
  "input_sha256": {
   "data/processed/layers/layer1_flood.gpkg": "0a731462182883116c0ca55989f89979f9e5399da05be2872781be49c02e7350",

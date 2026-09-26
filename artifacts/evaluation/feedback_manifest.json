@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "previous_version": null,
+  "created_utc": "2026-09-24T16:38:34.319581+00:00",
+  "data_versions": {
+    "changwon_ndms_2025": {
+      "role": "development",
+      "files": {
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.dbf": "7946c9ed804026a3bb16ce4692561aea35b9eab45ed3dbb5e9f78e52ed5498bc",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp": "2d413db4c2db63eb158da9ec475652acb5b7278dcdcb71d68333843007dbd517",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shx": "3c6042c07d1014bd095dcd9ba5237c8d408ac273e05c51f983211bfbab0942de",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.dbf": "c654ec85a36dc2a1b620485a1fc774ec387df0295a0e66140e2ce480e6d1573a",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp": "89f279f22fc38dc99fd5baed680674e8364ae3cd010fb1af76c37a411e095c76",
+        "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shx": "02f68b906184349adf37e72643b4ca376e240c3553a63ba86fd379d4aa9fa914"
+      }
+    },
+    "safetydata_dssp_if_00117": {
+      "role": "development",
+      "files": {
+        "data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg": "5df8b3e3771115eeee1114c785425d74bc966da0ce87809236c45b8ecdbee29a"
+      }
+    },
+    "changwon_2023": {
+      "role": "holdout",
+      "files": {
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.dbf": "7055b951bf97885721e350f3e786f379707aad0904528d64977de54bddbdbaa2",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.prj": "bf9ecc19461c8097681c023a9352164b9538ebb6ba7dc970035c7414bae2323c",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shp": "23b2394903b3c7e0b5eeb7ad8c76e5939ae62ee6431eb5e382633902a88beb57",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shx": "043f973b9bbd0bec515ec88d4a6d8e8b420896e29b414d71cd9b42bcb0dabc93"
+      }
+    },
+    "changwon_2024_mirae": {
+      "role": "holdout",
+      "files": {
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.dbf": "99a86ee28d9293714d77e61594f96493c30dac007eb7a8ae1f7c1bd88cc5bf76",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shp": "ee9e441161fb821a84249b5e259acf147b1d9bf09bf763dde9002614fadd68ae",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shx": "f724b950bb2fb4ef8727413d38070cee81e821c65785ab5989b70c187de1ca36"
+      }
+    },
+    "changwon_2024_ido": {
+      "role": "holdout",
+      "files": {
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.dbf": "05564ee157c76a205e24d70a3f3d022151a1f5bdecaca01e633e96eb8d270de4",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shp": "d3849c37801eda5e82df927fe6992d46c017b89f541840f119e405ebbbf711ee",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shx": "bf191aad8b14c6c76f8f0d32ea211f6a39f06017272c1a00c360c40b75bdb674",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.dbf": "d8338d3455c70ede06f08e3f3ccb2bf0780834537d6834984b13585c8e7707ae",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shp": "c6fcfd99d6d23852308546a2d2802dc1eb92fab24c2409c513d440f6fdf7ecc4",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shx": "3a1e2cacd30307e318632085674bfb773b86bc8542b74962cfcc7f025c008659",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.dbf": "8aa9835fe24e2432791b1aaff3a82d35f53b114268cda6ccbce8fad6ccc39089",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shp": "adf6072f3f21e21fc84e7634b5ba76ec264ad233b2c61a454e2c29d92f075c5f",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shx": "662fc15daafeb801604dbd2b6815711c1493219d3be8f0c776e095b45a6d909a",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.dbf": "d2e0810fafda6c64622f2ef8316ab9db9f3849a057548e3173db29b20b937152",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shp": "a0e4dca031fde7c8feb4555b695d1690e558064fdae51b9723ac9568d5e46320",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shx": "aace013f4f39fdea205ce3b1ee2e1b94cc17a02cb041d9885099c1b0af0d27a2",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.dbf": "bab92cf9509cc86fea91c12a981841122192c4f56c3acdc7dea12ec848830ea3",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shp": "47fe3dad1fbf9c0c42cea81d805427d7e983e3c482bf2779b5e68ba25efe1b95",
+        "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shx": "52327a553851a6cfe4cede6b37e4ce7186ad4a18af3feb2e08a5f622d3250abe"
+      }
+    }
+  },
+  "model_versions": {
+    "config/pipeline.yaml": "9bb9097f863d994f46ea8f36d28be9f26ba1e7244765bb712732890d35b354b4",
+    "config/config.yaml": "cdee32d38195be0b9791aa49b8bd89fe83f1f929fc6454f4407fd291c7bf8059",
+    "config/flood_traces.yaml": "6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8",
+    "config/raw_quality_waivers.yaml": "bf5d14c7e2c8a2011ad8d402b27299a1863ab7d20d5a8ff6e2d38738e744ec7c",
+    "artifacts/evaluation/primary_formula_manifest.json": "73dfb321b2aa2055e4f12e3bf11c3a3988e0641e8014903f2ceaaa31d99c3689"
+  },
+  "holdout_reference": {
+    "run_id": "holdout_20260924T100939Z_ae9c122-dirty_cf388a23",
+    "gates_sha256": "48d83b93b75459b31655ba4eb9069a5efd5eb9d11837338e9be8bcda8a835567",
+    "development_gates_sha256": "2ea2f05733b1d379c3ed3518d9794e9ff2eb1fcfeb027bf51408cad08e74c0bf"
+  },
+  "changed": [
+    "data_versions.changwon_2023",
+    "data_versions.changwon_2024_ido",
+    "data_versions.changwon_2024_mirae",
+    "data_versions.changwon_ndms_2025",
+    "data_versions.safetydata_dssp_if_00117",
+    "model_versions.artifacts/evaluation/primary_formula_manifest.json",
+    "model_versions.config/config.yaml",
+    "model_versions.config/flood_traces.yaml",
+    "model_versions.config/pipeline.yaml",
+    "model_versions.config/raw_quality_waivers.yaml"
+  ]
+}

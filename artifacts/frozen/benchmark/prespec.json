@@ -1,0 +1,464 @@
+{
+  "run_id": "P005_dev_20260924T094916Z",
+  "created_at_utc": "2026-09-24T09:49:16.224456+00:00",
+  "command": "env -u CHANGWON_HOLDOUT_TESTS PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 /home/data/.venv-changwon/bin/python -m src.models.benchmark",
+  "code_sha256": {
+    "src/models/folds.py": "107f058481a1ae32a4c527a0c268d19b1571941695b3fdbcc379bf8cdf09e0c4",
+    "src/models/benchmark.py": "dbaec8531a6879d1b4c4e3b0d06c1dbc90e4cf4a21946a55f2e0d61974b4a36c",
+    "tests/test_benchmark.py": "30acc8e7e3d1a7fe2240b453167121c1e16121969f1b4ee9f3082dbc1bcc96a1",
+    "src/data/uncertainty.py": "f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21",
+    "src/data/flood_traces.py": "45af0a155922cdb37eee7ea226919d355512cbc0a318f0ebffdb79cfbf6f8018",
+    "src/data/spatial.py": "f58cf6e57233006a7ca807b5dfe84154b04fed262acf16081e7968991ba03c1b",
+    "config/flood_traces.yaml": "6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8"
+  },
+  "input_sha256": {
+    "data/processed/layers/layer1_flood.gpkg": "3f5fb14ed169983798d9e5858454c1099950cc14e8aef2e288d7bbfeba204142",
+    "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp": "2d413db4c2db63eb158da9ec475652acb5b7278dcdcb71d68333843007dbd517",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shx": "3c6042c07d1014bd095dcd9ba5237c8d408ac273e05c51f983211bfbab0942de",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.dbf": "7946c9ed804026a3bb16ce4692561aea35b9eab45ed3dbb5e9f78e52ed5498bc",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp": "89f279f22fc38dc99fd5baed680674e8364ae3cd010fb1af76c37a411e095c76",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shx": "02f68b906184349adf37e72643b4ca376e240c3553a63ba86fd379d4aa9fa914",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.dbf": "c654ec85a36dc2a1b620485a1fc774ec387df0295a0e66140e2ce480e6d1573a",
+    "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+    "data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg": "5df8b3e3771115eeee1114c785425d74bc966da0ce87809236c45b8ecdbee29a"
+  },
+  "features": {
+    "F0": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km"
+    ],
+    "F1": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m"
+    ],
+    "F2": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m",
+      "rain_annual_max_1h",
+      "rain_hours_over_30mm",
+      "rain_top5_3h",
+      "rain_top5_24h"
+    ]
+  },
+  "candidates": {
+    "ridge": [
+      {
+        "C": 0.1
+      },
+      {
+        "C": 1.0
+      }
+    ],
+    "frequency_ratio": [
+      {
+        "n_bins": 5,
+        "alpha": 1.0
+      },
+      {
+        "n_bins": 10,
+        "alpha": 1.0
+      }
+    ],
+    "random_forest": [
+      {
+        "max_depth": 2,
+        "min_samples_leaf": 200
+      },
+      {
+        "max_depth": 4,
+        "min_samples_leaf": 400
+      }
+    ],
+    "xgboost": [
+      {
+        "max_depth": 1
+      },
+      {
+        "max_depth": 3
+      }
+    ]
+  },
+  "fixed_parameters": {
+    "ridge": {
+      "solver": "lbfgs",
+      "max_iter": 500,
+      "class_weight": null,
+      "random_state": 42
+    },
+    "frequency_ratio": {},
+    "random_forest": {
+      "n_estimators": 48,
+      "max_features": "sqrt",
+      "class_weight": null,
+      "n_jobs": 2,
+      "random_state": 42
+    },
+    "xgboost": {
+      "n_estimators": 80,
+      "learning_rate": 0.05,
+      "reg_lambda": 20.0,
+      "reg_alpha": 1.0,
+      "min_child_weight": 10,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "scale_pos_weight": 1.0,
+      "tree_method": "hist",
+      "n_jobs": 2,
+      "random_state": 42,
+      "eval_metric": "logloss"
+    }
+  },
+  "selection_rule": "모델·특징: 공간 5-fold 평균 cluster_auc와 LOEO 6-fold 평균 cluster_auc의 산술평균 최대. 동점: FEATURES 및 CANDIDATES 선언 순서. 기준선은 후보에서 제외. 하이퍼파라미터: 각 외부 학습 자료 안의 버퍼 적용 공간 그룹 3-fold 평균 cluster_auc 최대, 동점은 후보 선언 순서. 최종 파라미터도 전체 개발 자료의 동일한 내부 CV로 결정. 선택된 모델의 개발 CV 점수는 선택 편향이 있으므로 최종 성능 추정으로 해석하지 않는다.",
+  "versions": {
+    "sklearn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "seed": 42,
+  "population": "전체 격자; universe 필터 없음",
+  "development_events": [
+    2006,
+    2012,
+    2014,
+    2016,
+    2019,
+    2025
+  ],
+  "outer_spatial": {
+    "n_splits": 5,
+    "block_m": 2000,
+    "buffer_m": 300,
+    "cell_m": 100,
+    "cluster_radius_m": 150,
+    "block_origin": [
+      0,
+      0
+    ]
+  },
+  "inner": {
+    "n_splits": 3,
+    "block_m": 2000,
+    "buffer_m": 300,
+    "metric": "cluster_auc"
+  },
+  "loeo": "시험=뺀 사상 양성+모든 영구 음성. 음성을 공간 그룹 3분할 교차 예측; 시험 양성은 3개 모델 예측 평균. 중복 사상 양성도 학습에서 제외.",
+  "loeo_groups": "사상별로 뺀 열을 제거한 학습 사상 합집합으로 공간·배경 그룹을 구성; 내부 CV도 해당 그룹과 학습 라벨만 사용. 시험 라벨은 행 제외·평가에만 사용.",
+  "top20_ties": "정확히 20% 예산, 경계 동점은 분수 가중",
+  "class_weight": "없음",
+  "preprocessing": "모든 모델 학습 fold 중앙값 결측 대치; ridge만 학습 fold 평균·표준편차",
+  "past_flood": "개발 원본 중 학습 event_year 폴리곤까지 격자 중심점 최근접 거리 음수; 내부는 0. 공간 CV는 학습 격자와 겹치되 시험 격자와 겹치지 않는 원본만 사용.",
+  "holdout_read": false,
+  "holdout_scored": false,
+  "revision": {
+    "type": "post-hoc review correction; 최초 사전등록 아님",
+    "review": ".omc/review/RV1.md 발견 1~3",
+    "reasons": {
+      "1": "v1 전체 테스트에서 홀드아웃 읽기 발생; 이번에는 환경변수 없이 tests.test_benchmark만 실행",
+      "2": "LOEO 전역 그룹 누수를 학습 사상별 그룹으로 수정",
+      "3": "양성 격자 중심점 대리값을 학습 사상 원본 폴리곤 거리로 수정"
+    },
+    "v1_run_id": "P005_dev_20260924T091820Z",
+    "v1_selection": {
+      "model": "random_forest",
+      "feature_set": "F0",
+      "selection_score": 0.8407428630093536,
+      "parameters": {
+        "n_estimators": 48,
+        "max_features": "sqrt",
+        "class_weight": null,
+        "n_jobs": 2,
+        "random_state": 42,
+        "max_depth": 4,
+        "min_samples_leaf": 400
+      },
+      "feature_columns": [
+        "rel_elev_m",
+        "slope_deg",
+        "twi",
+        "impervious_frac",
+        "river_proximity",
+        "culvert_proximity",
+        "pump_within_km"
+      ]
+    },
+    "v1_holdout_read": true,
+    "v1_prespec_sha256": "896da482b114b90a55f7020f779075faec7f6eb2abef841b047c537f8d3bed56",
+    "unchanged": [
+      "CANDIDATES",
+      "FEATURES",
+      "SELECTION_RULE",
+      "FIXED_PARAMS"
+    ],
+    "selection_matches_v1": false
+  },
+  "gates": {
+    "grid_auc_min": 0.7,
+    "top20_capture_min": 0.5
+  },
+  "limitations": [
+    "기존 홀드아웃 실패가 알려진 뒤 제안된 비교 설계다. 이번 실행은 홀드아웃 파일을 읽지 않지만 최초 사전등록 분석은 아니다.",
+    "고정 기준선 L1·z_sensitivity는 제공된 동결 값을 사용한다. 과거 전체 격자 정규화 이력은 재학습하지 않는다.",
+    "빈도비 sigmoid 출력은 보정된 발생 확률이 아니라 순위 점수다.",
+    "폴리곤 1표 평가는 기존 비교 지표 범위에 없어 산출하지 않는다; 이번 수정의 원본 폴리곤은 근접도 기준선에 사용한다.",
+    "LOEO 음성은 사상별로 반복 채점된다. 사상 간 통합 OOF 값 대신 사상별 값과 비가중 평균을 보고한다.",
+    "공간 CV에서 학습·시험 격자에 동시에 걸친 원본 폴리곤은 근접도 원천에서 통째로 제외한다."
+  ],
+  "frozen_at_utc": "2026-09-24T09:51:51.220330+00:00",
+  "n_grid": 75400,
+  "n_positive": 642,
+  "n_clusters": 46,
+  "ranking": [
+    {
+      "model": "random_forest",
+      "feature_set": "F1",
+      "selection_score": 0.8411675123728033
+    },
+    {
+      "model": "random_forest",
+      "feature_set": "F0",
+      "selection_score": 0.8406507999346862
+    },
+    {
+      "model": "xgboost",
+      "feature_set": "F0",
+      "selection_score": 0.8383863839465873
+    },
+    {
+      "model": "xgboost",
+      "feature_set": "F1",
+      "selection_score": 0.836154418685134
+    },
+    {
+      "model": "frequency_ratio",
+      "feature_set": "F1",
+      "selection_score": 0.831185959324761
+    },
+    {
+      "model": "frequency_ratio",
+      "feature_set": "F0",
+      "selection_score": 0.8240293237841646
+    },
+    {
+      "model": "random_forest",
+      "feature_set": "F2",
+      "selection_score": 0.8222566226684376
+    },
+    {
+      "model": "ridge",
+      "feature_set": "F0",
+      "selection_score": 0.8168177725874846
+    },
+    {
+      "model": "ridge",
+      "feature_set": "F1",
+      "selection_score": 0.8158825252037262
+    },
+    {
+      "model": "xgboost",
+      "feature_set": "F2",
+      "selection_score": 0.8142185528486783
+    },
+    {
+      "model": "frequency_ratio",
+      "feature_set": "F2",
+      "selection_score": 0.8051613136681468
+    },
+    {
+      "model": "ridge",
+      "feature_set": "F2",
+      "selection_score": 0.8050023024515103
+    }
+  ],
+  "selection": {
+    "model": "random_forest",
+    "feature_set": "F1",
+    "selection_score": 0.8411675123728033,
+    "parameters": {
+      "n_estimators": 48,
+      "max_features": "sqrt",
+      "class_weight": null,
+      "n_jobs": 2,
+      "random_state": 42,
+      "max_depth": 4,
+      "min_samples_leaf": 400
+    },
+    "feature_columns": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m"
+    ]
+  },
+  "final_parameter_trials": [
+    {
+      "params": {
+        "max_depth": 2,
+        "min_samples_leaf": 200
+      },
+      "inner_cluster_auc": [
+        0.8574949807943235,
+        0.823087872227079,
+        0.8364195232607349
+      ],
+      "mean": 0.8390007920940459
+    },
+    {
+      "params": {
+        "max_depth": 4,
+        "min_samples_leaf": 400
+      },
+      "inner_cluster_auc": [
+        0.8650980834690408,
+        0.8246374823447423,
+        0.8558843860932448
+      ],
+      "mean": 0.8485399839690094
+    }
+  ],
+  "leakage_checklist": {
+    "preprocessing": "중앙값·평균·표준편차는 내부/외부 해당 학습 fold에서만 fit",
+    "frequency_bins": "분위 경계·빈도비·희소 구간 smoothing은 해당 학습 fold에서만 fit",
+    "hyperparameters": "외부 시험 점수와 무관하게 내부 3-fold cluster_auc로만 선택",
+    "proximity": "학습 사상 원본 폴리곤 거리; 공간 CV는 학습 영역에서만 선택하고 시험 격자에 걸친 원본 제외",
+    "spatial_clusters": "공간 전이는 전체 라벨 덩어리를 보존; LOEO는 학습 사상 라벨만으로 공간·배경·내부 CV 그룹 구성",
+    "buffer": "시험 2km 블록과 학습 100m 격자 사각형 간 거리 >300m",
+    "loeo": "뺀 사상 양성 전부 제외; 모든 음성은 그룹 교차 예측으로 학습·시험 중복 0",
+    "holdout": "개발 가공 파일과 load(files_for('development'))만 사용; tests.test_benchmark만 실행"
+  },
+  "development_trace_metadata": {
+    "n_files": 3,
+    "rows_per_file": {
+      "L100_침수심.shp": 19,
+      "L110_침수위.shp": 18,
+      "changwon_flood_traces.gpkg": 125
+    },
+    "skipped_files": {},
+    "duplicate_geometries_dropped": 17,
+    "n_traces": 145,
+    "n_polygons": 145,
+    "invalid_fixed": 0,
+    "area_km2": 4.619,
+    "union_area_km2": 4.25541382108407,
+    "date_columns": [
+      "F_SAT_YMD",
+      "FLDN_BGNG_YMD"
+    ],
+    "cause_columns": [
+      "F_RSN_DTL",
+      "FLDN_CS_DTL_NM",
+      "F_RSN_CD",
+      "cause"
+    ],
+    "event_columns": [
+      "F_DISA_NM",
+      "FLDN_DST_NM"
+    ],
+    "year_columns": [
+      "FLDN_YR",
+      "F_YR",
+      "INV_YR"
+    ],
+    "date_typo_repairs": 0,
+    "start_date_typo_repairs": 0,
+    "end_date_typo_repairs": 0,
+    "date_range": [
+      "2006-07-10",
+      "2025-07-19"
+    ],
+    "n_events": 12,
+    "years": [
+      "2006",
+      "2012",
+      "2014",
+      "2016",
+      "2019",
+      "2025"
+    ],
+    "n_years": 6,
+    "n_storms": 7,
+    "n_inland": 53,
+    "causes": [
+      "국지성호우로 인한 하천범람",
+      "내수_방재시설 용량부족",
+      "내수_방재시설 용량부족, 내수_기타(토사 유입으로 인한 배수로 매몰)",
+      "내수불량",
+      "역류",
+      "외수범람"
+    ],
+    "columns": [
+      "DIST_CODE",
+      "F_SHIM",
+      "F_AREA",
+      "ADM_CD",
+      "DAT_SEQ",
+      "F_YR",
+      "geometry",
+      "source_file",
+      "source_id",
+      "role",
+      "source_record_id",
+      "F_AVR_HGT",
+      "F_DISA_NM",
+      "INV_YR",
+      "F_RSN_DTL",
+      "F_SAT_YMD",
+      "F_END_YMD",
+      "F_SAT_TM",
+      "F_END_TM",
+      "F_RSN_CD",
+      "F_ZONE_NM",
+      "DMG_MONY",
+      "F_HOUR",
+      "FLDN_GRD",
+      "FLDN_DOWA",
+      "FLDN_END_YMD",
+      "FLDN_YR",
+      "FLDN_CS_DTL_NM",
+      "FLDN_BGNG_YMD",
+      "STDG_SGG_CD",
+      "FLDN_END_TM",
+      "FLDN_AREA",
+      "STDG_CTPV_CD",
+      "FLDN_DST_NM",
+      "SN",
+      "FLDN_BGNG_TM",
+      "sgg_name",
+      "event_date",
+      "cause",
+      "event_name",
+      "is_inland",
+      "event_end_date",
+      "event_year",
+      "storm_id",
+      "land_use",
+      "object_id"
+    ],
+    "crs": "EPSG:5179"
+  },
+  "elapsed_seconds": 155.063,
+  "final_model_sha256": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+  "results_sha256": "99f9ba10b449e9e4e004e763b20234daa0aa3a354ea73ec37322cb9761541fd7",
+  "holdout_evaluation": "동결 모델·특징·사전 게이트를 그대로 사용; 홀드아웃 평가 후 재튜닝 금지"
+}

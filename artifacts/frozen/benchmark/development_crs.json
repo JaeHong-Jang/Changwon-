@@ -1,0 +1,20 @@
+[
+  {
+    "file": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp",
+    "crs_evidence": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.prj",
+    "original_epsg": 5186,
+    "target_epsg": 5179
+  },
+  {
+    "file": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp",
+    "crs_evidence": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.prj",
+    "original_epsg": 5186,
+    "target_epsg": 5179
+  },
+  {
+    "file": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg",
+    "crs_evidence": "/mnt/c/Users/User/Desktop/대학교/3학년/창원 시 데이터 분석 공모전/data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg",
+    "original_epsg": 5179,
+    "target_epsg": 5179
+  }
+]

@@ -1,0 +1,86 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ===== Jupyter Notebook =====
+.ipynb_checkpoints/
+
+# ===== 가상환경 =====
+venv/
+env/
+.venv/
+.env
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 데이터 (raw 원본·external CSV는 Git LFS로 공유) =====
+data/processed/*.csv
+data/processed/*.pkl
+data/processed/*.parquet
+data/processed/**/*.csv
+data/processed/**/*.pkl
+data/processed/**/*.parquet
+data/processed/**/*.gpkg
+data/processed/**/*.geojson
+data/external/*.xlsx
+# 데이터 설명 README는 일반 Git으로 추적함
+!data/processed/README.md
+!data/external/README.md
+
+# ===== 모델 산출물 =====
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+!requirements.txt
+
+# ===== 로그 =====
+logs/
+*.log
+
+# ===== 하네스 실행 산출물 =====
+artifacts/validation/*.json
+artifacts/runs/
+!artifacts/README.md
+
+# ===== OMC =====
+.omc/
+
+# 파이프라인 노드별 최신 fingerprint·시도 횟수 (캐시 판정용). approvals/ 는 추적함
+artifacts/state/
+
+# 외부 자료 다운로드 캐시 (재취득 가능, 커밋하지 않음)
+.cache_ingest/
+
+# ===== 인증키 =====
+# .env 만으로는 부족하다. 키를 받아 임시로 저장한 파일이 루트에 놓이는 일이 잦다.
+*API*키*
+*api*key*
+*.key
+secrets.*
+
+# ===== 대용량 원본 (스크립트로 재생성 가능) =====
+# 창원시 도시침수정보시스템 WFS 원본 690MB. src/data/flood_maps.py 로 다시 받고,
+# 파이프라인이 읽는 것은 data/processed/canonical/flood_maps.gpkg 다.
+data/raw/flood_maps/
+# 동결 모델은 재현을 위해 추적한다 (AGENTS §5)
+!artifacts/frozen/**/*.joblib
+# 클라우드 세션 가상환경
+.venv/

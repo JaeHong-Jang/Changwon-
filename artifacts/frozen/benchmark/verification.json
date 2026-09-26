@@ -1,0 +1,43 @@
+{
+  "run_id": "P005_dev_20260924T094916Z",
+  "verified_metric_values": 704,
+  "verified_outer_parts": 23,
+  "verified_inner_splits": 69,
+  "spatial_test_coverage_min": 1,
+  "spatial_test_coverage_max": 1,
+  "cluster_split_violations": 0,
+  "buffer_violations": 0,
+  "train_test_overlap": 0,
+  "model_reload_finite_predictions": 75400,
+  "hashes_match": true,
+  "v1_artifacts_hashes_match": true,
+  "loeo_held_label_invariance_events": 6,
+  "polygon_proximity_matches_brute_force": true,
+  "result_rows": 896,
+  "elapsed_seconds": 155.063,
+  "selected": {
+    "model": "random_forest",
+    "feature_set": "F1",
+    "selection_score": 0.8411675123728033,
+    "parameters": {
+      "n_estimators": 48,
+      "max_features": "sqrt",
+      "class_weight": null,
+      "n_jobs": 2,
+      "random_state": 42,
+      "max_depth": 4,
+      "min_samples_leaf": 400
+    },
+    "feature_columns": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m"
+    ]
+  },
+  "self_verification_only": true
+}

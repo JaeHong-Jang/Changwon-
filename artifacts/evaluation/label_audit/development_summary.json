@@ -1,0 +1,97 @@
+{
+ "run_id": "label_audit_development_20260924T104040Z_1b8106ba",
+ "command": "python -m src.models.label_audit development",
+ "code_sha256": "1b8106ba94845be0f049dba1f411fccdcada8d856910e8883580249e2b7ef1c3",
+ "threshold": 0.1,
+ "role": "development",
+ "all": {
+  "n": 145,
+  "survive_grid_10pct": 0.952,
+  "survive_own_10pct": 0.897,
+  "median_area_m2": 8750.1
+ },
+ "by_land_class": {
+  "unknown": {
+   "n": 145,
+   "survive_grid_10pct": 0.952,
+   "survive_own_10pct": 0.897,
+   "median_area_m2": 8750.1
+  }
+ },
+ "by_area_bin": {
+  "<500": {
+   "n": 4,
+   "survive_grid_10pct": 0.25,
+   "survive_own_10pct": 0.0,
+   "median_area_m2": 325.5
+  },
+  "500-1k": {
+   "n": 7,
+   "survive_grid_10pct": 0.571,
+   "survive_own_10pct": 0.0,
+   "median_area_m2": 673.1
+  },
+  "1k-5k": {
+   "n": 43,
+   "survive_grid_10pct": 0.977,
+   "survive_own_10pct": 0.907,
+   "median_area_m2": 2880.8
+  },
+  "5k-20k": {
+   "n": 33,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 1.0,
+   "median_area_m2": 8400.5
+  },
+  ">=20k": {
+   "n": 58,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 1.0,
+   "median_area_m2": 49811.2
+  }
+ },
+ "by_storm": {
+  "2006-07-10": {
+   "n": 19,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 1.0,
+   "median_area_m2": 33396.5
+  },
+  "2012-09-17": {
+   "n": 31,
+   "survive_grid_10pct": 0.839,
+   "survive_own_10pct": 0.774,
+   "median_area_m2": 6052.7
+  },
+  "2014-08-25": {
+   "n": 47,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 0.915,
+   "median_area_m2": 8105.8
+  },
+  "2016-10-05": {
+   "n": 21,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 1.0,
+   "median_area_m2": 40506.3
+  },
+  "2019-10-02": {
+   "n": 7,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 0.714,
+   "median_area_m2": 37362.6
+  },
+  "2025-07-19": {
+   "n": 18,
+   "survive_grid_10pct": 0.889,
+   "survive_own_10pct": 0.889,
+   "median_area_m2": 3169.1
+  },
+  "Y2025": {
+   "n": 2,
+   "survive_grid_10pct": 1.0,
+   "survive_own_10pct": 1.0,
+   "median_area_m2": 2965.6
+  }
+ }
+}

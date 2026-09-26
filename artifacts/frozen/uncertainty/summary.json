@@ -1,0 +1,102 @@
+{
+  "input": "data/processed/layers/cdri.gpkg:cdri",
+  "run_id": "index_uncertainty_s20260924_r40",
+  "seed": 20260924,
+  "replicates_per_combination": 40,
+  "design_count": 2880,
+  "n_grid": 10202,
+  "top_n": 20,
+  "distinct_parameter_settings": 1008,
+  "dirichlet_draw_count": 960,
+  "nms_radius_m": 300.0,
+  "factor_levels": {
+    "floor": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "normalization": [
+      "minmax",
+      "percentile"
+    ],
+    "aggregation": [
+      "geometric",
+      "additive"
+    ],
+    "weights": [
+      "equal",
+      "entropy",
+      "dirichlet"
+    ],
+    "components": [
+      "HEVD",
+      "HEV"
+    ]
+  },
+  "dirichlet_alpha": "10 × equal weight (4 components: 2.5 each; 3 components: 10/3 each)",
+  "percentile_rule": "pandas rank(method='average', pct=True), then floor + (1-floor)*pct",
+  "rank_rule": "descending, first tie break in original row order",
+  "baseline": {
+    "exact_cdri": true,
+    "exact_rank": true,
+    "top20_grid_ids": [
+      "라마982027",
+      "마라095835",
+      "라라912924",
+      "라라987907",
+      "라라975917",
+      "마라096829",
+      "마라101837",
+      "마라096912",
+      "마라108851",
+      "마라110795",
+      "라마981030",
+      "마라065835",
+      "마라087849",
+      "라라965841",
+      "마라075856",
+      "마라067838",
+      "라라988929",
+      "라마987028",
+      "라라982902",
+      "라라971874"
+    ],
+    "exact_h08_nms_top20": true
+  },
+  "spearman_vs_baseline": {
+    "min": -0.014626029849001096,
+    "p05": 0.5636281185247712,
+    "median": 0.8106716707940367,
+    "p95": 0.946534711278427,
+    "max": 1.0
+  },
+  "top20_overlap": {
+    "min": 0.0,
+    "p05": 2.0,
+    "median": 7.0,
+    "p95": 13.0,
+    "max": 20.0
+  },
+  "rank90_candidate_count": 724,
+  "robust_priority_threshold": 0.8,
+  "robust_priority_count": 2,
+  "existing_robust_core_count": 8,
+  "robust_and_existing_core": [
+    "라라912924",
+    "라라975917"
+  ],
+  "robust_only": [],
+  "existing_core_only": [
+    "라라987907",
+    "마라095835",
+    "마라096829",
+    "마라096912",
+    "마라096913",
+    "마라101838"
+  ],
+  "effects_rule": "first-order Var(E[Y|factor])/Var(Y), summed over grids; rank and NMS inclusion separately",
+  "effects_note": "first-order ratios need not sum to one; interactions and Dirichlet draws remain",
+  "method_reference": "Saisana et al. (2005), doi:10.1111/j.1467-985X.2005.00350.x",
+  "aggregation_reference": "Greco et al. (2019), doi:10.1007/s11205-017-1832-9",
+  "document_correction_proposal": "METHODOLOGY §2.3·§5.1의 '비보상 집계'를 '보상이 제한되는 기하 집계'로 고친다. [0.05,1] 재척도 후 입력 요소는 0이 될 수 없으므로 '0이면 전체 0'을 현행 산식의 설명으로 쓰지 않는다."
+}

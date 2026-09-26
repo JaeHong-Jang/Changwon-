@@ -1,0 +1,39 @@
+# ===== 데이터 분석 핵심 =====
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+
+# ===== 시각화 =====
+matplotlib>=3.7
+seaborn>=0.12
+plotly>=5.15
+folium>=0.14          # 지도 시각화
+
+# ===== 머신러닝 / AI =====
+scikit-learn>=1.3
+xgboost>=2.0
+lightgbm>=4.0
+
+# ===== 공공데이터 수집 =====
+requests>=2.31
+beautifulsoup4>=4.12
+openpyxl>=3.1         # 엑셀 파일 처리
+
+# ===== 지리 데이터 =====
+geopandas>=0.14
+shapely>=2.0
+pyproj>=3.7         # CRS 의미 검증·재투영
+rasterio>=1.5        # DEM/GeoTIFF 등 래스터 처리
+
+# ===== 주피터 =====
+jupyter>=1.0
+ipykernel>=6.25
+jupyterlab>=4.0
+nbformat>=5.9        # 노트북 생성·검사
+nbconvert>=7.0       # 노트북 일괄 실행 (Restart & Run All 자동화)
+nbclient>=0.9
+
+# ===== 유틸리티 =====
+python-dotenv>=1.0
+PyYAML>=6.0
+tqdm>=4.65

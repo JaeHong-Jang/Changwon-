@@ -1,0 +1,137 @@
+[
+  {
+    "key": "a1_l200_050",
+    "description": "A1 창원 침수예상도 내수침수 50년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L200_050",
+    "path": "data/raw/flood_maps/changwon_wfs/L200_050.geojson",
+    "bytes": 86179606,
+    "sha256": "14652c154677a6d604cd52b37a3be37fa26cdfc7c87fed9ed0d92b1409ff18d0",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l200_080",
+    "description": "A1 창원 침수예상도 내수침수 80년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L200_080",
+    "path": "data/raw/flood_maps/changwon_wfs/L200_080.geojson",
+    "bytes": 92672475,
+    "sha256": "d22fc4f17abedf574560ac3d2506499c0202aff547431bb5c9dfc66b31894a4f",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l200_100",
+    "description": "A1 창원 침수예상도 내수침수 100년 (28,544건)",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L200_100",
+    "path": "data/raw/flood_maps/changwon_wfs/L200_100.geojson",
+    "bytes": 94656352,
+    "sha256": "18e00279b5f02ba4faee04259f95c7ccf790f82eef0b958517381395112d9ddf",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l200_200",
+    "description": "A1 창원 침수예상도 내수침수 200년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L200_200",
+    "path": "data/raw/flood_maps/changwon_wfs/L200_200.geojson",
+    "bytes": 101368443,
+    "sha256": "511aebbf296e82c3fd58d432f8088e4598f8e8c2d0ebbf7d38a22e02b7cf297c",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l210_030",
+    "description": "A1 창원 침수예상도 복합 30년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L210_030",
+    "path": "data/raw/flood_maps/changwon_wfs/L210_030.geojson",
+    "bytes": 35013625,
+    "sha256": "a8e73dffe75b98460e70f7d30fb1c465fdf9377c38cef211968cbc62cf892e4f",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l210_050",
+    "description": "A1 창원 침수예상도 복합 50년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L210_050",
+    "path": "data/raw/flood_maps/changwon_wfs/L210_050.geojson",
+    "bytes": 36608644,
+    "sha256": "682f9f5c737367b219631f15333acd783b0a0c5b966cbbecef491d32385ebc35",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l210_080",
+    "description": "A1 창원 침수예상도 복합 80년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L210_080",
+    "path": "data/raw/flood_maps/changwon_wfs/L210_080.geojson",
+    "bytes": 37741722,
+    "sha256": "b68311beb640c94da0796eb6ce8bf7a259ae969a3ff3c399ad3ea7f9bd23f6a7",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l210_100",
+    "description": "A1 창원 침수예상도 복합 100년 (41,130건)",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L210_100",
+    "path": "data/raw/flood_maps/changwon_wfs/L210_100.geojson",
+    "bytes": 38290533,
+    "sha256": "22324a9601efdc68031a5c7ed87569836b431c514070d1237127aa186ce98720",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l220_050",
+    "description": "A1 창원 침수예상도 외수범람 50년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L220_050",
+    "path": "data/raw/flood_maps/changwon_wfs/L220_050.geojson",
+    "bytes": 9759539,
+    "sha256": "6c2873dc5997c0f94af641b291d997acc5323b66b4fa01251df6333ec26842a3",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l220_100",
+    "description": "A1 창원 침수예상도 외수범람 100년 (2,681건)",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L220_100",
+    "path": "data/raw/flood_maps/changwon_wfs/L220_100.geojson",
+    "bytes": 13469952,
+    "sha256": "71e4bbd8831f9605272d1e6fbf133292909fc91035167fd2f730b909be1e703a",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l220_150",
+    "description": "A1 창원 침수예상도 외수범람 150년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L220_150",
+    "path": "data/raw/flood_maps/changwon_wfs/L220_150.geojson",
+    "bytes": 19490588,
+    "sha256": "1570ca948d4511d8e3a6afcb9b5f88614a32a03be1c2891f8578938cb1ad6573",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l220_200",
+    "description": "A1 창원 침수예상도 외수범람 200년",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L220_200",
+    "path": "data/raw/flood_maps/changwon_wfs/L220_200.geojson",
+    "bytes": 22169750,
+    "sha256": "d50e6d04d789434a5175578088ed4c0a0fdad8b2ad5d474e2154cff195dd970b",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a1_l300",
+    "description": "A1 창원 침수예상도 하천 범람 예상도 (62,430건)",
+    "url": "https://bangjae.changwon.go.kr/geoserver/cw/wfs?service=WFS&version=1.1.0&request=GetFeature&outputFormat=application/json&typeName=cw:L300",
+    "path": "data/raw/flood_maps/changwon_wfs/L300.geojson",
+    "bytes": 135186383,
+    "sha256": "27efb69677532c004e7cbdcb228a701e4074567fa2edc2a1e210b12cdbb261f6",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a5_facility",
+    "description": "A5 경로당·경찰·소방·병원 포인트",
+    "url": "https://bangjae.changwon.go.kr/api/api/data/point?frequency=2",
+    "path": "data/raw/shelters/changwon_facility_frequency2.json",
+    "bytes": 101004,
+    "sha256": "24f8e05da16a4332f5b3df71782317c8d4953651f6df5bafa64e3774f8e04ca5",
+    "collected_at": "2026-08-22"
+  },
+  {
+    "key": "a5_shelter",
+    "description": "A5 임시주거시설·학교 포인트",
+    "url": "https://bangjae.changwon.go.kr/api/api/data/point?frequency=1",
+    "path": "data/raw/shelters/changwon_shelter_frequency1.json",
+    "bytes": 86134,
+    "sha256": "f8f4d07ea5e2b95b9a33bb6226caa93e0b707b453c1712dc0b351db2ae3c97bc",
+    "collected_at": "2026-08-22"
+  }
+]

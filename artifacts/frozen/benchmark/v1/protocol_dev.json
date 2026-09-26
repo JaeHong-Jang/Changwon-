@@ -1,0 +1,169 @@
+{
+  "run_id": "P005_dev_20260924T091820Z",
+  "created_at_utc": "2026-09-24T09:18:20.222903+00:00",
+  "command": "PYTHONDONTWRITEBYTECODE=1 /home/data/.venv-changwon/bin/python -m src.models.benchmark",
+  "code_sha256": {
+    "src/models/folds.py": "e4a4083752d48e862c4637dd6d1ff2ad3383f0662d6d93b188207afb6b311a7c",
+    "src/models/benchmark.py": "742dc1330080fc8cfb48318df88bee7bfa5d2503a9b2f869f54e55c4288409ce",
+    "tests/test_benchmark.py": "1709d2eb705f750dedcf98878f4864f7290795cf5fb462b281c51a054b234b24",
+    "src/data/uncertainty.py": "f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21"
+  },
+  "input_sha256": {
+    "data/processed/layers/layer1_flood.gpkg": "3f5fb14ed169983798d9e5858454c1099950cc14e8aef2e288d7bbfeba204142",
+    "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157"
+  },
+  "features": {
+    "F0": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km"
+    ],
+    "F1": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m"
+    ],
+    "F2": [
+      "rel_elev_m",
+      "slope_deg",
+      "twi",
+      "impervious_frac",
+      "river_proximity",
+      "culvert_proximity",
+      "pump_within_km",
+      "flood_l210_100_depth_m",
+      "rain_annual_max_1h",
+      "rain_hours_over_30mm",
+      "rain_top5_3h",
+      "rain_top5_24h"
+    ]
+  },
+  "candidates": {
+    "ridge": [
+      {
+        "C": 0.1
+      },
+      {
+        "C": 1.0
+      }
+    ],
+    "frequency_ratio": [
+      {
+        "n_bins": 5,
+        "alpha": 1.0
+      },
+      {
+        "n_bins": 10,
+        "alpha": 1.0
+      }
+    ],
+    "random_forest": [
+      {
+        "max_depth": 2,
+        "min_samples_leaf": 200
+      },
+      {
+        "max_depth": 4,
+        "min_samples_leaf": 400
+      }
+    ],
+    "xgboost": [
+      {
+        "max_depth": 1
+      },
+      {
+        "max_depth": 3
+      }
+    ]
+  },
+  "fixed_parameters": {
+    "ridge": {
+      "solver": "lbfgs",
+      "max_iter": 500,
+      "class_weight": null,
+      "random_state": 42
+    },
+    "frequency_ratio": {},
+    "random_forest": {
+      "n_estimators": 48,
+      "max_features": "sqrt",
+      "class_weight": null,
+      "n_jobs": 2,
+      "random_state": 42
+    },
+    "xgboost": {
+      "n_estimators": 80,
+      "learning_rate": 0.05,
+      "reg_lambda": 20.0,
+      "reg_alpha": 1.0,
+      "min_child_weight": 10,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "scale_pos_weight": 1.0,
+      "tree_method": "hist",
+      "n_jobs": 2,
+      "random_state": 42,
+      "eval_metric": "logloss"
+    }
+  },
+  "selection_rule": "모델·특징: 공간 5-fold 평균 cluster_auc와 LOEO 6-fold 평균 cluster_auc의 산술평균 최대. 동점: FEATURES 및 CANDIDATES 선언 순서. 기준선은 후보에서 제외. 하이퍼파라미터: 각 외부 학습 자료 안의 버퍼 적용 공간 그룹 3-fold 평균 cluster_auc 최대, 동점은 후보 선언 순서. 최종 파라미터도 전체 개발 자료의 동일한 내부 CV로 결정. 선택된 모델의 개발 CV 점수는 선택 편향이 있으므로 최종 성능 추정으로 해석하지 않는다.",
+  "versions": {
+    "sklearn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "seed": 42,
+  "population": "전체 격자; universe 필터 없음",
+  "development_events": [
+    2006,
+    2012,
+    2014,
+    2016,
+    2019,
+    2025
+  ],
+  "outer_spatial": {
+    "n_splits": 5,
+    "block_m": 2000,
+    "buffer_m": 300,
+    "cell_m": 100,
+    "cluster_radius_m": 150,
+    "block_origin": [
+      0,
+      0
+    ]
+  },
+  "inner": {
+    "n_splits": 3,
+    "block_m": 2000,
+    "buffer_m": 300,
+    "metric": "cluster_auc"
+  },
+  "loeo": "시험=뺀 사상 양성+모든 영구 음성. 음성을 공간 그룹 3분할 교차 예측; 시험 양성은 3개 모델 예측 평균. 중복 사상 양성도 학습에서 제외.",
+  "top20_ties": "정확히 20% 예산, 경계 동점은 분수 가중",
+  "class_weight": "없음",
+  "preprocessing": "모든 모델 학습 fold 중앙값 결측 대치; ridge만 학습 fold 평균·표준편차",
+  "past_flood": "학습 사상의 양성 격자 중심점 최근접 거리 음수; 원본 흔적 폴리곤 거리의 대리값",
+  "holdout_read": false,
+  "holdout_scored": false,
+  "gates": {
+    "grid_auc_min": 0.7,
+    "top20_capture_min": 0.5
+  },
+  "limitations": [
+    "기존 홀드아웃 실패가 알려진 뒤 제안된 비교 설계다. 이번 실행은 홀드아웃 파일을 읽지 않지만 최초 사전등록 분석은 아니다.",
+    "고정 기준선 L1·z_sensitivity는 제공된 동결 값을 사용한다. 과거 전체 격자 정규화 이력은 재학습하지 않는다.",
+    "빈도비 sigmoid 출력은 보정된 발생 확률이 아니라 순위 점수다.",
+    "폴리곤 1표 평가는 개발 원본 폴리곤 식별자를 읽지 않아 이 단계에서 산출하지 않는다.",
+    "LOEO 음성은 사상별로 반복 채점된다. 사상 간 통합 OOF 값 대신 사상별 값과 비가중 평균을 보고한다.",
+    "근접도는 라벨이 있는 100m 격자 중심점 대리값이며 원본 흔적 경계 거리가 아니다."
+  ]
+}

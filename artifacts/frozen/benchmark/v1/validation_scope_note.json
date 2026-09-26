@@ -1,0 +1,12 @@
+{
+  "benchmark_holdout_read": false,
+  "benchmark_holdout_scored": false,
+  "full_unittest_holdout_read": true,
+  "full_unittest_holdout_model_scored": false,
+  "instruction_conflict": "전체 unittest 실행 요구를 수행하는 동안 다른 작업자의 tests/test_flood_traces.py 통합 테스트 setUpClass가 FT.load_holdout()을 호출했다. W3는 로그 확인 후 이를 발견했다. 따라서 W3 세션 전체에 대해서는 홀드아웃을 읽지 않았다고 주장할 수 없다.",
+  "evidence": ".omc/benchmark/unittest.log 및 tests/test_flood_traces.py setUpClass/test_holdout_inventory_and_labels",
+  "action": "벤치마크는 미리 기록한 protocol_dev.json의 후보·선택 규칙을 유지한다. 테스트 출력은 모델 선택·학습에 사용하지 않는다. 전체 테스트를 재실행하지 않고 리더에게 충돌을 보고한다.",
+  "tests": "Ran 209 tests in 119.891s; OK",
+  "command": "PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 /home/data/.venv-changwon/bin/python -m unittest discover -s tests",
+  "independent_review": "자기 검증만 수행했다. 독립 검토와 최종 판정은 리더에게 남긴다."
+}

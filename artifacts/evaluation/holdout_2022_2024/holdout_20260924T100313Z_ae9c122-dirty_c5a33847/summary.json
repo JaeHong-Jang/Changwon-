@@ -1,0 +1,414 @@
+{
+ "run_id": "holdout_20260924T100313Z_ae9c122-dirty_c5a33847",
+ "command": "python -m src.models.holdout_eval",
+ "started_utc": "2026-09-24T10:03:13.273209+00:00",
+ "git_head": "ae9c122",
+ "source_dirty": true,
+ "versions": {
+  "python": "3.14.4",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "geopandas": "1.1.4",
+  "shapely": "2.1.2",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1"
+ },
+ "code_sha256": {
+  "src/models/holdout_eval.py": "750dba037c9a1c3dd85c8cfedd35560e1cee1ada00627cd040a82ea157bc5abb",
+  "src/data/validation.py": "372c9e839129af2d084b24c943cfe31641bcdd0c829904d7b4d62ecc289ff69c",
+  "src/data/flood_traces.py": "ad673346edf41e7c76eb506242ce21d3e4cc9b75b2b6b32bb023c59514370c5a",
+  "src/data/layers.py": "ac3bd91cb0a4b21de70d3500f401161178304d852c9d366430a4e1bdb06a5331",
+  "src/data/uncertainty.py": "f047e65b732976a0dd8828a9fb4c9ae078cdfd33825c2fe6e2bfa353d0d7ba21",
+  "src/data/spatial.py": "f58cf6e57233006a7ca807b5dfe84154b04fed262acf16081e7968991ba03c1b",
+  "src/stages/h06_layers.py": "36acc6ed749790e4bcda2454fbd59abe4a9467dee3eff1dff8c4e77f25a8d188",
+  "src/models/benchmark.py": "dbaec8531a6879d1b4c4e3b0d06c1dbc90e4cf4a21946a55f2e0d61974b4a36c",
+  "src/models/folds.py": "107f058481a1ae32a4c527a0c268d19b1571941695b3fdbcc379bf8cdf09e0c4",
+  "config/flood_traces.yaml": "6229b4e3ed81b517792491586769421240349c730caf13587330648effee9da8"
+ },
+ "processed_sha256": {
+  "data/processed/layers/layer1_flood.gpkg": "3f5fb14ed169983798d9e5858454c1099950cc14e8aef2e288d7bbfeba204142",
+  "data/processed/features/grid_features.parquet": "092545b6c9a2c634c8521896967192033c54269ab930bf3f441a769c85c6e157"
+ },
+ "raw_sha256": {
+  "development": {
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.dbf": "7946c9ed804026a3bb16ce4692561aea35b9eab45ed3dbb5e9f78e52ed5498bc",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shp": "2d413db4c2db63eb158da9ec475652acb5b7278dcdcb71d68333843007dbd517",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L100_침수심.shx": "3c6042c07d1014bd095dcd9ba5237c8d408ac273e05c51f983211bfbab0942de",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.dbf": "c654ec85a36dc2a1b620485a1fc774ec387df0295a0e66140e2ce480e6d1573a",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shp": "89f279f22fc38dc99fd5baed680674e8364ae3cd010fb1af76c37a411e095c76",
+   "data/raw/flood_traces/changwon_info_disclosure_20260916/04_NDMS DB/L110_침수위.shx": "02f68b906184349adf37e72643b4ca376e240c3553a63ba86fd379d4aa9fa914",
+   "data/raw/flood_traces/safetydata_dssp_if_00117/changwon_flood_traces.gpkg": "5df8b3e3771115eeee1114c785425d74bc966da0ce87809236c45b8ecdbee29a"
+  },
+  "holdout": {
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.dbf": "7055b951bf97885721e350f3e786f379707aad0904528d64977de54bddbdbaa2",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.prj": "bf9ecc19461c8097681c023a9352164b9538ebb6ba7dc970035c7414bae2323c",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shp": "23b2394903b3c7e0b5eeb7ad8c76e5939ae62ee6431eb5e382633902a88beb57",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2023/01_동부원점/침수위_L110/L110_000_5670000_2024_4812000000_0001.shx": "043f973b9bbd0bec515ec88d4a6d8e8b420896e29b414d71cd9b42bcb0dabc93",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.dbf": "05564ee157c76a205e24d70a3f3d022151a1f5bdecaca01e633e96eb8d270de4",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shp": "d3849c37801eda5e82df927fe6992d46c017b89f541840f119e405ebbbf711ee",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/1. 마산합포구/F_CHIMWL_L110_마산합포구.shx": "bf191aad8b14c6c76f8f0d32ea211f6a39f06017272c1a00c360c40b75bdb674",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.dbf": "d8338d3455c70ede06f08e3f3ccb2bf0780834537d6834984b13585c8e7707ae",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shp": "c6fcfd99d6d23852308546a2d2802dc1eb92fab24c2409c513d440f6fdf7ecc4",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/2. 마산회원구/F_CHIMWL_L110_마산회원구.shx": "3a1e2cacd30307e318632085674bfb773b86bc8542b74962cfcc7f025c008659",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.dbf": "8aa9835fe24e2432791b1aaff3a82d35f53b114268cda6ccbce8fad6ccc39089",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shp": "adf6072f3f21e21fc84e7634b5ba76ec264ad233b2c61a454e2c29d92f075c5f",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/3. 성산구/F_CHIMWL_L110_성산구.shx": "662fc15daafeb801604dbd2b6815711c1493219d3be8f0c776e095b45a6d909a",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.dbf": "d2e0810fafda6c64622f2ef8316ab9db9f3849a057548e3173db29b20b937152",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shp": "a0e4dca031fde7c8feb4555b695d1690e558064fdae51b9723ac9568d5e46320",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/4. 진해구/F_CHIMWL_L110_진해구.shx": "aace013f4f39fdea205ce3b1ee2e1b94cc17a02cb041d9885099c1b0af0d27a2",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.dbf": "bab92cf9509cc86fea91c12a981841122192c4f56c3acdc7dea12ec848830ea3",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.prj": "3cb526b51b6ea319a8766da3ad7e83d1c810e606e4de91d9bc41d07b97ab5ee5",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.qmd": "7450b754a5b1113a0185b98e0ab2423efb9e86e7973f85520e869239ccaea756",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shp": "47fe3dad1fbf9c0c42cea81d805427d7e983e3c482bf2779b5e68ba25efe1b95",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_ido/5. 의창구/F_CHIMWL_L110_의창구.shx": "52327a553851a6cfe4cede6b37e4ce7186ad4a18af3feb2e08a5f622d3250abe",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.dbf": "99a86ee28d9293714d77e61594f96493c30dac007eb7a8ae1f7c1bd88cc5bf76",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.prj": "dcfa42cfd392417d954aeb5038d12fdaa32a30879b3f5d611f207c7115dc9e7e",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shp": "ee9e441161fb821a84249b5e259acf147b1d9bf09bf763dde9002614fadd68ae",
+   "data/raw/flood_traces/changwon_info_disclosure_20260924/2024_mirae/L110_침수위.shx": "f724b950bb2fb4ef8727413d38070cee81e821c65785ab5989b70c187de1ca36"
+  }
+ },
+ "models": {
+  "v2": {
+   "model_sha256": "8c18c3c2a38fa15cbd5c1a7eab7e86e471de5c665a6f59e91bbec68d07ee409a",
+   "prespec_run_id": "P005_dev_20260924T094916Z",
+   "selection": {
+    "model": "random_forest",
+    "feature_set": "F1",
+    "selection_score": 0.8411675123728033,
+    "parameters": {
+     "n_estimators": 48,
+     "max_features": "sqrt",
+     "class_weight": null,
+     "n_jobs": 2,
+     "random_state": 42,
+     "max_depth": 4,
+     "min_samples_leaf": 400
+    },
+    "feature_columns": [
+     "rel_elev_m",
+     "slope_deg",
+     "twi",
+     "impervious_frac",
+     "river_proximity",
+     "culvert_proximity",
+     "pump_within_km",
+     "flood_l210_100_depth_m"
+    ]
+   }
+  },
+  "v1": {
+   "model_sha256": "f1deb206ac593dcc039f4e8d8629d103f9da1456ce0509b91033cda01a4002ad",
+   "prespec_run_id": "P005_dev_20260924T091820Z",
+   "selection": {
+    "model": "random_forest",
+    "feature_set": "F0",
+    "selection_score": 0.8407428630093536,
+    "parameters": {
+     "n_estimators": 48,
+     "max_features": "sqrt",
+     "class_weight": null,
+     "n_jobs": 2,
+     "random_state": 42,
+     "max_depth": 4,
+     "min_samples_leaf": 400
+    },
+    "feature_columns": [
+     "rel_elev_m",
+     "slope_deg",
+     "twi",
+     "impervious_frac",
+     "river_proximity",
+     "culvert_proximity",
+     "pump_within_km"
+    ]
+   }
+  },
+  "n_past_polygons": 125
+ },
+ "score_roles": {
+  "L1": {
+   "role": "pre_registered",
+   "post_hoc_design": false,
+   "confirmatory": true
+  },
+  "model_frozen": {
+   "role": "frozen",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "model_frozen_to2019": {
+   "role": "frozen_sensitivity",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "rf_F0_v1": {
+   "role": "superseded",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "rf_F0_v1_to2019": {
+   "role": "superseded",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "city_flood_map": {
+   "role": "reference",
+   "post_hoc_design": false,
+   "confirmatory": false
+  },
+  "past_flood_pre2022": {
+   "role": "reference",
+   "post_hoc_design": false,
+   "confirmatory": false
+  },
+  "L1_without_flood_map": {
+   "role": "post_hoc",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "z_sensitivity": {
+   "role": "post_hoc",
+   "post_hoc_design": true,
+   "confirmatory": false
+  },
+  "z_exposure": {
+   "role": "post_hoc",
+   "post_hoc_design": true,
+   "confirmatory": false
+  }
+ },
+ "holdout": {
+  "n_traces": 196,
+  "n_storms": 4,
+  "union_area_km2": 9.546202081806902,
+  "invalid_fixed": 1,
+  "date_typo_repairs": 2,
+  "skipped_files": {}
+ },
+ "polygons_by_storm": {
+  "2022-09-06": 5,
+  "2023-08-10": 3,
+  "2024-07-24": 5,
+  "2024-09-20": 183
+ },
+ "polygons_by_subset": {
+  "all": 196,
+  "urban": 57,
+  "agricultural": 119,
+  "no_landuse_attr": 20
+ },
+ "n_background_cells": 72953,
+ "gate_definition": {
+  "auc_min": 0.7,
+  "top20_capture_min": 0.5,
+  "unit": "격자 1표, 10% 합집합 겹침 라벨, 음성 = 나머지 격자 (h06 과 동일 함수)"
+ },
+ "gates": {
+  "L1": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.4357,
+   "auc_cell_ci95": [
+    0.3856,
+    0.5962
+   ],
+   "auc_cluster": 0.6025,
+   "auc_cluster_ci95": [
+    0.5439,
+    0.661
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0734,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "model_frozen": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.8583,
+   "auc_cell_ci95": [
+    0.8307,
+    0.8685
+   ],
+   "auc_cluster": 0.8255,
+   "auc_cluster_ci95": [
+    0.8001,
+    0.8492
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.8571,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "model_frozen_to2019": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.8432,
+   "auc_cell_ci95": [
+    0.8229,
+    0.8515
+   ],
+   "auc_cluster": 0.8211,
+   "auc_cluster_ci95": [
+    0.7958,
+    0.8446
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.7632,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "rf_F0_v1": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.8761,
+   "auc_cell_ci95": [
+    0.8406,
+    0.889
+   ],
+   "auc_cluster": 0.8337,
+   "auc_cluster_ci95": [
+    0.8077,
+    0.8585
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.8666,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "rf_F0_v1_to2019": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.8508,
+   "auc_cell_ci95": [
+    0.8302,
+    0.859
+   ],
+   "auc_cluster": 0.8287,
+   "auc_cluster_ci95": [
+    0.8034,
+    0.8525
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.7198,
+   "passes_auc": true,
+   "passes_capture": true
+  },
+  "city_flood_map": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.4501,
+   "auc_cell_ci95": [
+    0.4406,
+    0.4811
+   ],
+   "auc_cluster": 0.4941,
+   "auc_cluster_ci95": [
+    0.4554,
+    0.5399
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.026,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "past_flood_pre2022": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.5322,
+   "auc_cell_ci95": [
+    0.4139,
+    0.7237
+   ],
+   "auc_cluster": 0.5682,
+   "auc_cluster_ci95": [
+    0.4997,
+    0.6369
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.2052,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "L1_without_flood_map": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.4387,
+   "auc_cell_ci95": [
+    0.388,
+    0.6002
+   ],
+   "auc_cluster": 0.6053,
+   "auc_cluster_ci95": [
+    0.5463,
+    0.6645
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0781,
+   "passes_auc": false,
+   "passes_capture": false
+  },
+  "z_sensitivity": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.7348,
+   "auc_cell_ci95": [
+    0.7197,
+    0.757
+   ],
+   "auc_cluster": 0.7616,
+   "auc_cluster_ci95": [
+    0.7345,
+    0.7898
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.2249,
+   "passes_auc": true,
+   "passes_capture": false
+  },
+  "z_exposure": {
+   "evaluable": true,
+   "n_nonfinite": 0,
+   "auc_cell": 0.1468,
+   "auc_cell_ci95": [
+    0.0864,
+    0.341
+   ],
+   "auc_cluster": 0.3459,
+   "auc_cluster_ci95": [
+    0.2753,
+    0.4176
+   ],
+   "n_positive_cells": 1267,
+   "n_clusters": 54,
+   "top20_capture": 0.0158,
+   "passes_auc": false,
+   "passes_capture": false
+  }
+ },
+ "note": "확증 근거는 L1 의 사전 게이트뿐이다. model_frozen 은 개발 자료로 동결한 v2 선택(분할 누수 수정 후)이지만 특징 후보군은 리더가 홀드아웃 진단을 본 뒤 정했다(post_hoc_design). rf_F0_v1 은 분할 누수가 있던 v1 선택으로 홀드아웃을 먼저 채점했기에 기록으로만 남긴다"
+}

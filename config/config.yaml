@@ -1,0 +1,120 @@
+# ===== 프로젝트 설정 =====
+project:
+  name: "2026 창원시 AI·데이터 활용 공모전"
+  team: ""
+  topic: "창원시 폭우 침수·하수 역류 우선 대응지역 분석"
+
+# ===== 경로 설정 =====
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  external_data: "data/external"
+  figures: "reports/figures"
+  reports: "reports/final"
+
+# ===== 공공데이터 API =====
+api:
+  data_go_kr:
+    base_url: "https://api.data.go.kr"
+    api_key: ""  # .env 파일에서 관리 권장
+
+# ===== 분석 설정 =====
+# ----- H04 격자 피처 (src/stages/h04_features.py) -----
+features:
+  raster_subdivision: 10            # 폴리곤 변수 래스터화 배율: 100m / 10 = 10m 픽셀 → 면적 비율
+  relative_elevation_radius_m: 500  # 상대고도 초점평균 반경 (ANALYSIS_PLAN §2-1)
+  pump_service_radius_m: 1000       # 펌프장 서비스권 (ANALYSIS_PLAN §2-1)
+  sgis_year: 2024                   # 인구·가구·주택 결합 연도
+  max_missing_rate: 0.05            # 핵심 변수 결측률 상한 (하네스 H04 게이트)
+
+# ----- H06 Layer 1 침수취약성 (src/stages/h06_layers.py) -----
+layer1:
+  idw_powers: [1, 2, 3]             # LOOCV RMSE 로 이 중 하나를 고른다
+  idw_k: 12                         # 최근접 지점 수 (ANALYSIS_PLAN §2-2)
+  idw_max_dist_m: 10000             # 이 반경 밖은 외삽하지 않고 최근접 값 + 플래그
+  river_proximity_m: 300            # 하천 근접도 max(0, 1 - d/300)
+  winsor_lo: 0.01                   # z-score 전 윈저라이즈 하한
+  winsor_hi: 0.99
+  n_classes: 4                      # Jenks 등급 수 (국토부 지침 I~IV)
+  case_study_lift_min: 1.5          # 사례지 5개 동 I·II등급 lift (face-validity)
+  trace_min_overlap: 0.10           # 격자 면적의 이 비율 넘게 겹쳐야 침수 양성으로 센다
+  trace_min_positive: 30            # 양성 격자가 이보다 적으면 성능을 판정하지 않는다
+  trace_auc_min: 0.70               # 침수흔적 라벨이 있을 때만 적용
+  trace_top20_capture_min: 0.50     # 상위 20% 격자의 흔적 포착률
+  trace_calibration_share: 0.5      # 참고용 시간 분할 — 앞 절반 사상으로 경계, 뒤 절반으로 채점.
+                                    # 검증 침수가 12건뿐이라 주 검증은 사상 단위 교차검증(LOEO)이다
+                                    # (CDRI_GRADE_SYSTEM §1③①, h07_cdri._calibrate_and_validate)
+
+# ----- H06 Layer 3 취약계층·대응역량 -----
+layer3:
+  capacity_max_dist_m: 2000         # 대피소·방재기관 접근성 상한 (ANALYSIS_PLAN 4)
+
+# ----- H07 CDRI 통합·민감도 -----
+cdri:
+  top_n: 20                         # 우선대응 지역 수
+  rescale_floor: 0.05               # 기하평균에서 0 이 전체를 0 으로 만들지 않도록 하한
+  min_spearman: 0.80                # 가중치·집계형 변형 간 중위 순위상관 하한 (하네스 H07)
+  min_top20_overlap: 14             # TOP 20 중첩 하한 (70%)
+  calibration_tolerance: 0.03       # 목표 백분위에서 이 범위 안의 PAV 단절점으로 경계를 옮긴다
+  calibration_min_ratio: 1.3        # 인접 등급 발생률 비 하한. 미달이면 두 등급 통합을 권고한다
+  calibration_trend_p_max: 0.01     # 등급-발생률 단조 추세검정 상한 (Cochran-Armitage)
+  calibration_lift_r5_min: 3.0      # 검증 사상에서 R5 의 lift 하한
+  calibration_lift_r4_min: 2.0      # 검증 사상에서 R4 의 lift 하한
+
+# ----- H08 우선대응 지역 정책화 -----
+policy:
+  nms_radius_m: 300                 # 같은 침수 구역이 인접 격자로 중복 선정되는 것을 막는다
+
+# ----- H10 재현성·환류 검증 -----
+h10:
+  workspace_parent: null
+  rerun_timeout_s: 3600
+  run_notebooks: true
+  keep_workspace: false
+  compare_patterns:
+    - data/processed/**/*.gpkg
+    - data/processed/**/*.parquet
+    - data/processed/**/*.csv
+    - reports/tables/*.csv
+    - artifacts/evaluation/primary_formula_manifest.json
+
+analysis:
+  random_seed: 42
+  test_size: 0.2
+  cv_folds: 5
+  climatology_start: "2015-01-01"
+  climatology_end: "2024-12-31"
+  min_station_day_coverage: 0.90
+  min_idw_stations_per_event: 24
+  min_station_coord_coverage: 0.90   # 관측지점 좌표 확보율 하한 (h03_stations). 미달이면 공간보간 중단
+  canonical_crs: "EPSG:5179"
+  grid_size_m: 100
+
+  # ----- 데이터 확인 EDA 판정 기준 (src/data/quality.py Thresholds) -----
+  # 여기가 단일 원천이다. 코드에 하드코딩하면 값을 바꿔도 파이프라인 fingerprint 가
+  # 그것을 모르고 캐시된 결과를 "통과 증거"로 남긴다.
+
+  # 강수 이상은 절대 mm 가 아니라 공간 일관성(같은 해 이웃 지점 대비 비율)으로 판정한다.
+  # 절대 기준으로 잡으면 2017년 같은 실제 가뭄년(29지점 전부 낮고 관측일수 정상)을 오탐한다.
+  # 실측 비율 분포 std 0.12, 1~99% 가 0.71~1.28 이라 [0.5, 2.0] 밖은 명백한 이탈.
+  # 주의: 검증 대상 데이터로 임계값을 정한 순환성이 있다. 다른 기간·지점망에는 재산정 필요.
+  rainfall_station_ratio_min: 0.5
+  rainfall_station_ratio_max: 2.0
+  # 연총량 비교는 관측일수가 비슷할 때만 뜻이 있다. 관측이 끊긴 해는 값이 이상한 것이
+  # 아니라 자료가 없는 것이므로 비교(분자·분모 모두)에서 빼고 따로 보고한다.
+  rainfall_year_obsday_min: 0.95
+  # 차단 기준이 아니라 "그 해가 기후적으로 특이했다"를 문서에 남기기 위한 참고선.
+  rainfall_annual_min_mm: 700
+  rainfall_annual_max_mm: 2600
+
+  # 수위는 센티널이 많다는 것이 하네스 §2·§6-2 에 기록된 사실이다(차룡8교 유효일 85.6%).
+  # 유효 셀 비율에 차단선을 두지 않고 "사례분석에 쓸 수 있는 지점이 남았는가"만 본다.
+  river_usable_ratio_min: 0.10
+  river_min_usable_stations: 1
+
+  # SGIS 격자 통계를 분석격자로 자른 뒤 주민등록인구와 비교할 때의 허용 오차.
+  sgis_pop_tolerance: 0.10
+  # !! 출처 미확인 !! "약 100만(2024)" 어림값이며 기준일·출처 표기가 없다.
+  # ±10% 관용치 안이라 현재 판정에는 영향이 없으나 보고서에 인용할 근거가 아니다.
+  # 행정안전부 주민등록인구통계의 기준일자 값으로 교체하고 여기에 출처를 적을 것.
+  changwon_registered_population: 1002000

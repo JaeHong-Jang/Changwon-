@@ -1,0 +1,11 @@
+{
+  "run_id": "P005_dev_20260924T094916Z",
+  "holdout_read": false,
+  "holdout_scored": false,
+  "test_scope": "tests.test_benchmark only; CHANGWON_HOLDOUT_TESTS unset",
+  "test_command": "env -u CHANGWON_HOLDOUT_TESTS PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp /home/data/.venv-changwon/bin/python -m unittest tests.test_benchmark",
+  "test_output": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.277s\n\nOK",
+  "v1_holdout_read": true,
+  "v1_violation_preserved": "v1/prespec.json, v1/unittest.log, v1/validation_scope_note.json",
+  "independent_review": "미실시; 이 실행은 구현 작업자의 자체 재검산이며 승인은 리더·독립 검토자 담당"
+}

@@ -1,0 +1,5 @@
+# 2022~2024 홀드아웃 공식 평가 결과의 기준값. H10 이 최신 평가(latest.json)의 게이트 해시와 비교한다.
+# 문서(METHODOLOGY §7.6, PAPER_ROADMAP §2)가 인용하는 실행이다. 값이 바뀌면 재평가 사유를 기록한 뒤에만 갱신한다.
+run_id: holdout_20260924T100939Z_ae9c122-dirty_cf388a23
+gates_sha256: 48d83b93b75459b31655ba4eb9069a5efd5eb9d11837338e9be8bcda8a835567
+development_gates_sha256: 2ea2f05733b1d379c3ed3518d9794e9ff2eb1fcfeb027bf51408cad08e74c0bf

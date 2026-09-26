@@ -1,0 +1,118 @@
+{
+ "run_id": "robust_20260926T135911Z_3d14fc1",
+ "git_head": "3d14fc1",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. python .omc/posthoc_h/robust_explain.py",
+ "role": "post_hoc 점검 — 홀드아웃은 채점에만, 학습은 이전 개발 사상만",
+ "variants": {
+  "rf_F1_d4_selected": [
+   "random_forest",
+   "F1",
+   {
+    "max_depth": 4,
+    "min_samples_leaf": 400
+   }
+  ],
+  "rf_F1_d2": [
+   "random_forest",
+   "F1",
+   {
+    "max_depth": 2,
+    "min_samples_leaf": 200
+   }
+  ],
+  "rf_F1_untuned": [
+   "random_forest",
+   "F1",
+   {}
+  ],
+  "rf_F0_d4": [
+   "random_forest",
+   "F0",
+   {
+    "max_depth": 4,
+    "min_samples_leaf": 400
+   }
+  ],
+  "logit_F1_C1": [
+   "ridge",
+   "F1",
+   {
+    "C": 1.0
+   }
+  ],
+  "logit_F1_C0.1": [
+   "ridge",
+   "F1",
+   {
+    "C": 0.1
+   }
+  ]
+ },
+ "sensitivity_axis_signs": "h06 SENSITIVITY_SPEC (동일 가중 z 합)",
+ "explain_trained_on": [
+  2006,
+  2012,
+  2014,
+  2016,
+  2019
+ ],
+ "explain": {
+  "rf_F1_d4_selected": {
+   "permutation_auc_drop": {
+    "rel_elev_m": 0.0114,
+    "slope_deg": 0.048,
+    "twi": 0.0088,
+    "impervious_frac": 0.0041,
+    "river_proximity": 0.0142,
+    "culvert_proximity": 0.0004,
+    "pump_within_km": 0.0047,
+    "flood_l210_100_depth_m": 0.0134
+   },
+   "partial_dependence_direction": {
+    "rel_elev_m": -0.764,
+    "slope_deg": -0.939,
+    "twi": 0.905,
+    "impervious_frac": 1.0,
+    "river_proximity": 0.976,
+    "culvert_proximity": -0.577,
+    "pump_within_km": 1.0,
+    "flood_l210_100_depth_m": 1.0
+   },
+   "spearman_vs_z_sensitivity": 0.9325
+  },
+  "logit_F1_C1": {
+   "permutation_auc_drop": {
+    "rel_elev_m": 0.0004,
+    "slope_deg": 0.244,
+    "twi": 0.0034,
+    "impervious_frac": 0.0032,
+    "river_proximity": 0.0171,
+    "culvert_proximity": 0.0027,
+    "pump_within_km": 0.0065,
+    "flood_l210_100_depth_m": 0.0025
+   },
+   "partial_dependence_direction": {
+    "rel_elev_m": -1.0,
+    "slope_deg": -1.0,
+    "twi": 1.0,
+    "impervious_frac": 1.0,
+    "river_proximity": 1.0,
+    "culvert_proximity": -1.0,
+    "pump_within_km": 1.0,
+    "flood_l210_100_depth_m": 1.0
+   },
+   "spearman_vs_z_sensitivity": 0.8669,
+   "standardized_coef": {
+    "rel_elev_m": -0.0669,
+    "slope_deg": -2.0612,
+    "twi": 0.2607,
+    "impervious_frac": 0.2062,
+    "river_proximity": 0.2812,
+    "culvert_proximity": -0.1431,
+    "pump_within_km": 0.1822,
+    "flood_l210_100_depth_m": 0.088
+   }
+  }
+ }
+}

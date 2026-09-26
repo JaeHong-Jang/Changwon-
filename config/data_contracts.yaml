@@ -1,0 +1,307 @@
+version: 1
+raw_root: data/raw
+
+# 이 파일은 "현재 원본이 분석에 투입 가능한가"를 판정하는 실행 계약이다.
+# 구조 오류는 error, 정제·판단이 필요한 품질 문제는 warning으로 기록한다.
+datasets:
+  rainfall_hourly:
+    description: 창원시 지점별 일자·24시간 강수량
+    source_url: https://www.data.go.kr/data/15150315/fileData.do
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "경상남도 창원시_시간별 강수량_*.csv"
+    expected_files: 1
+    encoding: cp949
+    header: true
+    min_rows_per_file: 170000
+    required_columns:
+      - 지역코드
+      - 지역명
+      - 년월일
+      - 1시강수량
+      - 24시강수량
+    profile_unique_columns: [지역코드, 지역명]
+    key_columns: [지역코드, 년월일]
+    quality:
+      max_exact_duplicate_rows: 0
+      max_duplicate_key_rows: 0
+      duplicate_severity: warning
+      date_column: 년월일
+      date_format: "%Y-%m-%d"
+      max_invalid_dates: 0
+      date_severity: warning
+      min_allowed_date: "2000-01-01"
+      max_allowed_date: "2025-09-23"
+      date_range_severity: warning
+      numeric_columns_regex: "^(?:[1-9]|1[0-9]|2[0-4])시강수량$"
+      min_numeric_value: 0
+      max_numeric_value: 300
+      range_severity: warning
+      max_numeric_parse_failures: 0
+      numeric_parse_severity: error
+    coverage:
+      group_columns: [지역코드, 지역명]
+      date_column: 년월일
+      date_format: "%Y-%m-%d"
+      numeric_columns_regex: "^(?:[1-9]|1[0-9]|2[0-4])시강수량$"
+      min_valid_values_per_day: 1
+      analysis_start: "2015-01-01"
+      analysis_end: "2024-12-31"
+      min_coverage_ratio: 0.90
+      min_groups_meeting_coverage: 29
+      severity: warning
+
+  river_level_hourly:
+    description: 창원시 지점별 일자·24시간 하천수위
+    source_url: https://www.data.go.kr/data/15150319/fileData.do
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "경상남도 창원시_하천수위 통계_*.csv"
+    expected_files: 1
+    encoding: cp949
+    header: true
+    min_rows_per_file: 9500
+    required_columns:
+      - 지역코드
+      - 지역명
+      - 년월일
+      - 1시하천수위
+      - 24시하천수위
+    profile_unique_columns: [지역코드, 지역명]
+    key_columns: [지역코드, 년월일]
+    quality:
+      max_exact_duplicate_rows: 0
+      max_duplicate_key_rows: 0
+      duplicate_severity: warning
+      date_column: 년월일
+      date_format: "%Y-%m-%d"
+      max_invalid_dates: 0
+      date_severity: warning
+      numeric_columns_regex: "^(?:[1-9]|1[0-9]|2[0-4])시하천수위$"
+      min_numeric_value: -100
+      max_numeric_value: 1000
+      range_severity: warning
+      sentinel_values: [-47999, -8383, 9321, 9999]
+      sentinel_severity: warning
+      max_numeric_parse_failures: 0
+      numeric_parse_severity: error
+    coverage:
+      group_columns: [지역코드, 지역명]
+      date_column: 년월일
+      date_format: "%Y-%m-%d"
+      numeric_columns_regex: "^(?:[1-9]|1[0-9]|2[0-4])시하천수위$"
+      sentinel_values: [-47999, -8383, 9321, 9999]
+      min_valid_values_per_day: 1
+      analysis_start: "2015-01-01"
+      analysis_end: "2024-12-31"
+      min_coverage_ratio: 0.90
+      min_groups_meeting_coverage: 1
+      severity: warning
+
+  pump_stations:
+    description: 창원시 배수펌프장 9개소
+    source_url: https://www.data.go.kr/data/15047868/fileData.do
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "경상남도_창원시_배수펌프장 현황_*.csv"
+    expected_files: 1
+    encoding: cp949
+    header: true
+    exact_rows_per_file: 9
+    required_columns:
+      - 펌프장명
+      - 주소
+      - 설치년도
+      - 설치목적
+      - 모터 펌프규모(kW(HP) X 대)
+    key_columns: [펌프장명]
+    quality:
+      max_duplicate_key_rows: 0
+      duplicate_severity: error
+      max_null_ratio: 0
+      null_severity: warning
+
+  river_metadata:
+    description: 좌표 없는 하천 명칭·주소·길이 보조 메타데이터
+    source_url: https://www.data.go.kr/
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "river/경상남도_창원시_하천_*.csv"
+    expected_files: 1
+    encoding: utf-8-sig
+    header: true
+    exact_rows_per_file: 53
+    required_columns:
+      - 하천코드
+      - 하천명
+      - 시점위치
+      - 종점위치
+      - 시점위치(위도)
+      - 종점위치(위도)
+      - 시점위치(경도)
+      - 종점위치(경도)
+      - 하천길이
+    key_columns: [하천코드]
+    quality:
+      max_duplicate_key_rows: 0
+      duplicate_severity: error
+
+  sgis_aggregation_age:
+    description: SGIS 집계구 성·연령별 인구(헤더 없음)
+    source_url: https://sgis.kostat.go.kr/
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "sgis/aggregation_statistics_2024/*_성연령별인구.csv"
+    expected_files: 5
+    encoding: utf-8-sig
+    header: false
+    columns: [year, spatial_id, variable, value]
+    min_rows_per_file: 20000
+    key_columns: [year, spatial_id, variable]
+    allowed_values:
+      year: [2024]
+    variable_column: variable
+    variable_regex: "^in_age_[0-9]{3}$"
+    quality:
+      max_duplicate_key_rows: 0
+      duplicate_severity: error
+      max_null_ratio: 0.20
+      null_columns: [value]
+      null_severity: warning
+      numeric_columns_regex: "^value$"
+      min_numeric_value: 0
+      range_severity: error
+      max_numeric_parse_failures: 0
+      numeric_parse_severity: error
+
+  sgis_aggregation_summary:
+    description: SGIS 집계구 총인구·노령화지수(헤더 없음)
+    source_url: https://sgis.kostat.go.kr/
+    collected_at: 2026-08-19
+    kind: csv
+    globs:
+      - "sgis/aggregation_statistics_2024/*_인구총괄(총인구).csv"
+      - "sgis/aggregation_statistics_2024/*_인구총괄(노령화지수).csv"
+    expected_files: 10
+    encoding: utf-8-sig
+    header: false
+    columns: [year, spatial_id, variable, value]
+    min_rows_per_file: 350
+    key_columns: [year, spatial_id, variable]
+    allowed_values:
+      year: [2024]
+    variable_column: variable
+    variable_regex: "^to_in_(001|004|007|008)$"
+    quality:
+      max_duplicate_key_rows: 0
+      duplicate_severity: error
+      numeric_columns_regex: "^value$"
+      min_numeric_value: 0
+      range_severity: error
+      max_numeric_parse_failures: 0
+      numeric_parse_severity: error
+    consistency:
+      group_columns: [year, spatial_id]
+      variable_column: variable
+      value_column: value
+      total_variable: to_in_001
+      part_variables: [to_in_007, to_in_008]
+      min_complete_ratio: 1.0
+      max_abs_difference: 0
+      severity: error
+
+  sgis_grid_statistics:
+    description: SGIS 100m 격자 인구·가구·주택(헤더 없음)
+    source_url: https://sgis.kostat.go.kr/
+    collected_at: 2026-08-19
+    kind: csv
+    glob: "sgis/grid_statistics_100m_2024/*.csv"
+    expected_files: 12
+    encoding: cp949
+    header: false
+    columns: [year, spatial_id, variable, value]
+    min_rows_per_file: 27000
+    key_columns: [year, spatial_id, variable]
+    allowed_values:
+      year: [2024]
+    variable_column: variable
+    variable_regex: "^to_(in_(001|007|008)|ga_001|ho_001)$"
+    quality:
+      max_duplicate_key_rows: 0
+      duplicate_severity: error
+      max_null_ratio: 0
+      null_columns: [value]
+      null_severity: error
+      numeric_columns_regex: "^value$"
+      min_numeric_value: 0
+      range_severity: error
+      max_numeric_parse_failures: 0
+      numeric_parse_severity: error
+    consistency:
+      group_columns: [year, spatial_id]
+      variable_column: variable
+      value_column: value
+      total_variable: to_in_001
+      part_variables: [to_in_007, to_in_008]
+      min_complete_ratio: 1.0
+      max_abs_difference: 10
+      severity: error
+
+  sgis_aggregation_boundaries:
+    description: 창원시 5개 구 집계구 경계
+    source_url: https://sgis.kostat.go.kr/
+    collected_at: 2026-08-19
+    kind: shapefile
+    glob: "sgis/aggregation_boundaries_2025_2Q/*.shp"
+    expected_files: 5
+    required_sidecars: [.dbf, .shx, .prj, .cpg]
+    min_records_per_file: 350
+    required_dbf_fields: [BASE_DATE, ADM_CD, TOT_OA_CD]
+    prj_contains: [Korea_Unified_Coordinate_System]
+    expected_crs: EPSG:5179
+    crs_reader: pyproj
+
+  sgis_grid_boundaries:
+    description: SGIS 100m 격자 경계 4개 도엽
+    source_url: https://sgis.kostat.go.kr/
+    collected_at: 2026-08-19
+    kind: shapefile
+    glob: "sgis/grid_boundaries_100m_2025/*.shp"
+    expected_files: 4
+    required_sidecars: [.dbf, .shx, .prj, .cpg]
+    min_records_per_file: 150000
+    required_dbf_fields: [GRID_CD]
+    prj_contains: [Korea_Unified_Coordinate_System]
+    expected_crs: EPSG:5179
+    crs_reader: pyproj
+
+  land_cover_middle:
+    description: 환경공간정보서비스 2025 중분류 토지피복도
+    source_url: https://aid.mcee.go.kr/
+    collected_at: 2026-08-19
+    kind: shapefile
+    glob: "land_cover/middle_2025/*.shp"
+    expected_files: 16
+    required_sidecars: [.dbf, .shx, .prj]
+    min_records_per_file: 1
+    required_dbf_fields: [L2_CODE, L2_NAME, IMG_NAME, IMG_DATE]
+    prj_contains: [Korea_Central_Belt_2010]
+    expected_crs: EPSG:5186
+    crs_reader: pyproj
+
+  dem_tiles:
+    description: 국토지리정보원 공개 DEM ERDAS Imagine 타일
+    source_url: http://map.ngii.go.kr/ms/map/NlipMap.do?tabGb=total
+    collected_at: 2026-08-19
+    kind: raster
+    glob: "dem/public_dem_2025/*.img"
+    expected_files: 6
+    exact_bytes_per_file: 596749
+    magic_ascii: EHFA_HEADER_TAG
+    expected_crs: EPSG:5179
+    expected_driver: HFA
+    expected_resolution: [90.0, 90.0]
+    expected_nodata: -9999.0
+    width_range: [261, 264]
+    height_range: [316, 318]
+    metadata_reader: rasterio

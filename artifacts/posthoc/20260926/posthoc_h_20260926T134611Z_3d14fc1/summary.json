@@ -1,0 +1,484 @@
+{
+ "run_id": "posthoc_h_20260926T134611Z_3d14fc1",
+ "started_utc": "2026-09-26T13:46:11.284331+00:00",
+ "git_head": "3d14fc1",
+ "source_dirty": false,
+ "command": "PYTHONPATH=. python .omc/posthoc_h/compare.py --holdout",
+ "role": "post_hoc — 2022~2024 홀드아웃을 본 뒤 설계한 비교. 사전 게이트 결과(L1 탈락)를 대체하지 않는다",
+ "reproduce_cdri_L1": {
+  "n": 10202,
+  "n_universe": 10202,
+  "max_abs_diff": 0.0
+ },
+ "top20_overlap": {
+  "L1": {
+   "L1": 20,
+   "z_sensitivity": 13,
+   "rf_to2019": 5,
+   "rf_frozen": 5
+  },
+  "z_sensitivity": {
+   "L1": 13,
+   "z_sensitivity": 20,
+   "rf_to2019": 7,
+   "rf_frozen": 8
+  },
+  "rf_to2019": {
+   "L1": 5,
+   "z_sensitivity": 7,
+   "rf_to2019": 20,
+   "rf_frozen": 17
+  },
+  "rf_frozen": {
+   "L1": 5,
+   "z_sensitivity": 8,
+   "rf_to2019": 17,
+   "rf_frozen": 20
+  }
+ },
+ "development": {
+  "L1": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.7504,
+    "auc_cell_ci95": [
+     0.633,
+     0.8625
+    ],
+    "auc_cluster": 0.7044,
+    "auc_cluster_ci95": [
+     0.6294,
+     0.7754
+    ],
+    "n_positive_cells": 642,
+    "n_clusters": 46,
+    "n_boot": 4000,
+    "top20_capture": 0.5436,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.5392,
+    "auc_cell_ci95": [
+     0.4399,
+     0.6118
+    ],
+    "auc_cluster": 0.3839,
+    "auc_cluster_ci95": [
+     0.3126,
+     0.458
+    ],
+    "n_positive_cells": 299,
+    "n_clusters": 41,
+    "n_boot": 4000,
+    "top20_capture": 0.2408,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.02548,
+    "Q2": 0.02549,
+    "Q3": 0.02941,
+    "Q4": 0.03088,
+    "Q5": 0.03528
+   },
+   "top20": {
+    "top20_cells_touching_trace": 3,
+    "top20_cells_within_300m": 6,
+    "polygons_within_300m_of_top20": 11,
+    "n_polygons": 145
+   }
+  },
+  "z_sensitivity": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.8685,
+    "auc_cell_ci95": [
+     0.8196,
+     0.9159
+    ],
+    "auc_cluster": 0.8153,
+    "auc_cluster_ci95": [
+     0.7752,
+     0.8525
+    ],
+    "n_positive_cells": 642,
+    "n_clusters": 46,
+    "n_boot": 4000,
+    "top20_capture": 0.7134,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.5713,
+    "auc_cell_ci95": [
+     0.4746,
+     0.6359
+    ],
+    "auc_cluster": 0.406,
+    "auc_cluster_ci95": [
+     0.3364,
+     0.4776
+    ],
+    "n_positive_cells": 299,
+    "n_clusters": 41,
+    "n_boot": 4000,
+    "top20_capture": 0.291,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.02156,
+    "Q2": 0.02451,
+    "Q3": 0.02941,
+    "Q4": 0.02843,
+    "Q5": 0.04263
+   },
+   "top20": {
+    "top20_cells_touching_trace": 3,
+    "top20_cells_within_300m": 5,
+    "polygons_within_300m_of_top20": 10,
+    "n_polygons": 145
+   }
+  },
+  "rf_to2019": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.9192,
+    "auc_cell_ci95": [
+     0.8906,
+     0.9432
+    ],
+    "auc_cluster": 0.854,
+    "auc_cluster_ci95": [
+     0.8216,
+     0.8831
+    ],
+    "n_positive_cells": 642,
+    "n_clusters": 46,
+    "n_boot": 4000,
+    "top20_capture": 0.8738,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.732,
+    "auc_cell_ci95": [
+     0.6195,
+     0.7876
+    ],
+    "auc_cluster": 0.5309,
+    "auc_cluster_ci95": [
+     0.4526,
+     0.6098
+    ],
+    "n_positive_cells": 299,
+    "n_clusters": 41,
+    "n_boot": 4000,
+    "top20_capture": 0.5117,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.00735,
+    "Q2": 0.01373,
+    "Q3": 0.01912,
+    "Q4": 0.03137,
+    "Q5": 0.07496
+   },
+   "top20": {
+    "top20_cells_touching_trace": 6,
+    "top20_cells_within_300m": 10,
+    "polygons_within_300m_of_top20": 14,
+    "n_polygons": 145
+   }
+  },
+  "rf_frozen": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.9188,
+    "auc_cell_ci95": [
+     0.8897,
+     0.9431
+    ],
+    "auc_cluster": 0.8584,
+    "auc_cluster_ci95": [
+     0.8253,
+     0.8876
+    ],
+    "n_positive_cells": 642,
+    "n_clusters": 46,
+    "n_boot": 4000,
+    "top20_capture": 0.8598,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.7295,
+    "auc_cell_ci95": [
+     0.6181,
+     0.7846
+    ],
+    "auc_cluster": 0.5308,
+    "auc_cluster_ci95": [
+     0.4533,
+     0.6095
+    ],
+    "n_positive_cells": 299,
+    "n_clusters": 41,
+    "n_boot": 4000,
+    "top20_capture": 0.5084,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.00784,
+    "Q2": 0.01225,
+    "Q3": 0.02206,
+    "Q4": 0.0299,
+    "Q5": 0.07447
+   },
+   "top20": {
+    "top20_cells_touching_trace": 6,
+    "top20_cells_within_300m": 10,
+    "polygons_within_300m_of_top20": 14,
+    "n_polygons": 145
+   }
+  }
+ },
+ "holdout": {
+  "L1": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.4357,
+    "auc_cell_ci95": [
+     0.3856,
+     0.5962
+    ],
+    "auc_cluster": 0.6025,
+    "auc_cluster_ci95": [
+     0.5439,
+     0.661
+    ],
+    "n_positive_cells": 1267,
+    "n_clusters": 54,
+    "n_boot": 4000,
+    "top20_capture": 0.0734,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.3398,
+    "auc_cell_ci95": [
+     0.2739,
+     0.4097
+    ],
+    "auc_cluster": 0.3142,
+    "auc_cluster_ci95": [
+     0.2697,
+     0.3609
+    ],
+    "n_positive_cells": 102,
+    "n_clusters": 64,
+    "n_boot": 4000,
+    "top20_capture": 0.0686,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.01568,
+    "Q2": 0.01814,
+    "Q3": 0.01225,
+    "Q4": 0.00049,
+    "Q5": 0.00343
+   },
+   "top20": {
+    "top20_cells_touching_trace": 1,
+    "top20_cells_within_300m": 7,
+    "polygons_within_300m_of_top20": 11,
+    "n_polygons": 196
+   }
+  },
+  "z_sensitivity": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.7348,
+    "auc_cell_ci95": [
+     0.7197,
+     0.757
+    ],
+    "auc_cluster": 0.7616,
+    "auc_cluster_ci95": [
+     0.7345,
+     0.7898
+    ],
+    "n_positive_cells": 1267,
+    "n_clusters": 54,
+    "n_boot": 4000,
+    "top20_capture": 0.2249,
+    "passes_auc": true,
+    "passes_capture": false
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.392,
+    "auc_cell_ci95": [
+     0.3324,
+     0.4501
+    ],
+    "auc_cluster": 0.3613,
+    "auc_cluster_ci95": [
+     0.3188,
+     0.4038
+    ],
+    "n_positive_cells": 102,
+    "n_clusters": 64,
+    "n_boot": 4000,
+    "top20_capture": 0.0588,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.00931,
+    "Q2": 0.01863,
+    "Q3": 0.01422,
+    "Q4": 0.0049,
+    "Q5": 0.00294
+   },
+   "top20": {
+    "top20_cells_touching_trace": 0,
+    "top20_cells_within_300m": 4,
+    "polygons_within_300m_of_top20": 17,
+    "n_polygons": 196
+   }
+  },
+  "rf_to2019": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.8432,
+    "auc_cell_ci95": [
+     0.8229,
+     0.8515
+    ],
+    "auc_cluster": 0.8211,
+    "auc_cluster_ci95": [
+     0.7958,
+     0.8446
+    ],
+    "n_positive_cells": 1267,
+    "n_clusters": 54,
+    "n_boot": 4000,
+    "top20_capture": 0.7632,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.4799,
+    "auc_cell_ci95": [
+     0.4063,
+     0.5503
+    ],
+    "auc_cluster": 0.4391,
+    "auc_cluster_ci95": [
+     0.3911,
+     0.4862
+    ],
+    "n_positive_cells": 102,
+    "n_clusters": 64,
+    "n_boot": 4000,
+    "top20_capture": 0.049,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.00588,
+    "Q2": 0.01324,
+    "Q3": 0.01569,
+    "Q4": 0.01275,
+    "Q5": 0.00245
+   },
+   "top20": {
+    "top20_cells_touching_trace": 1,
+    "top20_cells_within_300m": 7,
+    "polygons_within_300m_of_top20": 18,
+    "n_polygons": 196
+   }
+  },
+  "rf_frozen": {
+   "H_gate_all_cells": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.8583,
+    "auc_cell_ci95": [
+     0.8307,
+     0.8685
+    ],
+    "auc_cluster": 0.8255,
+    "auc_cluster_ci95": [
+     0.8001,
+     0.8492
+    ],
+    "n_positive_cells": 1267,
+    "n_clusters": 54,
+    "n_boot": 4000,
+    "top20_capture": 0.8571,
+    "passes_auc": true,
+    "passes_capture": true
+   },
+   "CDRI_gate_universe": {
+    "evaluable": true,
+    "n_nonfinite": 0,
+    "auc_cell": 0.4959,
+    "auc_cell_ci95": [
+     0.4215,
+     0.5653
+    ],
+    "auc_cluster": 0.4558,
+    "auc_cluster_ci95": [
+     0.4064,
+     0.5048
+    ],
+    "n_positive_cells": 102,
+    "n_clusters": 64,
+    "n_boot": 4000,
+    "top20_capture": 0.0784,
+    "passes_auc": false,
+    "passes_capture": false
+   },
+   "CDRI_quintile_incidence": {
+    "Q1": 0.00588,
+    "Q2": 0.0098,
+    "Q3": 0.01667,
+    "Q4": 0.01373,
+    "Q5": 0.00392
+   },
+   "top20": {
+    "top20_cells_touching_trace": 1,
+    "top20_cells_within_300m": 7,
+    "polygons_within_300m_of_top20": 18,
+    "n_polygons": 196
+   }
+  }
+ },
+ "holdout_universe_positive_cells": 102
+}

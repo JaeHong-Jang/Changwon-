@@ -28,11 +28,13 @@ def effects(long: pd.DataFrame) -> pd.DataFrame:
     grid_unit = frame["unit"].isin(GRID_UNITS)
     reasons = np.select(
         [~np.isfinite(frame["auc"]) | (frame["auc"] <= 0) | (frame["auc"] >= 1),
+         grid_unit & frame["n_pos_cells"].isna(),
          grid_unit & ~(frame["n_pos_cells"] >= MIN_POSITIVE_CELLS),
          ~grid_unit & ~(frame["n_units"] >= MIN_POLYGONS),
          ~(np.isfinite(frame["ci_lo"]) & np.isfinite(frame["ci_hi"])),
          ~((frame["ci_lo"] > 0) & (frame["ci_lo"] < frame["ci_hi"]) & (frame["ci_hi"] < 1))],
-        ["auc_missing_or_boundary", "positive_cells_lt_5", "polygons_lt_3", "ci_missing", "ci_degenerate_or_boundary"],
+        ["auc_missing_or_boundary", "cell_gate_missing", "positive_cells_lt_5", "polygons_lt_3", "ci_missing",
+         "ci_degenerate_or_boundary"],
         default="")
     frame = frame.assign(included=reasons == "", reason=reasons)
 

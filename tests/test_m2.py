@@ -28,7 +28,7 @@ class EffectsTest(unittest.TestCase):
     """포함 규칙과 짝 차이 분산을 확인한다."""
 
     def test_inclusion_rules(self):
-        """양성 격자 < 5, 폴리곤 < 3, 구간 퇴화·경계, AUC 결측을 이유와 함께 뺀다."""
+        """양성 격자 < 5, 짝 cell_gate 없음, 폴리곤 < 3, 구간 퇴화·경계, AUC 결측을 이유와 함께 뺀다."""
         # 사상 다섯 개에 각기 다른 탈락 사유를 넣는다
         rows = [long_row("s", "cell_gate", "ok", 0.8, *sym_ci(0.8, 0.2), 10),
                 long_row("s", "cluster_gate", "ok", 0.78, *sym_ci(0.78, 0.3), 3),
@@ -38,7 +38,8 @@ class EffectsTest(unittest.TestCase):
                 long_row("s", "cell_gate", "edge", 0.99, 0.95, 1.0, 30),
                 long_row("s", "cell_gate", "none", np.nan, np.nan, np.nan, 0),
                 long_row("s", "object", "ok", 0.7, *sym_ci(0.7, 0.1), 3),
-                long_row("s", "object", "few", 0.7, *sym_ci(0.7, 0.1), 2)]
+                long_row("s", "object", "few", 0.7, *sym_ci(0.7, 0.1), 2),
+                long_row("s", "cluster_gate", "orphan", 0.8, *sym_ci(0.8, 0.2), 4)]
         e = effects(pd.DataFrame(rows)).set_index(["unit", "test_event"])
         self.assertTrue(e.loc[("cell_gate", "ok"), "included"])
         self.assertTrue(e.loc[("cluster_gate", "ok"), "included"])
@@ -52,6 +53,7 @@ class EffectsTest(unittest.TestCase):
         self.assertEqual(e.loc[("cell_gate", "none"), "reason"], "auc_missing_or_boundary")
         self.assertTrue(e.loc[("object", "ok"), "included"])
         self.assertEqual(e.loc[("object", "few"), "reason"], "polygons_lt_3")
+        self.assertEqual(e.loc[("cluster_gate", "orphan"), "reason"], "cell_gate_missing")
 
     def test_paired_variance_and_intersection(self):
         """짝 차이는 둘 다 포함된 사상만 쓰고 분산은 SE_m² + SE_b² − 2ρ SE_m SE_b 다."""

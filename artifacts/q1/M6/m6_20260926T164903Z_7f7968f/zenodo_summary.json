@@ -1,0 +1,62 @@
+{
+  "n_files": 453,
+  "bytes": 105959301,
+  "missing_files": [],
+  "by_decision": {
+    "exclude": {
+      "n_files": 2,
+      "bytes": 17624
+    },
+    "hash_only": {
+      "n_files": 111,
+      "bytes": 18274969
+    },
+    "open": {
+      "n_files": 335,
+      "bytes": 25407483
+    },
+    "restricted": {
+      "n_files": 5,
+      "bytes": 62259225
+    }
+  },
+  "by_category": {
+    "code/open": {
+      "n_files": 165,
+      "bytes": 2272863
+    },
+    "derived_data/restricted": {
+      "n_files": 5,
+      "bytes": 62259225
+    },
+    "docs/open": {
+      "n_files": 59,
+      "bytes": 941829
+    },
+    "frozen_models/open": {
+      "n_files": 39,
+      "bytes": 6956727
+    },
+    "internal/exclude": {
+      "n_files": 2,
+      "bytes": 17624
+    },
+    "raw_open/open": {
+      "n_files": 1,
+      "bytes": 389120
+    },
+    "raw_restricted/hash_only": {
+      "n_files": 94,
+      "bytes": 879326
+    },
+    "raw_third_party/hash_only": {
+      "n_files": 17,
+      "bytes": 17395643
+    },
+    "results/open": {
+      "n_files": 71,
+      "bytes": 14846944
+    }
+  },
+  "license_files": []
+}

@@ -246,7 +246,7 @@ For other scores the sign of the size-weighting term is reversed. On the pooled 
 
 Survival of polygons under each rule depends on polygon size relative to the cell (Table 5). Under the reference rule at 100 m, 66.3 % of holdout polygons survive, but only 9.3 % of those smaller than 500 m² (54 polygons) and 12.3 % of urban polygons (57). At 1000 m, even 26 % of holdout polygons of 20 000 m² or more disappear, because 20 000 m² is 2 % of a 1 km² cell. The development inventory is dominated by larger polygons, and 95.8 % of its 142 dated polygons survive at 100 m.
 
-**Table 5.** Polygon survival under the reference threshold rule (`f10`) by area class and grid size.
+**Table 5.** Polygon survival under the reference threshold rule (`f10`) by area class and grid size. A polygon survives if at least one cell it overlaps is positive under the label of its own event (event-wise labels).
 
 | Role | Area class (count) | 100 m | 200 m | 500 m | 1000 m |
 |---|---|---:|---:|---:|---:|
@@ -256,9 +256,9 @@ Survival of polygons under each rule depends on polygon size relative to the cel
 | | 5000–20 000 m² (39) | 1.000 | 0.949 | 0.590 | 0.462 |
 | | ≥ 20 000 m² (54) | 1.000 | 1.000 | 0.926 | 0.741 |
 | | all (196) | 0.663 | 0.546 | 0.429 | 0.362 |
-| development | all dated (142) | 0.958 | — | — | 0.479 |
+| development | all dated (142) | 0.958 | 0.803 | 0.549 | 0.479 |
 
-*Source: run `m4_20260926T170511Z_1edf87c`, `survival_summary.csv`. The 100 m holdout values match the earlier label audit `label_audit_holdout_20260924T104628Z_1b8106ba` (66.3 %, urban 12.3 %).*
+*Source: run `m4_20260926T170511Z_1edf87c`, `survival_summary.csv` (role groups `holdout` and `development`). With the pooled holdout label (union of all four events, `holdout_pooled`) one additional polygon of ≥ 20 000 m² survives at 500 m (0.944; all polygons 0.434); all other cells are identical. The 100 m holdout values match the earlier label audit `label_audit_holdout_20260924T104628Z_1b8106ba` (66.3 %, urban 12.3 %).*
 
 ### 4.3 The gap is general: size dispersion and size-dependent detectability together
 
@@ -285,9 +285,9 @@ Table 6 shows the σ × β map for 200 polygons. At |β| = 1 the `f10` gap becom
 
 A cell-level gate verdict can differ from the polygon-level verdict when the polygon-level AUC lies near the gate and the coupling points the other way. With μ0 = 1.45 (polygon-level gate passed in every replicate), β = −1 drove the cell-level pass rate to 0 %, a unit flip in every replicate, and β = −0.5 gave a flip rate of 0.62. With μ0 = 0.55 (polygon gate almost never passed), β = +0.5 produced cell-level passes in 95.5 % of replicates.
 
-Two results limit these statements. First, the `rep_point` rule removes size weighting, but in landscapes with many large polygons (σ = 3, β = +1) the cells they cover become negatives and pull the AUC down (−0.0505): the pre-specified secondary prediction that `rep_point` stays within 0.05 of the object AUC failed in 1 of 61 scenarios, so `rep_point` is not free of bias. Second, when all events share the same β, pooling events and taking event medians give nearly the same cell-level AUC (median |V1 − V2| ≤ 0.012). The Changwon contrast between V1 (0.436) and V2 (0.791) is not reproduced by that generator. In Changwon, only the event that carries 98.8 % of the weight has a strong negative coupling (β̂ = −0.83 for the September 2024 event, |β̂| ≤ 0.17 for development events).
+Two results limit these statements. First, the `rep_point` rule removes size weighting, but in landscapes with many large polygons (σ = 3, β = +1) the cells they cover become negatives and pull the AUC down (−0.0505): the pre-specified secondary prediction that `rep_point` stays within 0.05 of the object AUC failed in 1 of 61 scenarios, so `rep_point` is not free of bias. Second, when all events share the same β, pooling events and taking event medians give nearly the same cell-level AUC: in all 24 multi-event scenarios the median of V1 − V2 over replicates lay within ±0.012, although in scenarios with skewed event sizes, event effects and β ≤ 0, 15–20 % of replicates still differed by 0.1 or more. The Changwon contrast between V1 (0.436) and V2 (0.791) is not reproduced by that generator. In Changwon, only the event that carries 98.8 % of the weight has a strong negative coupling (β̂ = −0.83 for the September 2024 event, |β̂| ≤ 0.17 for development events).
 
-In the post hoc anchor, the formula value Δ̂* and the observed `f10` gap agreed in rank across 50 event–score pairs (Spearman 0.885). For L1 on the pooled holdout σ̂ = 2.46 and β̂ = −0.80 give Δ̂* = −0.406 against an observed −0.276. The Changwon holdout sits in the σ ≈ 2.5 region of the synthetic space (top-10 % weight share 0.73, synthetic 0.74), and its covariance factors (ρ = −0.48, sd = 0.21, concentration factor 2.02) multiply to about −0.20, the observed size-weighting term (−0.198) up to rounding. The formula fits less well where polygon loss dominates (impervious fraction: −0.434 predicted vs. −0.194 observed) or where the relation to log-area is not linear (relative elevation: −0.085 vs. −0.154).
+In the post hoc anchor, the formula value Δ̂* and the observed `f10` gap agreed in rank across 50 event–score pairs (Spearman 0.885). For L1 on the pooled holdout σ̂ = 2.46 and β̂ = −0.80 give Δ̂* = −0.406 against an observed −0.276. The Changwon holdout sits in the σ ≈ 2.5 region of the synthetic space (top-10 % weight share 0.73, synthetic 0.74), and its covariance factors (ρ = −0.48, sd = 0.20, concentration factor 2.01) multiply to the observed size-weighting term (−0.198). The formula fits less well where polygon loss dominates (impervious fraction: −0.434 predicted vs. −0.194 observed) or where the relation to log-area is not linear (relative elevation: −0.085 vs. −0.154).
 
 ### 4.4 Learned terrain models are not distinguishable from slope alone
 
@@ -297,7 +297,7 @@ Over the seven test events with a learned score and at least five positive cells
 
 | Test event | Role | Positive cells | Slope alone | RF-F1 (walk-forward) | RF − slope |
 |---|---|---:|---:|---:|---:|
-| 2012 | development | 206 | 0.872 | 0.780 | −0.092 |
+| 2012 | development | 206 | 0.872 | 0.780 | −0.091 |
 | 2014 | development | 132 | 0.813 | 0.852 | +0.039 |
 | 2016 | development | 170 | 0.871 | 0.901 | +0.030 |
 | 2019 | development | 56 | 0.913 | 0.972 | +0.059 |
@@ -306,7 +306,7 @@ Over the seven test events with a learned score and at least five positive cells
 | 2024-09-20 | holdout | 1254 | 0.923 | 0.843 | −0.080 |
 | Median | | | 0.872 | 0.855 | +0.030 |
 
-*Source: run `m1_20260926T160821Z_a181f6c`, `decision.json`, `metrics_long.csv`. Post hoc design.*
+*Source: run `m1_20260926T160821Z_a181f6c`, `decision.json`, `metrics_long.csv`. Differences are computed from unrounded AUCs. Post hoc design.*
 
 At the event level the evidence is weak in both directions. The random-effects pooled logit difference RF − slope was −0.141 [−0.907, +0.625] over the same seven events; all seven leave-one-event-out variants and all estimator variants gave the same classification (interval covering zero). For polygon-level AUC the difference was −0.131 [−1.081, +0.819] on development events and +0.186 [−0.096, +0.468] on holdout events; we therefore do not claim that RF ranks polygons better than slope. Among all pairwise contrasts, only RF against relative elevation excluded zero.
 
